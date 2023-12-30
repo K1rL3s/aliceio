@@ -1,0 +1,258 @@
+[project]
+name = "alicebottle"
+description = "Asynchronous framework for Alice from Yandex Dialogs"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { file = "LICENSE" }
+authors = [{ name = "K1rL3s - Kirill Lesovoy" }]
+maintainers = [{ name = "K1rL3s - Kirill Lesovoy" }]
+keywords = [
+  "alice",
+  "yandex",
+  "alicebottle",
+  "bot",
+  "api",
+  "framework",
+  "wrapper",
+  "asyncio",
+]
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Development Status :: 1 - Planning",
+  "Environment :: Console",
+  "Framework :: AsyncIO",
+  "Typing :: Typed",
+  "Intended Audience :: Developers",
+  "Intended Audience :: System Administrators",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Software Development :: Libraries :: Application Frameworks",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: Communications :: Chat",
+]
+dependencies = [
+  "aiohttp~=3.9.0",
+  "pydantic>=2.4.1,<2.6",
+  "aiofiles~=23.2.1",
+  "magic-filter>=1.0.12,<1.1",
+  "typing-extensions>=4.7.0,<=5.0",
+]
+dynamic = ["version"]
+
+[project.optional-dependencies]
+fast = [
+  "uvloop>=0.17.0; (sys_platform == 'darwin' or sys_platform == 'linux') and platform_python_implementation != 'PyPy'",
+  "aiodns>=3.0.0",
+]
+redis = [
+  "redis[hiredis]~=5.0.1",
+]
+proxy = [
+  "aiohttp-socks~=0.8.3",
+]
+i18n = [
+  "Babel~=2.13.0",
+]
+test = [
+  "pytest~=7.4.2",
+  "pytest-html~=4.0.2",
+  "pytest-asyncio~=0.21.1",
+  "pytest-lazy-fixture~=0.6.3",
+  "pytest-mock~=3.12.0",
+  "pytest-mypy~=0.10.3",
+  "pytest-cov~=4.1.0",
+  "pytest-aiohttp~=1.0.5",
+  "aresponses~=2.1.6",
+  "pytz~=2023.3",
+  "pycryptodomex~=3.19.0",
+]
+dev = [
+  "black~=23.10.0",
+  "isort~=5.12.0",
+  "ruff~=0.1.1",
+  "mypy~=1.6.1",
+  "toml~=0.10.2",
+  "pre-commit~=3.5.0",
+  "packaging~=23.1",
+]
+
+[project.urls]
+Repository = "https://github.com/K1rL3s/alicebottle"
+
+[tool.hatch.envs.default]
+features = [
+  "dev",
+  "fast",
+  "redis",
+  "proxy",
+  "i18n",
+  "cli",
+]
+post-install-commands = [
+  "pre-commit install",
+]
+
+[tool.hatch.envs.default.scripts]
+reformat = [
+  "black alicebottle tests",
+  "isort alicebottle tests",
+]
+lint = "ruff alicebottle"
+
+[tool.hatch.envs.docs]
+features = [
+  "fast",
+  "redis",
+  "proxy",
+  "i18n",
+  "docs",
+  "cli",
+]
+
+[tool.hatch.envs.dev]
+python = "3.12"
+features = [
+  "dev",
+  "fast",
+  "redis",
+  "proxy",
+  "i18n",
+  "test",
+  "cli",
+]
+
+[tool.hatch.envs.test]
+features = [
+  "fast",
+  "redis",
+  "proxy",
+  "i18n",
+  "test",
+  "cli",
+]
+
+[tool.hatch.envs.test.scripts]
+cov = [
+  "pytest --cov-config pyproject.toml --cov=alicebottle --html=reports/py{matrix:python}/tests/index.html {args}",
+  "coverage html -d reports/py{matrix:python}/coverage",
+]
+cov-redis = [
+  "pytest --cov-config pyproject.toml --cov=alicebottle --html=reports/py{matrix:python}/tests/index.html --redis {env:REDIS_DNS:'redis://localhost:6379'} {args}",
+  "coverage html -d reports/py{matrix:python}/coverage",
+]
+view-cov = "google-chrome-stable reports/py{matrix:python}/coverage/index.html"
+
+
+[[tool.hatch.envs.test.matrix]]
+python = ["38", "39", "310", "311", "312"]
+
+[tool.ruff]
+line-length = 88
+select = [
+  "C",
+  "C4",
+  "E",
+  "F",
+  "T10",
+  "T20",
+  "Q",
+  "RET",
+]
+ignore = [
+  "F401"
+]
+src = ["alicebottle", "tests"]
+exclude = [
+  ".git",
+  "build",
+  "dist",
+  "venv",
+  ".venv",
+  "docs",
+  "tests",
+  "dev",
+  "scripts",
+  "*.egg-info",
+]
+target-version = "py310"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = [
+  "tests",
+]
+filterwarnings = [
+  "error",
+  "ignore::pytest.PytestUnraisableExceptionWarning",
+]
+
+[tool.coverage.run]
+branch = false
+parallel = true
+omit = [
+  "alicebottle/__about__.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+  "if __name__ == .__main__.:",
+  "pragma: no cover",
+  "if TYPE_CHECKING:",
+  "@abstractmethod",
+  "@overload",
+]
+
+[tool.mypy]
+plugins = "pydantic.mypy"
+python_version = "3.8"
+show_error_codes = true
+show_error_context = true
+pretty = true
+ignore_missing_imports = false
+warn_unused_configs = true
+disallow_subclassing_any = true
+disallow_any_generics = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_return_any = true
+follow_imports_for_stubs = true
+namespace_packages = true
+show_absolute_path = true
+
+[[tool.mypy.overrides]]
+module = [
+  "aiofiles",
+  "async_lru",
+  "uvloop",
+  "redis.*",
+  "babel.*",
+]
+ignore_missing_imports = true
+disallow_untyped_defs = true
+
+[tool.black]
+line-length = 99
+target-version = ['py38', 'py39', 'py310', 'py311']
+exclude = '''
+(
+    \.eggs
+  | \.git
+  | \.tox
+  | build
+  | dist
+  | venv
+  | docs
+)
+'''
+
+[tool.isort]
+profile = "black"

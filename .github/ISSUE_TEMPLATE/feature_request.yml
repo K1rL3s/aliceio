@@ -1,0 +1,56 @@
+name: Предложить новый функционал
+description: Расскажите о функциях, которые вы хотели бы видеть или улучшить в alicebottle
+labels:
+  - enhancement
+body:
+  - type: dropdown
+    attributes:
+      label: Версия alicebottle
+      description: (`pip show alicebottle` внутри виртуального окружения)
+      options:
+        - 1.x
+        - 2.x
+        - Все
+        - Не определено
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Решаемая проблема
+      description: Ваше предложение связано с конкретной проблемой? Если нет, опишите общую идею вашего запроса
+      placeholder: Например, я хочу отправлять изображения по ссылке
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Возможное решение
+      description: Опишите решение, которое вы хотели бы видеть в alicebottle
+      placeholder: Например, добавить метод отправки изображения по ссылке
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Альтернативы
+      description: Какие еще решения есть у вас в голове?
+      placeholder: Например, отправлять ссылку на изображение в начале сообщения
+
+  - type: textarea
+    attributes:
+      label: Пример кода
+      description: Небольшой пример кода, демонстрирующий поведение, которое вы хотели бы видеть
+      placeholder: |
+        await bot.send_photo(user_id, photo_url)
+        ...
+      render: python3
+
+  - type: textarea
+    attributes:
+      label: Дополнительная информация
+      description: Любая дополнительная информация
+      placeholder: |
+        Например, этот метод также должен кэшировать изображения для ускорения дальнейшей отправки.
+
+        Вы также можете прикрепить дополнительные изображения или другие файлы.

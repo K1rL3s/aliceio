@@ -1,0 +1,44 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.2.0
+    hooks:
+      - id: trailing-whitespace
+      - id: check-case-conflict
+      - id: check-merge-conflict
+      - id: debug-statements
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+      - id: detect-private-key
+      - id: check-yaml
+      - id: check-toml
+      - id: check-json
+
+  - repo: local
+    hooks:
+      - id: black
+        name: black
+        entry: black
+        language: system
+        types: [ python ]
+        stages: [ commit ]
+
+      - id: ruff (isort)
+        name: ruff-isort
+        entry: ruff --select I --select F401 --fix
+        language: system
+        types: [ python ]
+        stages: [ commit ]
+
+      - id: ruff
+        name: ruff check
+        entry: ruff check
+        language: system
+        types: [ python ]
+        stages: [ push ]
+
+      - id: mypy
+        name: mypy check
+        entry: mypy alicebottle
+        language: system
+        pass_filenames: false
+        stages: [ push ]

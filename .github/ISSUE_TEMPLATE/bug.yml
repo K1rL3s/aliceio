@@ -1,0 +1,103 @@
+name: Сообщение об ошибке
+description: Сообщение о произошедшем баге во время работы с alicebottle
+labels:
+  - bug
+body:
+  - type: checkboxes
+    attributes:
+      label: Checklist
+      options:
+        - label: Я уверен, что это баг в коде alicebottle
+          required: true
+        - label: Я искал похожие баги в issues, в том числе среди закрытых
+          required: true
+        - label: Я установил последнюю версию и проблема осталась
+          required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Context
+
+        Пожалуйста, предоставьте как можно больше информации. Это поможет нам воспроизвести проблему и исправить её
+
+  - type: input
+    attributes:
+      label: Операционная система
+      placeholder: Например, Ubuntu 22.04.3 LTS
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: Версия Python
+      description: (`python --version` внутри виртуального окружения)
+      placeholder: Например, 3.10.1
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: Версия alicebottle
+      description: (`pip show alicebottle` внутри виртуального окружения)
+      placeholder: Например, 0.1.0 или 2.0.1b2
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Ожидаемое поведение
+      description: Пожалуйста, опишите поведение, которое ожидается
+      placeholder: Например, бот должен отправить сообщение с текстом "Привет, мир!"
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Настоящее поведение
+      description: Пожалуйста, опишите поведение, которое происходит на самом деле
+      placeholder: Например, бот ничего не отправил
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Шаги для воспроизведения
+      description: Пожалуйста, опишите шаги, которые нужно предпринять для воспроизведения такого поведения
+      placeholder: |
+        1. Шаг 1
+        2. Шаг 2
+        3. ...
+        4. Что-то вышло
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Пример кода
+      description: Предоставьте [минимальный, воспроизводимый] (https://stackoverflow.com/help/minimal-reproducible-example) и правильно отформатированный пример (если применимо)
+      placeholder: |
+        from alicebottle import Bot, Dispatcher
+        ...
+      render: python3
+
+  - type: textarea
+    attributes:
+      label: Трейсбек, логи
+      description: Предоставьте полную обратную трассировку (если применимо) или другие логи
+      placeholder: |
+        Traceback (most recent call last):
+          File "main.py", line 1, in <module>
+            ...
+        SomeException: ...
+      render: sh
+
+  - type: textarea
+    attributes:
+      label: Дополнительная информация
+      description: Предоставьте любую дополнительную информацию, которая может помочь нам воспроизвести проблему
+      placeholder: |
+        Например, такое поведение воспроизводится только для новых пользователей
+
+        Вы также можете прикрепить дополнительные снимки экрана, журналы или другие файлы
+
