@@ -5,7 +5,7 @@ labels:
 body:
   - type: checkboxes
     attributes:
-      label: Checklist
+      label: Контрольный список
       options:
         - label: Я уверен, что это баг в коде alicebottle
           required: true
@@ -17,7 +17,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        ## Context
+        ## Контекст
 
         Пожалуйста, предоставьте как можно больше информации. Это поможет нам воспроизвести проблему и исправить её
 
