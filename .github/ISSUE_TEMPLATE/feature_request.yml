@@ -1,12 +1,12 @@
 name: Предложить новый функционал
-description: Расскажите о функциях, которые вы хотели бы видеть или улучшить в alicebottle
+description: Расскажите о функциях, которые вы хотели бы видеть или улучшить в aliceio
 labels:
   - enhancement
 body:
   - type: dropdown
     attributes:
-      label: Версия alicebottle
-      description: (`pip show alicebottle` внутри виртуального окружения)
+      label: Версия aliceio
+      description: (`pip show aliceio` внутри виртуального окружения)
       options:
         - 1.x
         - 2.x
@@ -26,7 +26,7 @@ body:
   - type: textarea
     attributes:
       label: Возможное решение
-      description: Опишите решение, которое вы хотели бы видеть в alicebottle
+      description: Опишите решение, которое вы хотели бы видеть в aliceio
       placeholder: Например, добавить метод отправки изображения по ссылке
     validations:
       required: true

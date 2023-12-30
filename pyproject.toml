@@ -1,5 +1,5 @@
 [project]
-name = "alicebottle"
+name = "aliceio"
 description = "Asynchronous framework for Alice from Yandex Dialogs"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -9,7 +9,7 @@ maintainers = [{ name = "K1rL3s - Kirill Lesovoy" }]
 keywords = [
   "alice",
   "yandex",
-  "alicebottle",
+  "aliceio",
   "bot",
   "api",
   "framework",
@@ -80,7 +80,7 @@ dev = [
 ]
 
 [project.urls]
-Repository = "https://github.com/K1rL3s/alicebottle"
+Repository = "https://github.com/K1rL3s/aliceio"
 
 [tool.hatch.envs.default]
 features = [
@@ -97,10 +97,10 @@ post-install-commands = [
 
 [tool.hatch.envs.default.scripts]
 reformat = [
-  "black alicebottle tests",
-  "isort alicebottle tests",
+  "black aliceio tests",
+  "isort aliceio tests",
 ]
-lint = "ruff alicebottle"
+lint = "ruff aliceio"
 
 [tool.hatch.envs.docs]
 features = [
@@ -136,11 +136,11 @@ features = [
 
 [tool.hatch.envs.test.scripts]
 cov = [
-  "pytest --cov-config pyproject.toml --cov=alicebottle --html=reports/py{matrix:python}/tests/index.html {args}",
+  "pytest --cov-config pyproject.toml --cov=aliceio --html=reports/py{matrix:python}/tests/index.html {args}",
   "coverage html -d reports/py{matrix:python}/coverage",
 ]
 cov-redis = [
-  "pytest --cov-config pyproject.toml --cov=alicebottle --html=reports/py{matrix:python}/tests/index.html --redis {env:REDIS_DNS:'redis://localhost:6379'} {args}",
+  "pytest --cov-config pyproject.toml --cov=aliceio --html=reports/py{matrix:python}/tests/index.html --redis {env:REDIS_DNS:'redis://localhost:6379'} {args}",
   "coverage html -d reports/py{matrix:python}/coverage",
 ]
 view-cov = "google-chrome-stable reports/py{matrix:python}/coverage/index.html"
@@ -164,7 +164,7 @@ select = [
 ignore = [
   "F401"
 ]
-src = ["alicebottle", "tests"]
+src = ["aliceio", "tests"]
 exclude = [
   ".git",
   "build",
@@ -193,7 +193,7 @@ filterwarnings = [
 branch = false
 parallel = true
 omit = [
-  "alicebottle/__about__.py",
+  "aliceio/__about__.py",
 ]
 
 [tool.coverage.report]

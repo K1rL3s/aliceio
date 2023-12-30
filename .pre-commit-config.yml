@@ -38,7 +38,7 @@ repos:
 
       - id: mypy
         name: mypy check
-        entry: mypy alicebottle
+        entry: mypy aliceio
         language: system
         pass_filenames: false
         stages: [ push ]
