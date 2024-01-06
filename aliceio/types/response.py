@@ -1,0 +1,20 @@
+from typing import List, Optional
+
+from aliceio.types import AliceObject, Card, Directives, ShowItemMeta, TextButton
+
+
+class Response(AliceObject):
+    """
+    Ответ API Алисы с полезной для пользователя информацией.
+
+    https://yandex.ru/dev/dialogs/alice/doc/response.html#response__response-desc
+    """
+
+    text: str
+    tts: Optional[str] = None
+    card: Optional[Card] = None
+    buttons: Optional[List[TextButton]] = None
+    directives: Optional[Directives] = None
+    show_item_meta: Optional[ShowItemMeta] = None
+    should_listen: Optional[bool] = None
+    end_session: bool = False
