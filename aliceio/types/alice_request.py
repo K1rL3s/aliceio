@@ -13,7 +13,7 @@ from aliceio.types import (
 from aliceio.types.state import ApplicationState, AuthorizedUserState, SessionState
 
 
-class AliceRequest(AliceObject):
+class Update(AliceObject):
     """
     Полный запрос от API Алисы.
 

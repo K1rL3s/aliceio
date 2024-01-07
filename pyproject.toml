@@ -34,10 +34,11 @@ classifiers = [
   "Topic :: Communications :: Chat",
 ]
 dependencies = [
+  "magic-filter>=1.0.12,<1.1",
   "aiohttp~=3.9.0",
   "pydantic>=2.4.1,<2.6",
   "aiofiles~=23.2.1",
-  "magic-filter>=1.0.12,<1.1",
+  "certifi>=2023.7.22",
   "typing-extensions>=4.7.0,<=5.0",
 ]
 dynamic = ["version"]
@@ -240,8 +241,8 @@ ignore_missing_imports = true
 disallow_untyped_defs = true
 
 [tool.black]
-line-length = 99
-target-version = ['py38', 'py39', 'py310', 'py311']
+line-length = 88
+target-version = ['py38', 'py39', 'py310', 'py311', 'py312']
 exclude = '''
 (
     \.eggs

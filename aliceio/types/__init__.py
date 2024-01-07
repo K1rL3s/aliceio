@@ -1,4 +1,4 @@
-from .alice_request import AliceRequest
+from .alice_request import Update
 from .alice_response import AliceResponse
 from .analytics import Analytics
 from .application import Application

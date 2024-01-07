@@ -1,9 +1,9 @@
 from pydantic import BaseModel, ConfigDict
 
-from aliceio.client.context_controller import BotContextController
+from aliceio.client.context_controller import SkillContextController
 
 
-class AliceObject(BotContextController, BaseModel):
+class AliceObject(SkillContextController, BaseModel):
     model_config = ConfigDict(
         use_enum_values=True,
         extra="allow",
