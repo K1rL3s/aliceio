@@ -25,7 +25,7 @@ from tests.mocked.mocked_skill import MockedSkill
 
 
 def create_mocked_update(
-    skill: MockedSkill,
+    skill: Optional[MockedSkill] = None,
     meta: Optional[Meta] = None,
     interfaces: Optional[Interfaces] = None,
     user: Optional[User] = None,
@@ -63,7 +63,7 @@ def create_mocked_update(
         session=session,
         request=request,
         version="1.0",
-        context={"skill": skill},
+        context={"skill": skill} if skill else None,
     )
     return mocked_update
 

@@ -28,7 +28,7 @@ class ErrorsMiddleware(BaseMiddleware):
             raise
         except Exception as e:
             response = await self.router.propagate_event(
-                update_type=EventType.ERROR,
+                event_type=EventType.ERROR,
                 event=ErrorEvent(update=cast(Update, event), exception=e),
                 **data,
             )

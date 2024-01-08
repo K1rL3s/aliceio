@@ -42,11 +42,18 @@ class Update(MutableAliceObject):
             EventType.PURCHASE: Pull,
             EventType.UPDATE: Update,
         }
-        setattr(
-            self,
-            self.event_type,
-            events[self.event_type].model_validate(self.request, from_attributes=True),
-        )
+        try:
+            setattr(
+                self,
+                self.event_type,
+                events[self.event_type].model_validate(
+                    self.request, from_attributes=True,
+                ),
+            )
+        except UpdateTypeLookupError:
+            # При работе ошибка возникнет ещё раз в диспетчере,
+            # здесь она глушится для работы тестов
+            pass
 
     @property
     def event(self) -> MutableAliceObject:

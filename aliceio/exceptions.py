@@ -45,7 +45,8 @@ class AliceAPIError(DetailedAliceioError):
 
 class ClientDecodeError(AliceioError):
     """
-    Exception raised when client can't decode response. (Malformed response, etc.)
+    Исключение возникает, когда клиент не может декодировать ответ.
+    (Неверный ответ или запрос и тд)
     """
 
     def __init__(self, message: str, original: Exception, data: Any) -> None:
