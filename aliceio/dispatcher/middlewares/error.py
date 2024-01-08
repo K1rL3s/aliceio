@@ -2,8 +2,9 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, Awaitable, Callable, Dict, cast
 
-from ...types import AliceObject, Update
-from ...types.error_event import ErrorEvent
+from ...enums import EventType
+from ...types import ErrorEvent, Update
+from ...types.base import AliceObject
 from ..event.bases import UNHANDLED, CancelHandler, SkipHandler
 from .base import BaseMiddleware
 
@@ -27,8 +28,8 @@ class ErrorsMiddleware(BaseMiddleware):
             raise
         except Exception as e:
             response = await self.router.propagate_event(
-                update_type="error",
-                event=ErrorEvent(alice_request=cast(Update, event), exception=e),
+                update_type=EventType.ERROR,
+                event=ErrorEvent(update=cast(Update, event), exception=e),
                 **data,
             )
             if response is not UNHANDLED:

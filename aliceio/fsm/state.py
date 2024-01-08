@@ -1,13 +1,11 @@
 import inspect
 from typing import Any, Iterator, Optional, Tuple, Type, no_type_check
 
-from aliceio.types import AliceObject
+from aliceio.types.base import AliceObject
 
 
 class State:
-    """
-    State object
-    """
+    """Состояние."""
 
     def __init__(
         self, state: Optional[str] = None, group_name: Optional[str] = None

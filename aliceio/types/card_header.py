@@ -1,7 +1,7 @@
-from aliceio.types import AliceObject
+from aliceio.types.base import MutableAliceObject
 
 
-class CardHeader(AliceObject):
+class CardHeader(MutableAliceObject):
     """
     Заголовок :class:`ItemsList`.
 

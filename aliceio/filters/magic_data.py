@@ -3,7 +3,7 @@ from typing import Any
 from magic_filter import AttrDict, MagicFilter
 
 from aliceio.filters.base import Filter
-from aliceio.types import AliceObject
+from aliceio.types.base import AliceObject
 
 
 class MagicData(Filter):

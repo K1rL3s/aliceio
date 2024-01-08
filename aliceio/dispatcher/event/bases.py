@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any, Awaitable, Callable, Dict, NoReturn, Optional, TypeVar, Union
 from unittest.mock import sentinel
 
-from ...types import AliceObject
+from ...types.base import AliceObject
 from ..middlewares.base import BaseMiddleware
 
 MiddlewareEventType = TypeVar("MiddlewareEventType", bound=AliceObject)
@@ -29,7 +29,5 @@ class CancelHandler(Exception):
 
 
 def skip(message: Optional[str] = None) -> NoReturn:
-    """
-    Raise an SkipHandler
-    """
+    """Вызов исключения :class:`SkipHandler`."""
     raise SkipHandler(message or "Event skipped")

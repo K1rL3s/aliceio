@@ -1,6 +1,6 @@
-from enum import Enum
+from aliceio.enums.base import ValuesEnum
 
-from aliceio.types import AliceObject
+from .base import AliceObject
 
 
 class AudioPlayerError(AliceObject):
@@ -13,6 +13,6 @@ class AudioPlayerError(AliceObject):
     type: str
 
 
-class ErrorType(str, Enum):
+class ErrorType(str, ValuesEnum):
     MEDIA_ERROR_UNKNOWN = "MEDIA_ERROR_UNKNOWN"
     MEDIA_ERROR_SERVICE_UNAVAILABLE = "MEDIA_ERROR_SERVICE_UNAVAILABLE"

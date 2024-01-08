@@ -2,7 +2,7 @@ import re
 from typing import Any, Dict, Pattern, Type, Union, cast
 
 from aliceio.filters.base import Filter
-from aliceio.types import AliceObject
+from aliceio.types.base import AliceObject
 from aliceio.types.error_event import ErrorEvent
 
 

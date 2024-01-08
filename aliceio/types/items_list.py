@@ -1,6 +1,10 @@
 from typing import List, Optional
 
-from aliceio.types import Card, CardType, ItemImage, CardHeader, CardFooter
+from .card import Card
+from ..enums.card import CardType
+from .card_footer import CardFooter
+from .card_header import CardHeader
+from .item_image import ItemImage
 
 
 class ItemsList(Card):

@@ -3,13 +3,10 @@ from typing import Any, Awaitable, Callable, Dict, Optional, cast
 from aliceio import Skill
 from aliceio.dispatcher.middlewares.base import BaseMiddleware
 from aliceio.fsm.context import FSMContext
-from aliceio.fsm.storage.base import (
-    DEFAULT_DESTINY,
-    BaseStorage,
-    StorageKey,
-)
+from aliceio.fsm.storage.base import DEFAULT_DESTINY, BaseStorage, StorageKey
 from aliceio.fsm.strategy import FSMStrategy, apply_strategy
-from aliceio.types import AliceObject, Session, User
+from aliceio.types import Session, User
+from aliceio.types.base import AliceObject
 
 
 class FSMContextMiddleware(BaseMiddleware):

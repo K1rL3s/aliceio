@@ -1,9 +1,9 @@
-from aliceio.types import AliceObject
+from aliceio.types.base import MutableAliceObject
 
 
-class Application(AliceObject):
+class Application(MutableAliceObject):
     """
-    Приложение из Session.
+    Приложение из :class:`Session`.
 
     https://yandex.ru/dev/dialogs/alice/doc/request.html#request__application-desc
     """

@@ -7,12 +7,7 @@ from redis.asyncio.connection import ConnectionPool
 from redis.typing import ExpiryT
 
 from aliceio.fsm.state import State
-from aliceio.fsm.storage.base import (
-    DEFAULT_DESTINY,
-    BaseStorage,
-    StateType,
-    StorageKey,
-)
+from aliceio.fsm.storage.base import DEFAULT_DESTINY, BaseStorage, StateType, StorageKey
 
 _JsonLoads = Callable[..., Any]
 _JsonDumps = Callable[..., str]

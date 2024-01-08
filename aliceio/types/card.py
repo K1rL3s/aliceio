@@ -1,12 +1,12 @@
 from abc import ABC
-from enum import Enum
 
 from pydantic import field_validator
 
-from aliceio.types import AliceObject
+from .base import MutableAliceObject
+from ..enums.card import CardType
 
 
-class Card(ABC, AliceObject):
+class Card(MutableAliceObject, ABC):
     """
     Родительский класс для карт
     :class:`BigImage`, :class:`ImageGallery` и :class:`ItemsList`
@@ -17,15 +17,9 @@ class Card(ABC, AliceObject):
     @field_validator("type")
     @classmethod
     def type_validate(cls, v: str) -> str:
-        if v not in CardType:
+        if v not in CardType.values():
             raise ValueError(
                 f'Card "type" must be '
                 f'{", ".join(ctype for ctype in CardType)}, not "{v}"'
             )
         return v
-
-
-class CardType(str, Enum):
-    BIG_IMAGE = "BigImage"
-    IMAGE_GALLERY = "ImageGallery"
-    ITEMS_LIST = "ItemsList"

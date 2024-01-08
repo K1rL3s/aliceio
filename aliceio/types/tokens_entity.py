@@ -1,4 +1,4 @@
-from aliceio.types import AliceObject
+from .base import AliceObject
 
 
 class TokensEntity(AliceObject):

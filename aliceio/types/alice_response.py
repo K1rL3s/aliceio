@@ -1,11 +1,13 @@
 from typing import Optional
 
-from aliceio.types import AliceObject, Response
-from aliceio.types.analytics import Analytics
-from aliceio.types.state import ApplicationState, AuthorizedUserState, SessionState
+from aliceio.types.base import MutableAliceObject
+
+from .analytics import Analytics
+from .response import Response
+from .state import ApplicationState, AuthorizedUserState, SessionState
 
 
-class AliceResponse(AliceObject):
+class AliceResponse(MutableAliceObject):
     """
     Ответ на запрос API Алисы.
 

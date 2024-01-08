@@ -1,12 +1,11 @@
 from typing import Dict
 
-from aliceio.types import AliceObject
-
+from .base import MutableAliceObject
 
 CustomEventData = Dict
 
 
-class Event(AliceObject):
+class Event(MutableAliceObject):
     """
     Событие для аналитики.
 

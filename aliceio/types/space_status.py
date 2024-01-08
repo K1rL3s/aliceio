@@ -1,4 +1,5 @@
-from aliceio.types import AliceObject, Quota
+from .base import AliceObject
+from .quota import Quota
 
 
 class SpaceStatus(AliceObject):

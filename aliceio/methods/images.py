@@ -1,7 +1,7 @@
 from typing import List
 
-from .base import AliceMethod
 from ..types import UploadedImage
+from .base import AliceMethod
 
 
 class Images(AliceMethod[List[UploadedImage]]):

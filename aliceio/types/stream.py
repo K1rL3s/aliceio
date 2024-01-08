@@ -1,7 +1,7 @@
-from aliceio.types import AliceObject
+from .base import MutableAliceObject
 
 
-class Stream(AliceObject):
+class Stream(MutableAliceObject):
     """
     Описание аудиопотока.
 

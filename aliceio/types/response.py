@@ -1,11 +1,15 @@
 from typing import List, Optional
 
-from aliceio.types import AliceObject, Card, Directives, ShowItemMeta, TextButton
+from .base import AliceObject
+from .card import Card
+from .directives import Directives
+from .show_item_meta import ShowItemMeta
+from .text_button import TextButton
 
 
 class Response(AliceObject):
     """
-    Ответ API Алисы с полезной для пользователя информацией.
+    Ответ для API Алисы с полезной для пользователя информацией.
 
     https://yandex.ru/dev/dialogs/alice/doc/response.html#response__response-desc
     """

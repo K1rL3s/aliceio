@@ -1,4 +1,5 @@
-from aliceio.types import AliceObject, Interfaces
+from .base import AliceObject
+from .interfaces import Interfaces
 
 
 class Meta(AliceObject):

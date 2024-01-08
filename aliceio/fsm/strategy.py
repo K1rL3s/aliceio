@@ -1,10 +1,11 @@
-from enum import Enum, auto
 from typing import Optional, Tuple
 
+from aliceio.enums.base import StrEnum
 
-class FSMStrategy(Enum):
-    USER = auto()
-    SESSION = auto()
+
+class FSMStrategy(StrEnum):
+    USER = "user"
+    SESSION = "session"
 
 
 def apply_strategy(

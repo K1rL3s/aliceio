@@ -1,9 +1,10 @@
 from typing import Optional
 
-from aliceio.types import AliceObject, MediaButton
+from .base import MutableAliceObject
+from .media_button import MediaButton
 
 
-class ImageGalleryItem(AliceObject):
+class ImageGalleryItem(MutableAliceObject):
     """
     Изображение в :class:`ImageGallery`.
 
@@ -11,5 +12,5 @@ class ImageGalleryItem(AliceObject):
     """  # noqa
 
     image_id: str
-    title: Optional[str]
+    title: Optional[str] = None
     button: Optional[MediaButton] = None

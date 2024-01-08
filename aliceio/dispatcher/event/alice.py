@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional
 from aliceio.dispatcher.middlewares.manager import MiddlewareManager
 
 from ...filters.base import Filter
-from ...types import AliceObject
+from ...types.base import AliceObject
 from .bases import UNHANDLED, MiddlewareType, SkipHandler
 from .handler import CallbackType, FilterObject, HandlerObject
 

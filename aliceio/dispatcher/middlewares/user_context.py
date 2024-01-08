@@ -1,8 +1,8 @@
 from typing import Any, Awaitable, Callable, Dict
 
 from aliceio.dispatcher.middlewares.base import BaseMiddleware
-from aliceio.types import AliceObject, Update
-
+from aliceio.types import Update
+from aliceio.types.base import AliceObject
 
 EVENT_FROM_USER_KEY = "event_from_user"
 EVENT_SESSION_KEY = "event_session"

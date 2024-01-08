@@ -1,12 +1,16 @@
 from typing import Optional
 
-from aliceio.types import AliceObject
-from aliceio.types.application import Application
-from aliceio.types.user import User
+from .application import Application
+from .base import AliceObject
+from .user import User
 
 
 class Session(AliceObject):
-    """Base Session object"""
+    """
+    Информация о сессии в навыке.
+
+    https://yandex.ru/dev/dialogs/alice/doc/request.html#request__session-desc
+    """
 
     message_id: int
     session_id: str

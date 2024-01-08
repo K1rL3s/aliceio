@@ -7,7 +7,7 @@ from aliceio.dispatcher.event.bases import (
     NextMiddlewareType,
 )
 from aliceio.dispatcher.event.handler import CallbackType
-from aliceio.types import AliceObject
+from aliceio.types.base import AliceObject
 
 
 class MiddlewareManager(Sequence[MiddlewareType[AliceObject]]):

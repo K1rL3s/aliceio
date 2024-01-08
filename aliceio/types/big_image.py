@@ -1,6 +1,8 @@
 from typing import Optional
 
-from aliceio.types import Card, CardType, MediaButton
+from .card import Card
+from ..enums.card import CardType
+from .media_button import MediaButton
 
 
 class BigImage(Card):

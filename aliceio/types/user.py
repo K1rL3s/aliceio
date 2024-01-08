@@ -1,8 +1,12 @@
-from aliceio.types import AliceObject
+from .base import AliceObject
 
 
 class User(AliceObject):
-    """Пользователь из Session"""
+    """
+    Пользователь из :class:`Session`.
+
+    https://yandex.ru/dev/dialogs/alice/doc/request.html#request__user-desc
+    """
 
     user_id: str
-    acess_token: str
+    access_token: str

@@ -1,5 +1,5 @@
-from .base import AliceMethod
 from ..types import SpaceStatus
+from .base import AliceMethod
 
 
 class Status(AliceMethod[SpaceStatus]):

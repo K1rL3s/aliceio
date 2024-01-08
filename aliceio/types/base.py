@@ -13,3 +13,9 @@ class AliceObject(SkillContextController, BaseModel):
         arbitrary_types_allowed=True,
         defer_build=True,
     )
+
+
+class MutableAliceObject(AliceObject):
+    model_config = ConfigDict(
+        frozen=False,
+    )

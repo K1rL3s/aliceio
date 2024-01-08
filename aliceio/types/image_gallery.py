@@ -1,6 +1,8 @@
 from typing import List
 
-from aliceio.types import Card, CardType, ImageGalleryItem
+from .card import Card
+from ..enums.card import CardType
+from .image_gallery_item import ImageGalleryItem
 
 
 class ImageGallery(Card):

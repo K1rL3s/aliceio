@@ -1,6 +1,6 @@
 from typing import Optional
 
-from aliceio.types import AliceObject
+from .base import AliceObject
 
 
 class UploadedImage(AliceObject):

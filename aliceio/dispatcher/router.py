@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-from typing import Any, Dict, Final, Generator, List, Optional, Set
+from typing import Any, Dict, Final, Generator, List, Optional
 
-from ..enums import UpdateType
-from ..types import AliceObject
+from ..enums import EventType
+from ..types.base import AliceObject
+from .event.alice import AliceEventObserver
 from .event.bases import REJECTED, UNHANDLED
 from .event.event import EventObserver
-from .event.alice import AliceEventObserver
 
 INTERNAL_UPDATE_TYPES: Final[frozenset[str]] = frozenset({"update", "error"})
 
@@ -30,17 +30,27 @@ class Router:
         self.sub_routers: List[Router] = []
 
         # Наблюдатели
-        self.message = AliceEventObserver(router=self, event_name=UpdateType.MESSAGE)
+        self.message = AliceEventObserver(router=self, event_name=EventType.MESSAGE)
+        self.button = AliceEventObserver(router=self, event_name=EventType.BUTTON)
+        self.purchase = AliceEventObserver(router=self, event_name=EventType.PURCHASE)
+        self.pull = AliceEventObserver(router=self, event_name=EventType.PULL)
+        self.audio_player = AliceEventObserver(
+            router=self, event_name=EventType.AUDIO_PLAYER
+        )
         self.errors = self.error = AliceEventObserver(
-            router=self, event_name=UpdateType.ERROR
+            router=self, event_name=EventType.ERROR
         )
 
         self.startup = EventObserver()
         self.shutdown = EventObserver()
 
         self.observers: Dict[str, AliceEventObserver] = {
-            "message": self.message,
-            "error": self.errors,
+            EventType.MESSAGE: self.message,
+            EventType.BUTTON: self.button,
+            EventType.PURCHASE: self.purchase,
+            EventType.PULL: self.pull,
+            EventType.AUDIO_PLAYER: self.audio_player,
+            EventType.ERROR: self.errors,
         }
 
     def __str__(self) -> str:
@@ -51,16 +61,19 @@ class Router:
 
     async def propagate_event(
         self,
-        update_type: str,
+        event_type: str,
         event: AliceObject,
         **kwargs: Any,
     ) -> Any:
         kwargs.update(event_router=self)
-        observer = self.observers.get(update_type)
+        observer = self.observers.get(event_type)
 
         async def _wrapped(telegram_event: AliceObject, **data: Any) -> Any:
             return await self._propagate_event(
-                observer=observer, update_type=update_type, event=telegram_event, **data
+                observer=observer,
+                event_type=event_type,
+                event=telegram_event,
+                **data,
             )
 
         if observer:
@@ -72,7 +85,7 @@ class Router:
     async def _propagate_event(
         self,
         observer: Optional[AliceEventObserver],
-        update_type: str,
+        event_type: str,
         event: AliceObject,
         **kwargs: Any,
     ) -> Any:
@@ -97,7 +110,7 @@ class Router:
 
         for router in self.sub_routers:
             response = await router.propagate_event(
-                update_type=update_type, event=event, **kwargs
+                event_type=event_type, event=event, **kwargs
             )
             if response is not UNHANDLED:
                 break

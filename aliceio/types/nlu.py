@@ -1,7 +1,7 @@
 from typing import Dict, List
 
-from aliceio.types import AliceObject, Entity
-
+from .base import AliceObject
+from .entity import Entity
 
 Intents = Dict
 

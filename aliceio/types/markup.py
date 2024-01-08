@@ -1,4 +1,4 @@
-from aliceio.types import AliceObject
+from aliceio.types.base import AliceObject
 
 
 class Markup(AliceObject):

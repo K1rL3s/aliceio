@@ -1,10 +1,10 @@
 from typing import List
 
-from aliceio.types import AliceObject
-from aliceio.types.event import Event
+from .base import MutableAliceObject
+from .event import Event
 
 
-class Analytics(AliceObject):
+class Analytics(MutableAliceObject):
     """
     Данные для аналитики AppMetrica.
 

@@ -3,7 +3,7 @@ from typing import Any, Dict, Optional, Sequence, Type, Union, cast
 
 from aliceio.filters.base import Filter
 from aliceio.fsm.state import State, StatesGroup
-from aliceio.types import AliceObject
+from aliceio.types.base import AliceObject
 
 StateType = Union[str, None, State, StatesGroup, Type[StatesGroup]]
 

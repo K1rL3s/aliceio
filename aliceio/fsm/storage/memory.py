@@ -3,11 +3,7 @@ from dataclasses import dataclass, field
 from typing import Any, DefaultDict, Dict, Optional
 
 from aliceio.fsm.state import State
-from aliceio.fsm.storage.base import (
-    BaseStorage,
-    StateType,
-    StorageKey,
-)
+from aliceio.fsm.storage.base import BaseStorage, StateType, StorageKey
 
 
 @dataclass

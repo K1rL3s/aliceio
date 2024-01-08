@@ -1,14 +1,14 @@
 from typing import Dict, Optional
 
-from aliceio.types import AliceObject, AudioPlayer
-
+from .audio_player_directive import AudioPlayerDirective
+from .base import MutableAliceObject
 
 StartAccountLinking = Dict
 # https://yandex.ru/dev/dialogs/alice/doc/response-start-account-linking.html
 # https://yandex.ru/dev/dialogs/alice/doc/auth/how-it-works.html
 
 
-class Directives(AliceObject):
+class Directives(MutableAliceObject):
     """
     Директивы.
 
@@ -16,5 +16,5 @@ class Directives(AliceObject):
     https://yandex.ru/dev/dialogs/alice/doc/response-start-account-linking.html
     """
 
-    audio_player: Optional[AudioPlayer] = None
+    audio_player: Optional[AudioPlayerDirective] = None
     start_account_linking: Optional[StartAccountLinking] = None

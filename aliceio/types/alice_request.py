@@ -1,80 +1,46 @@
-from typing import Optional, Union
+from typing import Optional, cast
 
-from aiohttp.web import Request as WebRequest
+from pydantic import UUID4
 
-from aliceio.types import (
-    AliceObject,
-    Meta,
-    Session,
-    Request,
-    Response,
-    AliceResponse,
-)
-from aliceio.types.state import ApplicationState, AuthorizedUserState, SessionState
+from .audio_player_error import AudioPlayerError
+from .base import AliceObject
+from .markup import Markup
+from .nlu import NLU
+from .payload import Payload
 
 
-class Update(AliceObject):
+class AliceRequest(AliceObject):
     """
-    Полный запрос от API Алисы.
+    Запрос с информацией от пользователя от API Алисы.
 
-    https://yandex.ru/dev/dialogs/alice/doc/request.html
+    https://yandex.ru/dev/dialogs/alice/doc/request.html#request__request-desc
     """
 
-    original_request: WebRequest
-    meta: Meta
-    request: Request
-    session: Session
-    version: str
+    type: str
+    payload: Payload
+    command: Optional[str] = None
+    original_utterance: Optional[str] = None
+    markup: Optional[Markup] = None
+    nlu: Optional[NLU] = None
 
-    def _make_alice_response(
-        self,
-        response: Response,
-        session_state: Optional[SessionState] = None,
-        user_state_update: Optional[AuthorizedUserState] = None,
-        application_state: Optional[ApplicationState] = None,
-    ) -> AliceResponse:
-        return AliceResponse(
-            response=response,
-            session_state=session_state or {},
-            user_state_update=user_state_update or {},
-            application_state=application_state or {},
-            version=self.version,
-        )
+    # Ошибка в аудиоплеере
+    # https://yandex.ru/dev/dialogs/alice/doc/request-audioplayer.html
+    error: Optional[AudioPlayerError] = None
 
-    def response(
-        self,
-        response: Union[Response, str],
-        session_state: Optional[SessionState] = None,
-        user_state_update: Optional[AuthorizedUserState] = None,
-        application_state: Optional[ApplicationState] = None,
-        **kwargs,
-    ) -> AliceResponse:
-        """
-        Generate response
+    # not null при type == RequestType.PURCHASE_CONFIRMATION
+    # https://yandex.ru/dev/dialogs/alice/doc/request-purchase-confirmation.html
+    purchase_request_id: Optional[str] = None
+    purchase_token: Optional[UUID4] = None
+    order_id: Optional[str] = None
+    purchase_timestamp: Optional[int] = None
+    purchase_payload: Optional[Payload] = None
+    signed_data: Optional[str] = None
+    signature: Optional[str] = None
 
-        :param response: Response or Response's text:
-            if response is not an instance of Response,
-            it is passed to the Response init as text with kwargs.
-            Otherwise it is used as a Response
+    # not null при запуске утреннего шоу Алисы
+    # https://yandex.ru/dev/dialogs/alice/doc/request-show-pull.html
+    show_type: Optional[str] = None
 
-        :param kwargs: tts, card, buttons, end_session for Response
-            NOTE: if you want to pass card, consider using one of
-              these methods: response_big_image, response_items_list
-
-        :param session_state: Session's state
-        :param user_state_update: User's state
-        :param application_state: Application's state
-            Allows to store data on Yandex's side
-            Read more: https://yandex.ru/dev/dialogs/alice/doc/session-persistence.html
-
-        :return: AliceResponse
-        """
-        if not isinstance(response, Response):
-            response = Response(text=response, **kwargs)
-
-        return self._make_alice_response(
-            response,
-            session_state,
-            user_state_update,
-            application_state,
-        )
+    def __post_init__(self):
+        if self.markup is not None:
+            self.markup = Markup(**cast(dict, self.markup))

@@ -1,31 +1,17 @@
-from enum import Enum
+from typing import Optional
 
-from pydantic import field_validator
+from .audio_player_error import AudioPlayerError
+from .base import MutableAliceObject
 
-from aliceio.types import AliceObject, AudioPlayerItem
 
-
-class AudioPlayer(AliceObject):
+class AudioPlayer(MutableAliceObject):
     """
-    Директива аудиоплеера.
+    Навык получает запрос с типом AudioPlayer,
+    если пользователь произносит команду управления аудиоплеером
+    или нажимает соответствующую кнопку в интерфейсе.
 
-    https://yandex.ru/dev/dialogs/alice/doc/response-audio-player.html
+    https://yandex.ru/dev/dialogs/alice/doc/request-audioplayer.html
     """
 
-    action: str
-    item: AudioPlayerItem
-
-    @field_validator("action")
-    @classmethod
-    def action_validate(cls, v: str) -> str:
-        if v not in Action:
-            raise ValueError(
-                f"AudioPlayer action must be "
-                f'{", ".join(atype for atype in Action)}, not "{v}"'
-            )
-        return v
-
-
-class Action(str, Enum):
-    PLAY = "Play"
-    STOP = "Stop"
+    type: str
+    error: Optional[AudioPlayerError] = None

@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Any, Awaitable, Callable, Dict
 
-from aliceio.types import AliceObject
+from aliceio.types.base import AliceObject
 
 
 class BaseMiddleware(ABC):

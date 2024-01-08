@@ -1,6 +1,6 @@
 from typing import Optional
 
-from aliceio.types.nlu_entity import NLUEntity
+from .nlu_entity import NLUEntity
 
 
 class GeoEntity(NLUEntity):
@@ -10,8 +10,8 @@ class GeoEntity(NLUEntity):
     https://yandex.ru/dev/dialogs/alice/doc/naming-entities.html#naming-entities__geo
     """
 
-    country: Optional[str]
-    city: Optional[str]
-    street: Optional[str]
-    house_number: Optional[str]
-    airport: Optional[str]
+    country: Optional[str] = None
+    city: Optional[str] = None
+    street: Optional[str] = None
+    house_number: Optional[int] = None
+    airport: Optional[str] = None

@@ -1,9 +1,10 @@
 from typing import Optional
 
-from aliceio.types import AliceObject, URL
+from .base import MutableAliceObject
+from .url import URL
 
 
-class Metadata(AliceObject):
+class Metadata(MutableAliceObject):
     """
     Метадата аудиоплеера.
 

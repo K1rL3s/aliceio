@@ -1,9 +1,11 @@
 from typing import Optional
 
-from aliceio.types import AliceObject, Metadata, Stream
+from .base import MutableAliceObject
+from .metadata import Metadata
+from .stream import Stream
 
 
-class AudioPlayerItem(AliceObject):
+class AudioPlayerItem(MutableAliceObject):
     """
     Данные директивы аудиоплеера.
 

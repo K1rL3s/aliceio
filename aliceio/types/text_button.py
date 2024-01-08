@@ -1,10 +1,10 @@
 from typing import Optional
 
-from aliceio.types import AliceObject
-from aliceio.types.payload import Payload
+from .base import MutableAliceObject
+from .payload import Payload
 
 
-class TextButton(AliceObject):
+class TextButton(MutableAliceObject):
     """
     Кнопка под сообщением навыка или над клавиатурой пользователя.
 

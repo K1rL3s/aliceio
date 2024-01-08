@@ -1,6 +1,8 @@
-The creators of the project were inspired by aiogram and vkbottle.
+The creators of the project were inspired by aiogram, aioalice and vkbottle.
 Part of the project's source code was taken from them.
 aiogram sources:
 - https://github.com/aiogram/aiogram
+aioalice sources:
+- https://github.com/mahenzon/aioalice
 vkbotlle soures:
 - https://github.com/vkbottle/vkbottle

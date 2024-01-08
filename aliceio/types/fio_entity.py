@@ -1,6 +1,6 @@
 from typing import Optional
 
-from aliceio.types.nlu_entity import NLUEntity
+from .nlu_entity import NLUEntity
 
 
 class FIOEntity(NLUEntity):

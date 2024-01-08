@@ -1,9 +1,10 @@
 from typing import Optional
 
-from aliceio.types import AliceObject, MediaButton
+from .base import MutableAliceObject
+from .media_button import MediaButton
 
 
-class CardFooter(AliceObject):
+class CardFooter(MutableAliceObject):
     """
     Текст и кнопки под :class:`ItemsList`.
 

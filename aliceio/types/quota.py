@@ -1,6 +1,6 @@
 from pydantic import computed_field
 
-from aliceio.types import AliceObject
+from .base import AliceObject
 
 
 class Quota(AliceObject):

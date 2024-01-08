@@ -1,17 +1,13 @@
-import logging
-from typing import cast, Dict, Optional, Type
+from typing import Dict, Optional, Type, cast
 
-from pydantic import field_validator
-
-from aliceio.types import AliceObject, TokensEntity
-from aliceio.types.datetime import DateTimeEntity
-from aliceio.types.fio_entity import FIOEntity
-from aliceio.types.geo_entity import GeoEntity
-from aliceio.types.number_entity import NumberEntity
-from aliceio.types.nlu_entity import NLUEntity, EntityType
-
-
-log = logging.getLogger(__name__)
+from ..enums.entity import EntityType
+from .base import AliceObject
+from .datetime import DateTimeEntity
+from .fio_entity import FIOEntity
+from .geo_entity import GeoEntity
+from .nlu_entity import NLUEntity
+from .number_entity import NumberEntity
+from .tokens_entity import TokensEntity
 
 
 class Entity(AliceObject):
@@ -24,13 +20,6 @@ class Entity(AliceObject):
     type: str
     tokens: TokensEntity
     value: Optional[NLUEntity] = None
-
-    @field_validator("type")
-    def check(self, v: str) -> str:
-        """Report unknown type"""
-        if v not in EntityType:
-            log.error('Unknown Entity type! "%r"', v)
-        return v
 
     def __post_init__(self):
         if not self.value:
