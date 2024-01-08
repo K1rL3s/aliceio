@@ -5,7 +5,7 @@ from aliceio.types import AliceObject, MediaButton
 
 class ItemImage(AliceObject):
     """
-    Изображение в `ItemsList`
+    Изображение в :class:`ItemsList`
 
     https://yandex.ru/dev/dialogs/alice/doc/response-card-itemslist.html#response-card-itemslist__items-desc
     """  # noqa

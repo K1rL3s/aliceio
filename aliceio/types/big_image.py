@@ -5,7 +5,7 @@ from aliceio.types import Card, CardType, MediaButton
 
 class BigImage(Card):
     """
-    Card с типом `BigImage`.
+    :class:`Card` с типом :code:`BigImage`.
 
     https://yandex.ru/dev/dialogs/alice/doc/response-card-bigimage.html
     """

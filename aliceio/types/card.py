@@ -7,7 +7,10 @@ from aliceio.types import AliceObject
 
 
 class Card(ABC, AliceObject):
-    """Родительский класс для карт `BigImage`, `ImageGallery` и `ItemsList`"""
+    """
+    Родительский класс для карт
+    :class:`BigImage`, :class:`ImageGallery` и :class:`ItemsList`
+    """
 
     type: str
 

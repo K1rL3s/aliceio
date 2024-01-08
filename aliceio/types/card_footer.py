@@ -5,7 +5,7 @@ from aliceio.types import AliceObject, MediaButton
 
 class CardFooter(AliceObject):
     """
-    Текст и кнопки под `ItemsList`.
+    Текст и кнопки под :class:`ItemsList`.
 
     https://yandex.ru/dev/dialogs/alice/doc/response-card-itemslist.html#response-card-itemslist__footer-desc
     """  # noqa

@@ -5,7 +5,7 @@ from aliceio.types import Card, CardType, ImageGalleryItem
 
 class ImageGallery(Card):
     """
-    Card с типом `ImageGallery`.
+    :class:`Card` с типом :code:`ImageGallery`.
 
     https://yandex.ru/dev/dialogs/alice/doc/response-card-imagegallery.html
     """
