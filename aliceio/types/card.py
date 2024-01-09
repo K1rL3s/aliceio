@@ -14,7 +14,7 @@ class Card(MutableAliceObject, ABC):
 
     type: str
 
-    @field_validator("type")
+    @field_validator("type", mode="after")
     @classmethod
     def type_validate(cls, v: str) -> str:
         if v not in CardType.values():

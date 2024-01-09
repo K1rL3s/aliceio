@@ -1,5 +1,7 @@
 from typing import List, Optional
 
+from pydantic import field_validator
+
 from ..enums.card import CardType
 from .card import Card
 from .card_footer import CardFooter
@@ -19,3 +21,12 @@ class ItemsList(Card):
     header: Optional[CardHeader] = None
     items: Optional[List[ItemImage]] = None
     footer: Optional[CardFooter] = None
+
+    @field_validator("type")
+    @classmethod
+    def type_validate(cls, v: str) -> str:
+        if v.lower() != CardType.ITEMS_LIST.lower():
+            raise ValueError(
+                f'ItemsList type must be "{CardType.ITEMS_LIST}", not "{v}"'
+            )
+        return CardType.ITEMS_LIST

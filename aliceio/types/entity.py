@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, Type, cast
+from typing import Any, Dict, Optional, Type, Union
 
 from ..enums.entity import EntityType
 from .base import MutableAliceObject
@@ -19,16 +19,17 @@ class Entity(MutableAliceObject):
 
     type: str
     tokens: TokensEntity
-    value: Optional[NLUEntity] = None
+    value: Optional[Union[NLUEntity, NumberEntity]] = None
 
     def model_post_init(self, __context: Any) -> None:
         super().model_post_init(__context)
-        if not self.value or not isinstance(self.value, dict):
+        if not self.value or isinstance(self.value, (int, float)):  # "YANDEX.NUMBER"
             return
         entity_type: Dict[str, Type[NLUEntity]] = {
             EntityType.YANDEX_FIO: FIOEntity,
             EntityType.YANDEX_GEO: GeoEntity,
             EntityType.YANDEX_DATETIME: DateTimeEntity,
-            EntityType.YANDEX_NUMBER: NumberEntity,
         }
-        self.value = entity_type.get(self.type, dict)(**cast(Dict, self.value))
+        if (known_entity := entity_type.get(self.type)) is None:
+            return
+        self.value = known_entity.model_validate(self.value, from_attributes=True)
