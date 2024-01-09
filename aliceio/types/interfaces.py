@@ -1,10 +1,10 @@
-from typing import Dict
+from typing import Any, Dict
 
 from aliceio.types.base import AliceObject
 
-AccountLinking = Dict
-Payments = Dict
-Screen = Dict
+AccountLinking = Dict[str, Any]
+Payments = Dict[str, Any]
+Screen = Dict[str, Any]
 
 
 class Interfaces(AliceObject):

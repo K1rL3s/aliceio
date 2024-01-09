@@ -1,9 +1,9 @@
-from typing import Dict, List
+from typing import Any, Dict, List
 
 from .base import AliceObject
 from .entity import Entity
 
-Intents = Dict
+Intents = Dict[str, Any]
 
 
 class NLU(AliceObject):

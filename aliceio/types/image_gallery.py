@@ -1,7 +1,7 @@
 from typing import List
 
-from .card import Card
 from ..enums.card import CardType
+from .card import Card
 from .image_gallery_item import ImageGalleryItem
 
 

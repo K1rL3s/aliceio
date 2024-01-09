@@ -5,12 +5,12 @@ from aliceio.filters import Filter
 
 
 class MyFilter(Filter):
-    async def __call__(self, event: str):
+    async def __call__(self, event: str) -> None:
         return
 
 
 class TestBaseFilter:
-    async def test_awaitable(self):
+    async def test_awaitable(self) -> None:
         my_filter = MyFilter()
 
         assert isinstance(my_filter, Awaitable)

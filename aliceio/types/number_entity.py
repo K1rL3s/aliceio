@@ -1,9 +1,9 @@
 from typing import Union
 
-from .base import AliceObject
+from .nlu_entity import NLUEntity
 
 
-class NumberEntity(AliceObject):
+class NumberEntity(NLUEntity):
     """
     NLU Entity Целого или дробного числа
 

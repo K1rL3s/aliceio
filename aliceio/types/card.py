@@ -2,8 +2,8 @@ from abc import ABC
 
 from pydantic import field_validator
 
-from .base import MutableAliceObject
 from ..enums.card import CardType
+from .base import MutableAliceObject
 
 
 class Card(MutableAliceObject, ABC):

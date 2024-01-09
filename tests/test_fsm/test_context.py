@@ -7,7 +7,7 @@ from tests.mocked import MockedSkill
 
 
 @pytest.fixture()
-def state(skill: MockedSkill):
+def state(skill: MockedSkill) -> FSMContext:
     storage = MemoryStorage()
     key = StorageKey(
         skill_id=skill.id,
@@ -22,7 +22,7 @@ def state(skill: MockedSkill):
 
 
 class TestFSMContext:
-    async def test_address_mapping(self, skill: MockedSkill):
+    async def test_address_mapping(self, skill: MockedSkill) -> None:
         storage = MemoryStorage()
         ctx = storage.storage[
             StorageKey(session_id="-42", user_id="42", skill_id=skill.id)

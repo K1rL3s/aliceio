@@ -5,7 +5,6 @@ import pytest
 from aliceio.fsm.state import State, StatesGroup, any_state
 from aliceio.types.base import AliceObject
 
-
 PY312_OR_GREATER = sys.version_info >= (3, 12)
 
 
@@ -34,9 +33,9 @@ class TestState:
         assert str(state) == "<State '*'>"
 
     def test_star_filter(self) -> None:
-        assert any_state(None, "foo")
-        assert any_state(None, "bar")
-        assert any_state(None, "baz")
+        assert any_state(AliceObject(), "foo")
+        assert any_state(AliceObject(), "bar")
+        assert any_state(AliceObject(), "baz")
 
     def test_alone(self) -> None:
         state = State("test")

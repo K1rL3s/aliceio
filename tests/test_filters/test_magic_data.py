@@ -1,3 +1,5 @@
+from typing import TypeVar
+
 from magic_filter import AttrDict
 
 from aliceio import F
@@ -5,11 +7,14 @@ from aliceio.filters import MagicData
 from aliceio.types import AliceRequest
 
 
+T = TypeVar("T")
+
+
 class TestMagicDataFilter:
-    async def test_call(self, event: AliceRequest):
+    async def test_call(self, event: AliceRequest) -> None:
         called = False
 
-        def check(value):
+        def check(value: T) -> T:
             nonlocal called
             called = True
 
@@ -27,6 +32,6 @@ class TestMagicDataFilter:
         assert isinstance(result, dict)
         assert result["test"]
 
-    def test_str(self):
+    def test_str(self) -> None:
         f = MagicData(magic_data=F.event.text == "test")
         assert str(f).startswith("MagicData(magic_data=")

@@ -1,10 +1,12 @@
 import re
+from typing import NoReturn, Union, Pattern
 
 import pytest
 
 from aliceio import Dispatcher
 from aliceio.filters import ExceptionMessageFilter, ExceptionTypeFilter
 from aliceio.types import Update
+from aliceio.types.base import MutableAliceObject
 from aliceio.types.error_event import ErrorEvent
 from tests.mocked import create_mocked_update
 from tests.mocked.mocked_skill import MockedSkill
@@ -12,7 +14,7 @@ from tests.mocked.mocked_skill import MockedSkill
 
 class TestExceptionMessageFilter:
     @pytest.mark.parametrize("value", ["value", re.compile("value")])
-    def test_converter(self, value) -> None:
+    def test_converter(self, value: Union[str, Pattern[str]]) -> None:
         obj = ExceptionMessageFilter(pattern=value)
         assert isinstance(obj.pattern, re.Pattern)
 
@@ -72,11 +74,11 @@ class TestDispatchException:
         dp = Dispatcher()
 
         @dp.update()
-        async def update_handler(event):
+        async def update_handler(event: MutableAliceObject) -> NoReturn:
             raise ValueError("BOOM")
 
         @dp.errors(ExceptionMessageFilter(pattern="BOOM"))
-        async def error_handler(error):
+        async def error_handler(error: ErrorEvent) -> str:
             return "Handled"
 
         with pytest.warns(RuntimeWarning, match="Detected unknown update type"):

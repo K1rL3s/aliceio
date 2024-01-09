@@ -13,7 +13,7 @@ class Quota(AliceObject):
     total: int
     used: int
 
-    @computed_field
+    @computed_field  # type: ignore[misc]
     @property
     def available(self) -> int:
         return self.total - self.used

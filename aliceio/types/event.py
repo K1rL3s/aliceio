@@ -1,8 +1,8 @@
-from typing import Dict
+from typing import Any, Dict
 
 from .base import MutableAliceObject
 
-CustomEventData = Dict
+CustomEventData = Dict[str, Any]
 
 
 class Event(MutableAliceObject):

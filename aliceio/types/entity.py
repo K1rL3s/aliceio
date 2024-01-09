@@ -1,7 +1,7 @@
-from typing import Dict, Optional, Type, cast
+from typing import Any, Dict, Optional, Type, cast
 
 from ..enums.entity import EntityType
-from .base import AliceObject
+from .base import MutableAliceObject
 from .datetime import DateTimeEntity
 from .fio_entity import FIOEntity
 from .geo_entity import GeoEntity
@@ -10,7 +10,7 @@ from .number_entity import NumberEntity
 from .tokens_entity import TokensEntity
 
 
-class Entity(AliceObject):
+class Entity(MutableAliceObject):
     """
     NLU Entity
 
@@ -21,8 +21,9 @@ class Entity(AliceObject):
     tokens: TokensEntity
     value: Optional[NLUEntity] = None
 
-    def __post_init__(self):
-        if not self.value:
+    def model_post_init(self, __context: Any) -> None:
+        super().model_post_init(__context)
+        if not self.value or not isinstance(self.value, dict):
             return
         entity_type: Dict[str, Type[NLUEntity]] = {
             EntityType.YANDEX_FIO: FIOEntity,
@@ -30,4 +31,4 @@ class Entity(AliceObject):
             EntityType.YANDEX_DATETIME: DateTimeEntity,
             EntityType.YANDEX_NUMBER: NumberEntity,
         }
-        self.value = entity_type.get(self.type, dict)(**cast(dict, self.value))
+        self.value = entity_type.get(self.type, dict)(**cast(Dict, self.value))

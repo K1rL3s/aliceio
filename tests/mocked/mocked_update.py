@@ -1,7 +1,5 @@
 from typing import Any, Dict, List, Optional
 
-from aiohttp.web_request import Request
-
 from aliceio.enums.entity import EntityType
 from aliceio.enums.update import RequestType
 from aliceio.types import (
@@ -15,6 +13,7 @@ from aliceio.types import (
     Interfaces,
     Markup,
     Meta,
+    Payload,
     Session,
     TokensEntity,
     Update,
@@ -34,7 +33,7 @@ def create_mocked_update(
     session: Optional[Session] = None,
     request: Optional[AliceRequest] = None,
     request_type: Optional[str] = None,
-    payload: Optional[Dict] = None,
+    payload: Optional[Payload] = None,
     command: Optional[str] = None,
     original_utterance: Optional[str] = None,
     markup: Optional[Markup] = None,
@@ -106,9 +105,9 @@ def create_mocked_session(
 
 
 def create_mocked_alice_request(
-    request: Optional[Request],
+    request: Optional[AliceRequest],
     request_type: Optional[str],
-    payload: Optional[Dict],
+    payload: Optional[Payload],
     command: Optional[str],
     original_utterance: Optional[str],
     markup: Optional[Markup],

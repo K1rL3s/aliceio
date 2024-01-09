@@ -1,6 +1,6 @@
-from typing import Dict
+from typing import Any, Dict
 
-StateDict = Dict
+StateDict = Dict[str, Any]
 SessionState = StateDict
 AuthorizedUserState = StateDict
 ApplicationState = StateDict

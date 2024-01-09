@@ -47,7 +47,8 @@ class Update(MutableAliceObject):
                 self,
                 self.event_type,
                 events[self.event_type].model_validate(
-                    self.request, from_attributes=True,
+                    self.request,
+                    from_attributes=True,
                 ),
             )
         except UpdateTypeLookupError:

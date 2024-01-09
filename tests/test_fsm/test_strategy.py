@@ -14,7 +14,7 @@ class TestStrategy:
         [
             [FSMStrategy.USER, (USER_ID, USER_ID)],
             [FSMStrategy.SESSION, (USER_ID, SESSION_ID)],
-            [None, (USER_ID, SESSION_ID)]
+            [None, (USER_ID, SESSION_ID)],
         ],
     )
     def test_strategy(

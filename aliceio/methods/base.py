@@ -40,7 +40,7 @@ class Response(BaseModel, Generic[AliceType]):
     result: Optional[AliceType] = None
     description: Optional[str] = None
     error_code: Optional[int] = None
-    parameters: Optional[Dict] = None
+    parameters: Optional[Dict[str, Any]] = None
 
 
 class AliceMethod(SkillContextController, BaseModel, Generic[AliceType], ABC):

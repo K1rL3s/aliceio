@@ -1,6 +1,6 @@
 import pytest
 
-from aliceio.fsm.storage.base import BaseStorage, DEFAULT_DESTINY, StorageKey
+from aliceio.fsm.storage.base import DEFAULT_DESTINY, BaseStorage, StorageKey
 from tests.mocked import MockedSkill
 
 

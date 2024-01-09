@@ -8,7 +8,7 @@ from aliceio.methods.base import AliceType, Response
 
 
 class MockedSession(BaseSession):
-    def __init__(self):
+    def __init__(self) -> None:
         super(MockedSession, self).__init__()
         self.responses: Deque[Response[AliceType]] = deque()
         self.requests: Deque[AliceMethod[AliceType]] = deque()
@@ -21,7 +21,7 @@ class MockedSession(BaseSession):
     def get_request(self) -> AliceMethod[AliceType]:
         return self.requests.pop()
 
-    async def close(self):
+    async def close(self) -> None:
         self.closed = True
 
     async def make_request(
@@ -56,7 +56,7 @@ class MockedSkill(Skill):
     if TYPE_CHECKING:
         session: MockedSession
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         super(MockedSkill, self).__init__(
             kwargs.pop("token", "42:TEST"),
             session=MockedSession(),
@@ -67,7 +67,7 @@ class MockedSkill(Skill):
         self,
         method: Type[AliceMethod[AliceType]],
         ok: bool,
-        result: AliceType = None,
+        result: Optional[AliceType] = None,
         description: Optional[str] = None,
         error_code: int = 200,
         migrate_to_chat_id: Optional[int] = None,

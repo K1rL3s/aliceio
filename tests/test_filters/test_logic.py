@@ -1,4 +1,4 @@
-from typing import Any, Type
+from typing import Any, Dict, Type, Union
 
 import pytest
 
@@ -7,7 +7,7 @@ from aliceio.filters.logic import _AndFilter, _InvertFilter, _LogicFilter, _OrFi
 
 
 class MockedFilter(BaseFilter):
-    async def __call__(self, *args) -> bool:
+    async def __call__(self, *args: Any) -> bool:
         return True
 
 
@@ -29,7 +29,12 @@ class TestLogic:
             [True, invert_f(lambda t: t is False), True],
         ],
     )
-    async def test_logic(self, obj, case, result):
+    async def test_logic(
+        self,
+        obj: bool,
+        case: _LogicFilter,
+        result: Union[bool, Dict[str, Any]],
+    ) -> None:
         assert await case(obj) == result
 
     @pytest.mark.parametrize(
@@ -41,5 +46,5 @@ class TestLogic:
             [~MockedFilter(), _InvertFilter],
         ],
     )
-    def test_dunder_methods(self, case: Any, type_: Type[_LogicFilter]):
+    def test_dunder_methods(self, case: Any, type_: Type[_LogicFilter]) -> None:
         assert isinstance(case, type_)

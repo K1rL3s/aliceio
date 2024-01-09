@@ -21,7 +21,7 @@ class UploadedImage(AliceObject):
     createdAt: str
 
     @property
-    def orig_url(self) -> str:
+    def orig_url(self) -> Optional[str]:
         return self.origUrl
 
     @property

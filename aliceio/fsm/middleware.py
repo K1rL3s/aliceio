@@ -50,8 +50,8 @@ class FSMContextMiddleware(BaseMiddleware):
     def resolve_context(
         self,
         skill: Skill,
-        user_id: Optional[str],
-        session_id: Optional[str],
+        user_id: str,
+        session_id: str,
         destiny: str = DEFAULT_DESTINY,
     ) -> Optional[FSMContext]:
         if user_id is not None:

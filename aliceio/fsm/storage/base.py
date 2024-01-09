@@ -13,7 +13,7 @@ DEFAULT_DESTINY = "default"
 class StorageKey:
     skill_id: str
     user_id: str
-    session_id: Optional[str] = None
+    session_id: str
     destiny: str = DEFAULT_DESTINY
 
 

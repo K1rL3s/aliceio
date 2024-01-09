@@ -1,7 +1,7 @@
 from typing import Optional
 
-from .card import Card
 from ..enums.card import CardType
+from .card import Card
 from .media_button import MediaButton
 
 

@@ -38,11 +38,11 @@ class Skill:
         self.__oauth_token = oauth_token
 
     @property
-    def token(self) -> str:
+    def token(self) -> Optional[str]:
         return self.__oauth_token
 
     @property
-    def oauth_token(self) -> str:
+    def oauth_token(self) -> Optional[str]:
         return self.__oauth_token
 
     @property

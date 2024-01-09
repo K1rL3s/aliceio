@@ -1,4 +1,4 @@
-from typing import Optional, cast
+from typing import Optional
 
 from pydantic import UUID4
 
@@ -40,7 +40,3 @@ class AliceRequest(AliceObject):
     # not null при запуске утреннего шоу Алисы
     # https://yandex.ru/dev/dialogs/alice/doc/request-show-pull.html
     show_type: Optional[str] = None
-
-    def __post_init__(self):
-        if self.markup is not None:
-            self.markup = Markup(**cast(dict, self.markup))

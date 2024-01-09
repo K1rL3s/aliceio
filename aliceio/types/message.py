@@ -1,4 +1,4 @@
-from typing import Optional, cast
+from typing import Optional
 
 from .base import MutableAliceObject
 from .markup import Markup
@@ -19,7 +19,3 @@ class Message(MutableAliceObject):
     original_utterance: Optional[str] = None
     markup: Optional[Markup] = None
     nlu: Optional[NLU] = None
-
-    def __post_init__(self):
-        if self.markup is not None:
-            self.markup = Markup(**cast(dict, self.markup))
