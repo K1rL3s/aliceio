@@ -12,6 +12,7 @@ from .session.base import BaseSession
 T = TypeVar("T")
 
 
+# TODO: Сделать загрузку, запрос и удаление изображений и аудио
 class Skill:
     def __init__(
         self,

@@ -68,11 +68,11 @@ class Router:
         kwargs.update(event_router=self)
         observer = self.observers.get(event_type)
 
-        async def _wrapped(telegram_event: AliceObject, **data: Any) -> Any:
+        async def _wrapped(alice_event: AliceObject, **data: Any) -> Any:
             return await self._propagate_event(
                 observer=observer,
                 event_type=event_type,
-                event=telegram_event,
+                event=alice_event,
                 **data,
             )
 

@@ -43,6 +43,12 @@ class AliceAPIError(DetailedAliceioError):
         return f"{self.label} - {original_message}"
 
 
+class AliceNetworkError(AliceAPIError):
+    """Базовое исключение для всех ошибок сети."""
+
+    label = "HTTP Client says"
+
+
 class ClientDecodeError(AliceioError):
     """
     Исключение возникает, когда клиент не может декодировать ответ.

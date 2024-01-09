@@ -57,7 +57,7 @@ class DefaultFilter(Filter, BaseModel):
         return True
 
 
-class TestTelegramEventObserver:
+class TestAliceEventObserver:
     def test_register(self) -> None:
         router = Router()
         observer = router.message
