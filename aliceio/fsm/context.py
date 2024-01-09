@@ -17,7 +17,7 @@ class FSMContext:
     async def set_data(
         self,
         data: Optional[Dict[str, Any]] = None,
-        **kwargs,
+        **kwargs: Any,
     ) -> None:
         if data:
             kwargs.update(data)

@@ -26,7 +26,9 @@ class StateFilter(Filter):
         return self._signature_to_string(*self.states)
 
     async def __call__(
-        self, obj: AliceObject, raw_state: Optional[str] = None
+        self,
+        obj: AliceObject,
+        raw_state: Optional[str] = None,
     ) -> Union[bool, Dict[str, Any]]:
         allowed_states = cast(Sequence[StateType], self.states)
         for allowed_state in allowed_states:

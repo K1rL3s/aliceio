@@ -6,7 +6,6 @@ from aliceio import F
 from aliceio.filters import MagicData
 from aliceio.types import AliceRequest
 
-
 T = TypeVar("T")
 
 

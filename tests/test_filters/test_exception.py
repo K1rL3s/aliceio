@@ -1,11 +1,12 @@
 import re
-from typing import NoReturn, Union, Pattern
+from typing import NoReturn, Pattern, Union
 
 import pytest
 
 from aliceio import Dispatcher
 from aliceio.filters import ExceptionMessageFilter, ExceptionTypeFilter
 from aliceio.types import Update
+from aliceio.types.alice_event import AliceEvent
 from aliceio.types.base import MutableAliceObject
 from aliceio.types.error_event import ErrorEvent
 from tests.mocked import create_mocked_update
@@ -74,7 +75,7 @@ class TestDispatchException:
         dp = Dispatcher()
 
         @dp.update()
-        async def update_handler(event: MutableAliceObject) -> NoReturn:
+        async def update_handler(event: AliceEvent) -> NoReturn:
             raise ValueError("BOOM")
 
         @dp.errors(ExceptionMessageFilter(pattern="BOOM"))

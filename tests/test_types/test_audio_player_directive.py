@@ -19,12 +19,12 @@ class TestAudioPlayerDirective:
                         offset_ms=0,
                         token="token",
                     )
-                )
+                ),
             )
 
     @pytest.mark.parametrize(
         "action",
-        [Action.PLAY, Action.STOP, "play", "stop", "STOP", "PLAY"]
+        [Action.PLAY, Action.STOP, "play", "stop", "STOP", "PLAY"],
     )
     def test_good_action(self, action: str) -> None:
         AudioPlayerDirective(
@@ -35,5 +35,5 @@ class TestAudioPlayerDirective:
                     offset_ms=0,
                     token="token",
                 )
-            )
+            ),
         )

@@ -1,10 +1,10 @@
 from typing import Optional
 
+from .alice_event import AliceEvent
 from .audio_player_error import AudioPlayerError
-from .base import MutableAliceObject
 
 
-class AudioPlayer(MutableAliceObject):
+class AudioPlayer(AliceEvent):
     """
     Навык получает запрос с типом AudioPlayer,
     если пользователь произносит команду управления аудиоплеером

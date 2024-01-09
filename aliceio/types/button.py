@@ -1,12 +1,12 @@
-from typing import Any, Optional, cast
+from typing import Optional
 
-from .base import MutableAliceObject
+from .alice_event import AliceEvent
 from .markup import Markup
 from .nlu import NLU
 from .payload import Payload
 
 
-class Button(MutableAliceObject):
+class Button(AliceEvent):
     """
     Нажатие пользователя на кнопку с непустым Payload.
 

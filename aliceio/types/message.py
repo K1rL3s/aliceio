@@ -1,12 +1,12 @@
 from typing import Optional
 
-from .base import MutableAliceObject
+from .alice_event import AliceEvent
 from .markup import Markup
 from .nlu import NLU
 from .payload import Payload
 
 
-class Message(MutableAliceObject):
+class Message(AliceEvent):
     """
     :class:`AliceRequest` с типом :code:`SimpleUtterance`.
 
@@ -15,7 +15,7 @@ class Message(MutableAliceObject):
 
     type: str
     payload: Payload
-    command: Optional[str] = None
-    original_utterance: Optional[str] = None
+    command: str
+    original_utterance: str
     markup: Optional[Markup] = None
     nlu: Optional[NLU] = None

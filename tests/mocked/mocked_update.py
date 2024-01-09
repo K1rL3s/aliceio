@@ -67,7 +67,10 @@ def create_mocked_update(
     return mocked_update
 
 
-def create_mocked_meta(meta: Optional[Meta], interfaces: Optional[Interfaces]) -> Meta:
+def create_mocked_meta(
+    meta: Optional[Meta] = None,
+    interfaces: Optional[Interfaces] = None,
+) -> Meta:
     return meta or Meta(
         locale="ru-RU",
         timezone="Europe/Moscow",
@@ -82,10 +85,10 @@ def create_mocked_meta(meta: Optional[Meta], interfaces: Optional[Interfaces]) -
 
 
 def create_mocked_session(
-    session: Optional[Session],
-    user: Optional[User],
-    application: Optional[Application],
-    is_new: Optional[bool],
+    session: Optional[Session] = None,
+    user: Optional[User] = None,
+    application: Optional[Application] = None,
+    is_new: Optional[bool] = None,
 ) -> Session:
     return session or Session(
         message_id=0,
@@ -105,16 +108,16 @@ def create_mocked_session(
 
 
 def create_mocked_alice_request(
-    request: Optional[AliceRequest],
-    request_type: Optional[str],
-    payload: Optional[Payload],
-    command: Optional[str],
-    original_utterance: Optional[str],
-    markup: Optional[Markup],
-    nlu: Optional[NLU],
-    tokens: Optional[List[str]],
-    intents: Optional[Intents],
-    entities: Optional[List[Entity]],
+    request: Optional[AliceRequest] = None,
+    request_type: Optional[str] = None,
+    payload: Optional[Payload] = None,
+    command: Optional[str] = None,
+    original_utterance: Optional[str] = None,
+    markup: Optional[Markup] = None,
+    nlu: Optional[NLU] = None,
+    tokens: Optional[List[str]] = None,
+    intents: Optional[Intents] = None,
+    entities: Optional[List[Entity]] = None,
 ) -> AliceRequest:
     return request or AliceRequest(
         type=request_type or RequestType.SIMPLE_UTTERANCE,

@@ -1,7 +1,7 @@
 from typing import List
 
+from .analytic_event import AnalyticEvent
 from .base import MutableAliceObject
-from .event import Event
 
 
 class Analytics(MutableAliceObject):
@@ -11,4 +11,4 @@ class Analytics(MutableAliceObject):
     https://yandex.ru/dev/dialogs/alice/doc/response.html#response__analytics-desc
     """
 
-    events: List[Event]
+    events: List[AnalyticEvent]

@@ -5,7 +5,7 @@ from .base import MutableAliceObject
 CustomEventData = Dict[str, Any]
 
 
-class Event(MutableAliceObject):
+class AnalyticEvent(MutableAliceObject):
     """
     Событие для аналитики.
 

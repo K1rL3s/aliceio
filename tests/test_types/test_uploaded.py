@@ -63,7 +63,7 @@ class TestUploadedSound:
             },
         ],
     )
-    def test_uploaded_sound(self,data: Dict[str, Any]) -> None:
+    def test_uploaded_sound(self, data: Dict[str, Any]) -> None:
         sound = UploadedSound.model_validate(data)
 
         assert sound.createdAt == sound.created_at

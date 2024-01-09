@@ -1,6 +1,7 @@
 from typing import Any, Dict, Optional, Type, cast
 
 from ..enums import EventType, RequestType
+from .alice_event import AliceEvent
 from .alice_request import AliceRequest
 from .audio_player import AudioPlayer
 from .base import MutableAliceObject
@@ -42,14 +43,14 @@ class Update(MutableAliceObject):
             EventType.PURCHASE: Pull,
             EventType.UPDATE: Update,
         }
+
+        data = self.request.model_dump()
+        data.update({"session": self.session, "user": self.session.user})
         try:
             setattr(
                 self,
                 self.event_type,
-                events[self.event_type].model_validate(
-                    self.request,
-                    from_attributes=True,
-                ),
+                events[self.event_type].model_validate(data, context=__context),
             )
         except UpdateTypeLookupError:
             # При работе ошибка возникнет ещё раз в диспетчере,
@@ -57,8 +58,8 @@ class Update(MutableAliceObject):
             pass
 
     @property
-    def event(self) -> MutableAliceObject:
-        return cast(MutableAliceObject, getattr(self, self.event_type))
+    def event(self) -> AliceEvent:
+        return cast(AliceEvent, getattr(self, self.event_type))
 
     @property
     def event_type(self) -> str:

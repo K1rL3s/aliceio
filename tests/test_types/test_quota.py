@@ -12,7 +12,7 @@ class TestQuota:
             [0, 0, 0],
             [1024, 24, 1000],
             [1024, 1024, 0],
-        ]
+        ],
     )
     def test_available(self, total: int, used: int, available: int) -> None:
         quota = Quota(total=total, used=used)

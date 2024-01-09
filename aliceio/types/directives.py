@@ -1,9 +1,9 @@
-from typing import Dict, Optional
+from typing import Any, Dict, Optional
 
 from .audio_player_directive import AudioPlayerDirective
 from .base import MutableAliceObject
 
-StartAccountLinking = Dict
+StartAccountLinking = Dict[str, Any]
 # https://yandex.ru/dev/dialogs/alice/doc/response-start-account-linking.html
 # https://yandex.ru/dev/dialogs/alice/doc/auth/how-it-works.html
 

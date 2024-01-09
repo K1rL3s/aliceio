@@ -1,10 +1,10 @@
 from pydantic import UUID4
 
-from .base import MutableAliceObject
+from .alice_event import AliceEvent
 from .payload import Payload
 
 
-class Purchase(MutableAliceObject):
+class Purchase(AliceEvent):
     """
     Навык получает запрос с объектом request и типом Purchase.Confirmation,
     если пользователь выполняет оплату и навык должен отправить ему подтверждение.

@@ -1,7 +1,7 @@
-from .base import MutableAliceObject
+from .alice_event import AliceEvent
 
 
-class Pull(MutableAliceObject):
+class Pull(AliceEvent):
     """
     Навык получает запрос с типом Show.Pull,
     если пользователь произносит команду запуска утреннего шоу Алисы.

@@ -25,7 +25,5 @@ class BigImage(Card):
     @classmethod
     def type_validate(cls, v: str) -> str:
         if v.lower() != CardType.BIG_IMAGE.lower():
-            raise ValueError(
-                f'BigImage type must be "{CardType.BIG_IMAGE}", not "{v}"'
-            )
+            raise ValueError(f'BigImage type must be "{CardType.BIG_IMAGE}", not "{v}"')
         return CardType.BIG_IMAGE
