@@ -16,16 +16,16 @@ from ..fsm.storage.memory import MemoryStorage
 from ..fsm.strategy import FSMStrategy
 from ..methods import AliceMethod, AliceType
 from ..types import Update, UpdateTypeLookupError
-from ..utils.backoff import BackoffConfig
+# from ..utils.backoff import BackoffConfig
 from .event.alice import AliceEventObserver
 from .event.bases import UNHANDLED, SkipHandler
 from .middlewares.error import ErrorsMiddleware
 from .middlewares.user_context import UserContextMiddleware
 from .router import Router
 
-DEFAULT_BACKOFF_CONFIG = BackoffConfig(
-    min_delay=1.0, max_delay=5.0, factor=1.3, jitter=0.1
-)
+# DEFAULT_BACKOFF_CONFIG = BackoffConfig(
+#     min_delay=1.0, max_delay=5.0, factor=1.3, jitter=0.1
+# )
 
 
 # TODO: Сделать загрузку, запрос и удаление изображений и аудио

@@ -1,4 +1,5 @@
 import pytest
+from pytest_lazyfixture import lazy_fixture
 
 from aliceio.fsm.storage.base import DEFAULT_DESTINY, BaseStorage, StorageKey
 from tests.mocked import MockedSkill
@@ -16,7 +17,7 @@ def create_storage_key(skill: MockedSkill) -> StorageKey:
 
 @pytest.mark.parametrize(
     "storage",
-    [pytest.lazy_fixture("redis_storage"), pytest.lazy_fixture("memory_storage")],
+    [lazy_fixture("redis_storage"), lazy_fixture("memory_storage")],
 )
 class TestStorages:
     async def test_set_state(
