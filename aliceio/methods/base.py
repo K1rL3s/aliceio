@@ -16,6 +16,7 @@ from pydantic import BaseModel, ConfigDict
 
 from aliceio.client.context_controller import SkillContextController
 
+from ..client.alice import AliceAPIServer
 from ..types import InputFile
 
 if TYPE_CHECKING:
@@ -36,11 +37,9 @@ class Request(BaseModel):
 
 # TODO: Сделать под Алису
 class Response(BaseModel, Generic[AliceType]):
-    ok: bool
     result: Optional[AliceType] = None
     description: Optional[str] = None
     error_code: Optional[int] = None
-    parameters: Optional[Dict[str, Any]] = None
 
 
 class AliceMethod(SkillContextController, BaseModel, Generic[AliceType], ABC):
@@ -52,7 +51,7 @@ class AliceMethod(SkillContextController, BaseModel, Generic[AliceType], ABC):
 
     if TYPE_CHECKING:
         __returning__: ClassVar[type]
-        __api_method__: ClassVar[str]
+        __http_method__: ClassVar[str]
     else:
 
         @property
@@ -62,10 +61,18 @@ class AliceMethod(SkillContextController, BaseModel, Generic[AliceType], ABC):
 
         @property
         @abstractmethod
-        def __api_method__(self) -> str:
+        def __http_method__(self) -> str:
             pass
 
-    async def emit(self, skill: Skill) -> AliceType:
+    @abstractmethod
+    def api_url(self, api_server: AliceAPIServer, skill_id: str) -> str:
+        pass
+
+    @abstractmethod
+    def model_validate(self, data: Dict[str, Any], **kwargs: Any) -> AliceType:
+        pass
+
+    async def emit(self, skill: "Skill") -> AliceType:
         return await skill(self)
 
     def __await__(self) -> Generator[Any, None, AliceType]:

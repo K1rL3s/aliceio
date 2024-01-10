@@ -22,7 +22,7 @@ class AliceAPIServer:
         Генерирует URL для загрузки файла на сервер API Алисы.
 
         :param skill_id: Айди навыка.
-        :param file_type: Изображение или аудио.
+        :param file_type: Тип, изображение или аудио.
         :return: URL
         """
         return self.file.format(skill_id=skill_id, file_type=file_type, file_id="")
@@ -32,8 +32,8 @@ class AliceAPIServer:
         Генерирует URL для получения информации о файле на сервере API Алисы.
 
         :param skill_id: Айди навыка.
-        :param file_type: Изображение или аудио.
-        :param file_id: Айди файла.
+        :param file_type: Тип, изображение или аудио.
+        :param file_id: Айди файла. Если пустая строка, то API вернёт все файлы типа.
         :return: URL
         """
         return self.file.format(skill_id=skill_id, file_type=file_type, file_id=file_id)

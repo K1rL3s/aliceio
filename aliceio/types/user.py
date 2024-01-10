@@ -1,3 +1,5 @@
+from typing import Optional
+
 from .base import AliceObject
 
 
@@ -9,4 +11,4 @@ class User(AliceObject):
     """
 
     user_id: str
-    access_token: str
+    access_token: Optional[str] = None

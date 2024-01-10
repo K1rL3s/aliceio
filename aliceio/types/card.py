@@ -2,7 +2,7 @@ from abc import ABC
 
 from pydantic import field_validator
 
-from ..enums.card import CardType
+from ..enums import CardType
 from .base import MutableAliceObject
 
 

@@ -15,8 +15,8 @@ class AliceResponse(MutableAliceObject):
     """
 
     response: Response
-    session_state: Optional[SessionState]
-    user_state_update: Optional[AuthorizedUserState]
-    application_state: Optional[ApplicationState]
-    analytics: Optional[Analytics]
+    session_state: Optional[SessionState] = None
+    user_state_update: Optional[AuthorizedUserState] = None
+    application_state: Optional[ApplicationState] = None
+    analytics: Optional[Analytics] = None
     version: str = "1.0"

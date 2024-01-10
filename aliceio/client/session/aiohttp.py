@@ -5,7 +5,6 @@ import ssl
 from typing import (
     TYPE_CHECKING,
     Any,
-    AsyncGenerator,
     Dict,
     Iterable,
     List,
@@ -131,9 +130,7 @@ class AiohttpSession(BaseSession):
         if self._session is None or self._session.closed:
             self._session = ClientSession(
                 connector=self._connector_type(**self._connector_init),
-                headers={
-                    USER_AGENT: f"{SERVER_SOFTWARE} aliceio/{__version__}",
-                },
+                headers={USER_AGENT: f"{SERVER_SOFTWARE} aliceio/{__version__}"},
             )
             self._should_reset_connector = False
 
@@ -167,6 +164,10 @@ class AiohttpSession(BaseSession):
             )
         return form
 
+    @staticmethod
+    def _build_request_headers(skill: Skill) -> Dict[str, Any]:
+        return {"Authorization": f"OAuth {skill.oauth_token}"}
+
     # TODO: Сделать под Алису
     async def make_request(
         self,
@@ -176,14 +177,16 @@ class AiohttpSession(BaseSession):
     ) -> AliceType:
         session = await self.create_session()
 
-        url = self.api.api_url(method=method.__api_method__)
+        url = method.api_url(api_server=self.api, skill_id=skill.id)
         form = self.build_form_data(skill=skill, method=method)
 
         try:
-            async with session.post(
+            async with session.request(
+                method.__http_method__,
                 url,
                 data=form,
                 timeout=self.timeout if timeout is None else timeout,
+                headers=self._build_request_headers(skill),
             ) as resp:
                 raw_result = await resp.text()
         except asyncio.TimeoutError:
@@ -200,28 +203,6 @@ class AiohttpSession(BaseSession):
             content=raw_result,
         )
         return cast(AliceType, response.result)
-
-    async def stream_content(
-        self,
-        url: str,
-        headers: Optional[Dict[str, Any]] = None,
-        timeout: int = 30,
-        chunk_size: int = 65536,
-        raise_for_status: bool = True,
-    ) -> AsyncGenerator[bytes, None]:
-        if headers is None:
-            headers = {}
-
-        session = await self.create_session()
-
-        async with session.get(
-            url,
-            timeout=timeout,
-            headers=headers,
-            raise_for_status=raise_for_status,
-        ) as resp:
-            async for chunk in resp.content.iter_chunked(chunk_size):
-                yield chunk
 
     async def __aenter__(self) -> AiohttpSession:
         await self.create_session()

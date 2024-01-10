@@ -17,7 +17,7 @@ class AliceRequest(AliceObject):
     """
 
     type: str
-    payload: Payload
+    payload: Optional[Payload] = None
     command: Optional[str] = None
     original_utterance: Optional[str] = None
     markup: Optional[Markup] = None

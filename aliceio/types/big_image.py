@@ -2,7 +2,7 @@ from typing import Optional
 
 from pydantic import field_validator
 
-from ..enums.card import CardType
+from ..enums import CardType
 from .card import Card
 from .media_button import MediaButton
 

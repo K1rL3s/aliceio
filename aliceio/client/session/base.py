@@ -2,25 +2,17 @@ from __future__ import annotations
 
 import abc
 import json
+import secrets
 from http import HTTPStatus
 from types import TracebackType
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    AsyncGenerator,
-    Callable,
-    Dict,
-    Final,
-    Optional,
-    Type,
-    cast,
-)
+from typing import TYPE_CHECKING, Any, Callable, Dict, Final, Optional, Type, cast
 
 from pydantic import ValidationError
 
 from aliceio.exceptions import AliceAPIError, ClientDecodeError
 
 from ...methods import AliceMethod, AliceType, Response
+from ...types import ErrorResult, InputFile
 from ..alice import PRODUCTION, AliceAPIServer
 from .middlewares.manager import RequestMiddlewareManager
 
@@ -76,16 +68,20 @@ class BaseSession(abc.ABC):
             # поскольку декодер можно кастомизировать и вызвать любое исключение.
             raise ClientDecodeError("Failed to decode object", e, content)
 
+        if HTTPStatus.OK <= status_code <= HTTPStatus.IM_USED:
+            try:
+                # is it ok? look ugly
+                result = method.model_validate(json_data, context={"skill": skill})
+                return Response[method.__returning__](result=result)
+            except ValidationError as e:
+                raise ClientDecodeError("Failed to deserialize object", e, json_data)
+
         try:
-            response_type = Response[method.__returning__]  # type: ignore
-            response = response_type.model_validate(json_data, context={"skill": skill})
+            response = ErrorResult.model_validate(json_data)
         except ValidationError as e:
             raise ClientDecodeError("Failed to deserialize object", e, json_data)
 
-        if HTTPStatus.OK <= status_code <= HTTPStatus.IM_USED and response.ok:
-            return response
-
-        description = cast(str, response.description)
+        description = cast(str, response.message)
         raise AliceAPIError(
             method=method,
             message=description,
@@ -113,18 +109,6 @@ class BaseSession(abc.ABC):
         :raise AliceApiError:
         """
         pass
-
-    @abc.abstractmethod
-    async def stream_content(
-        self,
-        url: str,
-        headers: Optional[Dict[str, Any]] = None,
-        timeout: int = 30,
-        chunk_size: int = 65536,
-        raise_for_status: bool = True,
-    ) -> AsyncGenerator[bytes, None]:  # pragma: no cover
-        """Чтение потока."""
-        yield b""
 
     # TODO: Сделать под Алису
     def prepare_value(
@@ -160,10 +144,15 @@ class BaseSession(abc.ABC):
         #         files=files,
         #         _dumps_json=_dumps_json,
         #     )
-        # if isinstance(value, InputFile):
-        #     key = secrets.token_urlsafe(10)
-        #     files[key] = value
-        #     return f"attach://{key}"
+        if isinstance(value, InputFile):
+            key = "file"
+            files[key] = value
+            return f"attach://{key}"
+
+        if isinstance(value, InputFile):
+            key = secrets.token_urlsafe(10)
+            files[key] = value
+            return f"attach://{key}"
         # if isinstance(value, dict):
         #     value = {
         #         key: prepared_item

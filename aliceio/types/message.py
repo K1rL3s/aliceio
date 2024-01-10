@@ -14,8 +14,8 @@ class Message(AliceEvent):
     """
 
     type: str
-    payload: Payload
     command: str
     original_utterance: str
+    payload: Optional[Payload] = None
     markup: Optional[Markup] = None
     nlu: Optional[NLU] = None

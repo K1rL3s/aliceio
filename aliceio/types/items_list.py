@@ -2,7 +2,7 @@ from typing import List, Optional
 
 from pydantic import field_validator
 
-from ..enums.card import CardType
+from ..enums import CardType
 from .card import Card
 from .card_footer import CardFooter
 from .card_header import CardHeader

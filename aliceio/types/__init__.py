@@ -16,6 +16,7 @@ from .datetime import DateTimeEntity
 from .directives import Directives
 from .entity import Entity
 from .error_event import ErrorEvent
+from .error_result import ErrorResult
 from .fio_entity import FIOEntity
 from .geo_entity import GeoEntity
 from .image_gallery import ImageGallery
@@ -37,6 +38,7 @@ from .pull import Pull
 from .purchase import Purchase
 from .quota import Quota
 from .response import Response
+from .result import Result
 from .session import Session
 from .show_item_meta import ShowItemMeta
 from .space_status import SpaceStatus
@@ -72,6 +74,7 @@ __all__ = (
     "Directives",
     "Entity",
     "ErrorEvent",
+    "ErrorResult",
     "FIOEntity",
     "FSInputFile",
     "GeoEntity",
@@ -94,6 +97,7 @@ __all__ = (
     "Purchase",
     "Quota",
     "Response",
+    "Result",
     "Session",
     "SessionState",
     "ShowItemMeta",
