@@ -14,18 +14,14 @@ from ..fsm.middleware import FSMContextMiddleware
 from ..fsm.storage.base import BaseStorage
 from ..fsm.storage.memory import MemoryStorage
 from ..fsm.strategy import FSMStrategy
-from ..methods import AliceMethod, AliceType
+from ..methods import AliceMethod
 from ..types import Update, UpdateTypeLookupError
-# from ..utils.backoff import BackoffConfig
+from ..types.base import AliceObject
 from .event.alice import AliceEventObserver
 from .event.bases import UNHANDLED, SkipHandler
 from .middlewares.error import ErrorsMiddleware
 from .middlewares.user_context import UserContextMiddleware
 from .router import Router
-
-# DEFAULT_BACKOFF_CONFIG = BackoffConfig(
-#     min_delay=1.0, max_delay=5.0, factor=1.3, jitter=0.1
-# )
 
 
 # TODO: Сделать загрузку, запрос и удаление изображений и аудио
@@ -127,13 +123,13 @@ class Dispatcher(Router):
         start_time = loop.time()
 
         if update.skill != skill:
-            # Re-mounting update to the current skill instance for making possible to
-            # use it in shortcuts.
-            # Here is update is re-created because we need to propagate context to
-            # all nested objects and attributes of the Update, but it
-            # is impossible without roundtrip to JSON :(
-            # The preferred way is that pass already mounted Skill instance to this update
-            # before call feed_update method
+            # Привязываем апдейт к текущему экземпляру навыка,
+            # чтобы сделать возможным его использование.
+            # Здесь апдейт создаётся заново, потому что нужно
+            # распространить контекст на все вложенные объекты и атрибуты,
+            # но это невозможно без обращения к JSON :(
+            # Предпочтительным способом является передача события с уже привязанным
+            # экземпляром навыка перед вызовом метода feed_update
             update = Update.model_validate(
                 update.model_dump(), context={"skill": skill}
             )
@@ -269,7 +265,10 @@ class Dispatcher(Router):
             return True  # because update was processed but unsuccessful
 
     async def _feed_webhook_update(
-        self, skill: Skill, update: Update, **kwargs: Any
+        self,
+        skill: Skill,
+        update: Update,
+        **kwargs: Any,
     ) -> Any:
         """
         The same with `Dispatcher.process_update()`
@@ -293,9 +292,9 @@ class Dispatcher(Router):
         self,
         skill: Skill,
         update: Union[Update, Dict[str, Any]],
-        _timeout: float = 55,
+        _timeout: float = 10000,
         **kwargs: Any,
-    ) -> Optional[AliceMethod[AliceType]]:
+    ) -> Optional[AliceObject]:
         if not isinstance(update, Update):  # Allow to use raw updates
             update = Update.model_validate(update, context={"skill": skill})
 
@@ -318,7 +317,7 @@ class Dispatcher(Router):
             warnings.warn(
                 "Detected slow response into webhook.\n"
                 "Alice is waiting for response only 4.5 seconds and cancel update.\n"
-                "For preventing this situation response into webhook returned immediately "
+                "For preventing this situation response into webhook returned immediately "  # noqa: E501
                 "and handler is moved to background and still processing update.",
                 RuntimeWarning,
             )
@@ -341,8 +340,9 @@ class Dispatcher(Router):
 
             if process_updates.done():
                 # TODO: handle exceptions
+                # TODO: Определить типы, сделать преобразование в AliceResponse
                 response: Any = process_updates.result()
-                if isinstance(response, AliceMethod):
+                if isinstance(response, AliceObject):
                     return response
 
             else:

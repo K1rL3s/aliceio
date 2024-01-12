@@ -22,23 +22,23 @@ repos:
         types: [ python ]
         stages: [ commit ]
 
-      - id: ruff (isort)
-        name: ruff-isort
-        entry: ruff --select I --select F401 --fix
+      - id: isort
+        name: isort
+        entry: isort
         language: system
         types: [ python ]
         stages: [ commit ]
 
       - id: ruff
-        name: ruff check
+        name: ruff
         entry: ruff check
         language: system
         types: [ python ]
-        stages: [ push ]
+        stages: [ commit ]
 
       - id: mypy
-        name: mypy check
+        name: mypy
         entry: mypy aliceio
         language: system
         pass_filenames: false
-        stages: [ push ]
+        stages: [ commit ]

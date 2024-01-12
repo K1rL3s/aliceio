@@ -27,7 +27,7 @@ class Router:
         self.name = name or hex(id(self))
 
         self._parent_router: Optional[Router] = None
-        self.sub_routers: List[Router] = []
+        self._sub_routers: List[Router] = []
 
         # Наблюдатели
         self.message = AliceEventObserver(router=self, event_name=EventType.MESSAGE)
@@ -108,7 +108,7 @@ class Router:
             if response is not UNHANDLED:
                 return response
 
-        for router in self.sub_routers:
+        for router in self._sub_routers:
             response = await router.propagate_event(
                 event_type=event_type, event=event, **kwargs
             )
@@ -127,7 +127,7 @@ class Router:
     @property
     def chain_tail(self) -> Generator[Router, None, None]:
         yield self
-        for router in self.sub_routers:
+        for router in self._sub_routers:
             yield from router.chain_tail
 
     @property
@@ -162,7 +162,7 @@ class Router:
             parent = parent.parent_router
 
         self._parent_router = router
-        router.sub_routers.append(self)
+        router._sub_routers.append(self)
 
     def include_routers(self, *routers: Router) -> None:
         """
@@ -191,12 +191,10 @@ class Router:
         return router
 
     async def emit_startup(self, *args: Any, **kwargs: Any) -> None:
-        """
-        Рекурсивный вызывов callback'ов при запуске.
-        """
+        """Рекурсивный вызов callback'ов при запуске."""
         kwargs.update(router=self)
         await self.startup.trigger(*args, **kwargs)
-        for router in self.sub_routers:
+        for router in self._sub_routers:
             await router.emit_startup(*args, **kwargs)
 
     async def emit_shutdown(self, *args: Any, **kwargs: Any) -> None:
@@ -205,5 +203,5 @@ class Router:
         """
         kwargs.update(router=self)
         await self.shutdown.trigger(*args, **kwargs)
-        for router in self.sub_routers:
+        for router in self._sub_routers:
             await router.emit_shutdown(*args, **kwargs)

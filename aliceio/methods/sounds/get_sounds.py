@@ -17,7 +17,7 @@ class GetSounds(AliceMethod[List[UploadedSound]]):
             file_id="",
         )
 
-    def model_validate(
+    def response_validate(
         self,
         data: Dict[str, Any],
         **kwargs: Any,

@@ -35,11 +35,9 @@ class Request(BaseModel):
     files: Optional[Dict[str, InputFile]]
 
 
-# TODO: Сделать под Алису
 class Response(BaseModel, Generic[AliceType]):
     result: Optional[AliceType] = None
-    description: Optional[str] = None
-    error_code: Optional[int] = None
+    status_code: Optional[int] = None
 
 
 class AliceMethod(SkillContextController, BaseModel, Generic[AliceType], ABC):
@@ -69,7 +67,7 @@ class AliceMethod(SkillContextController, BaseModel, Generic[AliceType], ABC):
         pass
 
     @abstractmethod
-    def model_validate(self, data: Dict[str, Any], **kwargs: Any) -> AliceType:
+    def response_validate(self, data: Dict[str, Any], **kwargs: Any) -> AliceType:
         pass
 
     async def emit(self, skill: "Skill") -> AliceType:

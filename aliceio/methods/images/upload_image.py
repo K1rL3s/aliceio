@@ -15,5 +15,5 @@ class UploadImage(AliceMethod[UploadedImage]):
     def api_url(self, api_server: AliceAPIServer, skill_id: str) -> str:
         return api_server.upload_url(skill_id=skill_id, file_type=FileType.IMAGES)
 
-    def model_validate(self, data: Dict[str, Any], **kwargs: Any) -> UploadedImage:
+    def response_validate(self, data: Dict[str, Any], **kwargs: Any) -> UploadedImage:
         return UploadedImage.model_validate(data[FileType.IMAGE], **kwargs)

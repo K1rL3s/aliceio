@@ -21,7 +21,7 @@ from .fio_entity import FIOEntity
 from .geo_entity import GeoEntity
 from .image_gallery import ImageGallery
 from .image_gallery_item import ImageGalleryItem
-from .input_file import BufferedInputFile, FSInputFile, InputFile, URLInputFile
+from .input_file import BufferedInputFile, FSInputFile, InputFile
 from .interfaces import Interfaces
 from .item_image import ItemImage
 from .items_list import ItemsList
@@ -111,6 +111,5 @@ __all__ = (
     "UploadedImage",
     "UploadedSound",
     "URL",
-    "URLInputFile",
     "User",
 )

@@ -17,7 +17,7 @@ class GetImages(AliceMethod[List[UploadedImage]]):
             file_id="",
         )
 
-    def model_validate(
+    def response_validate(
         self,
         data: Dict[str, Any],
         **kwargs: Any,

@@ -32,11 +32,11 @@ class TestRouter:
             router3.include_router(router1)
 
         assert router1.parent_router is None
-        assert router1.sub_routers == [router2]
+        assert router1._sub_routers == [router2]
         assert router2.parent_router is router1
-        assert router2.sub_routers == [router3]
+        assert router2._sub_routers == [router3]
         assert router3.parent_router is router2
-        assert router3.sub_routers == []
+        assert router3._sub_routers == []
 
     def test_including_many_routers(self):
         router = Router()
@@ -45,7 +45,7 @@ class TestRouter:
 
         router.include_routers(router1, router2)
 
-        assert router.sub_routers == [router1, router2]
+        assert router._sub_routers == [router1, router2]
 
     def test_including_many_routers_bad_type(self):
         router = Router()

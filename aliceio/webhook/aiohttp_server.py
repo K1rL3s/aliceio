@@ -4,15 +4,14 @@ from abc import ABC, abstractmethod
 from asyncio import Transport
 from typing import Any, Awaitable, Callable, Dict, Optional, Set, Tuple, cast
 
-from aiohttp import MultipartWriter, web
+from aiohttp import JsonPayload, web
 from aiohttp.abc import Application
 from aiohttp.typedefs import Handler
 from aiohttp.web_middlewares import middleware
 
 from aliceio import Dispatcher, Skill, loggers
 from aliceio.methods import AliceMethod
-from aliceio.methods.base import AliceType
-from aliceio.types import InputFile
+from aliceio.types.base import AliceObject
 from aliceio.webhook.security import IPFilter
 
 
@@ -152,6 +151,7 @@ class BaseRequestHandler(ABC):
         if isinstance(result, AliceMethod):
             await self.dispatcher.silent_call_request(skill=skill, result=result)
 
+    # TODO: Проверить, помогает ли про запуске шоу Алисы
     @staticmethod
     def _convert_show_pull_to_normal_request(update: Dict[str, Any]) -> Dict[str, Any]:
         """
@@ -164,63 +164,23 @@ class BaseRequestHandler(ABC):
         """
         return cast(Dict[str, Any], update.get("body", update))
 
-    async def _handle_request_background(
-        self,
-        skill: Skill,
-        request: web.Request,
-    ) -> web.Response:
-        feed_update_task = asyncio.create_task(
-            self._background_feed_update(
-                skill=skill,
-                update=await request.json(loads=skill.session.json_loads),
-            )
-        )
-        self._background_feed_update_tasks.add(feed_update_task)
-        feed_update_task.add_done_callback(self._background_feed_update_tasks.discard)
-        return web.json_response({}, dumps=skill.session.json_dumps)
-
+    # TODO: Сделать переопределение json модуля
     @staticmethod
-    def _build_response_writer(
+    def _build_response_json(
         skill: Skill,
-        result: Optional[AliceMethod[AliceType]],
-    ) -> MultipartWriter:
-        writer = MultipartWriter(
-            "form-data",
-            boundary=f"webhookBoundary{secrets.token_urlsafe(16)}",
+        result: Optional[AliceObject],
+    ) -> JsonPayload:
+        return JsonPayload(
+            value=result.model_dump() if result else None,
         )
-        if not result:
-            return writer
-
-        payload = writer.append(result.__api_method__)
-        payload.set_content_disposition("form-data", name="method")
-
-        files: Dict[str, InputFile] = {}
-        for key, value in result.model_dump(warnings=False).items():
-            value = skill.session.prepare_value(value, skill=skill, files=files)
-            if not value:
-                continue
-            payload = writer.append(value)
-            payload.set_content_disposition("form-data", name=key)
-
-        for key, value in files.items():
-            payload = writer.append(value.read(skill))
-            payload.set_content_disposition(
-                "form-data",
-                name=key,
-                filename=value.filename or key,
-            )
-
-        return writer
 
     async def _handle_request(self, skill: Skill, request: web.Request) -> web.Response:
-        result: Optional[AliceMethod[Any]] = await self.dispatcher.feed_webhook_update(
+        result = await self.dispatcher.feed_webhook_update(
             skill,
             await request.json(loads=skill.session.json_loads),
             **self.data,
         )
-        return web.Response(
-            body=self._build_response_writer(skill=skill, result=result)
-        )
+        return web.Response(body=self._build_response_json(skill=skill, result=result))
 
     async def handle(self, request: web.Request) -> web.Response:
         skill = await self.resolve_skill(request)

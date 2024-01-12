@@ -70,9 +70,13 @@ class BaseSession(abc.ABC):
 
         if HTTPStatus.OK <= status_code <= HTTPStatus.IM_USED:
             try:
-                # is it ok? look ugly
-                result = method.model_validate(json_data, context={"skill": skill})
-                return Response[method.__returning__](result=result)
+                # is it ok?
+                response_type = Response[method.__returning__]  # type: ignore
+                result = method.response_validate(json_data, context={"skill": skill})
+                return response_type(
+                    result=result,
+                    status_code=status_code,
+                )
             except ValidationError as e:
                 raise ClientDecodeError("Failed to deserialize object", e, json_data)
 
@@ -81,10 +85,9 @@ class BaseSession(abc.ABC):
         except ValidationError as e:
             raise ClientDecodeError("Failed to deserialize object", e, json_data)
 
-        description = cast(str, response.message)
         raise AliceAPIError(
             method=method,
-            message=description,
+            message=response.message,
         )
 
     @abc.abstractmethod

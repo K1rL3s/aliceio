@@ -160,7 +160,7 @@ class AiohttpSession(BaseSession):
             form.add_field(
                 key,
                 value.read(skill),
-                filename=value.filename or key,
+                filename=key,
             )
         return form
 

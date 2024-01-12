@@ -19,5 +19,5 @@ class DeleteImage(AliceMethod[Result]):
             file_id=self.file_id,
         )
 
-    def model_validate(self, data: Dict[str, Any], **kwargs: Any) -> Result:
+    def response_validate(self, data: Dict[str, Any], **kwargs: Any) -> Result:
         return Result.model_validate(data, **kwargs)
