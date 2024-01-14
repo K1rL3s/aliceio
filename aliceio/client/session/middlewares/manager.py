@@ -28,7 +28,8 @@ class RequestMiddlewareManager(Sequence[RequestMiddlewareType]):
         self,
         middleware: Optional[RequestMiddlewareType] = None,
     ) -> Union[
-        Callable[[RequestMiddlewareType], RequestMiddlewareType], RequestMiddlewareType
+        Callable[[RequestMiddlewareType], RequestMiddlewareType],
+        RequestMiddlewareType,
     ]:
         if middleware is None:
             return self.register

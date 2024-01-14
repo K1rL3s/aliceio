@@ -12,7 +12,7 @@ class IPFilter:
     def __init__(
         self,
         ips: Optional[Sequence[Union[str, IPv4Network, IPv4Address]]] = None,
-    ):
+    ) -> None:
         self._allowed_ips: Set[IPv4Address] = set()
 
         if ips:

@@ -23,9 +23,7 @@ from aiohttp.http import SERVER_SOFTWARE
 from aliceio.__meta__ import __version__
 from aliceio.methods import AliceMethod
 
-from ...exceptions import AliceNetworkError
-
-# from ...exceptions import AliceNetworkError
+from ...exceptions import AliceNetworkError, AliceNoCredentialsError
 from ...methods.base import AliceType
 from ...types import InputFile
 from .base import BaseSession
@@ -165,10 +163,17 @@ class AiohttpSession(BaseSession):
         return form
 
     @staticmethod
-    def _build_request_headers(skill: Skill) -> Dict[str, Any]:
+    def _build_request_headers(
+        skill: Skill, method: AliceMethod[Any]
+    ) -> Dict[str, Any]:
+        if skill.oauth_token is None:
+            raise AliceNoCredentialsError(
+                method,
+                "To use the Alice API, "
+                "you need to set an oauth token when creating a Skill",
+            )
         return {"Authorization": f"OAuth {skill.oauth_token}"}
 
-    # TODO: Сделать под Алису
     async def make_request(
         self,
         skill: Skill,
@@ -186,7 +191,7 @@ class AiohttpSession(BaseSession):
                 url,
                 data=form,
                 timeout=self.timeout if timeout is None else timeout,
-                headers=self._build_request_headers(skill),
+                headers=self._build_request_headers(skill, method),
             ) as resp:
                 raw_result = await resp.text()
         except asyncio.TimeoutError:

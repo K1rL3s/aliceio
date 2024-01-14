@@ -1,8 +1,6 @@
-import asyncio
-import secrets
 from abc import ABC, abstractmethod
 from asyncio import Transport
-from typing import Any, Awaitable, Callable, Dict, Optional, Set, Tuple, cast
+from typing import Any, Awaitable, Callable, Dict, Optional, Tuple, cast
 
 from aiohttp import JsonPayload, web
 from aiohttp.abc import Application
@@ -10,7 +8,6 @@ from aiohttp.typedefs import Handler
 from aiohttp.web_middlewares import middleware
 
 from aliceio import Dispatcher, Skill, loggers
-from aliceio.methods import AliceMethod
 from aliceio.types.base import AliceObject
 from aliceio.webhook.security import IPFilter
 
@@ -36,10 +33,10 @@ def setup_application(
         **kwargs,
     }
 
-    async def on_startup(*a: Any, **kw: Any) -> None:  # pragma: no cover
+    async def on_startup(*_: Any, **__: Any) -> None:  # pragma: no cover
         await dispatcher.emit_startup(**workflow_data)
 
-    async def on_shutdown(*a: Any, **kw: Any) -> None:  # pragma: no cover
+    async def on_shutdown(*_: Any, **__: Any) -> None:  # pragma: no cover
         await dispatcher.emit_shutdown(**workflow_data)
 
     app.on_startup.append(on_startup)
@@ -102,7 +99,6 @@ class BaseRequestHandler(ABC):
         """
         self.dispatcher = dispatcher
         self.data = data
-        self._background_feed_update_tasks: Set[asyncio.Task[Any]] = set()
 
     def register(self, app: Application, /, path: str, **kwargs: Any) -> None:
         """
@@ -133,23 +129,6 @@ class BaseRequestHandler(ABC):
         :return: Skill instance
         """
         pass
-
-    @abstractmethod
-    def verify_secret(self, alice_secret_token: str, skill: Skill) -> bool:
-        pass
-
-    async def _background_feed_update(
-        self,
-        skill: Skill,
-        update: Dict[str, Any],
-    ) -> None:
-        result = await self.dispatcher.feed_raw_update(
-            skill=skill,
-            update=self._convert_show_pull_to_normal_request(update),
-            **self.data,
-        )
-        if isinstance(result, AliceMethod):
-            await self.dispatcher.silent_call_request(skill=skill, result=result)
 
     # TODO: Проверить, помогает ли про запуске шоу Алисы
     @staticmethod
@@ -184,108 +163,30 @@ class BaseRequestHandler(ABC):
 
     async def handle(self, request: web.Request) -> web.Response:
         skill = await self.resolve_skill(request)
-        if not self.verify_secret(
-            request.headers.get("X-Alice-Skill-Api-Secret-Token", ""),
-            skill,
-        ):
-            return web.Response(body="Unauthorized", status=401)
         return await self._handle_request(skill=skill, request=request)
 
     __call__ = handle
 
 
-class SimpleRequestHandler(BaseRequestHandler):
+class OneSkillRequestHandler(BaseRequestHandler):
     def __init__(
         self,
         dispatcher: Dispatcher,
         skill: Skill,
-        secret_token: Optional[str] = None,
         **data: Any,
     ) -> None:
         """
-        Handler for single Skill instance
+        Обработчик для одного экземпляра навыка.
 
-        :param dispatcher: instance of :class:`aliceio.dispatcher.dispatcher.Dispatcher`
-        :param handle_in_background: immediately responds to the Telegram instead of
-            a waiting end of handler process
-        :param skill: instance of :class:`aliceio.client.skill.Skill`
+        :param dispatcher: Экземпляр :class:`aliceio.dispatcher.dispatcher.Dispatcher`
+        :param skill: Экземпляр :class:`aliceio.client.skill.Skill`
         """
         super().__init__(dispatcher=dispatcher, **data)
         self.skill = skill
-        self.secret_token = secret_token
-
-    def verify_secret(self, alice_secret_token: str, skill: Skill) -> bool:
-        if self.secret_token:
-            return secrets.compare_digest(alice_secret_token, self.secret_token)
-        return True
 
     async def close(self) -> None:
-        """
-        Close skill session
-        """
+        """Закрыть сессию навыка."""
         await self.skill.session.close()
 
     async def resolve_skill(self, request: web.Request) -> Skill:
         return self.skill
-
-
-class TokenBasedRequestHandler(BaseRequestHandler):
-    def __init__(
-        self,
-        dispatcher: Dispatcher,
-        handle_in_background: bool = True,
-        skill_settings: Optional[Dict[str, Any]] = None,
-        **data: Any,
-    ) -> None:
-        """
-        Handler that supports multiple skills the context will be resolved
-        from path variable 'skill_token'
-
-        .. note::
-
-            This handler is not recommended in due to token is available in URL
-            and can be logged by reverse proxy server or other middleware.
-
-        :param dispatcher: instance of :class:`aliceio.dispatcher.dispatcher.Dispatcher`
-        :param handle_in_background: immediately responds to the Telegram instead of
-            a waiting end of handler process
-        :param skill_settings: kwargs that will be passed to new Skill instance
-        """
-        super().__init__(
-            dispatcher=dispatcher, handle_in_background=handle_in_background, **data
-        )
-        if skill_settings is None:
-            skill_settings = {}
-        self.skill_settings = skill_settings
-        self.skills: Dict[str, Skill] = {}
-
-    def verify_secret(self, alice_secret_token: str, skill: Skill) -> bool:
-        return True
-
-    async def close(self) -> None:
-        for skill in self.skills.values():
-            await skill.session.close()
-
-    def register(self, app: Application, /, path: str, **kwargs: Any) -> None:
-        """
-        Validate path, register route and shutdown callback
-
-        :param app: instance of aiohttp Application
-        :param path: route path
-        :param kwargs:
-        """
-        if "{skill_token}" not in path:
-            raise ValueError("Path should contains '{skill_token}' substring")
-        super().register(app, path=path, **kwargs)
-
-    async def resolve_skill(self, request: web.Request) -> Skill:
-        """
-        Get skill token from a path and create or get from cache Skill instance
-
-        :param request:
-        :return:
-        """
-        token = request.match_info["skill_token"]
-        if token not in self.skills:
-            self.skills[token] = Skill(skill_id=token, **self.skill_settings)
-        return self.skills[token]

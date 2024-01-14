@@ -1,3 +1,5 @@
+from typing import Optional
+
 from aliceio.types.base import MutableAliceObject
 
 
@@ -8,4 +10,4 @@ class CardHeader(MutableAliceObject):
     https://yandex.ru/dev/dialogs/alice/doc/response-card-itemslist.html#response-card-itemslist__header-desc
     """  # noqa
 
-    text: str
+    text: Optional[str] = None  # Optional XD

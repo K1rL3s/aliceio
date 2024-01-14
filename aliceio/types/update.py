@@ -37,9 +37,9 @@ class Update(MutableAliceObject):
         super().model_post_init(__context)
         events: Dict[str, Type[MutableAliceObject]] = {
             EventType.AUDIO_PLAYER: AudioPlayer,
-            EventType.BUTTON: Button,
+            EventType.BUTTON_PRESSED: Button,
             EventType.MESSAGE: Message,
-            EventType.PULL: Pull,
+            EventType.SHOW_PULL: Pull,
             EventType.PURCHASE: Pull,
             EventType.UPDATE: Update,
         }
@@ -65,9 +65,9 @@ class Update(MutableAliceObject):
     def event_type(self) -> str:
         event_types: Dict[str, str] = {
             RequestType.SIMPLE_UTTERANCE: EventType.MESSAGE,
-            RequestType.BUTTON_PRESSED: EventType.BUTTON,
+            RequestType.BUTTON_PRESSED: EventType.BUTTON_PRESSED,
             RequestType.PURCHASE_CONFIRMATION: EventType.PURCHASE,
-            RequestType.SHOW_PULL: EventType.PULL,
+            RequestType.SHOW_PULL: EventType.SHOW_PULL,
             RequestType.AUDIO_PLAYER_STARTED: EventType.AUDIO_PLAYER,
             RequestType.AUDIO_PLAYER_FINISHED: EventType.AUDIO_PLAYER,
             RequestType.AUDIO_PLAYER_NEARLY_FINISHED: EventType.AUDIO_PLAYER,

@@ -11,7 +11,7 @@ class ItemImage(MutableAliceObject):
     https://yandex.ru/dev/dialogs/alice/doc/response-card-itemslist.html#response-card-itemslist__items-desc
     """  # noqa
 
-    image_id: str
-    title: str
-    description: str
+    image_id: Optional[str] = None  # Optional XD
+    title: Optional[str] = None
+    description: Optional[str] = None
     button: Optional[MediaButton] = None

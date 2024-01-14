@@ -31,9 +31,11 @@ class Router:
 
         # Наблюдатели
         self.message = AliceEventObserver(router=self, event_name=EventType.MESSAGE)
-        self.button = AliceEventObserver(router=self, event_name=EventType.BUTTON)
         self.purchase = AliceEventObserver(router=self, event_name=EventType.PURCHASE)
-        self.pull = AliceEventObserver(router=self, event_name=EventType.PULL)
+        self.show_pull = AliceEventObserver(router=self, event_name=EventType.SHOW_PULL)
+        self.button_pressed = AliceEventObserver(
+            router=self, event_name=EventType.BUTTON_PRESSED
+        )
         self.audio_player = AliceEventObserver(
             router=self, event_name=EventType.AUDIO_PLAYER
         )
@@ -46,9 +48,9 @@ class Router:
 
         self.observers: Dict[str, AliceEventObserver] = {
             EventType.MESSAGE: self.message,
-            EventType.BUTTON: self.button,
+            EventType.BUTTON_PRESSED: self.button_pressed,
             EventType.PURCHASE: self.purchase,
-            EventType.PULL: self.pull,
+            EventType.SHOW_PULL: self.show_pull,
             EventType.AUDIO_PLAYER: self.audio_player,
             EventType.ERROR: self.errors,
         }

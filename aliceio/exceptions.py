@@ -49,6 +49,12 @@ class AliceNetworkError(AliceAPIError):
     label = "HTTP Client says"
 
 
+class AliceNoCredentialsError(AliceAPIError):
+    """Исключение при использовании API Алисы без токена авторизации."""
+
+    label = "No OAuth Token"
+
+
 class ClientDecodeError(AliceioError):
     """
     Исключение возникает, когда клиент не может декодировать ответ.

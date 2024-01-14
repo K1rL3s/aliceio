@@ -14,7 +14,7 @@ class UploadedSound(AliceObject):
 
     id: str
     skillId: str
-    size: int
+    size: Optional[int]
     originalName: str
     createdAt: str
     isProcessed: bool

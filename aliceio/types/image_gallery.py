@@ -1,22 +1,26 @@
-from typing import List
+from typing import List, Optional
 
-from pydantic import field_validator
+from pydantic import Field, field_validator
 
 from ..enums import CardType
-from .card import Card
+from .base import MutableAliceObject
 from .image_gallery_item import ImageGalleryItem
 
 
-class ImageGallery(Card):
+class ImageGallery(MutableAliceObject):
     """
-    :class:`Card` с типом :code:`ImageGallery`.
+    :code:`Card` с типом :code:`ImageGallery`.
 
     https://yandex.ru/dev/dialogs/alice/doc/response-card-imagegallery.html
     """
 
     type: str = CardType.IMAGE_GALLERY
 
-    items: List[ImageGalleryItem]
+    items: Optional[List[ImageGalleryItem]] = Field(
+        default_factory=list,
+        min_length=1,
+        max_length=10,
+    )
 
     @field_validator("type")
     @classmethod

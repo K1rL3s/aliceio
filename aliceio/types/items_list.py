@@ -1,25 +1,29 @@
 from typing import List, Optional
 
-from pydantic import field_validator
+from pydantic import Field, field_validator
 
 from ..enums import CardType
-from .card import Card
+from .base import MutableAliceObject
 from .card_footer import CardFooter
 from .card_header import CardHeader
 from .item_image import ItemImage
 
 
-class ItemsList(Card):
+class ItemsList(MutableAliceObject):
     """
-    :class:`Card` с типом :code:`ItemsList`
+    :code:`Card` с типом :code:`ItemsList`
 
     https://yandex.ru/dev/dialogs/alice/doc/response-card-itemslist.html
     """
 
     type: str = CardType.ITEMS_LIST
 
+    items: List[ItemImage] = Field(
+        default_factory=list,
+        min_length=1,
+        max_length=5,
+    )
     header: Optional[CardHeader] = None
-    items: Optional[List[ItemImage]] = None
     footer: Optional[CardFooter] = None
 
     @field_validator("type")

@@ -1,7 +1,7 @@
 import pytest
 
 from aliceio.enums.card import CardType
-from aliceio.types import BigImage, Card, ImageGallery, ImageGalleryItem, ItemsList
+from aliceio.types import BigImage, ImageGallery, ImageGalleryItem, ItemsList
 
 
 class TestBigImage:
@@ -11,14 +11,14 @@ class TestBigImage:
     )
     def test_wrong_type(self, card_type: str) -> None:
         with pytest.raises(ValueError):
-            BigImage(type=card_type)
+            BigImage(image_id="42:IMAGE_ID", type=card_type)
 
     @pytest.mark.parametrize(
         "card_type",
         [CardType.BIG_IMAGE, "bigimage", "BIGIMAGE"],
     )
     def test_good_type(self, card_type: str) -> None:
-        BigImage(type=card_type)
+        BigImage(image_id="42:IMAGE_ID", type=card_type)
 
 
 class TestItemsList:
@@ -59,36 +59,3 @@ class TestImageGallery:
             type=card_type,
             items=[ImageGalleryItem(image_id="42:IMAGE_ID")],
         )
-
-
-class TestCard:
-    @pytest.mark.parametrize(
-        "card_type",
-        [
-            "42",
-            "random",
-            "any",
-            "bigimage",
-            "BIGIMAGE",
-            "itemslist",
-            "ITEMSLIST",
-            "imagegallery",
-            "IMAGEGALLERY",
-        ],
-    )
-    def test_wrong_type(self, card_type: str) -> None:
-        class AnyCard(Card):
-            pass
-
-        with pytest.raises(ValueError):
-            AnyCard(type=card_type)
-
-    @pytest.mark.parametrize(
-        "card_type",
-        [CardType.BIG_IMAGE, CardType.ITEMS_LIST, CardType.IMAGE_GALLERY],
-    )
-    def test_good_type(self, card_type: str) -> None:
-        class AnyCard(Card):
-            pass
-
-        AnyCard(type=card_type)

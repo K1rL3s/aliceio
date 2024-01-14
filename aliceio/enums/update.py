@@ -3,10 +3,10 @@ from aliceio.enums.base import StrEnum, ValuesEnum
 
 class EventType(StrEnum, ValuesEnum):
     AUDIO_PLAYER = "audio_player"
-    BUTTON = "button"
+    BUTTON_PRESSED = "button_pressed"
     ERROR = "error"
     MESSAGE = "message"
-    PULL = "pull"
+    SHOW_PULL = "show_pull"
     PURCHASE = "purchase"
     UPDATE = "update"
 

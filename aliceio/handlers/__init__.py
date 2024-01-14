@@ -1,6 +1,6 @@
 from .audio_player import AudioPlayerHandler
 from .base import BaseHandler, BaseHandlerMixin
-from .button import ButtonHandler
+from .button_pressed import ButtonPressedHandler
 from .error import ErrorHandler
 from .message import MessageHandler
 from .pull import PullHandler
@@ -10,7 +10,7 @@ __all__ = (
     "AudioPlayerHandler",
     "BaseHandler",
     "BaseHandlerMixin",
-    "ButtonHandler",
+    "ButtonPressedHandler",
     "ErrorHandler",
     "MessageHandler",
     "PullHandler",

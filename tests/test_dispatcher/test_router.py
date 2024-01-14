@@ -66,9 +66,9 @@ class TestRouter:
         router = Router()
 
         assert router.observers["message"] == router.message
-        assert router.observers["button"] == router.button
+        assert router.observers["button_pressed"] == router.button_pressed
         assert router.observers["purchase"] == router.purchase
-        assert router.observers["pull"] == router.pull
+        assert router.observers["show_pull"] == router.show_pull
         assert router.observers["audio_player"] == router.audio_player
         assert router.observers["error"] == router.errors
 

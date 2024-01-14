@@ -87,10 +87,10 @@ def extract_flags_from_object(obj: Any) -> Dict[str, Any]:
 
 def extract_flags(handler: Union["HandlerObject", Dict[str, Any]]) -> Dict[str, Any]:
     """
-    Extract flags from handler or middleware context data
+    Извлекает флаги из контекстных данных обработчика или мидлваря.
 
-    :param handler: handler object or data
-    :return: dictionary with all handler flags
+    :param handler: Объект обработчика или данные.
+    :return: Словарь со всеми флагами обработчика.
     """
     if isinstance(handler, dict) and "handler" in handler:
         handler = handler["handler"]
@@ -106,26 +106,27 @@ def get_flag(
     default: Optional[Any] = None,
 ) -> Any:
     """
-    Get flag by name
+    Получить флаг по имени (ключу).
 
-    :param handler: handler object or data
-    :param name: name of the flag
-    :param default: default value (None)
-    :return: value of the flag or default
+    :param handler: Объект обработчика или данные.
+    :param name: Имя флага.
+    :param default: Значение по умолчанию (None).
+    :return: Значение флага или default.
     """
     flags = extract_flags(handler)
     return flags.get(name, default)
 
 
 def check_flags(
-    handler: Union["HandlerObject", Dict[str, Any]], magic: MagicFilter
+    handler: Union["HandlerObject", Dict[str, Any]],
+    magic: MagicFilter,
 ) -> Any:
     """
-    Check flags via magic filter
+    Проверка флагов с помощью magic filter'а.
 
-    :param handler: handler object or data
-    :param magic: instance of the magic
-    :return: the result of magic filter check
+    :param handler: Объект обработчика или данные.
+    :param magic: Экземпляр magic filter'а.
+    :return: Результат проверки magic filter'а.
     """
     flags = extract_flags(handler)
     return magic.resolve(AttrDict(flags))

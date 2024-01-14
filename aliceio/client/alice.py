@@ -10,7 +10,7 @@ class AliceAPIServer:
 
     def api_url(self, method: str) -> str:
         """
-        Генерирует URL для независящих от навыка методов API Алисы (status итп).
+        Генерирует URL для независящих от навыка методов API Алисы (например, status).
 
         :param method: Название метода API (case sensitive).
         :return: URL

@@ -11,5 +11,5 @@ class CardFooter(MutableAliceObject):
     https://yandex.ru/dev/dialogs/alice/doc/response-card-itemslist.html#response-card-itemslist__footer-desc
     """  # noqa
 
-    text: str
+    text: Optional[str] = None  # Optional XD
     button: Optional[MediaButton] = None

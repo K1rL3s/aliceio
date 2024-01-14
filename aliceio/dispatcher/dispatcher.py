@@ -54,16 +54,17 @@ class Dispatcher(Router):
         )
         self.update.register(self._listen_update)
 
-        # Error handlers should work is out of all other functions
-        # and should be registered before all others middlewares
+        # Обработчики ошибок должны работать вне всех других функций
+        # и должны быть зарегистрированы раньше всех остальных мидлварей.
         self.update.outer_middleware(ErrorsMiddleware(self))
 
-        # User context middleware makes small optimization for all other builtin
-        # middlewares via caching the user and chat instances in the event context
+        # UserContextMiddleware выполняет небольшую оптимизацию
+        # для всех других встроенных мидлварей путем кэширования
+        # экземпляров пользователя и сессиив контексте событий.
         self.update.outer_middleware(UserContextMiddleware())
 
-        # FSM middleware should always be registered after User context middleware
-        # because here is used context from previous step
+        # FSMContextMiddleware всегда следует регистрировать после UserContextMiddleware
+        # поскольку здесь используется контекст из предыдущего шага.
         self.fsm = FSMContextMiddleware(
             storage=storage or MemoryStorage(),
             strategy=fsm_strategy,
@@ -112,11 +113,8 @@ class Dispatcher(Router):
 
     async def feed_update(self, skill: Skill, update: Update, **kwargs: Any) -> Any:
         """
-        Main entry point for incoming updates
-        Response of this method can be used as Webhook response
-
-        :param skill:
-        :param update:
+        Основная точка входа для входящих событий.
+        Ответ этого метода можно использовать как ответ вебхука.
         """
         loop = asyncio.get_running_loop()
         handled = False
@@ -164,10 +162,11 @@ class Dispatcher(Router):
         **kwargs: Any,
     ) -> Any:
         """
-        Main entry point for incoming updates with automatic Dict->Update serializer
+        Основная точка входа для входящих обновлений.
+        с автоматическим сериализатором Dict->Update.
 
-        :param skill:
-        :param update:
+        :param skill: Экземпляр навыка.
+        :param update: Обновление.
         :param kwargs:
         """
         parsed_update = Update.model_validate(update, context={"skill": skill})
@@ -179,35 +178,26 @@ class Dispatcher(Router):
         skill: Skill,
         result: AliceMethod[Any],
     ) -> None:
-        """
-        Simulate answer into WebHook
-
-        :param skill:
-        :param result:
-        :return:
-        """
+        """Имитация ответа в вебхук."""
         try:
             await skill(result)
         except AliceAPIError as e:
-            # In due to WebHook mechanism doesn't allow getting response for
-            # requests called in answer to WebHook request.
-            # Need to skip unsuccessful responses.
-            # For debugging here is added logging.
+            # Поскольку механизм WebHook не позволяет получить ответ на запросы,
+            # вызванные в ответ на запрос WebHook,
+            # необходимо пропускать неудачные ответы.
+            # Для отладки сюда добавлено логирование.
             loggers.event.error(
                 "Failed to make answer: %s: %s", e.__class__.__name__, e
             )
 
     async def _listen_update(self, update: Update, **kwargs: Any) -> Any:
         """
-        Main updates listener
+        Основной отслеживатель событий.
 
-        Workflow:
-        - Detect content type and propagate to observers in current router
-        - If no one filter is pass - propagate update to child routers as Update
-
-        :param update:
-        :param kwargs:
-        :return:
+        Задачи:
+        - Определяет тип контента и передаёт его наблюдателям на текущем роутере.
+        - Если ни один фильтр не прошел - распространяет обновление
+          на дочерние роутеры как Обновление.
         """
         try:
             event_type = update.event_type
@@ -230,40 +220,6 @@ class Dispatcher(Router):
             **kwargs,
         )
 
-    async def _process_update(
-        self,
-        skill: Skill,
-        update: Update,
-        call_answer: bool = True,
-        **kwargs: Any,
-    ) -> bool:
-        """
-        Propagate update to event listeners
-
-        :param skill: instance of Skill
-        :param update: instance of Update
-        :param call_answer: need to execute response as Alice method
-                            (like answer into webhook)
-        :param kwargs: contextual data for middlewares, filters and handlers
-        :return: status
-        """
-        try:
-            response = await self.feed_update(skill, update, **kwargs)
-            if call_answer and isinstance(response, AliceMethod):
-                await self.silent_call_request(skill=skill, result=response)
-            return response is not UNHANDLED
-
-        except Exception as e:
-            loggers.event.exception(
-                "Cause exception while process update "
-                "session=%s by skill id=%d\n%s: %s",
-                update.session.session_id,
-                skill.id,
-                e.__class__.__name__,
-                e,
-            )
-            return True  # because update was processed but unsuccessful
-
     async def _feed_webhook_update(
         self,
         skill: Skill,
@@ -271,8 +227,8 @@ class Dispatcher(Router):
         **kwargs: Any,
     ) -> Any:
         """
-        The same with `Dispatcher.process_update()`
-        but returns real response instead of bool
+        Тот же самый `Dispatcher.process_update()`,
+        но возвращает реальный ответ вместо bool.
         """
         try:
             return await self.feed_update(skill, update, **kwargs)
@@ -287,12 +243,13 @@ class Dispatcher(Router):
             )
             raise
 
-    # TODO: Сделать под Алису
+    # TODO: Сделать возврат из вебхука без ретурна в обработчиках?
+    # TODO: Сделать кастомный ответ, если ответа нет через _timeout секунд
     async def feed_webhook_update(
         self,
         skill: Skill,
         update: Union[Update, Dict[str, Any]],
-        _timeout: float = 10000,
+        _timeout: float = 4.5,
         **kwargs: Any,
     ) -> Optional[AliceObject]:
         if not isinstance(update, Update):  # Allow to use raw updates
