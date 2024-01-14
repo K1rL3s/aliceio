@@ -11,10 +11,9 @@ class GetSounds(AliceMethod[List[UploadedSound]]):
     __http_method__ = HttpMethod.GET
 
     def api_url(self, api_server: AliceAPIServer, skill_id: str) -> str:
-        return api_server.get_file_url(
+        return api_server.get_all_files_url(
             skill_id=skill_id,
             file_type=FileType.SOUNDS,
-            file_id="",
         )
 
     def response_validate(

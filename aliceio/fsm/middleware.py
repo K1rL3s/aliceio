@@ -53,20 +53,18 @@ class FSMContextMiddleware(BaseMiddleware):
         user_id: str,
         session_id: str,
         destiny: str = DEFAULT_DESTINY,
-    ) -> Optional[FSMContext]:
-        if user_id is not None:
-            user_id, session_id = apply_strategy(
-                strategy=self.strategy,
-                user_id=user_id,
-                session_id=session_id,
-            )
-            return self.get_context(
-                skill=skill,
-                user_id=user_id,
-                session_id=session_id,
-                destiny=destiny,
-            )
-        return None
+    ) -> FSMContext:
+        user_id, session_id = apply_strategy(
+            strategy=self.strategy,
+            user_id=user_id,
+            session_id=session_id,
+        )
+        return self.get_context(
+            skill=skill,
+            user_id=user_id,
+            session_id=session_id,
+            destiny=destiny,
+        )
 
     def get_context(
         self,

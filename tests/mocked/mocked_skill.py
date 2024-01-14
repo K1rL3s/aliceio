@@ -66,22 +66,12 @@ class MockedSkill(Skill):
     def add_result_for(
         self,
         method: Type[AliceMethod[AliceType]],
-        ok: bool,
         result: Optional[AliceType] = None,
-        description: Optional[str] = None,
-        error_code: int = 200,
-        migrate_to_chat_id: Optional[int] = None,
-        retry_after: Optional[int] = None,
+        status_code: int = 200,
     ) -> Response[AliceType]:
         response = Response[method.__returning__](  # type: ignore
-            ok=ok,
             result=result,
-            description=description,
-            error_code=error_code,
-            parameters=dict(
-                migrate_to_chat_id=migrate_to_chat_id,
-                retry_after=retry_after,
-            ),
+            status_code=status_code,
         )
         self.session.add_result(response)
         return response

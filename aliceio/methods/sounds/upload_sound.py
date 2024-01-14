@@ -13,7 +13,7 @@ class UploadSound(AliceMethod[UploadedSound]):
     file: InputFile
 
     def api_url(self, api_server: AliceAPIServer, skill_id: str) -> str:
-        return api_server.upload_url(skill_id=skill_id, file_type=FileType.SOUNDS)
+        return api_server.upload_file_url(skill_id=skill_id, file_type=FileType.SOUNDS)
 
     def response_validate(self, data: Dict[str, Any], **kwargs: Any) -> UploadedSound:
         return UploadedSound.model_validate(data[FileType.SOUND], **kwargs)

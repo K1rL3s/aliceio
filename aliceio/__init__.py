@@ -15,7 +15,7 @@ from .utils.magic_filter import MagicFilter
 with suppress(ImportError):
     import uvloop as _uvloop
 
-    _asyncio.set_event_loop_policy(_uvloop.EventLoopPolicy())
+    _asyncio.set_event_loop_policy(_uvloop.EventLoopPolicy())  # pragma: no cover
 
 
 F = MagicFilter()

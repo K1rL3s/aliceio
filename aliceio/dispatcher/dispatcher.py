@@ -40,9 +40,9 @@ class Dispatcher(Router):
         """
         Главный роутер
 
-        :param storage: Хранилище для FSM
-        :param fsm_strategy: Стратегия FSM
-        :param disable_fsm: Отключить ли FSM
+        :param storage: Хранилище для FSM.
+        :param fsm_strategy: Стратегия FSM.
+        :param disable_fsm: Отключить ли FSM.
         :param kwargs: Остальные аргументы,
                        будут переданы в обработчики как именованные аргументы
         """
@@ -273,9 +273,7 @@ class Dispatcher(Router):
         def process_response(task: Future[Any]) -> None:
             warnings.warn(
                 "Detected slow response into webhook.\n"
-                "Alice is waiting for response only 4.5 seconds and cancel update.\n"
-                "For preventing this situation response into webhook returned immediately "  # noqa: E501
-                "and handler is moved to background and still processing update.",
+                "Alice is waiting for response only 4.5 seconds and cancel update.",
                 RuntimeWarning,
             )
             try:

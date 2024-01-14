@@ -40,6 +40,9 @@ class Response(BaseModel, Generic[AliceType]):
     status_code: Optional[int] = None
 
 
+# TODO: Убрать skill_id из api_url?
+# Потому что skill есть в SkillContextController,
+# и при skill(method) привязывать метод в skill'у
 class AliceMethod(SkillContextController, BaseModel, Generic[AliceType], ABC):
     model_config = ConfigDict(
         extra="allow",

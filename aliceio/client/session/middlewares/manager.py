@@ -44,7 +44,8 @@ class RequestMiddlewareManager(Sequence[RequestMiddlewareType]):
         pass
 
     def __getitem__(
-        self, item: Union[int, slice]
+        self,
+        item: Union[int, slice],
     ) -> Union[RequestMiddlewareType, Sequence[RequestMiddlewareType]]:
         return self._middlewares[item]
 

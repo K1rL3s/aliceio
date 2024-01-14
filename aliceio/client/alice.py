@@ -15,9 +15,9 @@ class AliceAPIServer:
         :param method: Название метода API (case sensitive).
         :return: URL
         """
-        return self.base.format(method=method)
+        return self.base.format(method=method).rstrip("/")
 
-    def upload_url(self, skill_id: str, file_type: str) -> str:
+    def upload_file_url(self, skill_id: str, file_type: str) -> str:
         """
         Генерирует URL для загрузки файла на сервер API Алисы.
 
@@ -25,7 +25,7 @@ class AliceAPIServer:
         :param file_type: Тип, изображение или аудио.
         :return: URL
         """
-        return self.file.format(skill_id=skill_id, file_type=file_type, file_id="")
+        return self.get_file_url(skill_id, file_type, "")
 
     def get_file_url(self, skill_id: str, file_type: str, file_id: str) -> str:
         """
@@ -33,10 +33,35 @@ class AliceAPIServer:
 
         :param skill_id: Айди навыка.
         :param file_type: Тип, изображение или аудио.
-        :param file_id: Айди файла. Если пустая строка, то API вернёт все файлы типа.
+        :param file_id: Айди файла.
         :return: URL
         """
-        return self.file.format(skill_id=skill_id, file_type=file_type, file_id=file_id)
+        return self.file.format(
+            skill_id=skill_id,
+            file_type=file_type,
+            file_id=file_id,
+        ).rstrip("/")
+
+    def get_all_files_url(self, skill_id: str, file_type: str) -> str:
+        """
+        Генерирует URL для получения информации о всех файлах на сервере API Алисы.
+
+        :param skill_id: Айди навыка.
+        :param file_type: Тип, изображение или аудио.
+        :return: URL
+        """
+        return self.get_file_url(skill_id, file_type, "")
+
+    def delete_file_url(self, skill_id: str, file_type: str, file_id: str) -> str:
+        """
+        Генерирует URL для удаления файла с сервера API Алисы.
+
+        :param skill_id: Айди навыка.
+        :param file_type: Тип, изображение или аудио.
+        :param file_id: Айди файла.
+        :return: URL
+        """
+        return self.get_file_url(skill_id, file_type, file_id)
 
     @classmethod
     def from_base(cls, base: str) -> "AliceAPIServer":

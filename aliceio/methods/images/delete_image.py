@@ -13,7 +13,7 @@ class DeleteImage(AliceMethod[Result]):
     file_id: str
 
     def api_url(self, api_server: AliceAPIServer, skill_id: str) -> str:
-        return api_server.get_file_url(
+        return api_server.delete_file_url(
             skill_id=skill_id,
             file_type=FileType.IMAGES,
             file_id=self.file_id,
