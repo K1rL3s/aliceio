@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, Type, Union
+from typing import TYPE_CHECKING, Any, Dict, Optional, Type, Union
 
 from ..enums.entity import EntityType
 from .base import MutableAliceObject
@@ -20,6 +20,23 @@ class Entity(MutableAliceObject):
     type: str
     tokens: TokensEntity
     value: Optional[Union[NLUEntity, NumberEntity]] = None
+
+    if TYPE_CHECKING:
+
+        def __init__(
+            __pydantic_self__,
+            *,
+            type: str,
+            tokens: TokensEntity,
+            value: Optional[Union[NLUEntity, NumberEntity]] = None,
+            **__pydantic_kwargs: Any,
+        ) -> None:
+            super().__init__(
+                type=type,
+                tokens=tokens,
+                value=value,
+                **__pydantic_kwargs,
+            )
 
     def model_post_init(self, __context: Any) -> None:
         super().model_post_init(__context)

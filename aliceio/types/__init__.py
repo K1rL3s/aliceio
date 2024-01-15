@@ -35,13 +35,13 @@ from .nlu_entity import NLUEntity
 from .number_entity import NumberEntity
 from .payload import Payload
 from .purchase import Purchase
-from .quota import Quota
+from .quota import PreQuota, Quota
 from .response import Response
 from .result import Result
 from .session import Session
 from .show_item_meta import ShowItemMeta
 from .show_pull import ShowPull
-from .space_status import PreQuota, SpaceStatus
+from .space_status import SpaceStatus
 from .state import ApplicationState, AuthorizedUserState, SessionState, StateDict
 from .stream import Stream
 from .text_button import TextButton
@@ -95,7 +95,7 @@ __all__ = (
     "Payload",
     "PreQuota",
     "PreUploadedImage",
-    "PreUploadedSound",
+    "PreUploadedImage",
     "Purchase",
     "Quota",
     "Response",

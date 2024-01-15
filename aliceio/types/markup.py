@@ -1,3 +1,5 @@
+from typing import TYPE_CHECKING, Any
+
 from aliceio.types.base import AliceObject
 
 
@@ -10,3 +12,16 @@ class Markup(AliceObject):
     """  # noqa
 
     dangerous_context: bool
+
+    if TYPE_CHECKING:
+
+        def __init__(
+            __pydantic_self__,
+            *,
+            dangerous_context: bool,
+            **__pydantic_kwargs: Any,
+        ) -> None:
+            super().__init__(
+                dangerous_context=dangerous_context,
+                **__pydantic_kwargs,
+            )

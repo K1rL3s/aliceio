@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import TYPE_CHECKING, Any, Optional
 
 from .alice_event import AliceEvent
 from .audio_player_error import AudioPlayerError
@@ -15,3 +15,18 @@ class AudioPlayer(AliceEvent):
 
     type: str
     error: Optional[AudioPlayerError] = None
+
+    if TYPE_CHECKING:
+
+        def __init__(
+            __pydantic_self__,
+            *,
+            type: str,
+            error: Optional[AudioPlayerError] = None,
+            **__pydantic_kwargs: Any,
+        ) -> None:
+            super().__init__(
+                type=type,
+                error=error,
+                **__pydantic_kwargs,
+            )

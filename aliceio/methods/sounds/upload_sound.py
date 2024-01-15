@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, cast
+from typing import TYPE_CHECKING, Any, cast
 
 from aliceio.client.alice import AliceAPIServer
 from aliceio.enums import FileType, HttpMethod
@@ -14,6 +14,19 @@ class UploadSound(AliceMethod[PreUploadedSound]):
     __http_method__ = HttpMethod.POST
 
     file: InputFile
+
+    if TYPE_CHECKING:
+
+        def __init__(
+            __pydantic_self__,
+            *,
+            file: InputFile,
+            **__pydantic_kwargs: Any,
+        ) -> None:
+            super().__init__(
+                file=file,
+                **__pydantic_kwargs,
+            )
 
     def api_url(self, api_server: AliceAPIServer) -> str:
         skill: "Skill" = cast("Skill", self.skill)

@@ -1,3 +1,5 @@
+from typing import TYPE_CHECKING, Any
+
 from pydantic import field_validator
 
 from ..enums.base import StrEnum, ValuesEnum
@@ -14,6 +16,21 @@ class AudioPlayerDirective(MutableAliceObject):
 
     action: str
     item: AudioPlayerItem
+
+    if TYPE_CHECKING:
+
+        def __init__(
+            __pydantic_self__,
+            *,
+            action: str,
+            item: AudioPlayerItem,
+            **__pydantic_kwargs: Any,
+        ) -> None:
+            super().__init__(
+                action=action,
+                item=item,
+                **__pydantic_kwargs,
+            )
 
     @field_validator("action")
     @classmethod

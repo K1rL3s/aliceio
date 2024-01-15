@@ -1,3 +1,5 @@
+from typing import TYPE_CHECKING, Any
+
 from pydantic import computed_field
 
 from .base import AliceObject
@@ -13,6 +15,21 @@ class Quota(AliceObject):
     total: int
     used: int
 
+    if TYPE_CHECKING:
+
+        def __init__(
+            __pydantic_self__,
+            *,
+            total: int,
+            used: int,
+            **__pydantic_kwargs: Any,
+        ) -> None:
+            super().__init__(
+                total=total,
+                used=used,
+                **__pydantic_kwargs,
+            )
+
     @computed_field  # type: ignore[misc]
     @property
     def available(self) -> int:
@@ -23,3 +40,16 @@ class PreQuota(AliceObject):
     """Ключ к квоте."""
 
     quota: Quota
+
+    if TYPE_CHECKING:
+
+        def __init__(
+            __pydantic_self__,
+            *,
+            quota: Quota,
+            **__pydantic_kwargs: Any,
+        ) -> None:
+            super().__init__(
+                quota=quota,
+                **__pydantic_kwargs,
+            )

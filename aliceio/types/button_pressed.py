@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import TYPE_CHECKING, Any, Optional
 
 from .alice_event import AliceEvent
 from .markup import Markup
@@ -17,3 +17,22 @@ class ButtonPressed(AliceEvent):
     payload: Payload
     markup: Optional[Markup] = None
     nlu: Optional[NLU] = None
+
+    if TYPE_CHECKING:
+
+        def __init__(
+            __pydantic_self__,
+            *,
+            type: str,
+            payload: Payload,
+            markup: Optional[Markup] = None,
+            nlu: Optional[NLU] = None,
+            **__pydantic_kwargs: Any,
+        ) -> None:
+            super().__init__(
+                type=type,
+                payload=payload,
+                markup=markup,
+                nlu=nlu,
+                **__pydantic_kwargs,
+            )

@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import TYPE_CHECKING, Any, List, Optional
 
 from .base import AliceObject
 
@@ -20,6 +20,25 @@ class UploadedImage(AliceObject):
     size: int
     createdAt: str
 
+    if TYPE_CHECKING:
+
+        def __init__(
+            __pydantic_self__,
+            *,
+            id: str,
+            origUrl: Optional[str] = None,
+            size: int,
+            createdAt: str,
+            **__pydantic_kwargs: Any,
+        ) -> None:
+            super().__init__(
+                id=id,
+                origUrl=origUrl,
+                size=size,
+                createdAt=createdAt,
+                **__pydantic_kwargs,
+            )
+
     @property
     def orig_url(self) -> Optional[str]:
         return self.origUrl
@@ -34,8 +53,34 @@ class PreUploadedImage(AliceObject):
 
     image: UploadedImage
 
+    if TYPE_CHECKING:
+
+        def __init__(
+            __pydantic_self__,
+            *,
+            image: UploadedImage,
+            **__pydantic_kwargs: Any,
+        ) -> None:
+            super().__init__(
+                image=image,
+                **__pydantic_kwargs,
+            )
+
 
 class UploadedImagesList(AliceObject):
     """Список с изображениями."""
 
     images: List[UploadedImage]
+
+    if TYPE_CHECKING:
+
+        def __init__(
+            __pydantic_self__,
+            *,
+            images: List[UploadedImage],
+            **__pydantic_kwargs: Any,
+        ) -> None:
+            super().__init__(
+                images=images,
+                **__pydantic_kwargs,
+            )

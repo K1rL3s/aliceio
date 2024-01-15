@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import TYPE_CHECKING, Any, List, Optional
 
 from pydantic import Field, field_validator
 
@@ -25,6 +25,24 @@ class ItemsList(MutableAliceObject):
     )
     header: Optional[CardHeader] = None
     footer: Optional[CardFooter] = None
+
+    if TYPE_CHECKING:
+
+        def __init__(
+            __pydantic_self__,
+            *,
+            items: List[ItemImage],
+            header: Optional[CardHeader] = None,
+            footer: Optional[CardFooter] = None,
+            **__pydantic_kwargs: Any,
+        ) -> None:
+            super().__init__(
+                type=type,
+                items=items,
+                header=header,
+                footer=footer,
+                **__pydantic_kwargs,
+            )
 
     @field_validator("type")
     @classmethod
