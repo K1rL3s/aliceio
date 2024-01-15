@@ -143,7 +143,6 @@ class BaseRequestHandler(ABC):
         """
         return cast(Dict[str, Any], update.get("body", update))
 
-    # TODO: Сделать переопределение json модуля
     @staticmethod
     def _build_response_json(
         skill: Skill,
@@ -156,7 +155,7 @@ class BaseRequestHandler(ABC):
     async def _handle_request(self, skill: Skill, request: web.Request) -> web.Response:
         result = await self.dispatcher.feed_webhook_update(
             skill,
-            await request.json(loads=skill.session.json_loads),
+            await request.json(loads=skill.session.json_module.loads),
             **self.data,
         )
         return web.Response(body=self._build_response_json(skill=skill, result=result))

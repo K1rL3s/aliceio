@@ -1,6 +1,5 @@
-import json
 from abc import ABC, abstractmethod
-from typing import Any, Callable, Dict, Literal, Optional, cast
+from typing import Any, Dict, Literal, Optional, cast
 
 from redis.asyncio.client import Redis
 from redis.asyncio.connection import ConnectionPool
@@ -8,9 +7,7 @@ from redis.typing import ExpiryT
 
 from aliceio.fsm.state import State
 from aliceio.fsm.storage.base import DEFAULT_DESTINY, BaseStorage, StateType, StorageKey
-
-_JsonLoads = Callable[..., Any]
-_JsonDumps = Callable[..., str]
+from aliceio.json import JSONModule, json
 
 
 class KeyBuilder(ABC):
@@ -83,14 +80,14 @@ class RedisStorage(BaseStorage):
         key_builder: Optional[KeyBuilder] = None,
         state_ttl: Optional[ExpiryT] = None,
         data_ttl: Optional[ExpiryT] = None,
-        json_loads: _JsonLoads = json.loads,
-        json_dumps: _JsonDumps = json.dumps,
+        json_module: JSONModule = json,
     ) -> None:
         """
-        :param redis: Instance of Redis connection
+        :param redis: Экземпляр подключения Redis.
         :param key_builder: builder that helps to convert contextual key to string
-        :param state_ttl: TTL for state records
-        :param data_ttl: TTL for data records
+        :param state_ttl: TTL для записей состояния.
+        :param data_ttl: TTL для записей данных.
+        :param json_module: JSON Модуль.
         """
         if key_builder is None:
             key_builder = DefaultKeyBuilder()
@@ -98,8 +95,7 @@ class RedisStorage(BaseStorage):
         self.key_builder = key_builder
         self.state_ttl = state_ttl
         self.data_ttl = data_ttl
-        self.json_loads = json_loads
-        self.json_dumps = json_dumps
+        self.json_module = json_module
 
     @classmethod
     def from_url(
@@ -161,7 +157,7 @@ class RedisStorage(BaseStorage):
             return
         await self.redis.set(
             redis_key,
-            self.json_dumps(data),
+            self.json_module.dumps(data),
             ex=self.data_ttl,
         )
 
@@ -175,4 +171,4 @@ class RedisStorage(BaseStorage):
             return {}
         if isinstance(value, bytes):
             value = value.decode("utf-8")
-        return cast(Dict[str, Any], self.json_loads(value))
+        return cast(Dict[str, Any], self.json_module.dumps(value))

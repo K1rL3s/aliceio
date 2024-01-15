@@ -47,6 +47,7 @@ dynamic = ["version"]
 fast = [
   "uvloop>=0.17.0; (sys_platform == 'darwin' or sys_platform == 'linux') and platform_python_implementation != 'PyPy'",
   "aiodns>=3.0.0",
+  "ujson~=5.9.0",
 ]
 redis = [
   "redis[hiredis]~=5.0.1",
