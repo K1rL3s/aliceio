@@ -24,7 +24,6 @@ from .middlewares.user_context import UserContextMiddleware
 from .router import Router
 
 
-# TODO: Сделать загрузку, запрос и удаление изображений и аудио
 class Dispatcher(Router):
     """Главный роутер."""
 

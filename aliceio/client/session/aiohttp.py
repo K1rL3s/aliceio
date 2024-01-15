@@ -182,7 +182,7 @@ class AiohttpSession(BaseSession):
     ) -> AliceType:
         session = await self.create_session()
 
-        url = method.api_url(api_server=self.api, skill_id=skill.id)
+        url = method.api_url(api_server=self.api)
         form = self.build_form_data(skill=skill, method=method)
 
         try:

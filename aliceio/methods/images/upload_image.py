@@ -1,7 +1,12 @@
+from typing import TYPE_CHECKING, cast
+
 from aliceio.client.alice import AliceAPIServer
 from aliceio.enums import FileType, HttpMethod
 from aliceio.methods.base import AliceMethod
 from aliceio.types import InputFile, PreUploadedImage
+
+if TYPE_CHECKING:
+    from aliceio.client.skill import Skill
 
 
 class UploadImage(AliceMethod[PreUploadedImage]):
@@ -10,5 +15,9 @@ class UploadImage(AliceMethod[PreUploadedImage]):
 
     file: InputFile
 
-    def api_url(self, api_server: AliceAPIServer, skill_id: str) -> str:
-        return api_server.upload_file_url(skill_id=skill_id, file_type=FileType.IMAGES)
+    def api_url(self, api_server: AliceAPIServer) -> str:
+        skill: "Skill" = cast("Skill", self.skill)
+        return api_server.upload_file_url(
+            skill_id=skill.id,
+            file_type=FileType.IMAGES,
+        )

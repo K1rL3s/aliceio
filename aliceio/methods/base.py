@@ -40,9 +40,6 @@ class Response(BaseModel, Generic[AliceType]):
     status_code: Optional[int] = None
 
 
-# TODO: Убрать skill_id из api_url?
-# Потому что skill есть в SkillContextController,
-# и при skill(method) привязывать метод в skill'у
 class AliceMethod(SkillContextController, BaseModel, Generic[AliceType], ABC):
     model_config = ConfigDict(
         extra="allow",
@@ -65,11 +62,15 @@ class AliceMethod(SkillContextController, BaseModel, Generic[AliceType], ABC):
         def __http_method__(self) -> str:
             pass
 
+    # При emit навык всегда привязывается к навыку,
+    # поэтому он всегда будет не None при вызове api_url в AiohttpSession
     @abstractmethod
-    def api_url(self, api_server: AliceAPIServer, skill_id: str) -> str:
+    def api_url(self, api_server: AliceAPIServer) -> str:
         pass
 
     async def emit(self, skill: "Skill") -> AliceType:
+        if not self._skill:
+            self._skill = self.skill
         return await skill(self)
 
     def __await__(self) -> Generator[Any, None, AliceType]:
