@@ -5,12 +5,12 @@ from .alice_event import AliceEvent
 from .alice_request import AliceRequest
 from .audio_player import AudioPlayer
 from .base import MutableAliceObject
-from .button import Button
+from .button_pressed import ButtonPressed
 from .message import Message
 from .meta import Meta
-from .pull import Pull
 from .purchase import Purchase
 from .session import Session
+from .show_pull import ShowPull
 
 
 class Update(MutableAliceObject):
@@ -29,9 +29,9 @@ class Update(MutableAliceObject):
 
     message: Optional[Message] = None
     audio_player: Optional[AudioPlayer] = None
-    button: Optional[Button] = None
+    button_pressed: Optional[ButtonPressed] = None
     purchase: Optional[Purchase] = None
-    pull: Optional[Pull] = None
+    show_pull: Optional[ShowPull] = None
 
     if TYPE_CHECKING:
 
@@ -44,9 +44,9 @@ class Update(MutableAliceObject):
             version: str,
             message: Optional[Message] = None,
             audio_player: Optional[AudioPlayer] = None,
-            button: Optional[Button] = None,
+            button: Optional[ButtonPressed] = None,
             purchase: Optional[Purchase] = None,
-            pull: Optional[Pull] = None,
+            pull: Optional[ShowPull] = None,
             **__pydantic_kwargs: Any,
         ) -> None:
             super().__init__(
@@ -66,10 +66,10 @@ class Update(MutableAliceObject):
         super().model_post_init(__context)
         events: Dict[str, Type[MutableAliceObject]] = {
             EventType.AUDIO_PLAYER: AudioPlayer,
-            EventType.BUTTON_PRESSED: Button,
+            EventType.BUTTON_PRESSED: ButtonPressed,
             EventType.MESSAGE: Message,
-            EventType.SHOW_PULL: Pull,
-            EventType.PURCHASE: Pull,
+            EventType.SHOW_PULL: ShowPull,
+            EventType.PURCHASE: Purchase,
             EventType.UPDATE: Update,
         }
 

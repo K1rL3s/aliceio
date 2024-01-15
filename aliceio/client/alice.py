@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Any
 
 
 @dataclass(frozen=True)
@@ -8,21 +7,6 @@ class AliceAPIServer:
 
     base: str
     file: str
-
-    if TYPE_CHECKING:
-
-        def __init__(
-            __pydantic_self__,
-            *,
-            base: str,
-            file: str,
-            **__pydantic_kwargs: Any,
-        ) -> None:
-            super().__init__(
-                base=base,
-                file=file,
-                **__pydantic_kwargs,
-            )
 
     def api_url(self, method: str) -> str:
         """

@@ -6,7 +6,7 @@ from .nlu import NLU
 from .payload import Payload
 
 
-class Button(AliceEvent):
+class ButtonPressed(AliceEvent):
     """
     Нажатие пользователя на кнопку с непустым Payload.
 

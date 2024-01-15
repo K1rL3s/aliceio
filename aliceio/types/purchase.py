@@ -1,7 +1,5 @@
 from typing import TYPE_CHECKING, Any
 
-from pydantic import UUID4
-
 from .alice_event import AliceEvent
 from .payload import Payload
 
@@ -16,7 +14,7 @@ class Purchase(AliceEvent):
 
     type: str
     purchase_request_id: str
-    purchase_token: UUID4
+    purchase_token: str
     order_id: str
     purchase_timestamp: int
     purchase_payload: Payload
@@ -30,7 +28,7 @@ class Purchase(AliceEvent):
             *,
             type: str,
             purchase_request_id: str,
-            purchase_token: UUID4,
+            purchase_token: str,
             order_id: str,
             purchase_timestamp: int,
             purchase_payload: Payload,

@@ -1,7 +1,5 @@
 from typing import TYPE_CHECKING, Any, Optional
 
-from pydantic import UUID4
-
 from .audio_player_error import AudioPlayerError
 from .base import AliceObject
 from .markup import Markup
@@ -30,7 +28,7 @@ class AliceRequest(AliceObject):
     # not null при type == RequestType.PURCHASE_CONFIRMATION
     # https://yandex.ru/dev/dialogs/alice/doc/request-purchase-confirmation.html
     purchase_request_id: Optional[str] = None
-    purchase_token: Optional[UUID4] = None
+    purchase_token: Optional[str] = None
     order_id: Optional[str] = None
     purchase_timestamp: Optional[int] = None
     purchase_payload: Optional[Payload] = None
@@ -54,7 +52,7 @@ class AliceRequest(AliceObject):
             nlu: Optional[NLU] = None,
             error: Optional[AudioPlayerError] = None,
             purchase_request_id: Optional[str] = None,
-            purchase_token: Optional[UUID4] = None,
+            purchase_token: Optional[str] = None,
             order_id: Optional[str] = None,
             purchase_timestamp: Optional[int] = None,
             purchase_payload: Optional[Payload] = None,

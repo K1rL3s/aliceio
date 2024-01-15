@@ -2,10 +2,10 @@ from abc import ABC
 from typing import Optional
 
 from aliceio.handlers.base import BaseHandler
-from aliceio.types import Pull, User
+from aliceio.types import ShowPull, User
 
 
-class PullHandler(BaseHandler[Pull], ABC):
+class ShowPullHandler(BaseHandler[ShowPull], ABC):
     """Базовый класс для обработчиков запуска шоу Алисы."""
 
     @property
