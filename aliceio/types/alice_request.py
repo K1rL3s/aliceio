@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Any, TYPE_CHECKING
 
 from pydantic import UUID4
 
@@ -40,3 +40,44 @@ class AliceRequest(AliceObject):
     # not null при запуске утреннего шоу Алисы
     # https://yandex.ru/dev/dialogs/alice/doc/request-show-pull.html
     show_type: Optional[str] = None
+
+    if TYPE_CHECKING:
+
+        def __init__(
+            __pydantic_self__,
+            *,
+            type: str,
+            payload: Optional[Payload] = None,
+            command: Optional[str] = None,
+            original_utterance: Optional[str] = None,
+            markup: Optional[Markup] = None,
+            nlu: Optional[NLU] = None,
+            error: Optional[AudioPlayerError] = None,
+            purchase_request_id: Optional[str] = None,
+            purchase_token: Optional[UUID4] = None,
+            order_id: Optional[str] = None,
+            purchase_timestamp: Optional[int] = None,
+            purchase_payload: Optional[Payload] = None,
+            signed_data: Optional[str] = None,
+            signature: Optional[str] = None,
+            show_type: Optional[str] = None,
+            **__pydantic_kwargs: Any,
+        ) -> None:
+            super().__init__(
+                type=type,
+                payload=payload,
+                command=command,
+                original_utterance=original_utterance,
+                markup=markup,
+                nlu=nlu,
+                error=error,
+                purchase_request_id=purchase_request_id,
+                purchase_token=purchase_token,
+                order_id=order_id,
+                purchase_timestamp=purchase_timestamp,
+                purchase_payload=purchase_payload,
+                signed_data=signed_data,
+                signature=signature,
+                show_type=show_type,
+                **__pydantic_kwargs,
+            )

@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any, Dict, TYPE_CHECKING
 
 from aliceio.types.base import AliceObject
 
@@ -17,3 +17,19 @@ class Interfaces(AliceObject):
     account_linking: AccountLinking
     payments: Payments
     screen: Screen
+
+    if TYPE_CHECKING:
+        def __init__(
+            __pydantic_self__,
+            *,
+            account_linking: AccountLinking,
+            payments: Payments,
+            screen: Screen,
+            **__pydantic_kwargs: Any,
+        ) -> None:
+            super().__init__(
+                account_linking=account_linking,
+                payments=payments,
+                screen=screen,
+                **__pydantic_kwargs,
+            )

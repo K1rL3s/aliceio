@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, Type, cast
+from typing import Any, Dict, Optional, Type, cast, TYPE_CHECKING
 
 from ..enums import EventType, RequestType
 from .alice_event import AliceEvent
@@ -32,6 +32,34 @@ class Update(MutableAliceObject):
     button: Optional[Button] = None
     purchase: Optional[Purchase] = None
     pull: Optional[Pull] = None
+
+    if TYPE_CHECKING:
+        def __init__(
+            __pydantic_self__,
+            *,
+            meta: Meta,
+            request: AliceRequest,
+            session: Session,
+            version: str,
+            message: Optional[Message] = None,
+            audio_player: Optional[AudioPlayer] = None,
+            button: Optional[Button] = None,
+            purchase: Optional[Purchase] = None,
+            pull: Optional[Pull] = None,
+            **__pydantic_kwargs: Any,
+        ) -> None:
+            super().__init__(
+                meta=meta,
+                request=request,
+                session=session,
+                version=version,
+                message=message,
+                audio_player=audio_player,
+                button=button,
+                purchase=purchase,
+                pull=pull,
+                **__pydantic_kwargs,
+            )
 
     def model_post_init(self, __context: Any) -> None:
         super().model_post_init(__context)

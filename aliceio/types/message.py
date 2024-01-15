@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, TYPE_CHECKING, Any
 
 from .alice_event import AliceEvent
 from .markup import Markup
@@ -19,3 +19,25 @@ class Message(AliceEvent):
     payload: Optional[Payload] = None
     markup: Optional[Markup] = None
     nlu: Optional[NLU] = None
+
+    if TYPE_CHECKING:
+        def __init__(
+            __pydantic_self__,
+            *,
+            type: str,
+            command: str,
+            original_utterance: str,
+            payload: Optional[Payload] = None,
+            markup: Optional[Markup] = None,
+            nlu: Optional[NLU] = None,
+            **__pydantic_kwargs: Any,
+        ) -> None:
+            super().__init__(
+                type=type,
+                command=command,
+                original_utterance=original_utterance,
+                payload=payload,
+                markup=markup,
+                nlu=nlu,
+                **__pydantic_kwargs,
+            )

@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Any, TYPE_CHECKING
 
 from .base import AliceObject
 
@@ -13,3 +13,15 @@ class URL(AliceObject):
     """  # noqa
 
     url: Optional[str] = None
+
+    if TYPE_CHECKING:
+        def __init__(
+            __pydantic_self__,
+            *,
+            url: Optional[str] = None,
+            **__pydantic_kwargs: Any,
+        ) -> None:
+            super().__init__(
+                url=url,
+                **__pydantic_kwargs,
+            )
