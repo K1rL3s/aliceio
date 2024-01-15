@@ -47,8 +47,8 @@ from .stream import Stream
 from .text_button import TextButton
 from .tokens_entity import TokensEntity
 from .update import Update, UpdateTypeLookupError
-from .uploaded_image import UploadedImage
-from .uploaded_sound import UploadedSound
+from .uploaded_image import UploadedImage, PreUploadedImage, UploadedImagesList
+from .uploaded_sound import UploadedSound, PreUploadedSound, UploadedSoundsList
 from .url import URL
 from .user import User
 
@@ -93,6 +93,8 @@ __all__ = (
     "NLUEntity",
     "NumberEntity",
     "Payload",
+    "PreUploadedImage",
+    "PreUploadedImage",
     "Pull",
     "Purchase",
     "Quota",
@@ -109,7 +111,9 @@ __all__ = (
     "Update",
     "UpdateTypeLookupError",
     "UploadedImage",
+    "UploadedImagesList",
     "UploadedSound",
+    "UploadedSoundsList",
     "URL",
     "User",
 )
