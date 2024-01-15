@@ -1,4 +1,4 @@
-from typing import List, TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, List
 
 from .analytic_event import AnalyticEvent
 from .base import MutableAliceObject
@@ -14,6 +14,7 @@ class Analytics(MutableAliceObject):
     events: List[AnalyticEvent]
 
     if TYPE_CHECKING:
+
         def __init__(
             __pydantic_self__,
             *,

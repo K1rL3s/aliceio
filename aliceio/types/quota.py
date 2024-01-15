@@ -16,6 +16,7 @@ class Quota(AliceObject):
     used: int
 
     if TYPE_CHECKING:
+
         def __init__(
             __pydantic_self__,
             *,
@@ -41,6 +42,7 @@ class PreQuota(AliceObject):
     quota: Quota
 
     if TYPE_CHECKING:
+
         def __init__(
             __pydantic_self__,
             *,

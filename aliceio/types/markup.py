@@ -14,6 +14,7 @@ class Markup(AliceObject):
     dangerous_context: bool
 
     if TYPE_CHECKING:
+
         def __init__(
             __pydantic_self__,
             *,

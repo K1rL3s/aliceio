@@ -1,4 +1,4 @@
-from typing import Optional, TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Optional
 
 from .base import MutableAliceObject
 from .metadata import Metadata
@@ -16,6 +16,7 @@ class AudioPlayerItem(MutableAliceObject):
     metadata: Optional[Metadata] = None
 
     if TYPE_CHECKING:
+
         def __init__(
             __pydantic_self__,
             *,

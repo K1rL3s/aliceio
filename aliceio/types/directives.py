@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict, Optional
 
 from .audio_player_directive import AudioPlayerDirective
 from .base import MutableAliceObject
@@ -20,6 +20,7 @@ class Directives(MutableAliceObject):
     start_account_linking: Optional[StartAccountLinking] = None
 
     if TYPE_CHECKING:
+
         def __init__(
             __pydantic_self__,
             *,

@@ -1,4 +1,4 @@
-from typing import Optional, TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Optional
 
 from .nlu_entity import NLUEntity
 
@@ -15,6 +15,7 @@ class FIOEntity(NLUEntity):
     last_name: Optional[str] = None
 
     if TYPE_CHECKING:
+
         def __init__(
             __pydantic_self__,
             *,

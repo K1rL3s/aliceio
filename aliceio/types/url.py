@@ -1,4 +1,4 @@
-from typing import Optional, Any, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Optional
 
 from .base import AliceObject
 
@@ -15,6 +15,7 @@ class URL(AliceObject):
     url: Optional[str] = None
 
     if TYPE_CHECKING:
+
         def __init__(
             __pydantic_self__,
             *,

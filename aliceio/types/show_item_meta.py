@@ -1,4 +1,4 @@
-from typing import Optional, TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Optional
 
 from .base import MutableAliceObject
 
@@ -13,6 +13,7 @@ class ShowItemMeta(MutableAliceObject):
     expiration_date: Optional[str] = None
 
     if TYPE_CHECKING:
+
         def __init__(
             __pydantic_self__,
             *,

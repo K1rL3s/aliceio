@@ -1,4 +1,4 @@
-from typing import Optional, TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Optional
 
 from .base import AliceObject
 
@@ -14,6 +14,7 @@ class User(AliceObject):
     access_token: Optional[str] = None
 
     if TYPE_CHECKING:
+
         def __init__(
             __pydantic_self__,
             *,
@@ -26,4 +27,3 @@ class User(AliceObject):
                 access_token=access_token,
                 **__pydantic_kwargs,
             )
-

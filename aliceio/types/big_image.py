@@ -1,4 +1,4 @@
-from typing import Optional, TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Optional
 
 from pydantic import field_validator
 
@@ -22,6 +22,7 @@ class BigImage(MutableAliceObject):
     button: Optional[MediaButton] = None
 
     if TYPE_CHECKING:
+
         def __init__(
             __pydantic_self__,
             *,
@@ -39,7 +40,6 @@ class BigImage(MutableAliceObject):
                 button=button,
                 **__pydantic_kwargs,
             )
-
 
     @field_validator("type")
     @classmethod

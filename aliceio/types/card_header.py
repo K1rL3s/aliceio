@@ -1,4 +1,4 @@
-from typing import Optional, TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Optional
 
 from aliceio.types.base import MutableAliceObject
 
@@ -13,6 +13,7 @@ class CardHeader(MutableAliceObject):
     text: Optional[str] = None  # Optional XD
 
     if TYPE_CHECKING:
+
         def __init__(
             __pydantic_self__,
             *,

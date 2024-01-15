@@ -1,4 +1,4 @@
-from typing import List, Optional, TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, List, Optional
 
 from .base import AliceObject
 
@@ -21,6 +21,7 @@ class UploadedSound(AliceObject):
     error: Optional[str] = None
 
     if TYPE_CHECKING:
+
         def __init__(
             __pydantic_self__,
             *,
@@ -67,6 +68,7 @@ class PreUploadedSound(AliceObject):
     sound: UploadedSound
 
     if TYPE_CHECKING:
+
         def __init__(
             __pydantic_self__,
             *,
@@ -85,6 +87,7 @@ class UploadedSoundsList(AliceObject):
     sounds: List[UploadedSound]
 
     if TYPE_CHECKING:
+
         def __init__(
             __pydantic_self__,
             *,

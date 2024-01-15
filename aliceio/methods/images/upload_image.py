@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, cast, Any
+from typing import TYPE_CHECKING, Any, cast
 
 from aliceio.client.alice import AliceAPIServer
 from aliceio.enums import FileType, HttpMethod
@@ -16,6 +16,7 @@ class UploadImage(AliceMethod[PreUploadedImage]):
     file: InputFile
 
     if TYPE_CHECKING:
+
         def __init__(
             __pydantic_self__,
             *,

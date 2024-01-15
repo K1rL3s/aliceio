@@ -13,6 +13,7 @@ class Application(MutableAliceObject):
     application_id: str
 
     if TYPE_CHECKING:
+
         def __init__(
             __pydantic_self__,
             *,

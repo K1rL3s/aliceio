@@ -36,7 +36,7 @@ from .number_entity import NumberEntity
 from .payload import Payload
 from .pull import Pull
 from .purchase import Purchase
-from .quota import Quota, PreQuota
+from .quota import PreQuota, Quota
 from .response import Response
 from .result import Result
 from .session import Session
@@ -47,8 +47,8 @@ from .stream import Stream
 from .text_button import TextButton
 from .tokens_entity import TokensEntity
 from .update import Update, UpdateTypeLookupError
-from .uploaded_image import UploadedImage, PreUploadedImage, UploadedImagesList
-from .uploaded_sound import UploadedSound, PreUploadedSound, UploadedSoundsList
+from .uploaded_image import PreUploadedImage, UploadedImage, UploadedImagesList
+from .uploaded_sound import PreUploadedSound, UploadedSound, UploadedSoundsList
 from .url import URL
 from .user import User
 

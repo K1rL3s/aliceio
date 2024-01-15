@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Any, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 
 @dataclass(frozen=True)
@@ -10,6 +10,7 @@ class AliceAPIServer:
     file: str
 
     if TYPE_CHECKING:
+
         def __init__(
             __pydantic_self__,
             *,

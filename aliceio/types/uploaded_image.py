@@ -1,4 +1,4 @@
-from typing import List, Optional, TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, List, Optional
 
 from .base import AliceObject
 
@@ -21,6 +21,7 @@ class UploadedImage(AliceObject):
     createdAt: str
 
     if TYPE_CHECKING:
+
         def __init__(
             __pydantic_self__,
             *,
@@ -53,6 +54,7 @@ class PreUploadedImage(AliceObject):
     image: UploadedImage
 
     if TYPE_CHECKING:
+
         def __init__(
             __pydantic_self__,
             *,
@@ -71,6 +73,7 @@ class UploadedImagesList(AliceObject):
     images: List[UploadedImage]
 
     if TYPE_CHECKING:
+
         def __init__(
             __pydantic_self__,
             *,

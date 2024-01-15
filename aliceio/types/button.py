@@ -1,4 +1,4 @@
-from typing import Optional, Any, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Optional
 
 from .alice_event import AliceEvent
 from .markup import Markup
@@ -19,6 +19,7 @@ class Button(AliceEvent):
     nlu: Optional[NLU] = None
 
     if TYPE_CHECKING:
+
         def __init__(
             __pydantic_self__,
             *,

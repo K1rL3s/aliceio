@@ -1,4 +1,4 @@
-from typing import Any, Dict, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict
 
 from aliceio.types.base import AliceObject
 
@@ -19,6 +19,7 @@ class Interfaces(AliceObject):
     screen: Screen
 
     if TYPE_CHECKING:
+
         def __init__(
             __pydantic_self__,
             *,

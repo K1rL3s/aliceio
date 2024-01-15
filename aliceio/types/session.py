@@ -1,4 +1,4 @@
-from typing import Optional, Any, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Optional
 
 from .application import Application
 from .base import AliceObject
@@ -21,6 +21,7 @@ class Session(AliceObject):
     new: bool
 
     if TYPE_CHECKING:
+
         def __init__(
             __pydantic_self__,
             *,

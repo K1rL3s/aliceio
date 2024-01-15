@@ -1,4 +1,4 @@
-from typing import Optional, TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Optional
 
 from .base import MutableAliceObject
 from .media_button import MediaButton
@@ -17,6 +17,7 @@ class ItemImage(MutableAliceObject):
     button: Optional[MediaButton] = None
 
     if TYPE_CHECKING:
+
         def __init__(
             __pydantic_self__,
             *,
