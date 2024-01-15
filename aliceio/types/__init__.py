@@ -36,7 +36,7 @@ from .number_entity import NumberEntity
 from .payload import Payload
 from .pull import Pull
 from .purchase import Purchase
-from .quota import Quota
+from .quota import Quota, PreQuota
 from .response import Response
 from .result import Result
 from .session import Session
@@ -93,6 +93,7 @@ __all__ = (
     "NLUEntity",
     "NumberEntity",
     "Payload",
+    "PreQuota",
     "PreUploadedImage",
     "PreUploadedImage",
     "Pull",

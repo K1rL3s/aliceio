@@ -39,3 +39,15 @@ class PreQuota(AliceObject):
     """Ключ к квоте."""
 
     quota: Quota
+
+    if TYPE_CHECKING:
+        def __init__(
+            __pydantic_self__,
+            *,
+            quota: Quota,
+            **__pydantic_kwargs: Any,
+        ) -> None:
+            super().__init__(
+                quota=quota,
+                **__pydantic_kwargs,
+            )
