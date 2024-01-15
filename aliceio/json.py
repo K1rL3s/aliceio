@@ -3,7 +3,7 @@ from typing import Any, Protocol
 from choicelib import choice_in_order  # type: ignore
 
 
-class JSONModule(Protocol):
+class JSONModule(Protocol):  # pragma: no cover
     def loads(self, s: str) -> Any:
         ...
 

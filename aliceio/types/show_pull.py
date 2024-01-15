@@ -1,7 +1,7 @@
 from .alice_event import AliceEvent
 
 
-class Pull(AliceEvent):
+class ShowPull(AliceEvent):
     """
     Навык получает запрос с типом Show.Pull,
     если пользователь произносит команду запуска утреннего шоу Алисы.

@@ -3,7 +3,7 @@ from .base import BaseHandler, BaseHandlerMixin
 from .button_pressed import ButtonPressedHandler
 from .error import ErrorHandler
 from .message import MessageHandler
-from .pull import PullHandler
+from .pull import ShowPullHandler
 from .purchase import PurchaseHandler
 
 __all__ = (
@@ -13,6 +13,6 @@ __all__ = (
     "ButtonPressedHandler",
     "ErrorHandler",
     "MessageHandler",
-    "PullHandler",
     "PurchaseHandler",
+    "ShowPullHandler",
 )
