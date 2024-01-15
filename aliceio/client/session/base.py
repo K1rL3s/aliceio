@@ -70,12 +70,10 @@ class BaseSession(abc.ABC):
 
         if HTTPStatus.OK <= status_code <= HTTPStatus.IM_USED:
             try:
-                # is it ok?
                 response_type = Response[method.__returning__]  # type: ignore
-                result = method.response_validate(json_data, context={"skill": skill})
-                return response_type(
-                    result=result,
-                    status_code=status_code,
+                return response_type.model_validate(
+                    json_data,
+                    context={"skill": skill},
                 )
             except ValidationError as e:
                 raise ClientDecodeError("Failed to deserialize object", e, json_data)

@@ -1,5 +1,5 @@
 from .base import AliceObject
-from .quota import Quota
+from .quota import PreQuota
 
 
 class SpaceStatus(AliceObject):
@@ -9,5 +9,5 @@ class SpaceStatus(AliceObject):
     https://yandex.ru/dev/dialogs/alice/doc/resource-upload.html#http-images-load__quota
     """
 
-    images: Quota
-    sounds: Quota
+    images: PreQuota
+    sounds: PreQuota

@@ -33,7 +33,7 @@ class RequestLogging(BaseRequestMiddleware):
     ) -> Response[AliceType]:
         if type(method) not in self.ignore_methods:
             loggers.middlewares.info(
-                "Make request with method=%r by skill id=%d",
+                "Make request with method=%r by skill id=%r",
                 type(method).__name__,
                 skill.id,
             )

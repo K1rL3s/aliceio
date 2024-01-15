@@ -41,14 +41,14 @@ from .response import Response
 from .result import Result
 from .session import Session
 from .show_item_meta import ShowItemMeta
-from .space_status import SpaceStatus
+from .space_status import PreQuota, SpaceStatus
 from .state import ApplicationState, AuthorizedUserState, SessionState, StateDict
 from .stream import Stream
 from .text_button import TextButton
 from .tokens_entity import TokensEntity
 from .update import Update, UpdateTypeLookupError
-from .uploaded_image import UploadedImage
-from .uploaded_sound import UploadedSound
+from .uploaded_image import PreUploadedImage, UploadedImage, UploadedImagesList
+from .uploaded_sound import PreUploadedSound, UploadedSound, UploadedSoundsList
 from .url import URL
 from .user import User
 
@@ -95,6 +95,9 @@ __all__ = (
     "Payload",
     "Pull",
     "Purchase",
+    "PreQuota",
+    "PreUploadedImage",
+    "PreUploadedSound",
     "Quota",
     "Response",
     "Result",
@@ -109,7 +112,9 @@ __all__ = (
     "Update",
     "UpdateTypeLookupError",
     "UploadedImage",
+    "UploadedImagesList",
     "UploadedSound",
+    "UploadedSoundsList",
     "URL",
     "User",
 )

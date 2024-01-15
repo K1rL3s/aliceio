@@ -69,10 +69,6 @@ class AliceMethod(SkillContextController, BaseModel, Generic[AliceType], ABC):
     def api_url(self, api_server: AliceAPIServer, skill_id: str) -> str:
         pass
 
-    @abstractmethod
-    def response_validate(self, data: Dict[str, Any], **kwargs: Any) -> AliceType:
-        pass
-
     async def emit(self, skill: "Skill") -> AliceType:
         return await skill(self)
 

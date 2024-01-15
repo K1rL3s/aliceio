@@ -17,3 +17,9 @@ class Quota(AliceObject):
     @property
     def available(self) -> int:
         return self.total - self.used
+
+
+class PreQuota(AliceObject):
+    """Ключ к квоте."""
+
+    quota: Quota

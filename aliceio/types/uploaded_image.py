@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional
 
 from .base import AliceObject
 
@@ -27,3 +27,15 @@ class UploadedImage(AliceObject):
     @property
     def created_at(self) -> str:
         return self.createdAt
+
+
+class PreUploadedImage(AliceObject):
+    """Ключ к изображению."""
+
+    image: UploadedImage
+
+
+class UploadedImagesList(AliceObject):
+    """Список с изображениями."""
+
+    images: List[UploadedImage]

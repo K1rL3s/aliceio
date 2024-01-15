@@ -1,13 +1,11 @@
-from typing import Any, Dict, List
-
 from aliceio.client.alice import AliceAPIServer
 from aliceio.enums import FileType, HttpMethod
 from aliceio.methods.base import AliceMethod
-from aliceio.types import UploadedSound
+from aliceio.types import UploadedSoundsList
 
 
-class GetSounds(AliceMethod[List[UploadedSound]]):
-    __returning__ = List[UploadedSound]
+class GetSounds(AliceMethod[UploadedSoundsList]):
+    __returning__ = UploadedSoundsList
     __http_method__ = HttpMethod.GET
 
     def api_url(self, api_server: AliceAPIServer, skill_id: str) -> str:
@@ -15,13 +13,3 @@ class GetSounds(AliceMethod[List[UploadedSound]]):
             skill_id=skill_id,
             file_type=FileType.SOUNDS,
         )
-
-    def response_validate(
-        self,
-        data: Dict[str, Any],
-        **kwargs: Any,
-    ) -> List[UploadedSound]:
-        return [
-            UploadedSound.model_validate(sound, **kwargs)
-            for sound in data[FileType.SOUNDS]
-        ]

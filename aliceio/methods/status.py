@@ -1,8 +1,8 @@
 from typing import Any, Dict
 
 from ..client.alice import AliceAPIServer
-from ..enums import FileType, HttpMethod
-from ..types import Quota, SpaceStatus
+from ..enums import HttpMethod
+from ..types import SpaceStatus
 from .base import AliceMethod
 
 
@@ -14,8 +14,4 @@ class Status(AliceMethod[SpaceStatus]):
         return api_server.api_url(method="status")
 
     def response_validate(self, data: Dict[str, Any], **kwargs: Any) -> SpaceStatus:
-        return SpaceStatus(
-            images=Quota.model_validate(data[FileType.IMAGES]["quota"]),
-            sounds=Quota.model_validate(data[FileType.SOUNDS]["quota"]),
-            **kwargs,
-        )
+        return SpaceStatus.model_validate(data, **kwargs)

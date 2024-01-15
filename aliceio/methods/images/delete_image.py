@@ -1,5 +1,3 @@
-from typing import Any, Dict
-
 from aliceio.client.alice import AliceAPIServer
 from aliceio.enums import FileType, HttpMethod
 from aliceio.methods.base import AliceMethod
@@ -18,6 +16,3 @@ class DeleteImage(AliceMethod[Result]):
             file_type=FileType.IMAGES,
             file_id=self.file_id,
         )
-
-    def response_validate(self, data: Dict[str, Any], **kwargs: Any) -> Result:
-        return Result.model_validate(data, **kwargs)

@@ -36,7 +36,7 @@ class MockedSession(BaseSession):
         self.check_response(
             skill=skill,
             method=method,
-            status_code=response.error_code,
+            status_code=response.status_code,
             content=response.model_dump_json(),
         )
         return response.result  # type: ignore
@@ -58,7 +58,7 @@ class MockedSkill(Skill):
 
     def __init__(self, **kwargs) -> None:
         super(MockedSkill, self).__init__(
-            kwargs.pop("token", "42:TEST"),
+            kwargs.pop("token", "42:SKILL"),
             session=MockedSession(),
             **kwargs,
         )

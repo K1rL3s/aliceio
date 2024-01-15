@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional
 
 from .base import AliceObject
 
@@ -35,3 +35,15 @@ class UploadedSound(AliceObject):
     @property
     def is_processed(self) -> bool:
         return self.isProcessed
+
+
+class PreUploadedSound(AliceObject):
+    """Ключ к аудио."""
+
+    sound: UploadedSound
+
+
+class UploadedSoundsList(AliceObject):
+    """Список аудио."""
+
+    sounds: List[UploadedSound]
