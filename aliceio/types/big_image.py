@@ -33,7 +33,6 @@ class BigImage(MutableAliceObject):
             **__pydantic_kwargs: Any,
         ) -> None:
             super().__init__(
-                type=type,
                 image_id=image_id,
                 title=title,
                 description=description,

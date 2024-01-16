@@ -1,5 +1,5 @@
 from abc import ABC
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Optional
 
 from aliceio.types.base import MutableAliceObject
 from aliceio.types.session import Session
@@ -7,16 +7,16 @@ from aliceio.types.user import User
 
 
 class AliceEvent(MutableAliceObject, ABC):
-    user: User
     session: Session
+    user: Optional[User]
 
     if TYPE_CHECKING:
 
         def __init__(
             __pydantic_self__,
             *,
-            user: User,
             session: Session,
+            user: Optional[User] = None,
             **__pydantic_kwargs: Any,
         ) -> None:
             super().__init__(
@@ -26,5 +26,5 @@ class AliceEvent(MutableAliceObject, ABC):
             )
 
     @property
-    def from_user(self) -> User:
+    def from_user(self) -> Optional[User]:
         return self.user

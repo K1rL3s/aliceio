@@ -64,6 +64,7 @@ class Update(MutableAliceObject):
 
     def model_post_init(self, __context: Any) -> None:
         super().model_post_init(__context)
+
         events: Dict[str, Type[MutableAliceObject]] = {
             EventType.AUDIO_PLAYER: AudioPlayer,
             EventType.BUTTON_PRESSED: ButtonPressed,

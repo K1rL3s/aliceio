@@ -37,7 +37,6 @@ class ItemsList(MutableAliceObject):
             **__pydantic_kwargs: Any,
         ) -> None:
             super().__init__(
-                type=type,
                 items=items,
                 header=header,
                 footer=footer,
