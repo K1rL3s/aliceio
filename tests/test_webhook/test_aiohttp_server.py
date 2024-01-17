@@ -1,6 +1,6 @@
 from typing import Awaitable, Callable
 
-from aiohttp import MultipartReader, web
+from aiohttp import web
 from aiohttp.test_utils import TestClient
 from aiohttp.web_app import Application
 
@@ -135,48 +135,38 @@ class TestOneSkillRequestHandler:
         dp = Dispatcher()
 
         @dp.message(F.command == "test")
-        def handle_message(msg: Message) -> AliceResponse:
-            return AliceResponse(response=Response(text="test"))
+        def handle_message(msg: Message) -> Response:
+            return Response(text="test")
 
         handler = OneSkillRequestHandler(dispatcher=dp, skill=skill)
         handler.register(app, path="/webhook")
-        client: TestClient = await aiohttp_client(app)
+        client = await aiohttp_client(app)
 
         resp = await self.make_reqest(client=client, command="test")
         assert resp.status == 200
         assert resp.content_type == "application/json"
         assert await resp.json() == {
-            "response": {"text": "test"},
+            "response": {"text": "test", "end_session": False},
             "version": "1.0",
-            "end_session": False,
         }
 
     async def test_reply_into_webhook_unhandled(
         self,
         skill: MockedSkill,
-        aiohttp_client,
+        aiohttp_client: Callable[..., Awaitable[TestClient]],
     ):
         app = Application()
         dp = Dispatcher()
 
-        @dp.message(F.text == "test")
-        def handle_message(msg: Message):
-            return msg.answer(text="PASS")
+        @dp.message(F.command == "test")
+        def handle_message(msg: Message) -> Response:
+            return Response(text="test")
 
-        handler = OneSkillRequestHandler(
-            dispatcher=dp,
-            skill=skill,
-            handle_in_background=False,
-        )
+        handler = OneSkillRequestHandler(dispatcher=dp, skill=skill)
         handler.register(app, path="/webhook")
-        client: TestClient = await aiohttp_client(app)
+        client = await aiohttp_client(app)
 
         resp = await self.make_reqest(client=client, command="spam")
-        assert resp.status == 200
-        assert resp.content_type == "multipart/form-data"
-        result = {}
-        reader = MultipartReader.from_response(resp)
-        while part := await reader.next():
-            value = await part.read()
-            result[part.name] = value.decode()
-        assert not result
+        assert resp.status == 404
+        assert resp.content_type == "application/json"
+        assert await resp.json() is None

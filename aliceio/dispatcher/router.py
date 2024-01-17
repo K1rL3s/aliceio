@@ -42,6 +42,7 @@ class Router:
         self.errors = self.error = AliceEventObserver(
             router=self, event_name=EventType.ERROR
         )
+        self.timeout = AliceEventObserver(router=self, event_name=EventType.TIMEOUT)
 
         self.startup = EventObserver()
         self.shutdown = EventObserver()
@@ -53,6 +54,7 @@ class Router:
             EventType.SHOW_PULL: self.show_pull,
             EventType.AUDIO_PLAYER: self.audio_player,
             EventType.ERROR: self.errors,
+            EventType.TIMEOUT: self.timeout,
         }
 
     def __str__(self) -> str:
@@ -80,7 +82,9 @@ class Router:
 
         if observer:
             return await observer.wrap_outer_middleware(
-                _wrapped, event=event, data=kwargs
+                _wrapped,
+                event=event,
+                data=kwargs,
             )
         return await _wrapped(event, **kwargs)
 
@@ -112,7 +116,9 @@ class Router:
 
         for router in self._sub_routers:
             response = await router.propagate_event(
-                event_type=event_type, event=event, **kwargs
+                event_type=event_type,
+                event=event,
+                **kwargs,
             )
             if response is not UNHANDLED:
                 break

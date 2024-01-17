@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 import abc
-import secrets
+import datetime
+from enum import Enum
 from http import HTTPStatus
 from types import TracebackType
 from typing import TYPE_CHECKING, Any, Dict, Final, Optional, Type, cast
@@ -10,6 +11,7 @@ from pydantic import ValidationError
 
 from aliceio.exceptions import AliceAPIError, ClientDecodeError
 
+from ...dispatcher.event.bases import REJECTED, UNHANDLED
 from ...json import JSONModule, json
 from ...methods import AliceMethod, AliceType, Response
 from ...types import ErrorResult, InputFile
@@ -42,7 +44,7 @@ class BaseSession(abc.ABC):
         :param timeout: Тайм-аут запроса сессии.
         """
         self.api = api
-        self.json_module = json_module
+        self.json = json_module
         self.timeout = timeout
 
         self.middleware = RequestMiddlewareManager()
@@ -56,7 +58,7 @@ class BaseSession(abc.ABC):
     ) -> Response[AliceType]:
         """Проверка статуса ответа."""
         try:
-            json_data = self.json_module.loads(content)
+            json_data = self.json.loads(content)
         except Exception as e:
             # Обрабатываемая ошибка не может быть поймана конкретным типом,
             # поскольку декодер можно кастомизировать и вызвать любое исключение.
@@ -105,8 +107,7 @@ class BaseSession(abc.ABC):
         """
         pass
 
-    # TODO: Сделать под Алису
-    def prepare_value(
+    def prepare_value(  # noqa: C901
         self,
         value: Any,
         skill: Skill,
@@ -118,77 +119,53 @@ class BaseSession(abc.ABC):
             return None
         if isinstance(value, str):
             return value
-        # if value is UNSET_PARSE_MODE:
-        #     return self.prepare_value(
-        #         skill.parse_mode,
-        #         skill=skill,
-        #         files=files,
-        #         _dumps_json=_dumps_json,
-        #     )
-        # if value is UNSET_DISABLE_WEB_PAGE_PREVIEW:
-        #     return self.prepare_value(
-        #         skill.disable_web_page_preview,
-        #         skill=skill,
-        #         files=files,
-        #         _dumps_json=_dumps_json,
-        #     )
-        # if value is UNSET_PROTECT_CONTENT:
-        #     return self.prepare_value(
-        #         skill.protect_content,
-        #         skill=skill,
-        #         files=files,
-        #         _dumps_json=_dumps_json,
-        #     )
+        if value in (UNHANDLED, REJECTED):
+            return None
         if isinstance(value, InputFile):
             key = "file"
             files[key] = value
             return f"attach://{key}"
-
-        if isinstance(value, InputFile):
-            key = secrets.token_urlsafe(10)
-            files[key] = value
-            return f"attach://{key}"
-        # if isinstance(value, dict):
-        #     value = {
-        #         key: prepared_item
-        #         for key, item in value.items()
-        #         if (
-        #             prepared_item := self.prepare_value(
-        #                 item,
-        #                 skill=skill,
-        #                 files=files,
-        #                 _dumps_json=False,
-        #             )
-        #         )
-        #         is not None
-        #     }
-        #     if _dumps_json:
-        #         return self.json_dumps(value)
-        #     return value
-        # if isinstance(value, list):
-        #     value = [
-        #         prepared_item
-        #         for item in value
-        #         if (
-        #             prepared_item := self.prepare_value(
-        #                 item, skill=skill, files=files, _dumps_json=False
-        #             )
-        #         )
-        #         is not None
-        #     ]
-        #     if _dumps_json:
-        #         return self.json_dumps(value)
-        #     return value
-        # if isinstance(value, datetime.timedelta):
-        #     now = datetime.datetime.now()
-        #     return str(round((now + value).timestamp()))
-        # if isinstance(value, datetime.datetime):
-        #     return str(round(value.timestamp()))
-        # if isinstance(value, Enum):
-        #     return self.prepare_value(value.value, skill=skill, files=files)
+        if isinstance(value, dict):
+            value = {
+                key: prepared_item
+                for key, item in value.items()
+                if (
+                    prepared_item := self.prepare_value(
+                        item,
+                        skill=skill,
+                        files=files,
+                        _dumps_json=False,
+                    )
+                )
+                is not None
+            }
+            if _dumps_json:
+                return self.json.dumps(value)
+            return value
+        if isinstance(value, list):
+            value = [
+                prepared_item
+                for item in value
+                if (
+                    prepared_item := self.prepare_value(
+                        item, skill=skill, files=files, _dumps_json=False
+                    )
+                )
+                is not None
+            ]
+            if _dumps_json:
+                return self.json.dumps(value)
+            return value
+        if isinstance(value, datetime.timedelta):
+            now = datetime.datetime.now()
+            return str(round((now + value).timestamp()))
+        if isinstance(value, datetime.datetime):
+            return str(round(value.timestamp()))
+        if isinstance(value, Enum):
+            return self.prepare_value(value.value, skill=skill, files=files)
 
         if _dumps_json:
-            return self.json_module.dumps(value)
+            return self.json.dumps(value)
         return value
 
     async def __call__(

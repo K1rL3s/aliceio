@@ -16,9 +16,9 @@ class Session(AliceObject):
     session_id: str
     skill_id: str
     # user_id: str  DEPRECATED. Use `Session.application.application_id`
-    user: Optional[User]  # None если пользователь неавторизован
     application: Application
     new: bool
+    user: Optional[User] = None  # None если пользователь неавторизован
 
     if TYPE_CHECKING:
 
@@ -28,9 +28,9 @@ class Session(AliceObject):
             message_id: int,
             session_id: str,
             skill_id: str,
-            user: Optional[User],  # None если пользователь неавторизован
             application: Application,
             new: bool,
+            user: Optional[User] = None,  # None если пользователь неавторизован
             **__pydantic_kwargs: Any,
         ) -> None:
             super().__init__(

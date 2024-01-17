@@ -12,7 +12,6 @@ class TestShowPullHandler:
             type=RequestType.SHOW_PULL,
             show_type=ShowType.MORNING,
             session=create_mocked_session(),
-            user=create_mocked_session().user,
         )
 
         class MyHandler(ShowPullHandler):

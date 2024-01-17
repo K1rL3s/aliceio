@@ -18,7 +18,6 @@ class TestPurchaseHandler:
             signed_data="data",
             signature="sign",
             session=create_mocked_session(),
-            user=create_mocked_session().user,
         )
 
         class MyHandler(PurchaseHandler):

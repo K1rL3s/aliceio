@@ -9,13 +9,11 @@ from typing import Any, Dict, Optional, Set, Union
 from .. import loggers
 from ..client.skill import Skill
 from ..enums import EventType
-from ..exceptions import AliceAPIError
 from ..fsm.middleware import FSMContextMiddleware
 from ..fsm.storage.base import BaseStorage
 from ..fsm.storage.memory import MemoryStorage
 from ..fsm.strategy import FSMStrategy
-from ..methods import AliceMethod
-from ..types import Update, UpdateTypeLookupError
+from ..types import AliceResponse, Response, TimeoutEvent, Update, UpdateTypeLookupError
 from ..types.base import AliceObject
 from .event.alice import AliceEventObserver
 from .event.bases import UNHANDLED, SkipHandler
@@ -34,6 +32,7 @@ class Dispatcher(Router):
         fsm_strategy: FSMStrategy = FSMStrategy.USER,
         disable_fsm: bool = False,
         name: Optional[str] = None,
+        response_timeout: Union[int, float] = 4.0,
         **kwargs: Any,
     ) -> None:
         """
@@ -42,8 +41,11 @@ class Dispatcher(Router):
         :param storage: Хранилище для FSM.
         :param fsm_strategy: Стратегия FSM.
         :param disable_fsm: Отключить ли FSM.
+        :param name: Имя как роутера, полезно при дебаге.
+        :param response_timeout: Время для обработки события,
+            после которого будет вызван TimeoutEvent.
         :param kwargs: Остальные аргументы,
-                       будут переданы в обработчики как именованные аргументы
+            будут переданы в обработчики как именованные аргументы
         """
         super(Dispatcher, self).__init__(name=name)
 
@@ -53,14 +55,20 @@ class Dispatcher(Router):
         )
         self.update.register(self._listen_update)
 
+        # На timeout-observer тоже регистрируются все те же мидлвари, что и на update,
+        # потому что при возникновении TimeoutEvent'а контекстные данные из мидлварей
+        # оригинального Update не получить. Засчитаю за костыль
+
         # Обработчики ошибок должны работать вне всех других функций
         # и должны быть зарегистрированы раньше всех остальных мидлварей.
         self.update.outer_middleware(ErrorsMiddleware(self))
+        self.timeout.outer_middleware(ErrorsMiddleware(self))
 
         # UserContextMiddleware выполняет небольшую оптимизацию
         # для всех других встроенных мидлварей путем кэширования
         # экземпляров пользователя и сессиив контексте событий.
         self.update.outer_middleware(UserContextMiddleware())
+        self.timeout.outer_middleware(UserContextMiddleware())
 
         # FSMContextMiddleware всегда следует регистрировать после UserContextMiddleware
         # поскольку здесь используется контекст из предыдущего шага.
@@ -70,8 +78,10 @@ class Dispatcher(Router):
         )
         if not disable_fsm:
             self.update.outer_middleware(self.fsm)
+            self.timeout.outer_middleware(self.fsm)
         self.shutdown.register(self.fsm.close)
 
+        self.response_timeout = response_timeout
         self.workflow_data: Dict[str, Any] = kwargs
         self._running_lock = Lock()
         self._stop_signal: Optional[Event] = None
@@ -128,7 +138,8 @@ class Dispatcher(Router):
             # Предпочтительным способом является передача события с уже привязанным
             # экземпляром навыка перед вызовом метода feed_update
             update = Update.model_validate(
-                update.model_dump(), context={"skill": skill}
+                update.model_dump(),
+                context={"skill": skill},
             )
 
         try:
@@ -171,24 +182,6 @@ class Dispatcher(Router):
         parsed_update = Update.model_validate(update, context={"skill": skill})
         return await self.feed_update(skill=skill, update=parsed_update, **kwargs)
 
-    @classmethod
-    async def silent_call_request(
-        cls,
-        skill: Skill,
-        result: AliceMethod[Any],
-    ) -> None:
-        """Имитация ответа в вебхук."""
-        try:
-            await skill(result)
-        except AliceAPIError as e:
-            # Поскольку механизм WebHook не позволяет получить ответ на запросы,
-            # вызванные в ответ на запрос WebHook,
-            # необходимо пропускать неудачные ответы.
-            # Для отладки сюда добавлено логирование.
-            loggers.event.error(
-                "Failed to make answer: %s: %s", e.__class__.__name__, e
-            )
-
     async def _listen_update(self, update: Update, **kwargs: Any) -> Any:
         """
         Основной отслеживатель событий.
@@ -225,10 +218,7 @@ class Dispatcher(Router):
         update: Update,
         **kwargs: Any,
     ) -> Any:
-        """
-        Тот же самый `Dispatcher.process_update()`,
-        но возвращает реальный ответ вместо bool.
-        """
+        """Возвращает реальный ответ вместо bool."""
         try:
             return await self.feed_update(skill, update, **kwargs)
         except Exception as e:
@@ -242,13 +232,10 @@ class Dispatcher(Router):
             )
             raise
 
-    # TODO: Сделать возврат из вебхука без ретурна в обработчиках?
-    # TODO: Сделать кастомный ответ, если ответа нет через _timeout секунд
     async def feed_webhook_update(
         self,
         skill: Skill,
         update: Union[Update, Dict[str, Any]],
-        _timeout: float = 4.5,
         **kwargs: Any,
     ) -> Optional[AliceObject]:
         if not isinstance(update, Update):  # Allow to use raw updates
@@ -262,27 +249,12 @@ class Dispatcher(Router):
             if not waiter.done():
                 waiter.set_result(None)
 
-        timeout_handle = loop.call_later(_timeout, release_waiter)
+        timeout_handle = loop.call_later(self.response_timeout, release_waiter)
 
         process_updates: Future[Any] = asyncio.ensure_future(
             self._feed_webhook_update(skill=skill, update=update, **kwargs)
         )
         process_updates.add_done_callback(release_waiter, context=ctx)
-
-        def process_response(task: Future[Any]) -> None:
-            warnings.warn(
-                "Detected slow response into webhook.\n"
-                "Alice is waiting for response only 4.5 seconds and cancel update.",
-                RuntimeWarning,
-            )
-            try:
-                result = task.result()
-            except Exception as e:
-                raise e
-            if isinstance(result, AliceMethod):
-                asyncio.ensure_future(
-                    self.silent_call_request(skill=skill, result=result)
-                )
 
         try:
             try:
@@ -294,16 +266,49 @@ class Dispatcher(Router):
 
             if process_updates.done():
                 # TODO: handle exceptions
-                # TODO: Определить типы, сделать преобразование в AliceResponse
-                response: Any = process_updates.result()
-                if isinstance(response, AliceObject):
-                    return response
+                return await self._convert_response(process_updates.result())
 
-            else:
-                process_updates.remove_done_callback(release_waiter)
-                process_updates.add_done_callback(process_response, context=ctx)
+            process_updates.remove_done_callback(release_waiter)
+            response: Any = await self._process_timeouted_update(
+                skill,
+                update,
+                **kwargs,
+            )
+            return await self._convert_response(response)
 
         finally:
             timeout_handle.cancel()
 
-        return None
+    async def _process_timeouted_update(
+        self,
+        skill: Skill,
+        update: Update,
+        **kwargs: Any,
+    ) -> Any:
+        warnings.warn(
+            "Detected slow response into webhook.\n"
+            "Alice only waits less than 4.5 seconds for a response and cancel "
+            "skill conversation, so be careful and register extra fast handlers "
+            "in `@<router>.timeout` to respond to timeouted updates.",
+            RuntimeWarning,
+        )
+        return await self.propagate_event(
+            event_type=EventType.TIMEOUT,
+            event=TimeoutEvent(
+                update=update,
+                session=update.session,
+                context={"skill": skill},
+            ),
+            skill=skill,
+            **self.workflow_data,
+            **kwargs,
+        )
+
+    # TODO: Сделать преобразование разных типов в AliceResponse
+    @staticmethod
+    async def _convert_response(value: Any) -> Optional[Union[AliceObject, Any]]:
+        if isinstance(value, AliceResponse):
+            return value
+        if isinstance(value, Response):
+            return AliceResponse(response=value)
+        return value

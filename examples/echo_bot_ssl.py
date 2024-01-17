@@ -24,7 +24,7 @@ def main() -> None:
     dp.include_router(router)
 
     skill_id = os.environ["SKILL_ID"]
-    oauth_token = os.environ["OAUTH_TOKEN"]
+    oauth_token = os.getenv("OAUTH_TOKEN")
     skill = Skill(
         skill_id=skill_id,
         oauth_token=oauth_token,

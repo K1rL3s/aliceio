@@ -8,7 +8,6 @@ from aliceio.types.user import User
 
 class AliceEvent(MutableAliceObject, ABC):
     session: Session
-    user: Optional[User]
 
     if TYPE_CHECKING:
 
@@ -16,15 +15,17 @@ class AliceEvent(MutableAliceObject, ABC):
             __pydantic_self__,
             *,
             session: Session,
-            user: Optional[User] = None,
             **__pydantic_kwargs: Any,
         ) -> None:
             super().__init__(
-                user=user,
                 session=session,
                 **__pydantic_kwargs,
             )
 
     @property
     def from_user(self) -> Optional[User]:
-        return self.user
+        return self.session.user
+
+    @property
+    def user(self) -> Optional[User]:
+        return self.session.user

@@ -22,7 +22,7 @@ from aliceio.webhook.aiohttp_server import OneSkillRequestHandler, setup_applica
 
 router = Router()
 
-IMAGE_ID = "1030494/9cf43e52f64928daf818"
+IMAGE_ID = "1030494/9cf43e52f64928daf818"  # вставьте своё любое айди картинки
 
 
 @router.message(F.command == "изображения")

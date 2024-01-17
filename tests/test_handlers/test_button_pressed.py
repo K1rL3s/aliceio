@@ -12,7 +12,6 @@ class TestButtonPressedHandler:
             type=RequestType.BUTTON_PRESSED,
             payload={"k": "v"},
             session=create_mocked_session(),
-            user=create_mocked_session().user,
         )
 
         class MyHandler(ButtonPressedHandler):
