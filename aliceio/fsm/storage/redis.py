@@ -171,4 +171,4 @@ class RedisStorage(BaseStorage):
             return {}
         if isinstance(value, bytes):
             value = value.decode("utf-8")
-        return cast(Dict[str, Any], self.json.dumps(value))
+        return cast(Dict[str, Any], self.json.loads(value))

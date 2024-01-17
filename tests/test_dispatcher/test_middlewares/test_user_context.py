@@ -32,6 +32,14 @@ class TestUserContextMiddleware:
 
         assert data["event_session"] == 1
         assert data["event_from_user"] == 2
+        assert data["event_update"] == update
+
+        data.clear()
+        await middleware(next_handler, update, data)
+
+        assert data["event_session"] == update.session
+        assert data["event_from_user"] == update.session.user
+        assert data["event_update"] == update
 
     async def test_resolve_context(self) -> None:
         user = User(user_id="42", access_token="24")

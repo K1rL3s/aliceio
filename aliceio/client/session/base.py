@@ -112,7 +112,7 @@ class BaseSession(abc.ABC):
         value: Any,
         skill: Skill,
         files: Dict[str, Any],
-        _dumps_json: bool = True,
+        _dumps_json: bool = False,
     ) -> Any:
         """Подготовка значения перед отправкой."""
         if value is None:
@@ -162,7 +162,9 @@ class BaseSession(abc.ABC):
         if isinstance(value, datetime.datetime):
             return str(round(value.timestamp()))
         if isinstance(value, Enum):
-            return self.prepare_value(value.value, skill=skill, files=files)
+            return self.prepare_value(
+                value.value, skill=skill, files=files, _dumps_json=True
+            )
 
         if _dumps_json:
             return self.json.dumps(value)

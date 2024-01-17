@@ -1,4 +1,5 @@
 import contextvars
+import platform
 
 import pytest
 
@@ -105,5 +106,9 @@ class TestContextInstanceMixin:
 
         wrong_type_token = "wrong_type"
 
-        with pytest.raises(TypeError):
-            MyClass.reset_current(wrong_type_token)
+        if platform.python_implementation() == "PyPy":
+            with pytest.raises(AttributeError):
+                MyClass.reset_current(wrong_type_token)
+        else:
+            with pytest.raises(TypeError):
+                MyClass.reset_current(wrong_type_token)
