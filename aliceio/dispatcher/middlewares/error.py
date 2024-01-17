@@ -24,7 +24,7 @@ class ErrorsMiddleware(BaseMiddleware):
     ) -> Any:
         try:
             return await handler(event, data)
-        except (SkipHandler, CancelHandler):  # pragma: no cover
+        except (SkipHandler, CancelHandler):
             raise
         except Exception as e:
             event = cast(Update, event)

@@ -55,14 +55,20 @@ class Dispatcher(Router):
         )
         self.update.register(self._listen_update)
 
+        # На timeout-observer тоже регистрируются все те же мидлвари, что и на update,
+        # потому что при возникновении TimeoutEvent'а контекстные данные из мидлварей
+        # оригинального Update не получить. Засчитаю за костыль
+
         # Обработчики ошибок должны работать вне всех других функций
         # и должны быть зарегистрированы раньше всех остальных мидлварей.
         self.update.outer_middleware(ErrorsMiddleware(self))
+        self.timeout.outer_middleware(ErrorsMiddleware(self))
 
         # UserContextMiddleware выполняет небольшую оптимизацию
         # для всех других встроенных мидлварей путем кэширования
         # экземпляров пользователя и сессиив контексте событий.
         self.update.outer_middleware(UserContextMiddleware())
+        self.timeout.outer_middleware(UserContextMiddleware())
 
         # FSMContextMiddleware всегда следует регистрировать после UserContextMiddleware
         # поскольку здесь используется контекст из предыдущего шага.
@@ -72,6 +78,7 @@ class Dispatcher(Router):
         )
         if not disable_fsm:
             self.update.outer_middleware(self.fsm)
+            self.timeout.outer_middleware(self.fsm)
         self.shutdown.register(self.fsm.close)
 
         self.response_timeout = response_timeout
@@ -211,10 +218,7 @@ class Dispatcher(Router):
         update: Update,
         **kwargs: Any,
     ) -> Any:
-        """
-        Тот же самый `Dispatcher.process_update()`,
-        но возвращает реальный ответ вместо bool.
-        """
+        """Возвращает реальный ответ вместо bool."""
         try:
             return await self.feed_update(skill, update, **kwargs)
         except Exception as e:
@@ -228,8 +232,6 @@ class Dispatcher(Router):
             )
             raise
 
-    # TODO: Сделать возврат из вебхука без ретурна в обработчиках?
-    # TODO: Сделать кастомный ответ, если ответа нет через _timeout секунд
     async def feed_webhook_update(
         self,
         skill: Skill,
@@ -267,7 +269,11 @@ class Dispatcher(Router):
                 return await self._convert_response(process_updates.result())
 
             process_updates.remove_done_callback(release_waiter)
-            response: Any = await self._process_timeouted_update(update, **kwargs)
+            response: Any = await self._process_timeouted_update(
+                skill,
+                update,
+                **kwargs,
+            )
             return await self._convert_response(response)
 
         finally:
@@ -275,6 +281,7 @@ class Dispatcher(Router):
 
     async def _process_timeouted_update(
         self,
+        skill: Skill,
         update: Update,
         **kwargs: Any,
     ) -> Any:
@@ -287,15 +294,21 @@ class Dispatcher(Router):
         )
         return await self.propagate_event(
             event_type=EventType.TIMEOUT,
-            event=TimeoutEvent(update=update, session=update.session),
+            event=TimeoutEvent(
+                update=update,
+                session=update.session,
+                context={"skill": skill},
+            ),
+            skill=skill,
+            **self.workflow_data,
             **kwargs,
         )
 
-    # TODO: Определить типы, сделать преобразование в AliceResponse
+    # TODO: Сделать преобразование разных типов в AliceResponse
     @staticmethod
-    async def _convert_response(value: Any) -> Optional[AliceObject]:
+    async def _convert_response(value: Any) -> Optional[Union[AliceObject, Any]]:
         if isinstance(value, AliceResponse):
             return value
         if isinstance(value, Response):
             return AliceResponse(response=value)
-        return None
+        return value

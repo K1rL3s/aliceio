@@ -95,7 +95,7 @@ class RedisStorage(BaseStorage):
         self.key_builder = key_builder
         self.state_ttl = state_ttl
         self.data_ttl = data_ttl
-        self.json_module = json_module
+        self.json = json_module
 
     @classmethod
     def from_url(
@@ -157,7 +157,7 @@ class RedisStorage(BaseStorage):
             return
         await self.redis.set(
             redis_key,
-            self.json_module.dumps(data),
+            self.json.dumps(data),
             ex=self.data_ttl,
         )
 
@@ -171,4 +171,4 @@ class RedisStorage(BaseStorage):
             return {}
         if isinstance(value, bytes):
             value = value.decode("utf-8")
-        return cast(Dict[str, Any], self.json_module.dumps(value))
+        return cast(Dict[str, Any], self.json.dumps(value))

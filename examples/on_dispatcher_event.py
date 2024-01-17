@@ -18,7 +18,7 @@ async def echo(message: Message) -> AliceResponse:
         text = "Привет!"
     else:
         text = message.original_utterance
-        await asyncio.sleep(5)  # Симуляция долгой работы
+        await asyncio.sleep(5)  # Симуляция долгой работы. 5сек > 4.5сек
     return AliceResponse(response=Response(text=text))
 
 

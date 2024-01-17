@@ -43,7 +43,7 @@ class BaseSession(abc.ABC):
         :param timeout: Тайм-аут запроса сессии.
         """
         self.api = api
-        self.json_module = json_module
+        self.json = json_module
         self.timeout = timeout
 
         self.middleware = RequestMiddlewareManager()
@@ -57,7 +57,7 @@ class BaseSession(abc.ABC):
     ) -> Response[AliceType]:
         """Проверка статуса ответа."""
         try:
-            json_data = self.json_module.loads(content)
+            json_data = self.json.loads(content)
         except Exception as e:
             # Обрабатываемая ошибка не может быть поймана конкретным типом,
             # поскольку декодер можно кастомизировать и вызвать любое исключение.
@@ -137,7 +137,7 @@ class BaseSession(abc.ABC):
                 is not None
             }
             if _dumps_json:
-                return self.json_module.dumps(value)
+                return self.json.dumps(value)
             return value
         if isinstance(value, list):
             value = [
@@ -151,7 +151,7 @@ class BaseSession(abc.ABC):
                 is not None
             ]
             if _dumps_json:
-                return self.json_module.dumps(value)
+                return self.json.dumps(value)
             return value
         if isinstance(value, datetime.timedelta):
             now = datetime.datetime.now()
@@ -162,7 +162,7 @@ class BaseSession(abc.ABC):
             return self.prepare_value(value.value, skill=skill, files=files)
 
         if _dumps_json:
-            return self.json_module.dumps(value)
+            return self.json.dumps(value)
         return value
 
     async def __call__(

@@ -8,6 +8,7 @@ from aiohttp.typedefs import Handler
 from aiohttp.web_middlewares import middleware
 
 from aliceio import Dispatcher, Skill, loggers
+from aliceio.json import JSONModule, json
 from aliceio.types.base import AliceObject
 from aliceio.webhook.security import IPFilter
 
@@ -87,6 +88,7 @@ class BaseRequestHandler(ABC):
     def __init__(
         self,
         dispatcher: Dispatcher,
+        json_module: JSONModule = json,
         **data: Any,
     ) -> None:
         """
@@ -98,6 +100,7 @@ class BaseRequestHandler(ABC):
             a waiting end of a handler process
         """
         self.dispatcher = dispatcher
+        self.json = json
         self.data = data
 
     def register(self, app: Application, /, path: str, **kwargs: Any) -> None:
@@ -146,13 +149,13 @@ class BaseRequestHandler(ABC):
     async def _handle_request(self, skill: Skill, request: web.Request) -> web.Response:
         result = await self.dispatcher.feed_webhook_update(
             skill,
-            await request.json(loads=skill.session.json_module.loads),
+            await request.json(loads=self.json.loads),
             **self.data,
         )
         return web.Response(body=self._build_json_response(skill=skill, result=result))
 
-    @staticmethod
     def _build_json_response(
+        self,
         skill: Skill,
         result: Optional[AliceObject],
     ) -> JsonPayload:
@@ -165,7 +168,7 @@ class BaseRequestHandler(ABC):
             )
             if result
             else None,
-            dumps=skill.session.json_module.dumps,
+            dumps=self.json.dumps,
         )
 
     async def handle(self, request: web.Request) -> web.Response:
