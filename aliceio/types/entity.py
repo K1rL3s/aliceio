@@ -40,6 +40,7 @@ class Entity(MutableAliceObject):
 
     def model_post_init(self, __context: Any) -> None:
         super().model_post_init(__context)
+
         if not self.value or isinstance(self.value, (int, float)):  # "YANDEX.NUMBER"
             return
         entity_type: Dict[str, Type[NLUEntity]] = {
