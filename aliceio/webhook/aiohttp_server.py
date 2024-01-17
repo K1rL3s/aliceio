@@ -8,6 +8,7 @@ from aiohttp.typedefs import Handler
 from aiohttp.web_middlewares import middleware
 
 from aliceio import Dispatcher, Skill, loggers
+from aliceio.types import Update
 from aliceio.types.base import AliceObject
 from aliceio.webhook.security import IPFilter
 
@@ -189,3 +190,21 @@ class OneSkillRequestHandler(BaseRequestHandler):
 
     async def resolve_skill(self, request: web.Request) -> Skill:
         return self.skill
+
+    async def _handle_request(self, skill: Skill, request: web.Request) -> web.Response:
+        json_data = await request.json(loads=skill.session.json_module.loads)
+        update = Update.model_validate(json_data, context={"skill": skill})
+
+        # Проверка айди навыка в поступившем событии
+        if update.session.skill_id != skill.skill_id:
+            loggers.webhook.warning(
+                "Update came from a skill id=%r, but a skill id=%r was expected"
+            )
+            return web.Response(body="Not Acceptable", status=406)
+
+        result = await self.dispatcher.feed_webhook_update(
+            skill,
+            update,
+            **self.data,
+        )
+        return web.Response(body=self._build_response_json(skill=skill, result=result))

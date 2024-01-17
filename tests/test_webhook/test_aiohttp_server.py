@@ -1,10 +1,12 @@
+from typing import Awaitable, Callable
+
 from aiohttp import MultipartReader, web
 from aiohttp.test_utils import TestClient
 from aiohttp.web_app import Application
 
 from aliceio import Dispatcher, F
 from aliceio.methods import Request
-from aliceio.types import Message
+from aliceio.types import AliceResponse, Message, Response
 from aliceio.webhook.aiohttp_server import (
     OneSkillRequestHandler,
     ip_filter_middleware,
@@ -53,7 +55,12 @@ class TestAiohttpServer:
 
 
 class TestOneSkillRequestHandler:
-    async def make_reqest(self, client: TestClient, command: str = "test"):
+    async def make_reqest(
+        self,
+        client: TestClient,
+        command: str = "test",
+        skill_id: str = "42:SKILL_ID",
+    ):
         return await client.post(
             "/webhook",
             json={
@@ -68,54 +75,16 @@ class TestOneSkillRequestHandler:
                     },
                 },
                 "request": {
-                    "command": "закажи пиццу на улицу льва толстого 16 на завтра",
-                    "original_utterance": "закажи пиццу на улицу льва толстого, 16 на завтра",  # noqa: E501
+                    "command": command,
+                    "original_utterance": command,
                     "markup": {"dangerous_context": True},
                     "payload": {},
-                    "nlu": {
-                        "tokens": [
-                            "закажи",
-                            "пиццу",
-                            "на",
-                            "льва",
-                            "толстого",
-                            "16",
-                            "на",
-                            "завтра",
-                        ],
-                        "entities": [
-                            {
-                                "tokens": {"start": 2, "end": 6},
-                                "type": "YANDEX.GEO",
-                                "value": {
-                                    "house_number": "16",
-                                    "street": "льва толстого",
-                                },
-                            },
-                            {
-                                "tokens": {"start": 3, "end": 5},
-                                "type": "YANDEX.FIO",
-                                "value": {"first_name": "лев", "last_name": "толстой"},
-                            },
-                            {
-                                "tokens": {"start": 5, "end": 6},
-                                "type": "YANDEX.NUMBER",
-                                "value": 16,
-                            },
-                            {
-                                "tokens": {"start": 6, "end": 8},
-                                "type": "YANDEX.DATETIME",
-                                "value": {"day": 1, "day_is_relative": True},
-                            },
-                        ],
-                        "intents": {},
-                    },
                     "type": "SimpleUtterance",
                 },
                 "session": {
                     "message_id": 0,
                     "session_id": "42:SESSION_ID",
-                    "skill_id": "42:SKILL_ID",
+                    "skill_id": skill_id,
                     "user_id": "42:DEPRECATED_USER_ID",
                     "user": {
                         "user_id": "42:USER_ID",
@@ -133,32 +102,54 @@ class TestOneSkillRequestHandler:
             },
         )
 
-    async def test_reply_into_webhook_text(self, skill: MockedSkill, aiohttp_client):
+    async def test_verify_skill_id_in_webhook_request(
+        self,
+        skill: MockedSkill,
+        aiohttp_client: Callable[..., Awaitable[TestClient]],
+    ):
         app = Application()
         dp = Dispatcher()
 
-        @dp.message(F.text == "test")
-        def handle_message(msg: Message):
-            return msg.answer(text="PASS")
+        @dp.message()
+        def handle_message(msg: Message) -> AliceResponse:
+            return AliceResponse(response=Response(text="test"))
 
-        handler = OneSkillRequestHandler(
-            dispatcher=dp,
-            skill=skill,
-            handle_in_background=False,
-        )
+        handler = OneSkillRequestHandler(dispatcher=dp, skill=skill)
         handler.register(app, path="/webhook")
         client: TestClient = await aiohttp_client(app)
 
-        resp = await self.make_reqest(client=client)
+        resp = await self.make_reqest(client=client, command="test", skill_id=skill.id)
         assert resp.status == 200
-        assert resp.content_type == "multipart/form-data"
-        result = {}
-        reader = MultipartReader.from_response(resp)
-        while part := await reader.next():
-            value = await part.read()
-            result[part.name] = value.decode()
-        assert result["method"] == "sendMessage"
-        assert result["text"] == "PASS"
+        assert resp.content_type == "application/json"
+
+        resp = await self.make_reqest(client=client, command="test", skill_id="kaboom")
+        assert resp.status == 406
+        assert resp.content_type == "text/plain"
+
+    async def test_reply_into_webhook_alice_response(
+        self,
+        skill: MockedSkill,
+        aiohttp_client: Callable[..., Awaitable[TestClient]],
+    ):
+        app = Application()
+        dp = Dispatcher()
+
+        @dp.message(F.command == "test")
+        def handle_message(msg: Message) -> AliceResponse:
+            return AliceResponse(response=Response(text="test"))
+
+        handler = OneSkillRequestHandler(dispatcher=dp, skill=skill)
+        handler.register(app, path="/webhook")
+        client: TestClient = await aiohttp_client(app)
+
+        resp = await self.make_reqest(client=client, command="test")
+        assert resp.status == 200
+        assert resp.content_type == "application/json"
+        assert await resp.json() == {
+            "response": {"text": "test"},
+            "version": "1.0",
+            "end_session": False,
+        }
 
     async def test_reply_into_webhook_unhandled(
         self,

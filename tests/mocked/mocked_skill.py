@@ -58,7 +58,7 @@ class MockedSkill(Skill):
 
     def __init__(self, **kwargs) -> None:
         super(MockedSkill, self).__init__(
-            kwargs.pop("token", "42:SKILL"),
+            kwargs.pop("token", "42:SKILL_ID"),
             session=MockedSession(),
             **kwargs,
         )

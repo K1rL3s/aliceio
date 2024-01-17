@@ -25,7 +25,9 @@ class TestRequestLogging:
             ),
         )
         assert await skill.status()
-        assert "Make request with method='Status' by skill id='42:SKILL'" in caplog.text
+        assert (
+            "Make request with method='Status' by skill id='42:SKILL_ID'" in caplog.text
+        )
 
     async def test_ignore_methods(self, skill: MockedSkill, caplog):
         caplog.set_level(logging.INFO)
@@ -40,7 +42,7 @@ class TestRequestLogging:
         )
         assert await skill.status()
         assert (
-            "Make request with method='Status' by skill id='42:SKILL'"
+            "Make request with method='Status' by skill id='42:SKILL_ID'"
             not in caplog.text
         )
 
@@ -58,5 +60,6 @@ class TestRequestLogging:
         )
         assert await skill.get_images()
         assert (
-            "Make request with method='GetImages' by skill id='42:SKILL'" in caplog.text
+            "Make request with method='GetImages' by skill id='42:SKILL_ID'"
+            in caplog.text
         )
