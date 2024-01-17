@@ -11,6 +11,7 @@ from pydantic import ValidationError
 
 from aliceio.exceptions import AliceAPIError, ClientDecodeError
 
+from ...dispatcher.event.bases import REJECTED, UNHANDLED
 from ...json import JSONModule, json
 from ...methods import AliceMethod, AliceType, Response
 from ...types import ErrorResult, InputFile
@@ -118,6 +119,8 @@ class BaseSession(abc.ABC):
             return None
         if isinstance(value, str):
             return value
+        if value in (UNHANDLED, REJECTED):
+            return None
         if isinstance(value, InputFile):
             key = "file"
             files[key] = value

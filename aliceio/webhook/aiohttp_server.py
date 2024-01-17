@@ -6,9 +6,12 @@ from aiohttp import JsonPayload, web
 from aiohttp.abc import Application
 from aiohttp.typedefs import Handler
 from aiohttp.web_middlewares import middleware
+from pydantic import BaseModel
 
 from aliceio import Dispatcher, Skill, loggers
+from aliceio.dispatcher.event.bases import REJECTED, UNHANDLED
 from aliceio.json import JSONModule, json
+from aliceio.types import Update
 from aliceio.types.base import AliceObject
 from aliceio.webhook.security import IPFilter
 
@@ -100,7 +103,7 @@ class BaseRequestHandler(ABC):
             a waiting end of a handler process
         """
         self.dispatcher = dispatcher
-        self.json = json
+        self.json = json_module
         self.data = data
 
     def register(self, app: Application, /, path: str, **kwargs: Any) -> None:
@@ -152,7 +155,13 @@ class BaseRequestHandler(ABC):
             await request.json(loads=self.json.loads),
             **self.data,
         )
-        return web.Response(body=self._build_json_response(skill=skill, result=result))
+        return self._build_web_response(result, skill)
+
+    def _build_web_response(self, result: Any, skill: Skill) -> web.Response:
+        return web.Response(
+            body=self._build_json_response(skill=skill, result=result),
+            status=200 if result not in (UNHANDLED, REJECTED) else 404,
+        )
 
     def _build_json_response(
         self,
@@ -161,7 +170,7 @@ class BaseRequestHandler(ABC):
     ) -> JsonPayload:
         return JsonPayload(
             value=skill.session.prepare_value(
-                result.model_dump(),
+                result.model_dump() if isinstance(result, BaseModel) else result,
                 skill=skill,
                 files={},
                 _dumps_json=False,
@@ -200,3 +209,23 @@ class OneSkillRequestHandler(BaseRequestHandler):
 
     async def resolve_skill(self, request: web.Request) -> Skill:
         return self.skill
+
+    async def _handle_request(self, skill: Skill, request: web.Request) -> web.Response:
+        json_data = await request.json(loads=skill.session.json.loads)
+        update = Update.model_validate(json_data, context={"skill": skill})
+
+        # Проверка айди навыка в поступившем событии
+        if update.session.skill_id != skill.skill_id:
+            loggers.webhook.warning(
+                "Update came from a skill id=%r, but skill id=%r was expected",
+                update.session.skill_id,
+                skill.skill_id,
+            )
+            return web.Response(body="Not Acceptable", status=406)
+
+        result = await self.dispatcher.feed_webhook_update(
+            skill,
+            update,
+            **self.data,
+        )
+        return self._build_web_response(result, skill)

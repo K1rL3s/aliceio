@@ -30,7 +30,6 @@ class ImageGallery(MutableAliceObject):
             **__pydantic_kwargs: Any,
         ) -> None:
             super().__init__(
-                type=type,
                 items=items,
                 **__pydantic_kwargs,
             )

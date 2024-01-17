@@ -32,7 +32,7 @@ class Dispatcher(Router):
         fsm_strategy: FSMStrategy = FSMStrategy.USER,
         disable_fsm: bool = False,
         name: Optional[str] = None,
-        response_timeout: float = 4.0,
+        response_timeout: Union[int, float] = 4.0,
         **kwargs: Any,
     ) -> None:
         """
@@ -158,7 +158,7 @@ class Dispatcher(Router):
             finish_time = loop.time()
             duration = (finish_time - start_time) * 1000
             loggers.event.info(
-                "Update from session=%s is %s. Duration %d ms by skill id=%d",
+                "Update from session_id=%s is %s. Duration %d ms by skill id=%d",
                 update.session.session_id,
                 "handled" if handled else "not handled",
                 duration,

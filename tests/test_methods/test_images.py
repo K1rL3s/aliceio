@@ -15,7 +15,7 @@ class TestUploadImage:
 
         method.as_(skill)
         url = method.api_url(PRODUCTION)
-        assert url == "https://dialogs.yandex.net/api/v1/skills/42:SKILL/images"
+        assert url == "https://dialogs.yandex.net/api/v1/skills/42:SKILL_ID/images"
 
 
 class TestGetImages:
@@ -27,7 +27,7 @@ class TestGetImages:
 
         method.as_(skill)
         url = method.api_url(PRODUCTION)
-        assert url == "https://dialogs.yandex.net/api/v1/skills/42:SKILL/images"
+        assert url == "https://dialogs.yandex.net/api/v1/skills/42:SKILL_ID/images"
 
 
 class TestDeleteImage:
@@ -39,4 +39,6 @@ class TestDeleteImage:
 
         method.as_(skill)
         url = method.api_url(PRODUCTION)
-        assert url == "https://dialogs.yandex.net/api/v1/skills/42:SKILL/images/FILE_ID"
+        assert (
+            url == "https://dialogs.yandex.net/api/v1/skills/42:SKILL_ID/images/FILE_ID"
+        )

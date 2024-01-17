@@ -20,7 +20,6 @@ class ErrorEvent(AliceEvent):
             **__pydantic_kwargs: Any,
         ) -> None:
             super().__init__(
-                type=type,
                 update=update,
                 exception=exception,
                 **__pydantic_kwargs,

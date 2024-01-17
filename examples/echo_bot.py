@@ -1,12 +1,9 @@
-import asyncio
-import logging
 import os
 
 from aiohttp import web
 
 from aliceio import Dispatcher, Router, Skill
-from aliceio.exceptions import AliceNoCredentialsError
-from aliceio.types import AliceResponse, Message, Response, TimeoutEvent
+from aliceio.types import AliceResponse, Message, Response
 from aliceio.webhook.aiohttp_server import OneSkillRequestHandler, setup_application
 
 router = Router()
@@ -18,40 +15,15 @@ async def echo(message: Message) -> AliceResponse:
         text = "Привет!"
     else:
         text = message.original_utterance
-        await asyncio.sleep(5)  # Симуляция долгой работы. 5сек > 4.5сек
     return AliceResponse(response=Response(text=text))
 
 
-async def on_startup(skill: Skill) -> None:
-    try:
-        status = await skill.status()
-    except AliceNoCredentialsError as e:
-        status = e
-    logging.info("On startup: {}", str(status))
-
-
-async def on_shutdown(skill: Skill) -> None:
-    try:
-        status = await skill.status()
-    except AliceNoCredentialsError as e:
-        status = e
-    logging.info("On shutdown: {}", str(status))
-
-
-@router.timeout()
-async def on_timeout(timeout: TimeoutEvent) -> AliceResponse:
-    return AliceResponse(response=Response(text="Что-то с моим временем не так..."))
-
-
 def main() -> None:
-    dp = Dispatcher(response_timeout=3)
+    dp = Dispatcher()
     dp.include_router(router)
 
-    dp.startup.register(on_startup)
-    dp.shutdown.register(on_shutdown)
-
     skill_id = os.environ["SKILL_ID"]
-    oauth_token = os.environ.get("OAUTH_TOKEN")
+    oauth_token = os.getenv("OAUTH_TOKEN")
     skill = Skill(
         skill_id=skill_id,
         oauth_token=oauth_token,

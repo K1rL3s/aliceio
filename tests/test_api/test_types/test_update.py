@@ -102,7 +102,7 @@ class TestUpdate:
                 "session": {
                     "message_id": 0,
                     "session_id": "42:SESSION",
-                    "skill_id": "42:SKILL",
+                    "skill_id": "42:SKILL_ID",
                     "user_id": "42:USER",
                     "user": {"user_id": "42:USER", "access_token": "42:TOKEN"},
                     "application": {"application_id": "42:APP"},
