@@ -10,11 +10,11 @@ from tests.mocked import MockedSkill
 
 class TestDispatchTimeout:
     async def test_handle_timeout_dp(self, skill: MockedSkill, update: Update):
-        dp = Dispatcher(response_timeout=0.2)
+        dp = Dispatcher(response_timeout=0.1)
 
         @dp.message()
         async def message_handler(event):
-            await asyncio.sleep(0.5)
+            await asyncio.sleep(1)
 
         @dp.timeout()
         async def timeout_handler(timeout, skill, state) -> str:
@@ -28,12 +28,12 @@ class TestDispatchTimeout:
 
     async def test_handle_timeout_routers(self, skill: MockedSkill, update: Update):
         router = Router()
-        dp = Dispatcher(response_timeout=0.2)
+        dp = Dispatcher(response_timeout=0.1)
         dp.include_router(router)
 
         @router.message()
         async def message_handler(event):
-            await asyncio.sleep(0.5)
+            await asyncio.sleep(1)
 
         @router.timeout()
         async def timeout_handler(timeout, skill, state):

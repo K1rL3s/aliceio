@@ -288,8 +288,8 @@ class Dispatcher(Router):
         warnings.warn(
             "Detected slow response into webhook.\n"
             "Alice only waits less than 4.5 seconds for a response and cancel "
-            "skill conversation, so be careful and register extra fast handlers "
-            "in `@<router>.timeout` to respond to timeouted updates.",
+            "the skill dialog, so be careful and register ultra-fast handlers "
+            "by `@<router>.timeout` to respond to timeouted updates.",
             RuntimeWarning,
         )
         return await self.propagate_event(

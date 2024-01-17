@@ -43,13 +43,13 @@ class TestAiohttpServer:
 
         resp = await client.post(
             "/webhook",
-            headers={"X-Forwarded-For": "149.154.167.220"},
+            headers={"X-Forwarded-For": "178.154.128.1"},
         )
         assert resp.status == 200
 
         resp = await client.post(
             "/webhook",
-            headers={"X-Forwarded-For": "149.154.167.220,10.111.0.2"},
+            headers={"X-Forwarded-For": "185.32.187.1,10.111.0.2"},
         )
         assert resp.status == 200
 
