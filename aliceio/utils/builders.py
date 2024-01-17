@@ -19,7 +19,7 @@ Collection = TypeVar("Collection", ItemsList, ImageGallery, List[TextButton])
 Item = TypeVar("Item", ItemImage, ImageGalleryItem, TextButton)
 
 
-class Builder(Generic[Collection, Item], ABC):
+class Builder(ABC, Generic[Collection, Item]):
     _items: List[Item]
 
     @abstractmethod

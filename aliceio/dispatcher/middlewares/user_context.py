@@ -6,6 +6,7 @@ from aliceio.types.base import AliceObject
 
 EVENT_FROM_USER_KEY = "event_from_user"
 EVENT_SESSION_KEY = "event_session"
+EVENT_UPDATE_KEY = "update"
 
 
 class UserContextMiddleware(BaseMiddleware):
@@ -23,6 +24,7 @@ class UserContextMiddleware(BaseMiddleware):
         if user is not None:
             data[EVENT_FROM_USER_KEY] = user
         data[EVENT_SESSION_KEY] = session
+        data[EVENT_UPDATE_KEY] = event if isinstance(event, Update) else event.update
 
         return await handler(event, data)
 
