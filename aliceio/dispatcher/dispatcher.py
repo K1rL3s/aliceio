@@ -224,7 +224,7 @@ class Dispatcher(Router):
         except Exception as e:
             loggers.event.exception(
                 "Cause exception while process update "
-                "session=%s by skill id=%d\n%s: %s",
+                "session=%r by skill id=%r\n%s: %s",
                 update.session.session_id,
                 skill.id,
                 e.__class__.__name__,

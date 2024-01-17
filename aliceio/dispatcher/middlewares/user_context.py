@@ -6,7 +6,7 @@ from aliceio.types.base import AliceObject
 
 EVENT_FROM_USER_KEY = "event_from_user"
 EVENT_SESSION_KEY = "event_session"
-EVENT_UPDATE_KEY = "update"
+EVENT_UPDATE_KEY = "event_update"
 
 
 class UserContextMiddleware(BaseMiddleware):
