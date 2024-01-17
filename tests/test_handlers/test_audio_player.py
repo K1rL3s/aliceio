@@ -14,7 +14,6 @@ class TestAudioPlayerHandler:
                 message="Something wrong", type="MEDIA_ERROR_UNKNOWN"
             ),
             session=create_mocked_session(),
-            user=create_mocked_session().user,
         )
 
         class MyHandler(AudioPlayerHandler):

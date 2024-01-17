@@ -107,8 +107,7 @@ class TestAliceEventObserver:
             payload={},
             command="test",
             original_utterance="test",
-            session=(session := create_mocked_session()),
-            user=session.user,
+            session=create_mocked_session(),
         )
 
         results = await observer.trigger(message)

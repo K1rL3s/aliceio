@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 import abc
-import secrets
+import datetime
+from enum import Enum
 from http import HTTPStatus
 from types import TracebackType
 from typing import TYPE_CHECKING, Any, Dict, Final, Optional, Type, cast
@@ -105,8 +106,7 @@ class BaseSession(abc.ABC):
         """
         pass
 
-    # TODO: Сделать под Алису
-    def prepare_value(
+    def prepare_value(  # noqa: C901
         self,
         value: Any,
         skill: Skill,
@@ -118,74 +118,48 @@ class BaseSession(abc.ABC):
             return None
         if isinstance(value, str):
             return value
-        # if value is UNSET_PARSE_MODE:
-        #     return self.prepare_value(
-        #         skill.parse_mode,
-        #         skill=skill,
-        #         files=files,
-        #         _dumps_json=_dumps_json,
-        #     )
-        # if value is UNSET_DISABLE_WEB_PAGE_PREVIEW:
-        #     return self.prepare_value(
-        #         skill.disable_web_page_preview,
-        #         skill=skill,
-        #         files=files,
-        #         _dumps_json=_dumps_json,
-        #     )
-        # if value is UNSET_PROTECT_CONTENT:
-        #     return self.prepare_value(
-        #         skill.protect_content,
-        #         skill=skill,
-        #         files=files,
-        #         _dumps_json=_dumps_json,
-        #     )
         if isinstance(value, InputFile):
             key = "file"
             files[key] = value
             return f"attach://{key}"
-
-        if isinstance(value, InputFile):
-            key = secrets.token_urlsafe(10)
-            files[key] = value
-            return f"attach://{key}"
-        # if isinstance(value, dict):
-        #     value = {
-        #         key: prepared_item
-        #         for key, item in value.items()
-        #         if (
-        #             prepared_item := self.prepare_value(
-        #                 item,
-        #                 skill=skill,
-        #                 files=files,
-        #                 _dumps_json=False,
-        #             )
-        #         )
-        #         is not None
-        #     }
-        #     if _dumps_json:
-        #         return self.json_dumps(value)
-        #     return value
-        # if isinstance(value, list):
-        #     value = [
-        #         prepared_item
-        #         for item in value
-        #         if (
-        #             prepared_item := self.prepare_value(
-        #                 item, skill=skill, files=files, _dumps_json=False
-        #             )
-        #         )
-        #         is not None
-        #     ]
-        #     if _dumps_json:
-        #         return self.json_dumps(value)
-        #     return value
-        # if isinstance(value, datetime.timedelta):
-        #     now = datetime.datetime.now()
-        #     return str(round((now + value).timestamp()))
-        # if isinstance(value, datetime.datetime):
-        #     return str(round(value.timestamp()))
-        # if isinstance(value, Enum):
-        #     return self.prepare_value(value.value, skill=skill, files=files)
+        if isinstance(value, dict):
+            value = {
+                key: prepared_item
+                for key, item in value.items()
+                if (
+                    prepared_item := self.prepare_value(
+                        item,
+                        skill=skill,
+                        files=files,
+                        _dumps_json=False,
+                    )
+                )
+                is not None
+            }
+            if _dumps_json:
+                return self.json_module.dumps(value)
+            return value
+        if isinstance(value, list):
+            value = [
+                prepared_item
+                for item in value
+                if (
+                    prepared_item := self.prepare_value(
+                        item, skill=skill, files=files, _dumps_json=False
+                    )
+                )
+                is not None
+            ]
+            if _dumps_json:
+                return self.json_module.dumps(value)
+            return value
+        if isinstance(value, datetime.timedelta):
+            now = datetime.datetime.now()
+            return str(round((now + value).timestamp()))
+        if isinstance(value, datetime.datetime):
+            return str(round(value.timestamp()))
+        if isinstance(value, Enum):
+            return self.prepare_value(value.value, skill=skill, files=files)
 
         if _dumps_json:
             return self.json_module.dumps(value)

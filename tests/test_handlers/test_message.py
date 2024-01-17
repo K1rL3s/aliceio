@@ -13,7 +13,6 @@ class TestMessageHandler:
             command="test",
             original_utterance="test",
             session=create_mocked_session(),
-            user=create_mocked_session().user,
         )
 
         class MyHandler(MessageHandler):

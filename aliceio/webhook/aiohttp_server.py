@@ -143,22 +143,30 @@ class BaseRequestHandler(ABC):
         """
         return cast(Dict[str, Any], update.get("body", update))
 
-    @staticmethod
-    def _build_response_json(
-        skill: Skill,
-        result: Optional[AliceObject],
-    ) -> JsonPayload:
-        return JsonPayload(
-            value=result.model_dump() if result else None,
-        )
-
     async def _handle_request(self, skill: Skill, request: web.Request) -> web.Response:
         result = await self.dispatcher.feed_webhook_update(
             skill,
             await request.json(loads=skill.session.json_module.loads),
             **self.data,
         )
-        return web.Response(body=self._build_response_json(skill=skill, result=result))
+        return web.Response(body=self._build_json_response(skill=skill, result=result))
+
+    @staticmethod
+    def _build_json_response(
+        skill: Skill,
+        result: Optional[AliceObject],
+    ) -> JsonPayload:
+        return JsonPayload(
+            value=skill.session.prepare_value(
+                result.model_dump(),
+                skill=skill,
+                files={},
+                _dumps_json=False,
+            )
+            if result
+            else None,
+            dumps=skill.session.json_module.dumps,
+        )
 
     async def handle(self, request: web.Request) -> web.Response:
         skill = await self.resolve_skill(request)

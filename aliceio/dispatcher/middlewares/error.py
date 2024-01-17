@@ -27,9 +27,14 @@ class ErrorsMiddleware(BaseMiddleware):
         except (SkipHandler, CancelHandler):  # pragma: no cover
             raise
         except Exception as e:
+            event = cast(Update, event)
             response = await self.router.propagate_event(
                 event_type=EventType.ERROR,
-                event=ErrorEvent(update=cast(Update, event), exception=e),
+                event=ErrorEvent(
+                    update=event,
+                    exception=e,
+                    session=event.session,
+                ),
                 **data,
             )
             if response is not UNHANDLED:

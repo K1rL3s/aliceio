@@ -7,7 +7,6 @@ from aliceio import Dispatcher
 from aliceio.filters import ExceptionMessageFilter, ExceptionTypeFilter
 from aliceio.types import Update
 from aliceio.types.alice_event import AliceEvent
-from aliceio.types.base import MutableAliceObject
 from aliceio.types.error_event import ErrorEvent
 from tests.mocked import create_mocked_update
 from tests.mocked.mocked_skill import MockedSkill
@@ -22,10 +21,22 @@ class TestExceptionMessageFilter:
     async def test_match(self, update: Update) -> None:
         f = ExceptionMessageFilter(pattern="BOOM")
 
-        result = await f(ErrorEvent(update=update, exception=Exception()))
+        result = await f(
+            ErrorEvent(
+                update=update,
+                exception=Exception(),
+                session=update.session,
+            )
+        )
         assert result is False
 
-        result = await f(ErrorEvent(update=update, exception=Exception("BOOM")))
+        result = await f(
+            ErrorEvent(
+                update=update,
+                exception=Exception("BOOM"),
+                session=update.session,
+            )
+        )
         assert isinstance(result, dict)
         assert "match_exception" in result
 
@@ -59,9 +70,11 @@ class TestExceptionTypeFilter:
         value: bool,
         update: Update,
     ) -> None:
-        obj = ExceptionTypeFilter(MyException)
+        f = ExceptionTypeFilter(MyException)
 
-        result = await obj(ErrorEvent(update=update, exception=exception))
+        result = await f(
+            ErrorEvent(update=update, exception=exception, session=update.session)
+        )
 
         assert result == value
 

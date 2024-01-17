@@ -9,6 +9,7 @@ class EventType(StrEnum, ValuesEnum):
     SHOW_PULL = "show_pull"
     PURCHASE = "purchase"
     UPDATE = "update"
+    TIMEOUT = "timeout"
 
 
 class RequestType(StrEnum, ValuesEnum):
