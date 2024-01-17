@@ -147,7 +147,7 @@ class Dispatcher(Router):
             finish_time = loop.time()
             duration = (finish_time - start_time) * 1000
             loggers.event.info(
-                "Update from session=%s is %s. Duration %d ms by skill id=%d",
+                "Update from session_id=%s is %s. Duration %d ms by skill id=%d",
                 update.session.session_id,
                 "handled" if handled else "not handled",
                 duration,

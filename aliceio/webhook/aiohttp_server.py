@@ -198,7 +198,9 @@ class OneSkillRequestHandler(BaseRequestHandler):
         # Проверка айди навыка в поступившем событии
         if update.session.skill_id != skill.skill_id:
             loggers.webhook.warning(
-                "Update came from a skill id=%r, but a skill id=%r was expected"
+                "Update came from a skill id=%r, but a skill id=%r was expected",
+                update.session.skill_id,
+                skill.skill_id,
             )
             return web.Response(body="Not Acceptable", status=406)
 
