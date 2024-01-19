@@ -2,17 +2,17 @@ from __future__ import annotations
 
 import abc
 import datetime
+import json
 from enum import Enum
 from http import HTTPStatus
 from types import TracebackType
-from typing import TYPE_CHECKING, Any, Dict, Final, Optional, Type, cast
+from typing import TYPE_CHECKING, Any, Callable, Dict, Final, Optional, Type, cast
 
 from pydantic import ValidationError
 
 from aliceio.exceptions import AliceAPIError, ClientDecodeError
 
 from ...dispatcher.event.bases import REJECTED, UNHANDLED
-from ...json import JSONModule, json
 from ...methods import AliceMethod, AliceType, Response
 from ...types import ErrorResult, InputFile
 from ..alice import PRODUCTION, AliceAPIServer
@@ -22,6 +22,8 @@ if TYPE_CHECKING:
     from ..skill import Skill
 
 DEFAULT_TIMEOUT: Final[float] = 60.0
+_JsonLoads = Callable[..., Any]
+_JsonDumps = Callable[..., str]
 
 
 class BaseSession(abc.ABC):
@@ -34,17 +36,20 @@ class BaseSession(abc.ABC):
     def __init__(
         self,
         api: AliceAPIServer = PRODUCTION,
-        json_module: JSONModule = json,
+        json_loads: _JsonLoads = json.loads,
+        json_dumps: _JsonDumps = json.dumps,
         timeout: float = DEFAULT_TIMEOUT,
     ) -> None:
         """
 
         :param api: URL паттерны API Алисы.
-        :param json_module: JSON Модуль.
+        :param json_loads: JSON Loads.
+        :param json_dumps: Json Dumps.
         :param timeout: Тайм-аут запроса сессии.
         """
         self.api = api
-        self.json = json_module
+        self.json_loads = json_loads
+        self.json_dumps = json_dumps
         self.timeout = timeout
 
         self.middleware = RequestMiddlewareManager()
@@ -58,7 +63,7 @@ class BaseSession(abc.ABC):
     ) -> Response[AliceType]:
         """Проверка статуса ответа."""
         try:
-            json_data = self.json.loads(content)
+            json_data = self.json_loads(content)
         except Exception as e:
             # Обрабатываемая ошибка не может быть поймана конкретным типом,
             # поскольку декодер можно кастомизировать и вызвать любое исключение.
@@ -79,10 +84,7 @@ class BaseSession(abc.ABC):
         except ValidationError as e:
             raise ClientDecodeError("Failed to deserialize object", e, json_data)
 
-        raise AliceAPIError(
-            method=method,
-            message=response.message,
-        )
+        raise AliceAPIError(message=response.message)
 
     @abc.abstractmethod
     async def close(self) -> None:  # pragma: no cover
@@ -140,7 +142,7 @@ class BaseSession(abc.ABC):
                 is not None
             }
             if _dumps_json:
-                return self.json.dumps(value)
+                return self.json_dumps(value)
             return value
         if isinstance(value, list):
             value = [
@@ -154,7 +156,7 @@ class BaseSession(abc.ABC):
                 is not None
             ]
             if _dumps_json:
-                return self.json.dumps(value)
+                return self.json_dumps(value)
             return value
         if isinstance(value, datetime.timedelta):
             now = datetime.datetime.now()
@@ -167,7 +169,7 @@ class BaseSession(abc.ABC):
             )
 
         if _dumps_json:
-            return self.json.dumps(value)
+            return self.json_dumps(value)
         return value
 
     async def __call__(

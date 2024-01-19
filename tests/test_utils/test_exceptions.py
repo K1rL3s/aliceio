@@ -1,5 +1,4 @@
 from aliceio.exceptions import AliceAPIError, ClientDecodeError, DetailedAliceioError
-from aliceio.methods import Status
 
 
 class TestDetailedAliceioError:
@@ -26,12 +25,10 @@ class TestDetailedAliceioError:
 
 class TestAliceAPIError:
     def test_init(self):
-        method = Status()
         message = "test"
-        error = AliceAPIError(method, message)
+        error = AliceAPIError(message)
 
         assert error.message == message
-        assert error.method == method
         assert str(error) == f"Alice's server says - {message}"
 
 

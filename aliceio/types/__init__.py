@@ -96,7 +96,7 @@ __all__ = (
     "Payload",
     "PreQuota",
     "PreUploadedImage",
-    "PreUploadedImage",
+    "PreUploadedSound",
     "Purchase",
     "Quota",
     "Response",

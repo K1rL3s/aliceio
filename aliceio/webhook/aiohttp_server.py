@@ -1,3 +1,4 @@
+import json
 from abc import ABC, abstractmethod
 from asyncio import Transport
 from typing import Any, Awaitable, Callable, Dict, Optional, Tuple, cast
@@ -10,10 +11,12 @@ from pydantic import BaseModel
 
 from aliceio import Dispatcher, Skill, loggers
 from aliceio.dispatcher.event.bases import REJECTED, UNHANDLED
-from aliceio.json import JSONModule, json
 from aliceio.types import Update
 from aliceio.types.base import AliceObject
 from aliceio.webhook.security import IPFilter
+
+_JsonLoads = Callable[..., Any]
+_JsonDumps = Callable[..., str]
 
 
 def setup_application(
@@ -91,7 +94,8 @@ class BaseRequestHandler(ABC):
     def __init__(
         self,
         dispatcher: Dispatcher,
-        json_module: JSONModule = json,
+        json_loads: _JsonLoads = json.loads,
+        json_dumps: _JsonDumps = json.dumps,
         **data: Any,
     ) -> None:
         """
@@ -99,19 +103,20 @@ class BaseRequestHandler(ABC):
         и передавать его диспетчеру.
 
         :param dispatcher: Экземпляр :class:`aliceio.dispatcher.dispatcher.Dispatcher`
-        :param handle_in_background: immediately responds to the Telegram instead of
-            a waiting end of a handler process
+        :param json_loads: JSON Loads.
+        :param json_dumps: JSON Dumps.
         """
         self.dispatcher = dispatcher
-        self.json = json_module
+        self.json_loads = json_loads
+        self.json_dumps = json_dumps
         self.data = data
 
     def register(self, app: Application, /, path: str, **kwargs: Any) -> None:
         """
-        Register route and shutdown callback
+        Регистрирует эндпоинт и shutdown callback.
 
-        :param app: instance of aiohttp Application
-        :param path: route path
+        :param app: Экземпляр aiohttp Application.
+        :param path: Путь до эндпоинта.
         :param kwargs:
         """
         app.on_shutdown.append(self._handle_close)
@@ -127,14 +132,29 @@ class BaseRequestHandler(ABC):
     @abstractmethod
     async def resolve_skill(self, request: web.Request) -> Skill:
         """
-        This method should be implemented in subclasses of this class.
+        Этот метод должен быть реализован в наследниках этого класса.
 
-        Resolve Skill instance from request.
+        Получает экземпляр навыка из запроса.
 
         :param request:
-        :return: Skill instance
+        :return: Экземпляр навыка.
         """
         pass
+
+    @abstractmethod
+    async def _handle_request(self, skill: Skill, request: web.Request) -> web.Response:
+        """
+        Этот метод должен быть реализован в наследниках этого класса.
+
+        Обрабатывает запрос и возвращает конечный ответ.
+        """
+        pass
+
+    async def handle(self, request: web.Request) -> web.Response:
+        skill = await self.resolve_skill(request)
+        return await self._handle_request(skill=skill, request=request)
+
+    __call__ = handle
 
     # TODO: Проверить, помогает ли про запуске шоу Алисы
     @staticmethod
@@ -148,14 +168,6 @@ class BaseRequestHandler(ABC):
         :return:
         """
         return cast(Dict[str, Any], update.get("body", update))
-
-    async def _handle_request(self, skill: Skill, request: web.Request) -> web.Response:
-        result = await self.dispatcher.feed_webhook_update(
-            skill,
-            await request.json(loads=self.json.loads),
-            **self.data,
-        )
-        return self._build_web_response(result, skill)
 
     def _build_web_response(self, result: Any, skill: Skill) -> web.Response:
         return web.Response(
@@ -177,14 +189,8 @@ class BaseRequestHandler(ABC):
             )
             if result
             else None,
-            dumps=self.json.dumps,
+            dumps=self.json_dumps,
         )
-
-    async def handle(self, request: web.Request) -> web.Response:
-        skill = await self.resolve_skill(request)
-        return await self._handle_request(skill=skill, request=request)
-
-    __call__ = handle
 
 
 class OneSkillRequestHandler(BaseRequestHandler):
@@ -192,6 +198,8 @@ class OneSkillRequestHandler(BaseRequestHandler):
         self,
         dispatcher: Dispatcher,
         skill: Skill,
+        json_loads: _JsonLoads = json.loads,
+        json_dumps: _JsonDumps = json.dumps,
         **data: Any,
     ) -> None:
         """
@@ -200,7 +208,12 @@ class OneSkillRequestHandler(BaseRequestHandler):
         :param dispatcher: Экземпляр :class:`aliceio.dispatcher.dispatcher.Dispatcher`
         :param skill: Экземпляр :class:`aliceio.client.skill.Skill`
         """
-        super().__init__(dispatcher=dispatcher, **data)
+        super().__init__(
+            dispatcher=dispatcher,
+            json_loads=json_loads,
+            json_dumps=json_dumps,
+            **data,
+        )
         self.skill = skill
 
     async def close(self) -> None:
@@ -211,7 +224,9 @@ class OneSkillRequestHandler(BaseRequestHandler):
         return self.skill
 
     async def _handle_request(self, skill: Skill, request: web.Request) -> web.Response:
-        json_data = await request.json(loads=skill.session.json.loads)
+        json_data = self._convert_show_pull_to_normal_request(
+            await request.json(loads=self.json_loads)
+        )
         update = Update.model_validate(json_data, context={"skill": skill})
 
         # Проверка айди навыка в поступившем событии

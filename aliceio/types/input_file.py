@@ -3,12 +3,9 @@ from __future__ import annotations
 import io
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import TYPE_CHECKING, AsyncGenerator, Union
+from typing import AsyncGenerator, Union
 
 import aiofiles
-
-if TYPE_CHECKING:
-    from aliceio.client.skill import Skill
 
 DEFAULT_CHUNK_SIZE = 64 * 1024  # 64 kb
 
@@ -34,10 +31,7 @@ class InputFile(ABC):
         self.chunk_size = chunk_size
 
     @abstractmethod
-    async def read(
-        self,
-        skill: "Skill",
-    ) -> AsyncGenerator[bytes, None]:  # pragma: no cover
+    async def read(self) -> AsyncGenerator[bytes, None]:  # pragma: no cover
         yield b""
 
 
@@ -74,7 +68,7 @@ class BufferedInputFile(InputFile):
             data = f.read()
         return cls(data, chunk_size=chunk_size)
 
-    async def read(self, skill: "Skill") -> AsyncGenerator[bytes, None]:
+    async def read(self) -> AsyncGenerator[bytes, None]:
         buffer = io.BytesIO(self.data)
         while chunk := buffer.read(self.chunk_size):
             yield chunk
@@ -96,7 +90,7 @@ class FSInputFile(InputFile):
 
         self.path = path
 
-    async def read(self, skill: "Skill") -> AsyncGenerator[bytes, None]:
+    async def read(self) -> AsyncGenerator[bytes, None]:
         async with aiofiles.open(self.path, "rb") as f:
             while chunk := await f.read(self.chunk_size):
                 yield chunk

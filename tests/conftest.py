@@ -52,8 +52,7 @@ def pytest_collection_modifyitems(config: Config, items: List[Function]) -> None
 
 @pytest.fixture()
 def redis_server(request: SubRequest) -> Optional[str]:
-    redis_uri = request.config.getoption("--redis")
-    return redis_uri
+    return request.config.getoption("--redis")
 
 
 @pytest.fixture()
@@ -85,7 +84,7 @@ async def memory_storage() -> AsyncGenerator[MemoryStorage, None]:
 
 @pytest.fixture()
 def skill() -> MockedSkill:
-    return MockedSkill()
+    return MockedSkill(oauth_token="42:OAUTH")
 
 
 @pytest.fixture()

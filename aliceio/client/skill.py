@@ -1,9 +1,7 @@
 from __future__ import annotations
 
 from contextlib import asynccontextmanager
-from typing import Any, AsyncGenerator, AsyncIterator, Optional, TypeVar
-
-import aiofiles
+from typing import Any, AsyncIterator, Optional, TypeVar, Union, overload
 
 from ..methods import (
     DeleteImage,
@@ -86,16 +84,6 @@ class Skill:
             if auto_close:
                 await self.session.close()
 
-    @classmethod
-    async def __aiofiles_reader(
-        cls,
-        file: str,
-        chunk_size: int = 65536,
-    ) -> AsyncGenerator[bytes, None]:
-        async with aiofiles.open(file, "rb") as f:
-            while chunk := await f.read(chunk_size):
-                yield chunk
-
     def __eq__(self, other: Any) -> bool:
         """
         Сравнить текущий навык с другим экземпляром навыка.
@@ -131,12 +119,33 @@ class Skill:
         get_images = GetImages()
         return await self(get_images, request_timeout=request_timeout)
 
+    @overload
+    async def upload_image(
+        self,
+        url: str,
+        /,
+        request_timeout: Optional[int] = None,
+    ) -> PreUploadedImage:
+        pass
+
+    @overload
     async def upload_image(
         self,
         file: InputFile,
+        /,
         request_timeout: Optional[int] = None,
     ) -> PreUploadedImage:
-        upload_image = UploadImage(file=file)
+        pass
+
+    async def upload_image(
+        self,
+        file: Union[InputFile, str],
+        request_timeout: Optional[int] = None,
+    ) -> PreUploadedImage:
+        if isinstance(file, str):
+            upload_image = UploadImage(url=file)
+        else:
+            upload_image = UploadImage(file=file)
         return await self(upload_image, request_timeout=request_timeout)
 
     async def delete_image(

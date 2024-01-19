@@ -1,6 +1,7 @@
 import pytest
 
 from aliceio.client.alice import PRODUCTION
+from aliceio.exceptions import AliceWrongFieldError
 from aliceio.methods import DeleteImage, GetImages, UploadImage
 from aliceio.types import BufferedInputFile
 from tests.mocked import MockedSkill
@@ -16,6 +17,15 @@ class TestUploadImage:
         method.as_(skill)
         url = method.api_url(PRODUCTION)
         assert url == "https://dialogs.yandex.net/api/v1/skills/42:SKILL_ID/images"
+
+    def test_fields_not_empty(self):
+        with pytest.raises(AliceWrongFieldError):
+            UploadImage()
+        with pytest.raises(AliceWrongFieldError):
+            UploadImage(file=BufferedInputFile(file=b""), url="url")
+
+        UploadImage(file=BufferedInputFile(file=b""))
+        UploadImage(url="url")
 
 
 class TestGetImages:

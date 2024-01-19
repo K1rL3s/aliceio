@@ -157,18 +157,15 @@ class AiohttpSession(BaseSession):
         for key, value in files.items():
             form.add_field(
                 key,
-                value.read(skill),
+                value.read(),
                 filename=key,
             )
         return form
 
     @staticmethod
-    def _build_request_headers(
-        skill: Skill, method: AliceMethod[Any]
-    ) -> Dict[str, Any]:
+    def _build_request_headers(skill: Skill) -> Dict[str, Any]:
         if skill.oauth_token is None:
             raise AliceNoCredentialsError(
-                method,
                 "To use the Alice API, "
                 "you need to set an oauth token when creating a Skill",
             )
@@ -191,16 +188,13 @@ class AiohttpSession(BaseSession):
                 url,
                 data=form,
                 timeout=self.timeout if timeout is None else timeout,
-                headers=self._build_request_headers(skill, method),
+                headers=self._build_request_headers(skill),
             ) as resp:
                 raw_result = await resp.text()
         except asyncio.TimeoutError:
-            raise AliceNetworkError(method=method, message="AliceRequest timeout error")
+            raise AliceNetworkError(message="AliceRequest timeout error")
         except ClientError as e:
-            raise AliceNetworkError(
-                method=method,
-                message=f"{type(e).__name__}: {e}",
-            )
+            raise AliceNetworkError(message=f"{type(e).__name__}: {e}")
         response = self.check_response(
             skill=skill,
             method=method,

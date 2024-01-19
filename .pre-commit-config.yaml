@@ -17,21 +17,21 @@ repos:
     hooks:
       - id: black
         name: black
-        entry: black
+        entry: black .
         language: system
         types: [ python ]
         stages: [ commit ]
 
       - id: isort
         name: isort
-        entry: isort
+        entry: isort .
         language: system
         types: [ python ]
         stages: [ commit ]
 
       - id: ruff
         name: ruff
-        entry: ruff check
+        entry: ruff check aliceio examples
         language: system
         types: [ python ]
         stages: [ commit ]

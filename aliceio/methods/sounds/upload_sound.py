@@ -3,14 +3,14 @@ from typing import TYPE_CHECKING, Any, cast
 from aliceio.client.alice import AliceAPIServer
 from aliceio.enums import FileType, HttpMethod
 from aliceio.methods.base import AliceMethod
-from aliceio.types import InputFile, PreUploadedSound, UploadedSound
+from aliceio.types import InputFile, PreUploadedSound
 
 if TYPE_CHECKING:
     from aliceio.client.skill import Skill
 
 
 class UploadSound(AliceMethod[PreUploadedSound]):
-    __returning__ = UploadedSound
+    __returning__ = PreUploadedSound
     __http_method__ = HttpMethod.POST
 
     file: InputFile

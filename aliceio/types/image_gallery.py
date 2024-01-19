@@ -1,8 +1,9 @@
-from typing import TYPE_CHECKING, Any, List, Optional
+from typing import TYPE_CHECKING, Any, List
 
 from pydantic import Field, field_validator
 
 from ..enums import CardType
+from ..exceptions import AliceWrongFieldError
 from .base import MutableAliceObject
 from .image_gallery_item import ImageGalleryItem
 
@@ -38,7 +39,7 @@ class ImageGallery(MutableAliceObject):
     @classmethod
     def type_validate(cls, v: str) -> str:
         if v.lower() != CardType.IMAGE_GALLERY.lower():
-            raise ValueError(
+            raise AliceWrongFieldError(
                 f'ImageGallery type must be "{CardType.IMAGE_GALLERY}", not "{v}"'
             )
         return CardType.IMAGE_GALLERY

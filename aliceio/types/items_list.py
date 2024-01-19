@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING, Any, List, Optional
 from pydantic import Field, field_validator
 
 from ..enums import CardType
+from ..exceptions import AliceWrongFieldError
 from .base import MutableAliceObject
 from .card_footer import CardFooter
 from .card_header import CardHeader
@@ -47,7 +48,7 @@ class ItemsList(MutableAliceObject):
     @classmethod
     def type_validate(cls, v: str) -> str:
         if v.lower() != CardType.ITEMS_LIST.lower():
-            raise ValueError(
+            raise AliceWrongFieldError(
                 f'ItemsList type must be "{CardType.ITEMS_LIST}", not "{v}"'
             )
         return CardType.ITEMS_LIST

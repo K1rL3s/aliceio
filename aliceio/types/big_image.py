@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING, Any, Optional
 from pydantic import field_validator
 
 from ..enums import CardType
+from ..exceptions import AliceWrongFieldError
 from .base import MutableAliceObject
 from .media_button import MediaButton
 
@@ -44,5 +45,7 @@ class BigImage(MutableAliceObject):
     @classmethod
     def type_validate(cls, v: str) -> str:
         if v.lower() != CardType.BIG_IMAGE.lower():
-            raise ValueError(f'BigImage type must be "{CardType.BIG_IMAGE}", not "{v}"')
+            raise AliceWrongFieldError(
+                f'BigImage type must be "{CardType.BIG_IMAGE}", not "{v}"'
+            )
         return CardType.BIG_IMAGE

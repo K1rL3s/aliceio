@@ -1,7 +1,5 @@
 from typing import Any, Optional
 
-from aliceio.methods.base import AliceMethod, AliceType
-
 
 class AliceioError(Exception):
     """Базовое исключение для всех ошибок aliceio."""
@@ -32,11 +30,9 @@ class AliceAPIError(DetailedAliceioError):
 
     def __init__(
         self,
-        method: AliceMethod[AliceType],
         message: str,
     ) -> None:
         super().__init__(message=message)
-        self.method = method
 
     def __str__(self) -> str:
         original_message = super().__str__()
@@ -53,6 +49,12 @@ class AliceNoCredentialsError(AliceAPIError):
     """Исключение при использовании API Алисы без токена авторизации."""
 
     label = "No OAuth Token"
+
+
+class AliceWrongFieldError(AliceAPIError):
+    """Исключение при создании модели с неправильным(и) полем(ями)."""
+
+    label = "Wrong field(s)"
 
 
 class ClientDecodeError(AliceioError):
