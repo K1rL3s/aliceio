@@ -1,0 +1,150 @@
+site_name: Aliceio Docs
+site_author: Aliceio
+site_description: Awesome Alice framework
+site_url: https://aliceio.rtfd.io/
+repo_name: aliceio/aliceio
+repo_url: https://github.com/K1rL3s/aliceio
+edit_uri: edit/master/docs/
+copyright: <a href="https://github.com/K1rL3s/aliceio/tree/master/LICENSE" target="_blank" rel="noopener">View maintainers</a>  # заменить
+
+extra:
+  generator: false
+  disqus: ""
+  social:
+    - icon: fontawesome/brands/telegram
+      link: https://t.me/aliceio_ru
+      name: Our Telegram chat
+
+# TODO запилить под наши файлы
+nav:
+  - Документация:
+      - index.md
+      - Интерфейсы высокого уровня:
+          - Интерфейс ботов:
+              - Bot: high-level/bot.md
+              - User: high-level/user.md
+              - Labeler: high-level/bot/labeler.md
+              - Multibot: high-level/bot/multibot.md
+          - Хендлинг:
+              - Handler: high-level/handling/handler.md
+              - Router: high-level/handling/router.md
+              - View: high-level/handling/view.md
+              - Return Manager: high-level/handling/return-manager.md
+              - State Dispenser: high-level/handling/state-dispenser.md
+              - Middleware: high-level/handling/middleware.md
+              - Rules: high-level/handling/rules.md
+      - Интерфейсы низкого уровня:
+          - API:
+              - Работа с API: low-level/api.md
+              - Response Validator: low-level/api/response-validator.md
+              - Request Rescheduler: low-level/api/request-rescheduler.md
+              - Request Validator: low-level/api/request-validator.md
+              - Token Generator: low-level/api/token-generator.md
+          - Exception Handling:
+              - Error Handler: low-level/exception_handling/error-handler.md
+              - Code Exception: low-level/exception_handling/code-exception.md
+          - Http Client: low-level/http-client.md
+          - Polling: low-level/polling.md
+          - Callback: low-level/callback.md
+      - Дополнительные инструменты:
+          - Auth Flows: tools/auth.md
+          - Keyboard: tools/keyboard.md
+          - Loop Wrapper: tools/loop-wrapper.md
+          - Message Event: tools/message-event.md
+          - Storage: tools/storage.md
+          - Template: tools/template.md
+          - Uploaders: tools/uploaders.md
+          - VKScript: tools/vkscript.md
+      - Кастомизация зависимостей: modules.md
+# TODO запилить туториал для алисы
+#  - Туториал: # надо ли?
+#      - tutorial/index.md
+#      - Первый бот: tutorial/first-bot.md
+#      - Правила: tutorial/rules.md
+#      - Разделение кода: tutorial/code-separation.md
+#      - Клавиатуры и вложения: tutorial/keyboards-attachments.md
+#      - Мидлвари и return менеджеры: tutorial/middlewares-return-managers.md
+#      - Обработка ошибок: tutorial/error-handling.md
+#      - Callback API: tutorial/callback-bot.md
+#      - Рекомендуемые IDE: tutorial/recommended-ide.md
+#      - FAQ: tutorial/faq.md
+
+theme:
+  name: material
+  features:
+    - navigation.instant
+    - navigation.indexes
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.top
+    - search.suggest
+    - content.code.copy
+
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      accent: blue
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to dark mode
+
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      accent: blue
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to light mode
+
+  font:
+    text: Roboto Mono
+    code: Monaco
+
+#  logo: logo.svg   заменить
+#  favicon: logo.svg   заменить
+
+markdown_extensions:
+  - admonition:
+  - md_in_html:
+  - toc:
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+      permalink: ""
+  - pymdownx.magiclink:
+      repo_url_shortener: true
+      repo_url_shorthand: true
+      normalize_issue_symbols: true
+      user: aliceio
+      repo: aliceio
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+      linenums: true
+      guess_lang: true
+  - pymdownx.inlinehilite:
+  - pymdownx.superfences:
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.escapeall:
+      hardbreak: True
+      nbsp: True
+  - pymdownx.details:
+  - pymdownx.tabbed:
+  - pymdownx.saneheaders:
+
+plugins:  # заменить всё
+  - search:
+#  - redirects:
+#      redirect_maps:
+#        "high-level/routing/index.md": "high-level/handling/index.md"
+#        "high-level/routing/rules.md": "high-level/handling/rules.md"
+#        "high-level/user/user.md": "high-level/user.md"
+#        "high-level/bot/bot.md": "high-level/bot.md"
+#        "low-level/api/api.md": "low-level/api.md"
+#        "low-level/polling/polling.md": "low-level/polling.md"
+#        "low-level/callback/callback.md": "low-level/callback.md"
+#        "low-level/http/http-client.md": "low-level/http-client.md"
+
+extra_css:
+  - _css/style.css
