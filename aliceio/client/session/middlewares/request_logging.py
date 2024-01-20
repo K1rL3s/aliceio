@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING, Any, List, Optional, Type
 
 from aliceio import loggers
 from aliceio.methods import AliceMethod
-from aliceio.methods.base import AliceType, Response
+from aliceio.methods.base import AliceType, ApiResponse
 
 from .base import BaseRequestMiddleware, NextRequestMiddlewareType
 
@@ -30,7 +30,7 @@ class RequestLogging(BaseRequestMiddleware):
         make_request: NextRequestMiddlewareType[AliceType],
         skill: "Skill",
         method: AliceMethod[AliceType],
-    ) -> Response[AliceType]:
+    ) -> ApiResponse[AliceType]:
         if type(method) not in self.ignore_methods:
             loggers.middlewares.info(
                 "Make request with method=%r by skill id=%r",

@@ -3,7 +3,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Protocol
 
-from aliceio.methods import AliceMethod, Response
+from aliceio.methods import AliceMethod, ApiResponse
 from aliceio.methods.base import AliceType
 
 if TYPE_CHECKING:
@@ -15,7 +15,7 @@ class NextRequestMiddlewareType(Protocol[AliceType]):  # pragma: no cover
         self,
         skill: "Skill",
         method: AliceMethod[AliceType],
-    ) -> Response[AliceType]:
+    ) -> ApiResponse[AliceType]:
         pass
 
 
@@ -25,7 +25,7 @@ class RequestMiddlewareType(Protocol):  # pragma: no cover
         make_request: NextRequestMiddlewareType[AliceType],
         skill: "Skill",
         method: AliceMethod[AliceType],
-    ) -> Response[AliceType]:
+    ) -> ApiResponse[AliceType]:
         pass
 
 
@@ -38,7 +38,7 @@ class BaseRequestMiddleware(ABC):
         make_request: NextRequestMiddlewareType[AliceType],
         skill: "Skill",
         method: AliceMethod[AliceType],
-    ) -> Response[AliceType]:
+    ) -> ApiResponse[AliceType]:
         """
         Вызов мидлваря.
 
@@ -47,6 +47,6 @@ class BaseRequestMiddleware(ABC):
         :param method: Метод запроса
                        (Подкласс :class:`aiolice.methods.base.AliceMethod`)
 
-        :return: :class:`aiolice.methods.Response`
+        :return: :class:`aiolice.methods.ApiResponse`
         """
         pass

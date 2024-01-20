@@ -66,10 +66,10 @@ class AliceAPIServer:
     @classmethod
     def from_base(cls, base: str) -> "AliceAPIServer":
         """
-        Use this method to auto-generate AliceAPIServer instance from base URL
+        Используйте этот метод для автогенерации AliceAPIServer из базового URL.
 
-        :param base: Base URL
-        :return: instance of :class:`AliceAPIServer`
+        :param base: Базовый URL.
+        :return: Экземпляр :class:`AliceAPIServer`
         """
         base = base.rstrip("/")
         return cls(

@@ -3,26 +3,16 @@ import os
 import sys
 
 from aiohttp import web
+from handlers.echo import echo_router
+from handlers.start import start_router
 
-from aliceio import Dispatcher, Router, Skill
-from aliceio.types import AliceResponse, Message, Response
+from aliceio import Dispatcher, Skill
 from aliceio.webhook.aiohttp_server import OneSkillRequestHandler, setup_application
-
-router = Router()
-
-
-@router.message()
-async def echo(message: Message) -> AliceResponse:
-    if message.session.new:
-        text = "Привет!"
-    else:
-        text = message.original_utterance
-    return AliceResponse(response=Response(text=text))
 
 
 def main() -> None:
     dp = Dispatcher()
-    dp.include_router(router)
+    dp.include_routers(start_router, echo_router)
 
     skill_id = os.environ["SKILL_ID"]
     oauth_token = os.getenv("OAUTH_TOKEN")

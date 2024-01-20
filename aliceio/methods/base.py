@@ -35,7 +35,7 @@ class Request(BaseModel):
     files: Optional[Dict[str, InputFile]]
 
 
-class Response(BaseModel, Generic[AliceType]):
+class ApiResponse(BaseModel, Generic[AliceType]):
     result: Optional[AliceType] = None
     status_code: Optional[int] = None
 

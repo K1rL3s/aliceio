@@ -110,6 +110,8 @@ class BaseRequestHandler(ABC):
         self.json_loads = json_loads
         self.json_dumps = json_dumps
         self.data = data
+        # В идеале self.data должна передаваться в self.dispatcher.feed_webhook_update
+        # как **kwargs, см. OneSkillRequestHandler._handle_request
 
     def register(self, app: Application, /, path: str, **kwargs: Any) -> None:
         """

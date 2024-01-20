@@ -11,7 +11,7 @@ class NLU(AliceObject):
     Слова и сущности, которые Диалоги извлекли из запроса пользователя.
 
     https://yandex.ru/dev/dialogs/alice/doc/request-simpleutterance.html#request-simpleutterance__nlu-desc
-    """  # noqa
+    """  # noqa: E501
 
     tokens: List[str]
     entities: List[Entity]

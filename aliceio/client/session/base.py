@@ -13,7 +13,7 @@ from pydantic import ValidationError
 from aliceio.exceptions import AliceAPIError, ClientDecodeError
 
 from ...dispatcher.event.bases import REJECTED, UNHANDLED
-from ...methods import AliceMethod, AliceType, Response
+from ...methods import AliceMethod, AliceType, ApiResponse
 from ...types import ErrorResult, InputFile
 from ..alice import PRODUCTION, AliceAPIServer
 from .middlewares.manager import RequestMiddlewareManager
@@ -60,7 +60,7 @@ class BaseSession(abc.ABC):
         method: AliceMethod[AliceType],
         status_code: int,
         content: str,
-    ) -> Response[AliceType]:
+    ) -> ApiResponse[AliceType]:
         """Проверка статуса ответа."""
         try:
             json_data = self.json_loads(content)
@@ -71,7 +71,7 @@ class BaseSession(abc.ABC):
 
         if HTTPStatus.OK <= status_code <= HTTPStatus.IM_USED:
             try:
-                response_type = Response[method.__returning__]  # type: ignore
+                response_type = ApiResponse[method.__returning__]  # type: ignore
                 return response_type.model_validate(
                     json_data,
                     context={"skill": skill},

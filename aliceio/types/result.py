@@ -10,7 +10,7 @@ class Result(AliceObject):
     https://yandex.ru/dev/dialogs/alice/doc/resource-upload.html#http-images-load__delete
 
     https://yandex.ru/dev/dialogs/alice/doc/resource-upload.html#http-images-load__delete
-    """  # noqa
+    """  # noqa: E501
 
     result: str
 

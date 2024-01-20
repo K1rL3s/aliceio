@@ -15,7 +15,7 @@ class Entity(MutableAliceObject):
     NLU Entity
 
     https://yandex.ru/dev/dialogs/alice/doc/request-simpleutterance.html#request-simpleutterance__entities-desc
-    """  # noqa
+    """  # noqa: E501
 
     type: str
     tokens: TokensEntity

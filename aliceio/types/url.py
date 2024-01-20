@@ -10,7 +10,7 @@ class URL(AliceObject):
     https://yandex.ru/dev/dialogs/alice/doc/response-audio-player.html#direct-play__audio-player-item-metadata-art-desc
 
     https://yandex.ru/dev/dialogs/alice/doc/response-audio-player.html#direct-play__audio-player-item-metadata-background-image-desc
-    """  # noqa
+    """  # noqa: E501
 
     url: Optional[str] = None
 

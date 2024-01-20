@@ -4,6 +4,7 @@ from .alice_event import AliceEvent
 from .markup import Markup
 from .nlu import NLU
 from .payload import Payload
+from .session import Session
 
 
 class ButtonPressed(AliceEvent):
@@ -25,6 +26,7 @@ class ButtonPressed(AliceEvent):
             *,
             type: str,
             payload: Payload,
+            session: Session,  # из AliceEvent
             markup: Optional[Markup] = None,
             nlu: Optional[NLU] = None,
             **__pydantic_kwargs: Any,
@@ -32,6 +34,7 @@ class ButtonPressed(AliceEvent):
             super().__init__(
                 type=type,
                 payload=payload,
+                session=session,
                 markup=markup,
                 nlu=nlu,
                 **__pydantic_kwargs,

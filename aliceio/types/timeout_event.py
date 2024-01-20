@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING, Any
 
 from .alice_event import AliceEvent
+from .session import Session
 from .update import Update
 
 
@@ -15,10 +16,12 @@ class TimeoutEvent(AliceEvent):
             __pydantic_self__,
             *,
             update: Update,
+            session: Session,  # из AliceEvent
             **__pydantic_kwargs: Any,
         ) -> None:
             super().__init__(
                 update=update,
+                session=session,
                 **__pydantic_kwargs,
             )
 

@@ -10,7 +10,7 @@ class UploadedSound(AliceObject):
     https://yandex.ru/dev/dialogs/alice/doc/resource-sounds-upload.html#http-load__upload-file
 
     https://yandex.ru/dev/dialogs/alice/doc/resource-sounds-upload.html#http-load__list
-    """  # noqa
+    """  # noqa: E501
 
     id: str
     skillId: str

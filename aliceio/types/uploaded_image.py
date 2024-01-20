@@ -12,7 +12,7 @@ class UploadedImage(AliceObject):
     https://yandex.ru/dev/dialogs/alice/doc/resource-upload.html#http-images-load__upload-file
 
     https://yandex.ru/dev/dialogs/alice/doc/resource-upload.html#http-images-load__list
-    """  # noqa
+    """  # noqa: E501
 
     id: str
     origUrl: Optional[str] = None
