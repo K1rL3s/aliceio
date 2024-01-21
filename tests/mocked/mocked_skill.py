@@ -33,11 +33,12 @@ class MockedSession(BaseSession):
         self.closed = False
         self.requests.append(method)
         response: ApiResponse[AliceType] = self.responses.pop()
+        result = response.result
         self.check_response(
             skill=skill,
             method=method,
             status_code=response.status_code,
-            content=response.model_dump_json(),
+            content=result.model_dump_json(),
         )
         return response.result  # type: ignore
 

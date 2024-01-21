@@ -1,20 +1,17 @@
 from __future__ import annotations
 
 import abc
-import datetime
 import json
-from enum import Enum
 from http import HTTPStatus
 from types import TracebackType
-from typing import TYPE_CHECKING, Any, Callable, Dict, Final, Optional, Type, cast
+from typing import TYPE_CHECKING, Any, Callable, Final, Optional, Type, cast
 
 from pydantic import ValidationError
 
 from aliceio.exceptions import AliceAPIError, ClientDecodeError
 
-from ...dispatcher.event.bases import REJECTED, UNHANDLED
 from ...methods import AliceMethod, AliceType, ApiResponse
-from ...types import ErrorResult, InputFile
+from ...types import ErrorResult
 from ..alice import PRODUCTION, AliceAPIServer
 from .middlewares.manager import RequestMiddlewareManager
 
@@ -73,7 +70,7 @@ class BaseSession(abc.ABC):
             try:
                 response_type = ApiResponse[method.__returning__]  # type: ignore
                 return response_type.model_validate(
-                    json_data,
+                    {"result": json_data, "status_code": status_code},
                     context={"skill": skill},
                 )
             except ValidationError as e:
@@ -108,69 +105,6 @@ class BaseSession(abc.ABC):
         :raise AliceApiError:
         """
         pass
-
-    def prepare_value(  # noqa: C901
-        self,
-        value: Any,
-        skill: Skill,
-        files: Dict[str, Any],
-        _dumps_json: bool = False,
-    ) -> Any:
-        """Подготовка значения перед отправкой."""
-        if value is None:
-            return None
-        if isinstance(value, str):
-            return value
-        if value in (UNHANDLED, REJECTED):
-            return None
-        if isinstance(value, InputFile):
-            key = "file"
-            files[key] = value
-            return f"attach://{key}"
-        if isinstance(value, dict):
-            value = {
-                key: prepared_item
-                for key, item in value.items()
-                if (
-                    prepared_item := self.prepare_value(
-                        item,
-                        skill=skill,
-                        files=files,
-                        _dumps_json=False,
-                    )
-                )
-                is not None
-            }
-            if _dumps_json:
-                return self.json_dumps(value)
-            return value
-        if isinstance(value, list):
-            value = [
-                prepared_item
-                for item in value
-                if (
-                    prepared_item := self.prepare_value(
-                        item, skill=skill, files=files, _dumps_json=False
-                    )
-                )
-                is not None
-            ]
-            if _dumps_json:
-                return self.json_dumps(value)
-            return value
-        if isinstance(value, datetime.timedelta):
-            now = datetime.datetime.now()
-            return str(round((now + value).timestamp()))
-        if isinstance(value, datetime.datetime):
-            return str(round(value.timestamp()))
-        if isinstance(value, Enum):
-            return self.prepare_value(
-                value.value, skill=skill, files=files, _dumps_json=True
-            )
-
-        if _dumps_json:
-            return self.json_dumps(value)
-        return value
 
     async def __call__(
         self,

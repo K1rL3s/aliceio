@@ -11,6 +11,7 @@ from aliceio.client.session.base import AliceType, BaseSession
 from aliceio.exceptions import AliceAPIError, ClientDecodeError
 from aliceio.methods import AliceMethod, Status
 from aliceio.types import PreQuota, Quota, SpaceStatus
+from aliceio.utils.funcs import prepare_value
 from tests.mocked.mocked_skill import MockedSkill
 
 
@@ -72,11 +73,7 @@ class TestBaseSession:
         assert "example.com" in session.api.base
 
     def test_prepare_value_timedelta(self, skill: MockedSkill):
-        session = CustomSession()
-
-        value = session.prepare_value(
-            datetime.timedelta(minutes=2), skill=skill, files={}
-        )
+        value = prepare_value(datetime.timedelta(minutes=2), files={})
         assert isinstance(value, str)
 
     def test_check_response_json_decode_error(self):

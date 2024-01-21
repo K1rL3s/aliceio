@@ -103,10 +103,10 @@ class Skill:
         """
         Вызов API Алисы.
 
-        :param method: Запрос, наследник :code:`AliceMethod`
+        :param method: Запрос, наследник :code:`AliceMethod`.
         :return:
         """
-        return await self.session(self, method, timeout=request_timeout)
+        return await self.session(self, method.as_(self), timeout=request_timeout)
 
     async def status(self, request_timeout: Optional[int] = None) -> SpaceStatus:
         status = Status()
