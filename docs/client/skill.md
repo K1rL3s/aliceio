@@ -18,8 +18,7 @@ HTTP Client session (Например, AiohttpSession).\
 
 
 - `__call__(self, method: AliceMethod[T], request_timeout: Optional[int] = None,) -> T:`\
-Вызов API Алисы.\
-`:param method:` Запрос, наследник :code:`AliceMethod`
+Вызов API Алисы.
 
 
 - `status(self, request_timeout: Optional[int] = None) -> SpaceStatus:`\
