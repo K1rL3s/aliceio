@@ -7,7 +7,7 @@ from aliceio.methods import AliceMethod, ApiResponse
 from aliceio.methods.base import AliceType
 
 if TYPE_CHECKING:
-    from ...skill import Skill
+    from aliceio.client.skill import Skill
 
 
 class NextRequestMiddlewareType(Protocol[AliceType]):  # pragma: no cover

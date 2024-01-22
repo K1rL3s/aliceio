@@ -26,7 +26,7 @@ async def new_session(message: Message, state: FSMContext) -> Response:
     return Response(text="Привет! Как тебя зовут?")
 
 
-@form_router.message(F.command.casefold() == "отмена")
+@form_router.message(F.command == "отмена")
 async def cancel_handler(message: Message, state: FSMContext) -> Response:
     """Позволяет пользователю отменить любое действие."""
     current_state = await state.get_state()
@@ -50,7 +50,7 @@ async def process_name(message: Message, state: FSMContext) -> Response:
     )
 
 
-@form_router.message(Form.like_skills, F.command.casefold() == "нет")
+@form_router.message(Form.like_skills, F.command == "нет")
 async def process_dont_like_skills(message: Message, state: FSMContext) -> Response:
     data = await state.get_data()
     await state.clear()
@@ -60,7 +60,7 @@ async def process_dont_like_skills(message: Message, state: FSMContext) -> Respo
     )
 
 
-@form_router.message(Form.like_skills, F.command.casefold() == "да")
+@form_router.message(Form.like_skills, F.command == "да")
 async def process_like_skills(message: Message, state: FSMContext) -> Response:
     await state.set_state(Form.device)
     return Response(
@@ -84,7 +84,7 @@ async def process_device(message: Message, state: FSMContext) -> Response:
     data = await state.update_data(device=message.command)
     await state.clear()
 
-    if message.command.casefold() == "телефон":
+    if message.command == "телефон":
         text = "С телефона? Да, это самое удобное, с чего можно пользоваться Алисой.\n"
     else:
         text = ""

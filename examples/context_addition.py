@@ -9,21 +9,20 @@ from aiohttp import web
 from aliceio import BaseMiddleware, Dispatcher, Router, Skill
 from aliceio.filters import BaseFilter
 from aliceio.types import Message, Response, User
-from aliceio.types.base import AliceObject
 from aliceio.webhook.aiohttp_server import OneSkillRequestHandler, setup_application
 
 router = Router(name=__name__)
 
 
-class RandomFloatMiddleware(BaseMiddleware):
+class RandomFloatMiddleware(BaseMiddleware[Message]):
     def __init__(self, start: float = 0.01, end: float = 100.0) -> None:
         self.start = start
         self.end = end
 
     async def __call__(
         self,
-        handler: Callable[[AliceObject, Dict[str, Any]], Awaitable[Any]],
-        event: AliceObject,
+        handler: Callable[[Message, Dict[str, Any]], Awaitable[Any]],
+        event: Message,
         data: Dict[str, Any],
     ) -> Any:
         # Добаляем значение в контекст3
@@ -38,7 +37,7 @@ class RandomNumberFilter(BaseFilter):
         event_from_user: User
         # Фильтры также могут принимать данные из контекста как обработчики
     ) -> Union[bool, Dict[str, Any]]:
-        if message.text.casefold() == "число":
+        if message.command == "число":
             # Возврат словаря обновит контекст
             return {"int_num": random.randint(1_000, 10_000)}
         return False
@@ -60,8 +59,8 @@ async def start_handler(
     kek_num: int,  # Аргумент из даты RequestHandler'а
 ) -> Response:
     return Response(
-        text='💻 Скажи "число", и я скажу число, '
-        f"которое я задумал (точно не {yoy_num} и не {kek_num})"
+        text='💻 Скажи "число", и я скажу число, которое я задумал\n'
+        f"(точно не {yoy_num} и не {kek_num})"
     )
 
 

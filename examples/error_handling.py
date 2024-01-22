@@ -43,7 +43,7 @@ async def handle_invalid_exceptions(event: ErrorEvent) -> Response:
     return Response(text=f"Произошла ошибка: {repr(event.exception)}")
 
 
-@router.message(F.command.casefold().startswith("мне"))
+@router.message(F.command.startswith("мне"))
 async def handle_set_age(message: Message) -> Response:
     age = message.command.replace("мне", "", 1).strip()
     if not age:
@@ -55,7 +55,7 @@ async def handle_set_age(message: Message) -> Response:
     return Response(text=f"Твой возраст через год  - {int(age) + 1}")
 
 
-@router.message(F.command.casefold().startswith("я"))
+@router.message(F.command.startswith("я"))
 async def handle_set_name(message: Message) -> Response:
     name = message.command.replace("я", "", 1).strip()
     if not name:

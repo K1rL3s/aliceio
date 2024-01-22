@@ -13,7 +13,13 @@ from ..fsm.middleware import FSMContextMiddleware
 from ..fsm.storage.base import BaseStorage
 from ..fsm.storage.memory import MemoryStorage
 from ..fsm.strategy import FSMStrategy
-from ..types import AliceResponse, Response, TimeoutEvent, Update, UpdateTypeLookupError
+from ..types import (
+    AliceResponse,
+    Response,
+    TimeoutUpdate,
+    Update,
+    UpdateTypeLookupError,
+)
 from ..types.base import AliceObject
 from .event.alice import AliceEventObserver
 from .event.bases import UNHANDLED, SkipHandler
@@ -43,7 +49,7 @@ class Dispatcher(Router):
         :param disable_fsm: Отключить ли FSM.
         :param name: Имя как роутера, полезно при дебаге.
         :param response_timeout: Время для обработки события,
-            после которого будет вызван TimeoutEvent.
+            после которого будет вызван :class:`TimeoutUpdate`.
         :param kwargs: Остальные аргументы,
             будут переданы в обработчики как именованные аргументы
         """
@@ -56,7 +62,7 @@ class Dispatcher(Router):
         self.update.register(self._listen_update)
 
         # На timeout-observer тоже регистрируются все те же мидлвари, что и на update,
-        # потому что при возникновении TimeoutEvent'а контекстные данные из мидлварей
+        # потому что при возникновении TimeoutUpdate'а контекстные данные из мидлварей
         # оригинального Update не получить. Засчитаю за костыль
 
         # Обработчики ошибок должны работать вне всех других функций
@@ -294,9 +300,8 @@ class Dispatcher(Router):
         )
         return await self.propagate_event(
             event_type=EventType.TIMEOUT,
-            event=TimeoutEvent(
-                update=update,
-                session=update.session,
+            event=TimeoutUpdate.model_validate(
+                update.model_dump(),
                 context={"skill": skill},
             ),
             skill=skill,

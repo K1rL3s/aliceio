@@ -3,7 +3,7 @@ from unittest.mock import patch
 import pytest
 
 from aliceio.dispatcher.middlewares.user_context import UserContextMiddleware
-from aliceio.types import Application, TimeoutEvent, Update, User
+from aliceio.types import Application, TimeoutUpdate, Update, User
 from tests.mocked import create_mocked_session, create_mocked_update
 
 
@@ -16,9 +16,8 @@ class TestUserContextMiddleware:
         with pytest.raises(RuntimeError):
             await UserContextMiddleware()(next_handler, None, {})
 
-    async def test_expected_event_type(self):
-        update = create_mocked_update()
-        timeout = TimeoutEvent(update=update, session=update.session)
+    async def test_expected_event_type(self, update: Update):
+        timeout = TimeoutUpdate.model_validate(update.model_dump())
         await UserContextMiddleware()(next_handler, update, {})
         await UserContextMiddleware()(next_handler, timeout, {})
 

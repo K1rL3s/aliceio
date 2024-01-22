@@ -1,25 +1,24 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, Awaitable, Callable, Dict, cast
+from typing import TYPE_CHECKING, Any, Awaitable, Callable, Dict
 
-from ...enums import EventType
-from ...types import ErrorEvent, Update
-from ...types.base import AliceObject
-from ..event.bases import UNHANDLED, CancelHandler, SkipHandler
-from .base import BaseMiddleware
+from aliceio.dispatcher.event.bases import UNHANDLED, CancelHandler, SkipHandler
+from aliceio.dispatcher.middlewares.base import BaseMiddleware
+from aliceio.enums import EventType
+from aliceio.types import ErrorEvent, Update
 
 if TYPE_CHECKING:
-    from ..router import Router
+    from aliceio.dispatcher.router import Router
 
 
-class ErrorsMiddleware(BaseMiddleware):
+class ErrorsMiddleware(BaseMiddleware[Update]):
     def __init__(self, router: Router):
         self.router = router
 
     async def __call__(
         self,
-        handler: Callable[[AliceObject, Dict[str, Any]], Awaitable[Any]],
-        event: AliceObject,
+        handler: Callable[[Update, Dict[str, Any]], Awaitable[Any]],
+        event: Update,
         data: Dict[str, Any],
     ) -> Any:
         try:
@@ -27,7 +26,6 @@ class ErrorsMiddleware(BaseMiddleware):
         except (SkipHandler, CancelHandler):
             raise
         except Exception as e:
-            event = cast(Update, event)
             response = await self.router.propagate_event(
                 event_type=EventType.ERROR,
                 event=ErrorEvent(

@@ -8,15 +8,14 @@ from typing import TYPE_CHECKING, Any, Callable, Final, Optional, Type, cast
 
 from pydantic import ValidationError
 
+from aliceio.client.alice import PRODUCTION, AliceAPIServer
+from aliceio.client.session.middlewares.manager import RequestMiddlewareManager
 from aliceio.exceptions import AliceAPIError, ClientDecodeError
-
-from ...methods import AliceMethod, AliceType, ApiResponse
-from ...types import ErrorResult
-from ..alice import PRODUCTION, AliceAPIServer
-from .middlewares.manager import RequestMiddlewareManager
+from aliceio.methods import AliceMethod, AliceType, ApiResponse
+from aliceio.types import ErrorResult
 
 if TYPE_CHECKING:
-    from ..skill import Skill
+    from aliceio.client.skill import Skill
 
 DEFAULT_TIMEOUT: Final[float] = 60.0
 _JsonLoads = Callable[..., Any]

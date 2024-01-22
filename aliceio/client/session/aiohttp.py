@@ -21,16 +21,15 @@ from aiohttp.hdrs import USER_AGENT
 from aiohttp.http import SERVER_SOFTWARE
 
 from aliceio.__meta__ import __version__
+from aliceio.client.session.base import BaseSession
+from aliceio.exceptions import AliceNetworkError, AliceNoCredentialsError
 from aliceio.methods import AliceMethod
-
-from ...exceptions import AliceNetworkError, AliceNoCredentialsError
-from ...methods.base import AliceType
-from ...types import InputFile
-from ...utils.funcs import prepare_value
-from .base import BaseSession
+from aliceio.methods.base import AliceType
+from aliceio.types import InputFile
+from aliceio.utils.funcs import prepare_value
 
 if TYPE_CHECKING:
-    from ..skill import Skill
+    from aliceio.client.skill import Skill
 
 _ProxyBasic = Union[str, Tuple[str, BasicAuth]]
 _ProxyChain = Iterable[_ProxyBasic]

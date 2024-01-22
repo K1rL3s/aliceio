@@ -2,13 +2,15 @@ import logging
 from typing import TYPE_CHECKING, Any, List, Optional, Type
 
 from aliceio import loggers
+from aliceio.client.session.middlewares.base import (
+    BaseRequestMiddleware,
+    NextRequestMiddlewareType,
+)
 from aliceio.methods import AliceMethod
 from aliceio.methods.base import AliceType, ApiResponse
 
-from .base import BaseRequestMiddleware, NextRequestMiddlewareType
-
 if TYPE_CHECKING:
-    from ...skill import Skill
+    from aliceio.client.skill import Skill
 
 logger = logging.getLogger(__name__)
 

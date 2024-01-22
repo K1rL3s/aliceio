@@ -1,7 +1,11 @@
-from aliceio.types import TimeoutEvent, Update
+from aliceio.types import TimeoutUpdate, Update
 
 
 class TestTimeoutEvent:
     def test_event(self, update: Update):
-        event = TimeoutEvent(update=update, session=update.session)
+        event = TimeoutUpdate.model_validate(
+            update.model_dump(),
+            context={"skill": update.skill},
+        )
         assert event.event == update.event
+        assert event.skill == update.skill

@@ -45,7 +45,7 @@ from .space_status import SpaceStatus
 from .state import ApplicationState, AuthorizedUserState, SessionState, StateDict
 from .stream import Stream
 from .text_button import TextButton
-from .timeout_event import TimeoutEvent
+from .timeout_event import TimeoutUpdate
 from .tokens_entity import TokensEntity
 from .update import Update, UpdateTypeLookupError
 from .uploaded_image import PreUploadedImage, UploadedImage, UploadedImagesList
@@ -109,7 +109,7 @@ __all__ = (
     "StateDict",
     "Stream",
     "TextButton",
-    "TimeoutEvent",
+    "TimeoutUpdate",
     "TokensEntity",
     "Update",
     "UpdateTypeLookupError",

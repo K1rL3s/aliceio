@@ -4,7 +4,7 @@ import pytest
 
 from aliceio import Dispatcher, Router
 from aliceio.fsm.context import FSMContext
-from aliceio.types import TimeoutEvent, Update
+from aliceio.types import TimeoutUpdate, Update
 from tests.mocked import MockedSkill
 
 
@@ -18,7 +18,7 @@ class TestDispatchTimeout:
 
         @dp.timeout()
         async def timeout_handler(timeout, skill, state) -> str:
-            assert isinstance(timeout, TimeoutEvent)
+            assert isinstance(timeout, TimeoutUpdate)
             assert isinstance(skill, MockedSkill)
             assert isinstance(state, FSMContext)
             return "Handled"
@@ -37,7 +37,7 @@ class TestDispatchTimeout:
 
         @router.timeout()
         async def timeout_handler(timeout, skill, state):
-            assert isinstance(timeout, TimeoutEvent)
+            assert isinstance(timeout, TimeoutUpdate)
             assert isinstance(skill, MockedSkill)
             assert isinstance(state, FSMContext)
             return "Handled"

@@ -7,7 +7,6 @@ from aiohttp import web
 
 from aliceio import Dispatcher, F, Router, Skill
 from aliceio.types import (
-    AliceResponse,
     ImageGalleryItem,
     ItemImage,
     MediaButton,
@@ -28,7 +27,7 @@ IMAGE_ID = "1030494/9cf43e52f64928daf818"  # вставьте своё любо�
 
 
 @router.message(F.command == "изображения")
-async def items_list(message: Message) -> AliceResponse:
+async def items_list(message: Message) -> Response:
     builder = ItemsListBuilder()
     builder.add(
         IMAGE_ID,
@@ -41,16 +40,14 @@ async def items_list(message: Message) -> AliceResponse:
         button=MediaButton(text="3.5", url="https://ya.ru"),
     ).add(ItemImage(image_id=IMAGE_ID, title="Четвёртая"))
 
-    return AliceResponse(
-        response=Response(
-            text="Список айтемов",
-            card=builder.to_collection(),
-        )
+    return Response(
+        text="Список айтемов",
+        card=builder.to_collection(),
     )
 
 
 @router.message(F.command == "заголовок")
-async def items_list_header_footer(message: Message) -> AliceResponse:
+async def items_list_header_footer(message: Message) -> Response:
     builder = ItemsListBuilder()
     builder.add(
         IMAGE_ID,
@@ -74,16 +71,14 @@ async def items_list_header_footer(message: Message) -> AliceResponse:
     #     )
     # )
 
-    return AliceResponse(
-        response=Response(
-            text="Список айтемов",
-            card=builder.to_collection(),
-        )
+    return Response(
+        text="Список айтемов",
+        card=builder.to_collection(),
     )
 
 
 @router.message(F.command == "галерея")
-async def image_gallery(message: Message) -> AliceResponse:
+async def image_gallery(message: Message) -> Response:
     builder = ImageGalleryBuilder()
     builder.add(
         IMAGE_ID,
@@ -97,16 +92,14 @@ async def image_gallery(message: Message) -> AliceResponse:
         ImageGalleryItem(image_id=IMAGE_ID, title="4"),
     )
 
-    return AliceResponse(
-        response=Response(
-            text="Галерея изображений",
-            card=builder.to_collection(),
-        )
+    return Response(
+        text="Галерея изображений",
+        card=builder.to_collection(),
     )
 
 
 @router.message(F.command == "кнопки")
-async def text_buttons(message: Message) -> AliceResponse:
+async def text_buttons(message: Message) -> Response:
     builder = TextButtonsBuilder()
     builder.add(
         "Первая",
@@ -123,19 +116,17 @@ async def text_buttons(message: Message) -> AliceResponse:
         TextButton(title="Пятая"),
     )
 
-    return AliceResponse(
-        response=Response(
-            text="Обычные кнопочки",
-            buttons=builder.to_collection(),
-        )
+    return Response(
+        text="Обычные кнопочки",
+        buttons=builder.to_collection(),
     )
 
 
 # Не обрабатывайте разные типы событий одной функцией
 @router.button_pressed()
 @router.message()
-async def button_pressed(_: Any) -> AliceResponse:
-    return AliceResponse(response=Response(text="Сомнительно, но окэй"))
+async def button_pressed(_: Any) -> Response:
+    return Response(text="Сомнительно, но окэй")
 
 
 def main() -> None:
