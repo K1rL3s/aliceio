@@ -161,6 +161,7 @@ class TestAiohttpSession:
         assert fields[2][0]["name"] == fields[1][2][9:]
         assert isinstance(fields[2][2], AsyncIterable)
 
+    # TODO: Расширить и протестить методы из aliceio/methods
     async def test_make_request(
         self,
         skill: MockedSkill,

@@ -1,38 +1,18 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    ClassVar,
-    Dict,
-    Generator,
-    Generic,
-    Optional,
-    TypeVar,
-)
+from typing import TYPE_CHECKING, Any, ClassVar, Generator, Generic, Optional, TypeVar
 
 from pydantic import BaseModel, ConfigDict
 
 from aliceio.client.context_controller import SkillContextController
 
 from ..client.alice import AliceAPIServer
-from ..types import InputFile
 
 if TYPE_CHECKING:
     from ..client.skill import Skill
 
 AliceType = TypeVar("AliceType", bound=Any)
-
-
-# TODO: Сделать под Алису
-class Request(BaseModel):
-    model_config = ConfigDict(arbitrary_types_allowed=True)
-
-    method: str
-
-    data: Dict[str, Optional[Any]]
-    files: Optional[Dict[str, InputFile]]
 
 
 class ApiResponse(BaseModel, Generic[AliceType]):

@@ -1,4 +1,4 @@
-from .base import AliceMethod, AliceType, ApiResponse, Request
+from .base import AliceMethod, AliceType, ApiResponse
 from .images import DeleteImage, GetImages, UploadImage
 from .sounds import DeleteSound, GetSounds, UploadSound
 from .status import Status
@@ -11,7 +11,6 @@ __all__ = (
     "DeleteSound",
     "GetImages",
     "GetSounds",
-    "Request",
     "Status",
     "UploadImage",
     "UploadSound",
