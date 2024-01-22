@@ -5,7 +5,6 @@ from aiohttp.test_utils import TestClient
 from aiohttp.web_app import Application
 
 from aliceio import Dispatcher, F
-from aliceio.methods import Request
 from aliceio.types import AliceResponse, Message, Response
 from aliceio.webhook.aiohttp_server import (
     OneSkillRequestHandler,
@@ -32,7 +31,7 @@ class TestAiohttpServer:
         ip_filter = IPFilter.default()
         app.middlewares.append(ip_filter_middleware(ip_filter))
 
-        async def handler(request: Request):
+        async def handler(request: web.Request):
             return web.json_response({"ok": True})
 
         app.router.add_route("POST", "/webhook", handler)

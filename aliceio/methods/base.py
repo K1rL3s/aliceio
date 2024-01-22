@@ -25,16 +25,6 @@ if TYPE_CHECKING:
 AliceType = TypeVar("AliceType", bound=Any)
 
 
-# TODO: Сделать под Алису
-class Request(BaseModel):
-    model_config = ConfigDict(arbitrary_types_allowed=True)
-
-    method: str
-
-    data: Dict[str, Optional[Any]]
-    files: Optional[Dict[str, InputFile]]
-
-
 class Response(BaseModel, Generic[AliceType]):
     result: Optional[AliceType] = None
     status_code: Optional[int] = None
