@@ -1,6 +1,7 @@
 import asyncio
 import logging
 import os
+import sys
 
 from aiohttp import web
 
@@ -24,18 +25,18 @@ async def echo(message: Message) -> AliceResponse:
 
 async def on_startup(skill: Skill) -> None:
     try:
-        status = await skill.status()
+        log = str(await skill.status())
     except AliceNoCredentialsError as e:
-        status = e
-    logging.info("On startup: {}", str(status))
+        log = str(e)
+    logging.info("On startup: %s", log)
 
 
 async def on_shutdown(skill: Skill) -> None:
     try:
-        status = await skill.status()
+        log = str(await skill.status())
     except AliceNoCredentialsError as e:
-        status = e
-    logging.info("On shutdown: {}", str(status))
+        log = str(e)
+    logging.info("On shutdown: %s", log)
 
 
 @router.timeout()
@@ -73,4 +74,5 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO, stream=sys.stdout)
     main()

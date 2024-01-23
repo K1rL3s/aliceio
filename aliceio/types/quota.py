@@ -1,7 +1,5 @@
 from typing import TYPE_CHECKING, Any, ClassVar
 
-from pydantic import computed_field
-
 from .base import AliceObject
 
 

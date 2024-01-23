@@ -3,8 +3,8 @@ from __future__ import annotations
 from typing import Any, Awaitable, Callable, Dict, NoReturn, Optional, TypeVar, Union
 from unittest.mock import sentinel
 
-from ...types.base import AliceObject
-from ..middlewares.base import BaseMiddleware
+from aliceio.dispatcher.middlewares.base import BaseMiddleware
+from aliceio.types.base import AliceObject
 
 MiddlewareEventType = TypeVar("MiddlewareEventType", bound=AliceObject)
 NextMiddlewareType = Callable[[MiddlewareEventType, Dict[str, Any]], Awaitable[Any]]

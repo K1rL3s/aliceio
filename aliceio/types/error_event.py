@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING, Any, ClassVar
 
 from .alice_event import AliceEvent
+from .session import Session
 from .update import Update
 
 
@@ -18,11 +19,13 @@ class ErrorEvent(AliceEvent):
             *,
             update: Update,
             exception: Exception,
+            session: Session,  # из AliceEvent
             **__pydantic_kwargs: Any,
         ) -> None:
             super().__init__(
                 update=update,
                 exception=exception,
+                session=session,
                 **__pydantic_kwargs,
             )
 

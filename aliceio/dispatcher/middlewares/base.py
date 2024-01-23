@@ -1,17 +1,19 @@
 from abc import ABC, abstractmethod
-from typing import Any, Awaitable, Callable, Dict
+from typing import Any, Awaitable, Callable, Dict, Generic, TypeVar
 
 from aliceio.types.base import AliceObject
 
+EventType = TypeVar("EventType", bound=AliceObject)
 
-class BaseMiddleware(ABC):
+
+class BaseMiddleware(ABC, Generic[EventType]):
     """Базовый дженерик мидлварь"""
 
     @abstractmethod
     async def __call__(
         self,
-        handler: Callable[[AliceObject, Dict[str, Any]], Awaitable[Any]],
-        event: AliceObject,
+        handler: Callable[[EventType, Dict[str, Any]], Awaitable[Any]],
+        event: EventType,
         data: Dict[str, Any],
     ) -> Any:  # pragma: no cover
         """

@@ -2,18 +2,17 @@ from typing import Any, Awaitable, Callable, Dict, Optional, Tuple
 
 from aliceio.dispatcher.middlewares.base import BaseMiddleware
 from aliceio.types import Session, Update, User
-from aliceio.types.base import AliceObject
 
 EVENT_FROM_USER_KEY = "event_from_user"
 EVENT_SESSION_KEY = "event_session"
 EVENT_UPDATE_KEY = "event_update"
 
 
-class UserContextMiddleware(BaseMiddleware):
+class UserContextMiddleware(BaseMiddleware[Update]):
     async def __call__(
         self,
-        handler: Callable[[AliceObject, Dict[str, Any]], Awaitable[Any]],
-        event: AliceObject,
+        handler: Callable[[Update, Dict[str, Any]], Awaitable[Any]],
+        event: Update,
         data: Dict[str, Any],
     ) -> Any:
         if not isinstance(event, Update):

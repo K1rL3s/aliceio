@@ -16,8 +16,7 @@ class TestUserContextMiddleware:
         with pytest.raises(RuntimeError):
             await UserContextMiddleware()(next_handler, None, {})
 
-    async def test_expected_event_type(self):
-        update = create_mocked_update()
+    async def test_expected_event_type(self, update: Update):
         timeout = TimeoutUpdate.model_validate(update, from_attributes=True)
         await UserContextMiddleware()(next_handler, update, {})
         await UserContextMiddleware()(next_handler, timeout, {})

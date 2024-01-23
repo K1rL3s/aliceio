@@ -21,15 +21,15 @@ from aiohttp.hdrs import USER_AGENT
 from aiohttp.http import SERVER_SOFTWARE
 
 from aliceio.__meta__ import __version__
+from aliceio.client.session.base import BaseSession
+from aliceio.exceptions import AliceNetworkError, AliceNoCredentialsError
 from aliceio.methods import AliceMethod
-
-from ...exceptions import AliceNetworkError, AliceNoCredentialsError
-from ...methods.base import AliceType
-from ...types import InputFile
-from .base import BaseSession
+from aliceio.methods.base import AliceType
+from aliceio.types import InputFile
+from aliceio.utils.funcs import prepare_value
 
 if TYPE_CHECKING:
-    from ..skill import Skill
+    from aliceio.client.skill import Skill
 
 _ProxyBasic = Union[str, Tuple[str, BasicAuth]]
 _ProxyChain = Iterable[_ProxyBasic]
@@ -142,15 +142,14 @@ class AiohttpSession(BaseSession):
             # https://docs.aiohttp.org/en/stable/client_advanced.html#graceful-shutdown
             await asyncio.sleep(0.25)
 
-    def build_form_data(
+    def build_request_data(
         self,
-        skill: Skill,
         method: AliceMethod[AliceType],
-    ) -> FormData:
+    ) -> Tuple[Optional[FormData], Optional[Dict[str, Any]]]:
         form = FormData(quote_fields=False)
         files: Dict[str, InputFile] = {}
         for key, value in method.model_dump(warnings=False).items():
-            value = self.prepare_value(value, skill=skill, files=files)
+            value = prepare_value(value, files=files)
             if not value:
                 continue
             form.add_field(key, value)
@@ -160,7 +159,21 @@ class AiohttpSession(BaseSession):
                 value.read(),
                 filename=key,
             )
-        return form
+
+        if not files:
+            return None, self._build_json_data(method)
+
+        return form, None
+
+    @staticmethod
+    def _build_json_data(method: AliceMethod[AliceType]) -> Dict[str, Any]:
+        data: Dict[str, Any] = {}
+        for key, value in method.model_dump(warnings=False).items():
+            value = prepare_value(value, files={})
+            if not value:
+                continue
+            data[key] = value
+        return cast(Dict[str, Any], prepare_value(data, {}))
 
     @staticmethod
     def _build_request_headers(skill: Skill) -> Dict[str, Any]:
@@ -180,13 +193,14 @@ class AiohttpSession(BaseSession):
         session = await self.create_session()
 
         url = method.api_url(api_server=self.api)
-        form = self.build_form_data(skill=skill, method=method)
+        form, json_payload = self.build_request_data(method=method)
 
         try:
             async with session.request(
                 method.__http_method__,
                 url,
                 data=form,
+                json=json_payload,
                 timeout=self.timeout if timeout is None else timeout,
                 headers=self._build_request_headers(skill),
             ) as resp:

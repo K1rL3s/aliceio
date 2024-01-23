@@ -122,8 +122,7 @@ class TestAiohttpSession:
             dict_: Dict[str, Any]
 
         session = AiohttpSession()
-        form = session.build_form_data(
-            skill,
+        form, json_data = session.build_request_data(
             TestMethod(
                 str_="value",
                 int_=42,
@@ -134,10 +133,9 @@ class TestAiohttpSession:
             ),
         )
 
-        fields = form._fields
-        assert len(fields) == 5
-        # assert all(isinstance(field[2], str) for field in fields)
-        assert "null_" not in [item[0]["name"] for item in fields]
+        assert form is None
+        assert len(json_data) == 5
+        assert "null_" not in json_data.keys()
 
     def test_build_form_data_with_files(self, skill: Skill):
         class TestMethod(AliceMethod[bool]):
@@ -151,8 +149,7 @@ class TestAiohttpSession:
             document: InputFile
 
         session = AiohttpSession()
-        form = session.build_form_data(
-            skill,
+        form, json_data = session.build_request_data(
             TestMethod(key="value", document=BareInputFile()),
         )
 
@@ -164,6 +161,7 @@ class TestAiohttpSession:
         assert fields[2][0]["name"] == fields[1][2][9:]
         assert isinstance(fields[2][2], AsyncIterable)
 
+    # TODO: Расширить и протестить методы из aliceio/methods
     async def test_make_request(
         self,
         skill: MockedSkill,
@@ -175,7 +173,7 @@ class TestAiohttpSession:
             "post",
             aresponses.Response(
                 status=200,
-                text='{"result": 42}',
+                text="42",
                 headers={"Content-Type": "application/json"},
             ),
         )
