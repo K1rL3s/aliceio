@@ -28,7 +28,7 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
-          - macos-latest
+          # - macos-latest  # Открыть после окончания активной разработки, жрёт много минут
           - windows-latest
         python-version:
           - '3.8'
@@ -74,7 +74,7 @@ jobs:
         if: ${{ env.IS_WINDOWS == 'false' }}
         uses: shogo82148/actions-setup-redis@v1
         with:
-          redis-version: 6
+          redis-version: 7
 
       - name: Run tests
         run: |
@@ -97,7 +97,7 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
-          - macos-latest
+          # - macos-latest  # Открыть после окончания активной разработки, жрёт много минут
           # - windows-latest
         python-version:
           - 'pypy3.8'
@@ -128,7 +128,7 @@ jobs:
       - name: Setup redis
         uses: shogo82148/actions-setup-redis@v1
         with:
-          redis-version: 6
+          redis-version: 7
 
       - name: Run tests
         run: |

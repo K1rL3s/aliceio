@@ -145,13 +145,28 @@ class BaseRequestHandler(ABC):
         pass
 
     @abstractmethod
-    async def _handle_request(self, skill: Skill, request: web.Request) -> web.Response:
-        """
-        Этот метод должен быть реализован в наследниках этого класса.
+    async def _handle_request(
+        self,
+        skill: Skill,
+        request: web.Request,
+        update: Optional[Update] = None,
+    ) -> web.Response:
+        if update is None:
+            update = cast(Update, self._update_validate(skill, request))
 
-        Обрабатывает запрос и возвращает конечный ответ.
-        """
-        pass
+        result = await self.dispatcher.feed_webhook_update(
+            skill,
+            update,
+            **self.data,
+        )
+        return self._build_web_response(result)
+
+    # Сделать здесь обработку, если прилетает некорректный update?
+    async def _update_validate(self, skill: Skill, request: web.Request) -> Update:
+        json_data = self._convert_show_pull_to_normal_request(
+            await request.json(loads=self.json_loads)
+        )
+        return Update.model_validate(json_data, context={"skill": skill})
 
     async def handle(self, request: web.Request) -> web.Response:
         skill = await self.resolve_skill(request)
@@ -215,11 +230,13 @@ class OneSkillRequestHandler(BaseRequestHandler):
     async def resolve_skill(self, request: web.Request) -> Skill:
         return self.skill
 
-    async def _handle_request(self, skill: Skill, request: web.Request) -> web.Response:
-        json_data = self._convert_show_pull_to_normal_request(
-            await request.json(loads=self.json_loads)
-        )
-        update = Update.model_validate(json_data, context={"skill": skill})
+    async def _handle_request(
+        self,
+        skill: Skill,
+        request: web.Request,
+        update: Optional[Update] = None,
+    ) -> web.Response:
+        update = await self._update_validate(skill, request)
 
         # Проверка айди навыка в поступившем событии
         if update.session.skill_id != skill.skill_id:
@@ -230,9 +247,4 @@ class OneSkillRequestHandler(BaseRequestHandler):
             )
             return web.Response(body="Not Acceptable", status=406)
 
-        result = await self.dispatcher.feed_webhook_update(
-            skill,
-            update,
-            **self.data,
-        )
-        return self._build_web_response(result)
+        return await super()._handle_request(skill, request, update)
