@@ -61,20 +61,14 @@ class Dispatcher(Router):
         )
         self.update.register(self._listen_update)
 
-        # На timeout-observer тоже регистрируются все те же мидлвари, что и на update,
-        # потому что при возникновении TimeoutUpdate'а контекстные данные из мидлварей
-        # оригинального Update не получить. Засчитаю за костыль
-
         # Обработчики ошибок должны работать вне всех других функций
         # и должны быть зарегистрированы раньше всех остальных мидлварей.
         self.update.outer_middleware(ErrorsMiddleware(self))
-        self.timeout.outer_middleware(ErrorsMiddleware(self))
 
         # UserContextMiddleware выполняет небольшую оптимизацию
         # для всех других встроенных мидлварей путем кэширования
         # экземпляров пользователя и сессиив контексте событий.
         self.update.outer_middleware(UserContextMiddleware())
-        self.timeout.outer_middleware(UserContextMiddleware())
 
         # FSMContextMiddleware всегда следует регистрировать после UserContextMiddleware
         # поскольку здесь используется контекст из предыдущего шага.
@@ -84,7 +78,6 @@ class Dispatcher(Router):
         )
         if not disable_fsm:
             self.update.outer_middleware(self.fsm)
-            self.timeout.outer_middleware(self.fsm)
         self.shutdown.register(self.fsm.close)
 
         self.response_timeout = response_timeout
@@ -298,13 +291,12 @@ class Dispatcher(Router):
             "by `@<router>.timeout` to respond to timeouted updates.",
             RuntimeWarning,
         )
-        return await self.propagate_event(
-            event_type=EventType.TIMEOUT,
-            event=TimeoutUpdate.model_validate(
+        return await self._feed_webhook_update(
+            skill=skill,
+            update=TimeoutUpdate.model_validate(
                 update.model_dump(),
                 context={"skill": skill},
             ),
-            skill=skill,
             **self.workflow_data,
             **kwargs,
         )

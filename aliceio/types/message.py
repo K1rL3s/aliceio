@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any, ClassVar, Optional
 
 from .alice_event import AliceEvent
 from .markup import Markup
@@ -22,6 +22,9 @@ class Message(AliceEvent):
     nlu: Optional[NLU] = None
 
     if TYPE_CHECKING:
+        text: ClassVar[str]
+        original_text: ClassVar[str]
+        original_command: ClassVar[str]
 
         def __init__(
             __pydantic_self__,
@@ -46,14 +49,16 @@ class Message(AliceEvent):
                 **__pydantic_kwargs,
             )
 
-    @property
-    def text(self) -> str:
-        return self.command
+    else:
 
-    @property
-    def original_text(self) -> str:
-        return self.original_utterance
+        @property
+        def text(self) -> str:
+            return self.command
 
-    @property
-    def original_command(self) -> str:
-        return self.original_utterance
+        @property
+        def original_text(self) -> str:
+            return self.original_utterance
+
+        @property
+        def original_command(self) -> str:
+            return self.original_utterance

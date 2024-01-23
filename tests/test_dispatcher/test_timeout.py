@@ -17,8 +17,9 @@ class TestDispatchTimeout:
             await asyncio.sleep(1)
 
         @dp.timeout()
-        async def timeout_handler(timeout, skill, state) -> str:
-            assert isinstance(timeout, TimeoutUpdate)
+        async def timeout_handler(event, skill, state, event_update) -> str:
+            assert isinstance(event, type(update.event))
+            assert isinstance(event_update, TimeoutUpdate)
             assert isinstance(skill, MockedSkill)
             assert isinstance(state, FSMContext)
             return "Handled"
@@ -36,8 +37,9 @@ class TestDispatchTimeout:
             await asyncio.sleep(1)
 
         @router.timeout()
-        async def timeout_handler(timeout, skill, state):
-            assert isinstance(timeout, TimeoutUpdate)
+        async def timeout_handler(event, skill, state, event_update) -> str:
+            assert isinstance(event, type(update.event))
+            assert isinstance(event_update, TimeoutUpdate)
             assert isinstance(skill, MockedSkill)
             assert isinstance(state, FSMContext)
             return "Handled"
