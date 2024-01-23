@@ -1,7 +1,7 @@
-from typing import Any, Awaitable, Callable, Dict, Optional, Tuple, Union
+from typing import Any, Awaitable, Callable, Dict, Optional, Tuple
 
 from aliceio.dispatcher.middlewares.base import BaseMiddleware
-from aliceio.types import Session, TimeoutEvent, Update, User
+from aliceio.types import Session, Update, User
 from aliceio.types.base import AliceObject
 
 EVENT_FROM_USER_KEY = "event_from_user"
@@ -16,7 +16,7 @@ class UserContextMiddleware(BaseMiddleware):
         event: AliceObject,
         data: Dict[str, Any],
     ) -> Any:
-        if not isinstance(event, (Update, TimeoutEvent)):
+        if not isinstance(event, Update):
             raise RuntimeError("UserContextMiddleware got an unexpected event type!")
 
         session, user = self.resolve_event_context(event=event)
@@ -24,13 +24,13 @@ class UserContextMiddleware(BaseMiddleware):
         if user is not None:
             data[EVENT_FROM_USER_KEY] = user
         data[EVENT_SESSION_KEY] = session
-        data[EVENT_UPDATE_KEY] = event if isinstance(event, Update) else event.update
+        data[EVENT_UPDATE_KEY] = event
 
         return await handler(event, data)
 
     @classmethod
     def resolve_event_context(
         cls,
-        event: Union[Update, TimeoutEvent],
+        event: Update,
     ) -> Tuple[Session, Optional[User]]:
         return event.session, event.session.user

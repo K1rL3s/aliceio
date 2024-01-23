@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, List, Optional
+from typing import TYPE_CHECKING, Any, ClassVar, List, Optional
 
 from .base import AliceObject
 
@@ -21,6 +21,8 @@ class UploadedImage(AliceObject):
     createdAt: str
 
     if TYPE_CHECKING:
+        orig_url: ClassVar[Optional[str]]
+        created_at: ClassVar[Optional[str]]
 
         def __init__(
             __pydantic_self__,
@@ -39,13 +41,15 @@ class UploadedImage(AliceObject):
                 **__pydantic_kwargs,
             )
 
-    @property
-    def orig_url(self) -> Optional[str]:
-        return self.origUrl
+    else:
 
-    @property
-    def created_at(self) -> str:
-        return self.createdAt
+        @property
+        def orig_url(self) -> Optional[str]:
+            return self.origUrl
+
+        @property
+        def created_at(self) -> str:
+            return self.createdAt
 
 
 class PreUploadedImage(AliceObject):

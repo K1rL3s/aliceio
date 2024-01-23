@@ -6,7 +6,7 @@ from aiohttp import web
 
 from aliceio import Dispatcher, Router, Skill
 from aliceio.exceptions import AliceNoCredentialsError
-from aliceio.types import AliceResponse, Message, Response, TimeoutEvent
+from aliceio.types import AliceResponse, Message, Response, TimeoutUpdate
 from aliceio.webhook.aiohttp_server import OneSkillRequestHandler, setup_application
 
 router = Router()
@@ -39,7 +39,7 @@ async def on_shutdown(skill: Skill) -> None:
 
 
 @router.timeout()
-async def on_timeout(timeout: TimeoutEvent) -> AliceResponse:
+async def on_timeout(timeout: TimeoutUpdate) -> AliceResponse:
     return AliceResponse(response=Response(text="Что-то с моим временем не так..."))
 
 
