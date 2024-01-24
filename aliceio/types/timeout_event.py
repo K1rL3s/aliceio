@@ -27,7 +27,7 @@ class TimeoutUpdate(Update):
         MutableAliceObject.model_post_init(self, __context)
         try:
             self._event_model_validate(self._real_event_type, __context)
-        except UpdateTypeLookupError:
+        except UpdateTypeLookupError:  # pragma: no cover
             pass
 
     @property

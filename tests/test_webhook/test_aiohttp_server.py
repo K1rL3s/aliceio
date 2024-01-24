@@ -93,9 +93,9 @@ class TestOneSkillRequestHandler:
                     "new": True,
                 },
                 "state": {
-                    "session": {"value": 10},
-                    "user": {"value": 42},
-                    "application": {"value": 37},
+                    "session": {"state": "SessionState", "data": {"value": 77}},
+                    "user": {},
+                    "application": {"state": "AppnState", "data": {"value": 1337}},
                 },
                 "version": "1.0",
             },
@@ -141,11 +141,24 @@ class TestOneSkillRequestHandler:
         handler.register(app, path="/webhook")
         client = await aiohttp_client(app)
 
-        resp = await self.make_reqest(client=client, command="test")
+        resp = await self.make_reqest(client=client, command="test", skill_id=skill.id)
         assert resp.status == 200
         assert resp.content_type == "application/json"
         assert await resp.json() == {
-            "response": {"text": "test", "end_session": False},
+            "analytics": None,
+            "application_state": None,
+            "response": {
+                "buttons": None,
+                "card": None,
+                "directives": None,
+                "end_session": False,
+                "should_listen": None,
+                "show_item_meta": None,
+                "text": "test",
+                "tts": None,
+            },
+            "session_state": None,
+            "user_state_update": None,
             "version": "1.0",
         }
 
@@ -165,7 +178,7 @@ class TestOneSkillRequestHandler:
         handler.register(app, path="/webhook")
         client = await aiohttp_client(app)
 
-        resp = await self.make_reqest(client=client, command="spam")
+        resp = await self.make_reqest(client=client, command="spam", skill_id=skill.id)
         assert resp.status == 404
         assert resp.content_type == "application/json"
         assert await resp.json() is None

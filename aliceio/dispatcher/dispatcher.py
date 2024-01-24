@@ -1,29 +1,22 @@
-from __future__ import annotations
-
 import asyncio
 import contextvars
 import warnings
 from asyncio import CancelledError, Event, Future, Lock
-from typing import Any, Dict, Optional, Set, Union
+from typing import Any, Dict, Optional, Set, Union, cast
 
 from .. import loggers
 from ..client.skill import Skill
 from ..enums import EventType
-from ..fsm.middleware import FSMContextMiddleware
+from ..fsm.middlewares import FSMApiStorageMiddleware, FSMContextMiddleware
+from ..fsm.storage.api import ApiStorage
 from ..fsm.storage.base import BaseStorage
 from ..fsm.storage.memory import MemoryStorage
 from ..fsm.strategy import FSMStrategy
-from ..types import (
-    AliceResponse,
-    Response,
-    TimeoutUpdate,
-    Update,
-    UpdateTypeLookupError,
-)
-from ..types.base import AliceObject
+from ..types import AliceResponse, TimeoutUpdate, Update, UpdateTypeLookupError
 from .event.alice import AliceEventObserver
-from .event.bases import UNHANDLED, SkipHandler
+from .event.bases import REJECTED, UNHANDLED, SkipHandler
 from .middlewares.error import ErrorsMiddleware
+from .middlewares.response_convert import ResponseConvertMiddleware
 from .middlewares.user_context import UserContextMiddleware
 from .router import Router
 
@@ -37,16 +30,18 @@ class Dispatcher(Router):
         storage: Optional[BaseStorage] = None,
         fsm_strategy: FSMStrategy = FSMStrategy.USER,
         disable_fsm: bool = False,
+        use_api_storage: bool = False,
         name: Optional[str] = None,
         response_timeout: Union[int, float] = 4.0,
         **kwargs: Any,
     ) -> None:
         """
-        Главный роутер
+        Главный роутер.
 
         :param storage: Хранилище для FSM.
         :param fsm_strategy: Стратегия FSM.
         :param disable_fsm: Отключить ли FSM.
+        :param use_alice_storage: Использовать ли хранилище API Алисы для FSM.
         :param name: Имя как роутера, полезно при дебаге.
         :param response_timeout: Время для обработки события,
             после которого будет вызван :class:`TimeoutUpdate`.
@@ -61,6 +56,12 @@ class Dispatcher(Router):
         )
         self.update.register(self._listen_update)
 
+        # Преобразователь типов должен работать до FSMApiStorageMiddleware
+        # и после всех остальных мидлварей, потому что ему нужен именно AliceResponse,
+        # а из остальных может вернуться что-то другое. Поэтому он ставится после всех
+        # мидлварей и до FSMApiStorageMiddleware
+        self.update.outer_middleware(ResponseConvertMiddleware())
+
         # Обработчики ошибок должны работать вне всех других функций
         # и должны быть зарегистрированы раньше всех остальных мидлварей.
         self.update.outer_middleware(ErrorsMiddleware(self))
@@ -70,14 +71,20 @@ class Dispatcher(Router):
         # экземпляров пользователя и сессиив контексте событий.
         self.update.outer_middleware(UserContextMiddleware())
 
+        storage = self._init_storage(storage, disable_fsm, use_api_storage)
         # FSMContextMiddleware всегда следует регистрировать после UserContextMiddleware
         # поскольку здесь используется контекст из предыдущего шага.
         self.fsm = FSMContextMiddleware(
-            storage=storage or MemoryStorage(),
+            storage=storage,
             strategy=fsm_strategy,
         )
         if not disable_fsm:
             self.update.outer_middleware(self.fsm)
+            if use_api_storage:
+                self.update.outer_middleware(
+                    FSMApiStorageMiddleware(strategy=fsm_strategy)
+                )
+                self.update.outer_middleware(ResponseConvertMiddleware())
         self.shutdown.register(self.fsm.close)
 
         self.response_timeout = response_timeout
@@ -119,7 +126,26 @@ class Dispatcher(Router):
         """
         raise RuntimeError("Dispatcher can not be attached to another Router.")
 
-    async def feed_update(self, skill: Skill, update: Update, **kwargs: Any) -> Any:
+    @staticmethod
+    def _init_storage(
+        storage: Optional[BaseStorage],
+        disable_fsm: bool,
+        use_api_storage: bool,
+    ) -> BaseStorage:
+        if storage is not None:
+            return storage
+        if disable_fsm:
+            return MemoryStorage()
+        if use_api_storage:
+            return ApiStorage()
+        return MemoryStorage()
+
+    async def feed_update(
+        self,
+        skill: Skill,
+        update: Update,
+        **kwargs: Any,
+    ) -> Optional[AliceResponse]:
         """
         Основная точка входа для входящих событий.
         Ответ этого метода можно использовать как ответ вебхука.
@@ -151,8 +177,8 @@ class Dispatcher(Router):
                     "skill": skill,
                 },
             )
-            handled = response is not UNHANDLED
-            return response
+            handled = response not in (UNHANDLED, REJECTED, None)
+            return cast(Optional[AliceResponse], response)
         finally:
             finish_time = loop.time()
             duration = (finish_time - start_time) * 1000
@@ -216,7 +242,7 @@ class Dispatcher(Router):
         skill: Skill,
         update: Update,
         **kwargs: Any,
-    ) -> Any:
+    ) -> Optional[AliceResponse]:
         """Возвращает реальный ответ вместо bool."""
         try:
             return await self.feed_update(skill, update, **kwargs)
@@ -236,7 +262,7 @@ class Dispatcher(Router):
         skill: Skill,
         update: Union[Update, Dict[str, Any]],
         **kwargs: Any,
-    ) -> Optional[AliceObject]:
+    ) -> Optional[AliceResponse]:
         if not isinstance(update, Update):  # Allow to use raw updates
             update = Update.model_validate(update, context={"skill": skill})
 
@@ -250,7 +276,7 @@ class Dispatcher(Router):
 
         timeout_handle = loop.call_later(self.response_timeout, release_waiter)
 
-        process_updates: Future[Any] = asyncio.ensure_future(
+        process_updates: Future[Optional[AliceResponse]] = asyncio.ensure_future(
             self._feed_webhook_update(skill=skill, update=update, **kwargs)
         )
         process_updates.add_done_callback(release_waiter, context=ctx)
@@ -265,15 +291,14 @@ class Dispatcher(Router):
 
             if process_updates.done():
                 # TODO: handle exceptions
-                return await self._convert_response(process_updates.result())
+                return process_updates.result()
 
             process_updates.remove_done_callback(release_waiter)
-            response: Any = await self._process_timeouted_update(
+            return await self._process_timeouted_update(
                 skill,
                 update,
                 **kwargs,
             )
-            return await self._convert_response(response)
 
         finally:
             timeout_handle.cancel()
@@ -283,7 +308,7 @@ class Dispatcher(Router):
         skill: Skill,
         update: Update,
         **kwargs: Any,
-    ) -> Any:
+    ) -> Optional[AliceResponse]:
         warnings.warn(
             "Detected slow response into webhook.\n"
             "Alice only waits less than 4.5 seconds for a response and cancel "
@@ -300,12 +325,3 @@ class Dispatcher(Router):
             **self.workflow_data,
             **kwargs,
         )
-
-    # TODO: Сделать преобразование разных типов в AliceResponse
-    @staticmethod
-    async def _convert_response(value: Any) -> Optional[Union[AliceObject, Any]]:
-        if isinstance(value, AliceResponse):
-            return value
-        if isinstance(value, Response):
-            return AliceResponse(response=value)
-        return value

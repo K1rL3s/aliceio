@@ -5,7 +5,7 @@ import pytest
 
 from aliceio import Dispatcher
 from aliceio.filters import ExceptionMessageFilter, ExceptionTypeFilter
-from aliceio.types import Update
+from aliceio.types import AliceResponse, Update
 from aliceio.types.alice_event import AliceEvent
 from aliceio.types.error_event import ErrorEvent
 from tests.mocked import create_mocked_update
@@ -97,5 +97,6 @@ class TestDispatchException:
 
         with pytest.warns(RuntimeWarning, match="Detected unknown update type"):
             update = create_mocked_update(request_type="42")
-
-            assert await dp.feed_update(skill, update) == "Handled"
+            result = await dp.feed_update(skill, update)
+        assert isinstance(result, AliceResponse)
+        assert result.response.text == "Handled"

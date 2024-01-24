@@ -12,8 +12,9 @@ DEFAULT_DESTINY = "default"
 @dataclass(frozen=True)
 class StorageKey:
     skill_id: str
-    user_id: str
-    session_id: str
+    user_id: Optional[str]
+    session_id: Optional[str]
+    application_id: Optional[str]
     destiny: str = DEFAULT_DESTINY
 
 
@@ -66,7 +67,7 @@ class BaseStorage(ABC):
         data: Dict[str, Any],
     ) -> Dict[str, Any]:
         """
-        Обновление данные в хранилище по ключу (like dict.update)
+        Обновление данные в хранилище по ключу (like dict.update).
 
         :param key: Ключ.
         :param data: Часть данных.

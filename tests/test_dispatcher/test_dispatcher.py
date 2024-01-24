@@ -5,7 +5,8 @@ import pytest
 
 from aliceio.dispatcher.dispatcher import Dispatcher
 from aliceio.dispatcher.router import Router
-from aliceio.types import AliceResponse, Message, Response, Update
+from aliceio.fsm.middlewares import FSMApiStorageMiddleware, FSMContextMiddleware
+from aliceio.types import Message, Response, Update
 from tests.mocked import MockedSkill
 
 
@@ -79,15 +80,15 @@ RAW_UPDATE = {
         "user_id": "42:DEPRECATED_USER_ID",
         "user": {
             "user_id": "42:USER_ID",
-            "access_token": "AgAAAAAB4vpbAAApoR1oaCd5yR6eiXSHqOGT8dT",
+            "access_token": "42:ACCESS_TOKEN",
         },
         "application": {"application_id": "42:APP_ID"},
         "new": True,
     },
     "state": {
-        "session": {"value": 10},
-        "user": {"value": 42},
-        "application": {"value": 37},
+        "session": {"state": "SessionState", "data": {"value": 77}},
+        "user": {"state": "UserState", "data": {"value": 42}},
+        "application": {"state": "ApplicationState", "data": {"value": 1337}},
     },
     "version": "1.0",
 }
@@ -161,4 +162,62 @@ class TestDispatcher:
 
         result_1 = await dispatcher.feed_webhook_update(skill, UPDATE)
         result_2 = await dispatcher.feed_webhook_update(skill, RAW_UPDATE)
-        assert result_1 == result_2 == AliceResponse(response=Response(text="ok"))
+        assert result_1 == result_2
+
+    async def test_disable_fsm_true(self):
+        dp = Dispatcher(disable_fsm=True)
+
+        assert (
+            sum(
+                isinstance(middleware, FSMContextMiddleware)
+                for middleware in dp.update.outer_middleware._middlewares
+            )
+            == 0
+        )
+        assert (
+            sum(
+                isinstance(middleware, FSMApiStorageMiddleware)
+                for middleware in dp.update.outer_middleware._middlewares
+            )
+            == 0
+        )
+
+    async def test_disable_fsm_false(self):
+        dp = Dispatcher(disable_fsm=False)
+
+        assert (
+            sum(
+                isinstance(middleware, FSMContextMiddleware)
+                for middleware in dp.update.outer_middleware._middlewares
+            )
+            == 1
+        )
+        assert (
+            sum(
+                isinstance(middleware, FSMApiStorageMiddleware)
+                for middleware in dp.update.outer_middleware._middlewares
+            )
+            == 0
+        )
+
+    async def test_use_api_storage_true(self):
+        dp = Dispatcher(disable_fsm=False, use_api_storage=True)
+
+        assert (
+            sum(
+                isinstance(middleware, FSMApiStorageMiddleware)
+                for middleware in dp.update.outer_middleware._middlewares
+            )
+            == 1
+        )
+
+    async def test_use_api_storage_false(self):
+        dp = Dispatcher(disable_fsm=False, use_api_storage=False)
+
+        assert (
+            sum(
+                isinstance(middleware, FSMApiStorageMiddleware)
+                for middleware in dp.update.outer_middleware._middlewares
+            )
+            == 0
+        )

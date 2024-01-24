@@ -11,6 +11,7 @@ def create_storage_key(skill: MockedSkill) -> StorageKey:
         skill_id=skill.id,
         user_id="42:USER_ID",
         session_id="42:SESSION_ID",
+        application_id="42:APP_ID",
         destiny=DEFAULT_DESTINY,
     )
 
