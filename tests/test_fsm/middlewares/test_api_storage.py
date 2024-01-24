@@ -7,7 +7,7 @@ from aliceio.fsm.middlewares import FSMApiStorageMiddleware
 from aliceio.fsm.storage.base import DEFAULT_DESTINY, StorageKey
 from aliceio.fsm.storage.memory import MemoryStorage
 from aliceio.fsm.strategy import FSMStrategy
-from aliceio.types import AliceResponse, ApiState, Response
+from aliceio.types import AliceResponse, ApiState, Response, Update
 from tests.mocked import MockedSkill, create_mocked_update
 
 
@@ -99,11 +99,7 @@ class TestFSMApiStorageMiddleware:
         assert record.state == FSMStrategy.SESSION
         assert record.data == {"sess": "ion"}
 
-    async def test_pre_set_state_no_data(self, state: FSMContext):
-        update = create_mocked_update(
-            state=ApiState(user={}, session={}, application={})
-        )
-
+    async def test_pre_set_state_no_data(self, state: FSMContext, update: Update):
         for strategy in (
             FSMStrategy.USER,
             FSMStrategy.SESSION,
@@ -119,11 +115,7 @@ class TestFSMApiStorageMiddleware:
         state: FSMContext,
     ):
         update = create_mocked_update(
-            state=ApiState(
-                user={"state": "MyState", "data": {"foo": "bar"}},
-                session={},
-                application={},
-            )
+            user_state={"state": "MyState", "data": {"foo": "bar"}}
         )
         middleware = FSMApiStorageMiddleware(strategy=FSMStrategy.USER)
 
@@ -219,8 +211,8 @@ class TestFSMApiStorageMiddleware:
             "state": "MyState",
             "data": {"foo": "bar", "bar": "foo"},
         }
-        assert await state.get_state() is None
-        assert await state.get_data() == {}
+        assert await state.get_state() == "MyState"
+        assert await state.get_data() == {"foo": "bar", "bar": "foo"}  # нет очистки
 
     async def test_post_update_empty_context(self, state: FSMContext):
         middleware = FSMApiStorageMiddleware(strategy=FSMStrategy.USER)
@@ -251,11 +243,7 @@ class TestFSMApiStorageMiddleware:
             return AliceResponse(response=Response(text="test"))
 
         update = create_mocked_update(
-            state=ApiState(
-                user={"state": "MyState", "data": {"foo": "bar"}},
-                session={},
-                application={},
-            )
+            user_state={"state": "MyState", "data": {"foo": "bar"}}
         )
         middleware = FSMApiStorageMiddleware(strategy=FSMStrategy.USER)
         data = {"state": state}
@@ -267,5 +255,25 @@ class TestFSMApiStorageMiddleware:
             "data": {"42": "24", "bar": "foo"},
         }
         assert result.session_state is None
-        assert result.application_state is None
+        assert result.application_state is None  # есть очистка
+        assert data["raw_state"] == "MyState"
+
+    async def test_call_with_none_respone(self, state: FSMContext):
+        async def next_handler(handler, data) -> None:
+            state = data["state"]
+            await state.set_state("AnotherState")
+            await state.set_data({"42": "24"})
+            await state.update_data(bar="foo")
+
+        update = create_mocked_update(
+            user_state={"state": "MyState", "data": {"foo": "bar"}}
+        )
+        middleware = FSMApiStorageMiddleware(strategy=FSMStrategy.USER)
+        data = {"state": state}
+
+        result = await middleware(next_handler, update, data)
+
+        assert result is None
+        assert await state.get_state() is None
+        assert await state.get_data() == {}  # есть очистка
         assert data["raw_state"] == "MyState"

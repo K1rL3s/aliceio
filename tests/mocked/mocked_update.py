@@ -43,6 +43,9 @@ def create_mocked_update(
     intents: Optional[Dict[str, Any]] = None,
     entities: Optional[List[Entity]] = None,
     state: Optional[ApiState] = None,
+    user_state: Optional[Dict[str, Any]] = None,
+    session_state: Optional[Dict[str, Any]] = None,
+    application_state: Optional[Dict[str, Any]] = None,
 ) -> Update:
     meta = create_mocked_meta(meta, interfaces)
     session = create_mocked_session(session, user, application, is_new)
@@ -58,6 +61,7 @@ def create_mocked_update(
         intents,
         entities,
     )
+    state = create_mocked_api_state(state, user_state, session_state, application_state)
 
     return Update(
         meta=meta,
@@ -65,7 +69,7 @@ def create_mocked_update(
         request=request,
         version="1.0",
         context={"skill": skill} if skill else None,
-        state=state or ApiState(session={}, user={}, application={}),
+        state=state,
     )
 
 
@@ -183,4 +187,15 @@ def create_mocked_alice_request(
                 ),
             ],
         ),
+    )
+
+
+def create_mocked_api_state(
+    state: Optional[ApiState] = None,
+    user: Optional[Dict[str, Any]] = None,
+    session: Optional[Dict[str, Any]] = None,
+    application: Optional[Dict[str, Any]] = None,
+) -> ApiState:
+    return state or ApiState(
+        user=user or {}, session=session or {}, application=application or {}
     )

@@ -33,8 +33,12 @@ class FSMApiStorageMiddleware(BaseMiddleware[Update]):
 
         response: Optional[AliceResponse] = await handler(event, data)
 
-        if response is not None:
+        if response:
             await self.post_update_state(response, fsm_context)
+
+        # Очистка ключа, так как невозможно изменить состояние не через ответ на запрос
+        await fsm_context.clear()
+
         return response
 
     async def pre_set_state(self, event: Update, fsm_context: FSMContext) -> None:
@@ -60,8 +64,6 @@ class FSMApiStorageMiddleware(BaseMiddleware[Update]):
             "state": await fsm_context.get_state(),
             "data": await fsm_context.get_data(),
         }
-        # Очистка ключа, так как невозможно изменить состояние не через ответ на запрос
-        await fsm_context.clear()
         self.set_new_state(response, new_state)
 
     def set_new_state(
