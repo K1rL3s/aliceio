@@ -2,9 +2,9 @@
 
 Добро пожаловать в документацию Aliceio!
 
-Для начинающих  рекомендуется ознакомиться с [туториалом](tutorial/index.md) и [FAQ](tutorial/faq.md), а после них, с технической документацией по интерфейсам разных уровней:
+Для начинающих  рекомендуется ознакомиться с [туториалом](tutorial/index.md) и [FAQ](tutorial/faq.md), а после них, с технической документацией:
 
-* [high-level](high-level/index.md)
-* [low-level](low-level/index.md)
-* [tools](tools/index.md)
+* [Клиент](client.md)
+* [Хендлинг](handling.md)
+* [Tools](tools.md)
 * [Кастомизация зависимостей](modules.md)

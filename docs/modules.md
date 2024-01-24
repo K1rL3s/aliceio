@@ -1,6 +1,6 @@
 # Dependencies customisation
 
-VKBottle автоматически выбирает лучшую альтернативу для стандартных библиотек.
+Aliceio автоматически выбирает лучшую альтернативу для стандартных библиотек.
 
 Эти библиотеки не указаны в зависимостях, поэтому вы должны установить их сами.
 
@@ -24,7 +24,7 @@ VKBottle автоматически выбирает лучшую альтерн
 
         ```python
         import logging
-        logging.getLogger("vkbottle").setLevel(logging.INFO)
+        logging.getLogger("aliceio").setLevel(logging.INFO)
         ```
 
     === "loguru"
@@ -44,5 +44,5 @@ VKBottle автоматически выбирает лучшую альтерн
 
             ```python
             from loguru import logger
-            logger.disable("vkbottle")
+            logger.disable("aliceio")
             ```

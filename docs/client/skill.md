@@ -24,13 +24,13 @@ HTTP Client session (Например, AiohttpSession).\
 - `status(self, request_timeout: Optional[int] = None) -> SpaceStatus:`\
 Вызывает метод `:class:Status` <ссылка на доку>
 
-#### @property
+##### @property
 - `token` - Возвращает токен навыка.
 - `oauth_token` - Возвращает токен навыка.
 - `skill_id` - Возвращает айди навыка.
 - `id` - Возвращает айди навыка.
 
-#### @asynccontextmanager
+###### @asynccontextmanager
 Использование в контекстном менеджере.
 - `context(self, auto_close: bool = True) -> AsyncIterator[Skill]`\
 `:param auto_close:` - Закрыть ли HTTP-сессию при выходе.\

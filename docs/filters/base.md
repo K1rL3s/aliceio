@@ -14,6 +14,7 @@
 
 - `_signature_to_string(self, *args: Any, **kwargs: Any) -> str:` - Подпись к строке.
 
+
 - `__await__(self)` - Этот метод нужен только для проверки, никогда не вызывается.
 #### @abstractmethod
 - `__call__(self, *args: Any, **kwargs: Any,) -> Union[bool, Dict[str, Any]]:`\
@@ -21,3 +22,6 @@
 Принимает входящее событие и должен возвращать логическое значение или dict.
 
 
+## Примеры
+1. [Пример](https://github.com/K1rL3s/aliceio/blob/examples/examples/context_addition.py)
+2. [Пример](https://github.com/K1rL3s/aliceio/blob/examples/examples/custom_filter.py)
