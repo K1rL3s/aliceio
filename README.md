@@ -1,42 +1,46 @@
 <p align="center">
-  <a href="https://github.com/vkbottle/vkbottle">
-    <img width="150px" height="150px" alt="VKBottle" src="https://raw.githubusercontent.com/vkbottle/vkbottle/master/docs/logo.svg"> # сюда свою лого
+  <a href="https://github.com/K1rl3s/aliceio">
+    <img width="200px" height="200px" alt="aliceio" src="https://raw.githubusercontent.com/K1rL3s/aliceio/docs/docs/_static/logo_aliceio_trans_text.png">
   </a>
 </p>
 <h1 align="center">
-  Aliceio
+  AliceIO
 </h1>
 
-## Hello World
-#### # TODO сделать для алисы
-```python
-from vkbottle.bot import Bot
+<!-- Сюда картиночки маленькие -->
 
-bot = Bot("GroupToken")
+<p align="center">
+    <b>
+        Асинхронный фреймворк для
+        <a href="https://dialogs.yandex.ru/store">навыков Алисы</a>
+        из
+        <a href="https://dialogs.yandex.ru/development">Яндекс.Диалогов</a>
+    </b>
+</p>
 
-@bot.on.message()
-async def handler(_) -> str:
-    return "Hello world!"
+## Возможности
+- Асинхронность ([asyncio docs](https://docs.python.org/3/library/asyncio.html), [PEP 492](http://www.python.org/dev/peps/pep-0492))
+- Есть тайпхинты ([PEP 484](http://www.python.org/dev/peps/pep-0484) и может быть использован с [mypy](http://mypy-lang.org/)
+- Поддержка [PyPy](https://www.pypy.org/)
+- Роутеры (Blueprints)
+- Машина состояний (Finite State Machine)
+- Мидлвари (для входящих событий и вызовов API)
+- Использует мощные [магические фильтры](https://github.com/aiogram/magic-filter)
 
-bot.run_forever()
-```
 
-[Смотреть больше примеров!](https://github.com/aliceio/aliceio/tree/master/examples)
+### Важно!
+Настоятельно рекомендуется иметь опыт работы с [asyncio](https://docs.python.org/3/library/asyncio.html) перед использование **aliceio**
+
 
 ## Документация
+- [Примеры](https://github.com/aliceio/aliceio/tree/master/examples)
+- [Техническая документация](https://aliceio.readthedocs.io/)
 
-[Техническая документация](https://aliceio.rtfd.io)
+## Связь
+Если у вас есть вопросы, вы можете посетить чат сообщества в Telegram
+-   🇷🇺 [\@aliceio_ru](https://t.me/aliceio_ru)
 
-## Установка
-
-Установить новейшую версию можно командой:
-
-```shell
-pip install aliceio
-```
 
 ## Лицензия
-
-Copyright © 2023-2024 [K1rL3s](https://github.com/K1rL3s).\
-Copyright © 2023-2024 [ZloyKobra](https://github.com/ZloyKobra).\
-Этот проект имеет [MIT](https://github.com/K1rL3s/aliceio/blob/master/LICENSE) лицензию.декс Алисы - aliceio "Алисио"
+Copyright © 2023-2024 [K1rL3s](https://github.com/K1rL3s) and [ZloyKobra](https://github.com/ZloyKobra) \
+Этот проект использует [MIT](https://github.com/K1rL3s/aliceio/blob/master/LICENSE) лицензию
