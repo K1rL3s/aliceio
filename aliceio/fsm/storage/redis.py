@@ -74,7 +74,7 @@ class DefaultKeyBuilder(KeyBuilder):
 
 class RedisStorage(BaseStorage):
     """
-    Redis storage required :code:`redis` package installed (:code:`pip install redis`)
+    Требуется хранилище Redis. :code:`pip install redis`
     """
 
     def __init__(

@@ -1,11 +1,10 @@
-# `Builder`
+# DefaultKeyBuilder
 
-::: aliceio.utils.builders.Builder
+::: aliceio.fsm.storage.redis.DefaultKeyBuilder
     handler: python
     options:
       members:
-        - add
-        - to_collection
-        - __len__
+        - __init__
+        - build
       show_root_heading: false
       show_source: false

@@ -1,10 +1,12 @@
-# `MemoryStorage`
+# RedisStorage
 
-::: aliceio.fsm.storage.memory.MemoryStorage
+::: aliceio.fsm.storage.redis.RedisStorage
     handler: python
-    selection:
     options:
+      selection:
       members:
+        - __init__
+        - from_url
         - set_state
         - get_state
         - set_data

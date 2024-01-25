@@ -1,17 +1,12 @@
-# Класс TextButtonsBuilder
-`TextButtonsBuilder(Builder[List[TextButton], TextButton]):` - Билдер текстовых кнопок.
-### Параметры
+# `TextButtonsBuilder`
 
-`self._items: List[TextButton] = []`
+::: aliceio.utils.builders.TextButtonsBuilder
+    options:
+      inherited_members: true
+      members:
+        - add
+        - to_collection
+        - __len__
+      show_root_heading: false
+      show_source: false
 
-### Функции
-
-- `add(self, item: Union[TextButton, str], /, url: Optional[str] = None, payload: Optional[Payload] = None, hide: bool = True,) -> Self:`\
-Добавить айтем в билдер.
-    ```
-    @overload
-    add(self, title: str, /, url: Optional[str] = None, payload: Optional[Payload] = None, hide: bool = True,) -> Self:
-    add(self, item: TextButton, /) -> Self:
-    ```
-
-- `to_collection(self) -> List[TextButton]:` - Создать коллекцию из текущего билдера.

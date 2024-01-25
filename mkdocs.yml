@@ -74,7 +74,10 @@ nav:
               - Storage:
                   - Базовый класс: fsm/storage/base.md
                   - Хранилище: fsm/storage/memory.md
-                  - Redis: fsm/storage/redis.md
+                  - Redis:
+                      - Базовый класс: fsm/storage/redis/base.md
+                      - DefaultKeyBuilder: fsm/storage/redis/default_key_builder.md
+                      - KeyBuilder: fsm/storage/redis/key_builder.md
               - Context: fsm/context.md
               - Мидлварь: fsm/middleware.md
               - State: fsm/state.md
@@ -200,8 +203,8 @@ theme:
     text: Roboto Mono
     code: Monaco
 
-#  logo: logo.svg   заменить
-#  favicon: logo.svg   заменить
+  logo: _static/logo_aliceio_white.png
+  favicon: _static/logo_aliceio_white.png
 
 markdown_extensions:
   - admonition:
@@ -236,7 +239,21 @@ markdown_extensions:
 
 plugins:  # заменить всё
   - search:
-  - mkdocstrings
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            group_by_category: true
+            members_order: alphabetical
+            show_root_members_full_path: true
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
+            allow_inspection: true
+            show_source: true
+            show_docstring_attributes: true
+            docstring_options:
+              ignore_init_summary: false
+            merge_init_into_class: false
 #  - redirects:
 #      redirect_maps:
 #        "high-level/routing/index.md": "high-level/handling/index.md"

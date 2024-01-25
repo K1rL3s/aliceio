@@ -1,27 +1,18 @@
-# Класс Filter
-`Filter(ABC)`\
-Если вы хотите сделать собственные фильтры, такие же как встроенные фильтры, вам нужно будет написать подкласс с переопределением метода`__call__`и добавлением атрибутов фильтра.
+# Filter
 
-### Функции
+::: aliceio.filters.base.Filter
+    handler: python
+    options:
+      members:
+        - __call__
+        - update_handler_flags
+        - _signature_to_string
+      show_root_heading: false
+      show_source: false
 
-- `__invert__(self) -> "_InvertFilter"` - [InvertFilter](<ссылка на filters/logic.md>)
-
-
-- `update_handler_flags(self, flags: Dict[str, Any]) -> None:`\
-Также, если вы хотите расширить флаги обработчика с помощью этого фильтра, вам следует реализовать этот метод\
-Существующие флаги, могут быть обновлены напрямую.
-
-
-- `_signature_to_string(self, *args: Any, **kwargs: Any) -> str:` - Подпись к строке.
-
-
-- `__await__(self)` - Этот метод нужен только для проверки, никогда не вызывается.
-#### @abstractmethod
-- `__call__(self, *args: Any, **kwargs: Any,) -> Union[bool, Dict[str, Any]]:`\
-Этот метод надо переопределить.\
-Принимает входящее событие и должен возвращать логическое значение или dict.
 
 
 ## Примеры
-1. [Пример](https://github.com/K1rL3s/aliceio/blob/examples/examples/context_addition.py)
+1. [Пример](https://github.com/K1rL3s/aliceio/blob/examples/examples/filters.py)
 2. [Пример](https://github.com/K1rL3s/aliceio/blob/examples/examples/custom_filter.py)
+3. [Пример](https://github.com/K1rL3s/aliceio/blob/examples/examples/context_addition.py)

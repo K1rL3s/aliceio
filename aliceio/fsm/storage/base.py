@@ -33,7 +33,7 @@ class BaseStorage(ABC):
     @abstractmethod
     async def get_state(self, key: StorageKey) -> Optional[str]:
         """
-        Получить состяние по ключу.
+        Получить состояние по ключу.
 
         :param key: Ключ.
         :return: Текущее состояние.

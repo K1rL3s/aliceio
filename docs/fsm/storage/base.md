@@ -12,3 +12,6 @@
         - close
       show_root_heading: false
       show_source: false
+
+## Примеры
+1. [Пример](https://github.com/K1rL3s/aliceio/blob/examples/examples/finite_state_machine.py)
