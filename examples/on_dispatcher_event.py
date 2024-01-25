@@ -1,12 +1,13 @@
 import asyncio
 import logging
 import os
+import sys
 
 from aiohttp import web
 
 from aliceio import Dispatcher, Router, Skill
 from aliceio.exceptions import AliceNoCredentialsError
-from aliceio.types import AliceResponse, Message, Response, TimeoutEvent
+from aliceio.types import AliceResponse, Message, Response, TimeoutUpdate
 from aliceio.webhook.aiohttp_server import OneSkillRequestHandler, setup_application
 
 router = Router()
@@ -24,22 +25,22 @@ async def echo(message: Message) -> AliceResponse:
 
 async def on_startup(skill: Skill) -> None:
     try:
-        status = await skill.status()
+        log = str(await skill.status())
     except AliceNoCredentialsError as e:
-        status = e
-    logging.info("On startup: {}", str(status))
+        log = str(e)
+    logging.info("On startup: %s", log)
 
 
 async def on_shutdown(skill: Skill) -> None:
     try:
-        status = await skill.status()
+        log = str(await skill.status())
     except AliceNoCredentialsError as e:
-        status = e
-    logging.info("On shutdown: {}", str(status))
+        log = str(e)
+    logging.info("On shutdown: %s", log)
 
 
 @router.timeout()
-async def on_timeout(timeout: TimeoutEvent) -> AliceResponse:
+async def on_timeout(timeout: TimeoutUpdate) -> AliceResponse:
     return AliceResponse(response=Response(text="Что-то с моим временем не так..."))
 
 
@@ -73,4 +74,5 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO, stream=sys.stdout)
     main()

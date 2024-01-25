@@ -58,7 +58,7 @@ class TestInputFile:
     #         aresponses.ANY,
     #         aresponses.ANY,
     #         "get",
-    #         aresponses.Response(status=200, body=b"\f" * 10),
+    #         aresponses.ApiResponse(status=200, body=b"\f" * 10),
     #     )
     #     async with Skill(skill_id="42:SKILL_ID").context() as skill:
     #         file = URLInputFile("https://test.org/", chunk_size=1)

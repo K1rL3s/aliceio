@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, List, Optional
+from typing import TYPE_CHECKING, Any, ClassVar, List, Optional
 
 from .base import AliceObject
 
@@ -12,7 +12,7 @@ class UploadedImage(AliceObject):
     https://yandex.ru/dev/dialogs/alice/doc/resource-upload.html#http-images-load__upload-file
 
     https://yandex.ru/dev/dialogs/alice/doc/resource-upload.html#http-images-load__list
-    """  # noqa
+    """  # noqa: E501
 
     id: str
     origUrl: Optional[str] = None
@@ -21,6 +21,8 @@ class UploadedImage(AliceObject):
     createdAt: str
 
     if TYPE_CHECKING:
+        orig_url: ClassVar[Optional[str]]
+        created_at: ClassVar[Optional[str]]
 
         def __init__(
             __pydantic_self__,
@@ -39,13 +41,15 @@ class UploadedImage(AliceObject):
                 **__pydantic_kwargs,
             )
 
-    @property
-    def orig_url(self) -> Optional[str]:
-        return self.origUrl
+    else:
 
-    @property
-    def created_at(self) -> str:
-        return self.createdAt
+        @property
+        def orig_url(self) -> Optional[str]:
+            return self.origUrl
+
+        @property
+        def created_at(self) -> str:
+            return self.createdAt
 
 
 class PreUploadedImage(AliceObject):

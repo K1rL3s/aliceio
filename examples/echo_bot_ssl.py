@@ -1,5 +1,7 @@
+import logging
 import os
 import ssl
+import sys
 
 from aiohttp import web
 
@@ -49,3 +51,8 @@ def main() -> None:
     context.load_cert_chain(WEBHOOK_SSL_CERT, WEBHOOK_SSL_PRIV)
 
     web.run_app(app, host=WEB_SERVER_HOST, port=WEB_SERVER_PORT, ssl_context=context)
+
+
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO, stream=sys.stdout)
+    main()

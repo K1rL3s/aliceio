@@ -28,6 +28,7 @@ class Session(AliceObject):
             message_id: int,
             session_id: str,
             skill_id: str,
+            # user_id: str,
             application: Application,
             new: bool,
             user: Optional[User] = None,  # None если пользователь неавторизован

@@ -4,17 +4,17 @@ from typing import TYPE_CHECKING, Any, AsyncGenerator, Deque, Dict, Optional, Ty
 from aliceio import Skill
 from aliceio.client.session.base import BaseSession
 from aliceio.methods import AliceMethod
-from aliceio.methods.base import AliceType, Response
+from aliceio.methods.base import AliceType, ApiResponse
 
 
 class MockedSession(BaseSession):
     def __init__(self) -> None:
         super(MockedSession, self).__init__()
-        self.responses: Deque[Response[AliceType]] = deque()
+        self.responses: Deque[ApiResponse[AliceType]] = deque()
         self.requests: Deque[AliceMethod[AliceType]] = deque()
         self.closed = True
 
-    def add_result(self, response: Response[AliceType]) -> Response[AliceType]:
+    def add_result(self, response: ApiResponse[AliceType]) -> ApiResponse[AliceType]:
         self.responses.append(response)
         return response
 
@@ -32,12 +32,13 @@ class MockedSession(BaseSession):
     ) -> AliceType:
         self.closed = False
         self.requests.append(method)
-        response: Response[AliceType] = self.responses.pop()
+        response: ApiResponse[AliceType] = self.responses.pop()
+        result = response.result
         self.check_response(
             skill=skill,
             method=method,
             status_code=response.status_code,
-            content=response.model_dump_json(),
+            content=result.model_dump_json(),
         )
         return response.result  # type: ignore
 
@@ -68,8 +69,8 @@ class MockedSkill(Skill):
         method: Type[AliceMethod[AliceType]],
         result: Optional[AliceType] = None,
         status_code: int = 200,
-    ) -> Response[AliceType]:
-        response = Response[method.__returning__](  # type: ignore
+    ) -> ApiResponse[AliceType]:
+        response = ApiResponse[method.__returning__](  # type: ignore
             result=result,
             status_code=status_code,
         )

@@ -2,13 +2,15 @@ import logging
 from typing import TYPE_CHECKING, Any, List, Optional, Type
 
 from aliceio import loggers
+from aliceio.client.session.middlewares.base import (
+    BaseRequestMiddleware,
+    NextRequestMiddlewareType,
+)
 from aliceio.methods import AliceMethod
-from aliceio.methods.base import AliceType, Response
-
-from .base import BaseRequestMiddleware, NextRequestMiddlewareType
+from aliceio.methods.base import AliceType, ApiResponse
 
 if TYPE_CHECKING:
-    from ...skill import Skill
+    from aliceio.client.skill import Skill
 
 logger = logging.getLogger(__name__)
 
@@ -30,7 +32,7 @@ class RequestLogging(BaseRequestMiddleware):
         make_request: NextRequestMiddlewareType[AliceType],
         skill: "Skill",
         method: AliceMethod[AliceType],
-    ) -> Response[AliceType]:
+    ) -> ApiResponse[AliceType]:
         if type(method) not in self.ignore_methods:
             loggers.middlewares.info(
                 "Make request with method=%r by skill id=%r",

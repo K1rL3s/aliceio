@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, List, Optional
+from typing import TYPE_CHECKING, Any, ClassVar, List, Optional
 
 from .base import AliceObject
 
@@ -10,7 +10,7 @@ class UploadedSound(AliceObject):
     https://yandex.ru/dev/dialogs/alice/doc/resource-sounds-upload.html#http-load__upload-file
 
     https://yandex.ru/dev/dialogs/alice/doc/resource-sounds-upload.html#http-load__list
-    """  # noqa
+    """  # noqa: E501
 
     id: str
     skillId: str
@@ -21,6 +21,10 @@ class UploadedSound(AliceObject):
     error: Optional[str] = None
 
     if TYPE_CHECKING:
+        skill_id: ClassVar[str]
+        original_name: ClassVar[str]
+        created_at: ClassVar[str]
+        is_processed: ClassVar[bool]
 
         def __init__(
             __pydantic_self__,
@@ -45,21 +49,23 @@ class UploadedSound(AliceObject):
                 **__pydantic_kwargs,
             )
 
-    @property
-    def skill_id(self) -> str:
-        return self.skillId
+    else:
 
-    @property
-    def original_name(self) -> str:
-        return self.originalName
+        @property
+        def skill_id(self) -> str:
+            return self.skillId
 
-    @property
-    def created_at(self) -> str:
-        return self.createdAt
+        @property
+        def original_name(self) -> str:
+            return self.originalName
 
-    @property
-    def is_processed(self) -> bool:
-        return self.isProcessed
+        @property
+        def created_at(self) -> str:
+            return self.createdAt
+
+        @property
+        def is_processed(self) -> bool:
+            return self.isProcessed
 
 
 class PreUploadedSound(AliceObject):

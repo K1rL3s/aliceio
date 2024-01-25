@@ -13,7 +13,13 @@ from ..fsm.middleware import FSMContextMiddleware
 from ..fsm.storage.base import BaseStorage
 from ..fsm.storage.memory import MemoryStorage
 from ..fsm.strategy import FSMStrategy
-from ..types import AliceResponse, Response, TimeoutEvent, Update, UpdateTypeLookupError
+from ..types import (
+    AliceResponse,
+    Response,
+    TimeoutUpdate,
+    Update,
+    UpdateTypeLookupError,
+)
 from ..types.base import AliceObject
 from .event.alice import AliceEventObserver
 from .event.bases import UNHANDLED, SkipHandler
@@ -43,7 +49,7 @@ class Dispatcher(Router):
         :param disable_fsm: Отключить ли FSM.
         :param name: Имя как роутера, полезно при дебаге.
         :param response_timeout: Время для обработки события,
-            после которого будет вызван TimeoutEvent.
+            после которого будет вызван :class:`TimeoutUpdate`.
         :param kwargs: Остальные аргументы,
             будут переданы в обработчики как именованные аргументы
         """
@@ -55,20 +61,14 @@ class Dispatcher(Router):
         )
         self.update.register(self._listen_update)
 
-        # На timeout-observer тоже регистрируются все те же мидлвари, что и на update,
-        # потому что при возникновении TimeoutEvent'а контекстные данные из мидлварей
-        # оригинального Update не получить. Засчитаю за костыль
-
         # Обработчики ошибок должны работать вне всех других функций
         # и должны быть зарегистрированы раньше всех остальных мидлварей.
         self.update.outer_middleware(ErrorsMiddleware(self))
-        self.timeout.outer_middleware(ErrorsMiddleware(self))
 
         # UserContextMiddleware выполняет небольшую оптимизацию
         # для всех других встроенных мидлварей путем кэширования
         # экземпляров пользователя и сессиив контексте событий.
         self.update.outer_middleware(UserContextMiddleware())
-        self.timeout.outer_middleware(UserContextMiddleware())
 
         # FSMContextMiddleware всегда следует регистрировать после UserContextMiddleware
         # поскольку здесь используется контекст из предыдущего шага.
@@ -78,7 +78,6 @@ class Dispatcher(Router):
         )
         if not disable_fsm:
             self.update.outer_middleware(self.fsm)
-            self.timeout.outer_middleware(self.fsm)
         self.shutdown.register(self.fsm.close)
 
         self.response_timeout = response_timeout
@@ -158,7 +157,7 @@ class Dispatcher(Router):
             finish_time = loop.time()
             duration = (finish_time - start_time) * 1000
             loggers.event.info(
-                "Update from session_id=%s is %s. Duration %d ms by skill id=%d",
+                "Update from session_id=%r is %s. Duration %d ms by skill id=%r",
                 update.session.session_id,
                 "handled" if handled else "not handled",
                 duration,
@@ -292,14 +291,12 @@ class Dispatcher(Router):
             "by `@<router>.timeout` to respond to timeouted updates.",
             RuntimeWarning,
         )
-        return await self.propagate_event(
-            event_type=EventType.TIMEOUT,
-            event=TimeoutEvent(
-                update=update,
-                session=update.session,
+        return await self._feed_webhook_update(
+            skill=skill,
+            update=TimeoutUpdate.model_validate(
+                update.model_dump(),
                 context={"skill": skill},
             ),
-            skill=skill,
             **self.workflow_data,
             **kwargs,
         )

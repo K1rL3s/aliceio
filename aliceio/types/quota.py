@@ -1,6 +1,4 @@
-from typing import TYPE_CHECKING, Any
-
-from pydantic import computed_field
+from typing import TYPE_CHECKING, Any, ClassVar
 
 from .base import AliceObject
 
@@ -16,6 +14,7 @@ class Quota(AliceObject):
     used: int
 
     if TYPE_CHECKING:
+        available: ClassVar[int]
 
         def __init__(
             __pydantic_self__,
@@ -30,10 +29,11 @@ class Quota(AliceObject):
                 **__pydantic_kwargs,
             )
 
-    @computed_field  # type: ignore[misc]
-    @property
-    def available(self) -> int:
-        return self.total - self.used
+    else:
+
+        @property
+        def available(self) -> int:
+            return self.total - self.used
 
 
 class PreQuota(AliceObject):

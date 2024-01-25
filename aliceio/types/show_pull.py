@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING, Any
 
 from .alice_event import AliceEvent
+from .session import Session
 
 
 class ShowPull(AliceEvent):
@@ -21,10 +22,12 @@ class ShowPull(AliceEvent):
             *,
             type: str,
             show_type: str,
+            session: Session,  # из AliceEvent
             **__pydantic_kwargs: Any,
         ) -> None:
             super().__init__(
                 type=type,
                 show_type=show_type,
+                session=session,
                 **__pydantic_kwargs,
             )

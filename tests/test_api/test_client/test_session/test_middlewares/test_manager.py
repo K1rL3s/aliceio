@@ -6,7 +6,7 @@ from aliceio.client.session.middlewares.base import (
     NextRequestMiddlewareType,
 )
 from aliceio.client.session.middlewares.manager import RequestMiddlewareManager
-from aliceio.methods import AliceMethod, Response
+from aliceio.methods import AliceMethod, ApiResponse
 from aliceio.types.base import AliceObject
 
 
@@ -16,7 +16,7 @@ class MyMiddleware(BaseRequestMiddleware):
         make_request: NextRequestMiddlewareType,
         skill: Skill,
         method: AliceMethod[AliceObject],
-    ) -> Response[AliceObject]:
+    ) -> ApiResponse[AliceObject]:
         return await make_request(skill, method)
 
 

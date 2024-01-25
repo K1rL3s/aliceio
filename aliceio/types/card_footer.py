@@ -9,7 +9,7 @@ class CardFooter(MutableAliceObject):
     Текст и кнопки под :class:`ItemsList`.
 
     https://yandex.ru/dev/dialogs/alice/doc/response-card-itemslist.html#response-card-itemslist__footer-desc
-    """  # noqa
+    """  # noqa: E501
 
     text: Optional[str] = None  # Optional XD
     button: Optional[MediaButton] = None

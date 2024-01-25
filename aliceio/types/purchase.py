@@ -2,6 +2,7 @@ from typing import TYPE_CHECKING, Any
 
 from .alice_event import AliceEvent
 from .payload import Payload
+from .session import Session
 
 
 class Purchase(AliceEvent):
@@ -34,6 +35,7 @@ class Purchase(AliceEvent):
             purchase_payload: Payload,
             signed_data: str,
             signature: str,
+            session: Session,  # из AliceEvent
             **__pydantic_kwargs: Any,
         ) -> None:
             super().__init__(
@@ -45,5 +47,6 @@ class Purchase(AliceEvent):
                 purchase_payload=purchase_payload,
                 signed_data=signed_data,
                 signature=signature,
+                session=session,
                 **__pydantic_kwargs,
             )

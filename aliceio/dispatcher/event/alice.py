@@ -2,12 +2,11 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional
 
+from aliceio.dispatcher.event.bases import UNHANDLED, MiddlewareType, SkipHandler
+from aliceio.dispatcher.event.handler import CallbackType, FilterObject, HandlerObject
 from aliceio.dispatcher.middlewares.manager import MiddlewareManager
-
-from ...filters.base import Filter
-from ...types.base import AliceObject
-from .bases import UNHANDLED, MiddlewareType, SkipHandler
-from .handler import CallbackType, FilterObject, HandlerObject
+from aliceio.filters.base import Filter
+from aliceio.types.base import AliceObject
 
 if TYPE_CHECKING:
     from aliceio.dispatcher.router import Router

@@ -8,8 +8,12 @@ from aliceio.fsm.strategy import FSMStrategy, apply_strategy
 from aliceio.types import Session, User
 from aliceio.types.base import AliceObject
 
+FSM_STORAGE_KEY = "fsm_storage"
+FSM_CONTEXT_KEY = "state"
+RAW_STATE_KEY = "raw_state"
 
-class FSMContextMiddleware(BaseMiddleware):
+
+class FSMContextMiddleware(BaseMiddleware[AliceObject]):
     def __init__(
         self,
         storage: BaseStorage,
@@ -26,9 +30,13 @@ class FSMContextMiddleware(BaseMiddleware):
     ) -> Any:
         skill: Skill = cast(Skill, data["skill"])
         context = self.resolve_event_context(skill, data)
-        data["fsm_storage"] = self.storage
-        if context:
-            data.update({"state": context, "raw_state": await context.get_state()})
+        data.update(
+            {
+                FSM_STORAGE_KEY: self.storage,
+                FSM_CONTEXT_KEY: context,
+                RAW_STATE_KEY: await context.get_state(),
+            }
+        )
         return await handler(event, data)
 
     def resolve_event_context(
@@ -36,7 +44,7 @@ class FSMContextMiddleware(BaseMiddleware):
         skill: Skill,
         data: Dict[str, Any],
         destiny: str = DEFAULT_DESTINY,
-    ) -> Optional[FSMContext]:
+    ) -> FSMContext:
         session: Session = data["event_session"]
         user: Optional[User] = data.get("event_from_user")
         user_id = user.user_id if user else session.application.application_id
