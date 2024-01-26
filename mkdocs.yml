@@ -18,147 +18,148 @@ extra:
 # TODO запилить под наши файлы
 nav:
   - Документация:
-      - index.md
-      - Клиент:
-          - Сессия:
-              - Мидлвари:
-                  - Базовый класс: client/session/middlewares/base.md
-                  - Manager: client/session/middlewares/manager.md
-                  - RequestLogging: client/session/middlewares/request_logging.md
-              - Базовый класс: client/session/base.md
-              - Aiohttp: client/session/aiohttp.md
-          - Навык: client/skill.md
-          - API: client/alice.md
-          - ContextController: client/context_controller.md
-      - Хендлинг:
-          - Обработчики:
-              - AudioPlayer: handlers/audio_player.md
-              - Базовый класс: handlers/base.md
-              - ButtonPressed: handlers/button_pressed.md
-              - Error: handlers/error.md
-              - Message: handlers/message.md
-              - Purchase: handlers/purchase.md
-              - ShowPull: handlers/show_pull.md
-          - Dispatcher:
-              - dispatcher/dispatcher.md
-              - Флаги: dispatcher/flags.md
-              - Роутеры: dispatcher/router.md
-              - Ивенты:
-                  - dispatcher/event/event.md
-                  - Alice: dispatcher/event/alice.md
-                  - Базовый класс: dispatcher/event/bases.md
-                  - Handler: dispatcher/event/handler.md
-              - Мидлвари:
-                  - Базовый класс: dispatcher/middlewares/base.md
-                  - Error: dispatcher/middlewares/error.md
-                  - Manager: dispatcher/middlewares/manager.md
-                  - UserContext: dispatcher/middlewares/user_context.md
-          - Webhook:
-              - AiohttpServer: webhook/aiohttp_server.md
-              - Security: webhook/security.md
-      - Tools:
-          - Enums:
-              - Базовый класс: enums/base.md
-              - Card: enums/card.md
-              - Entity: enums/entity.md
-              - FileType: enums/file_type.md
-              - HttpMethod: enums/http_method.md
-              - Update: enums/update.md
-          - Filters:
-              - Базовый класс: filters/base.md
-              - Exception: filters/exception.md
-              - Logic: filters/logic.md
-              - MagicData: filters/magic_data.md
-              - State: filters/state.md
-          - FSM:
-              - Storage:
-                  - Базовый класс: fsm/storage/base.md
-                  - Хранилище: fsm/storage/memory.md
-                  - Redis:
-                      - Базовый класс: fsm/storage/redis/base.md
-                      - DefaultKeyBuilder: fsm/storage/redis/default_key_builder.md
-                      - KeyBuilder: fsm/storage/redis/key_builder.md
-              - Context: fsm/context.md
-              - Мидлварь: fsm/middleware.md
-              - State: fsm/state.md
-              - Strategy: fsm/strategy.md
-          - Methods:
-              - Картинки:
-                  - Delete: methods/images/delete_image.md
-                  - Get: methods/images/get_images.md
-                  - Upload: methods/images/upload_image.md
-              - Звук:
-                  - Delete: methods/sounds/delete_sound.md
-                  - Get: methods/sounds/get_sounds.md
-                  - Upload:  methods/sounds/upload_sound.md
-              - Базовый класс: methods/base.md
-              - Статус: methods/status.md
-          - Types:
-              - AliceEvent: types/alice_event.md
-              - AliceRequest: types/alice_request.md
-              - AliceResponse: types/alice_response.md
-              - AnalyticEvent: types/analytic_event.md
-              - Analytics: types/analytics.md
-              - Application: types/application.md
-              - AudioPlayer: types/audio_player.md
-              - AudioPlayerDirective: types/audio_player_directive.md
-              - AudioPlayerError: types/audio_player_error.md
-              - AudioPlayerItem: types/audio_player_item.md
-              - Base: types/.base.md
-              - BigImage: types/big_image.md
-              - ButtonPressed: types/button_pressed.md
-              - Card: types/card.md
-              - CardFooter: types/card_footer.md
-              - CardHeader: types/card_header.md
-              - Datetime: datetime.md
-              - Directives: directives.md
-              - Entity: types/entity.md
-              - ErrorEvent: types/error_event.md
-              - ErrorResult: types/error_result.md
-              - FIOEntity: types/fio_entity.md
-              - GEOEntity: types/geo_entity.md
-              - ImageGallery: types/image_gallery.md
-              - ImageGalleryItem: types/image_gallery_item.md
-              - InputFile: types/input_file.md
-              - Interface: types/interface.md
-              - ItemImage: types/item_image.md
-              - ItemsList: types/items_list.md
-              - Markup: types/markup.md
-              - MediaButton: media_button.md
-              - Message: types/message.md
-              - Meta: types/meta.md
-              - MetaData: types/metadata.md
-              - NLU: types/nlu.md
-              - NLUEntity: types/nlu_entity.md
-              - NumberEntity: types/number_entity.md
-              - Payload: types/payload.md
-              - Purchase: types/purchase.md
-              - Quota: types/quota.md
-              - Response: types/response.md
-              - Result: types/result.md
-              - Session: types/session.md
-              - ShowItemMeta: types/show_item_meta.md
-              - ShowPull: types/show_pull.md
-              - SpaceStatus: types/space_status.md
-              - State: types/state.md
-              - Stream: types/stream.md
-              - TextButton: types/text_button.md
-              - TimeOutEvent: types/timeout_event.md
-              - TokensEntity: types/tokens_entity.md
-              - Update: types/update.md
-              - UploadedImage: types/uploaded_image.md
-              - UploadedSound: types/uploaded_sound.md
-              - URL: types/url.md
-              - User: types/user.md
-          - Utils:
-              - Билдеры:
-                  - Builder(Базовый класс): utils/builders/builder.md
-                  - ImageGalleryBuilder: utils/builders/image_gallery_builder.md
-                  - ItemsListBuilder: utils/builders/items_list_builder.md
-                  - TextButtonBuilder: utils/builders/text_button_builder.md
-              - MagicFilter: utils/magic_filter.md
-              - Mixins: utils/mixins.md
-              - Warnings: utils/warnings.md
+      - Пользовательский уровень:
+          - user_level.md
+          - Клиент:
+              - Сессия:
+                  - Мидлвари:
+                      - Базовый класс: client/session/middlewares/base.md
+                      - Manager: client/session/middlewares/manager.md
+                      - RequestLogging: client/session/middlewares/request_logging.md
+                  - Базовый класс: client/session/base.md
+                  - Aiohttp: client/session/aiohttp.md
+              - Навык: client/skill.md
+              - API: client/alice.md
+              - ContextController: client/context_controller.md
+          - Хендлинг:
+              - Обработчики:
+                  - AudioPlayer: handlers/audio_player.md
+                  - Базовый класс: handlers/base.md
+                  - ButtonPressed: handlers/button_pressed.md
+                  - Error: handlers/error.md
+                  - Message: handlers/message.md
+                  - Purchase: handlers/purchase.md
+                  - ShowPull: handlers/show_pull.md
+              - Dispatcher:
+                  - dispatcher/dispatcher.md
+                  - Флаги: dispatcher/flags.md
+                  - Роутеры: dispatcher/router.md
+                  - Ивенты:
+                      - dispatcher/event/event.md
+                      - Alice: dispatcher/event/alice.md
+                      - Базовый класс: dispatcher/event/bases.md
+                      - Handler: dispatcher/event/handler.md
+                  - Мидлвари:
+                      - Базовый класс: dispatcher/middlewares/base.md
+                      - Error: dispatcher/middlewares/error.md
+                      - Manager: dispatcher/middlewares/manager.md
+                      - UserContext: dispatcher/middlewares/user_context.md
+              - Webhook:
+                  - AiohttpServer: webhook/aiohttp_server.md
+                  - Security: webhook/security.md
+          - Tools:
+              - Enums:
+                  - enums/all_enums.md
+              - Filters:
+                  - Базовый класс: filters/base.md
+                  - Exception: filters/exception.md
+                  - Logic: filters/logic.md
+                  - MagicData: filters/magic_data.md
+                  - State: filters/state.md
+              - FSM:
+                  - Storage:
+                      - Базовый класс: fsm/storage/base.md
+                      - Хранилище: fsm/storage/memory.md
+                      - Redis:
+                          - Базовый класс: fsm/storage/redis/base.md
+                          - DefaultKeyBuilder: fsm/storage/redis/default_key_builder.md
+                          - KeyBuilder: fsm/storage/redis/key_builder.md
+                  - Context: fsm/context.md
+                  - Мидлварь: fsm/middleware.md
+                  - State: fsm/state.md
+                  - Strategy: fsm/strategy.md
+              - Methods:
+                  - Картинки:
+                      - Delete: methods/images/delete_image.md
+                      - Get: methods/images/get_images.md
+                      - Upload: methods/images/upload_image.md
+                  - Звук:
+                      - Delete: methods/sounds/delete_sound.md
+                      - Get: methods/sounds/get_sounds.md
+                      - Upload:  methods/sounds/upload_sound.md
+                  - Базовый класс: methods/base.md
+                  - Статус: methods/status.md
+              - Types:
+                  - AliceEvent: types/alice_event.md
+                  - AliceRequest: types/alice_request.md
+                  - AliceResponse: types/alice_response.md
+                  - AnalyticEvent: types/analytic_event.md
+                  - Analytics: types/analytics.md
+                  - Application: types/application.md
+                  - AudioPlayer: types/audio_player.md
+                  - AudioPlayerDirective: types/audio_player_directive.md
+                  - AudioPlayerError: types/audio_player_error.md
+                  - AudioPlayerItem: types/audio_player_item.md
+                  - Base: types/.base.md
+                  - BigImage: types/big_image.md
+                  - ButtonPressed: types/button_pressed.md
+                  - Card: types/card.md
+                  - CardFooter: types/card_footer.md
+                  - CardHeader: types/card_header.md
+                  - Datetime: datetime.md
+                  - Directives: directives.md
+                  - Entity: types/entity.md
+                  - ErrorEvent: types/error_event.md
+                  - ErrorResult: types/error_result.md
+                  - FIOEntity: types/fio_entity.md
+                  - GEOEntity: types/geo_entity.md
+                  - ImageGallery: types/image_gallery.md
+                  - ImageGalleryItem: types/image_gallery_item.md
+                  - InputFile: types/input_file.md
+                  - Interface: types/interface.md
+                  - ItemImage: types/item_image.md
+                  - ItemsList: types/items_list.md
+                  - Markup: types/markup.md
+                  - MediaButton: media_button.md
+                  - Message: types/message.md
+                  - Meta: types/meta.md
+                  - MetaData: types/metadata.md
+                  - NLU: types/nlu.md
+                  - NLUEntity: types/nlu_entity.md
+                  - NumberEntity: types/number_entity.md
+                  - Payload: types/payload.md
+                  - Purchase: types/purchase.md
+                  - Quota: types/quota.md
+                  - Response: types/response.md
+                  - Result: types/result.md
+                  - Session: types/session.md
+                  - ShowItemMeta: types/show_item_meta.md
+                  - ShowPull: types/show_pull.md
+                  - SpaceStatus: types/space_status.md
+                  - State: types/state.md
+                  - Stream: types/stream.md
+                  - TextButton: types/text_button.md
+                  - TimeOutEvent: types/timeout_event.md
+                  - TokensEntity: types/tokens_entity.md
+                  - Update: types/update.md
+                  - UploadedImage: types/uploaded_image.md
+                  - UploadedSound: types/uploaded_sound.md
+                  - URL: types/url.md
+                  - User: types/user.md
+              - Utils:
+                  - Билдеры:
+                      - Builder(Базовый класс): utils/builders/builder.md
+                      - ImageGalleryBuilder: utils/builders/image_gallery_builder.md
+                      - ItemsListBuilder: utils/builders/items_list_builder.md
+                      - TextButtonBuilder: utils/builders/text_button_builder.md
+                  - MagicFilter: utils/magic_filter.md
+                  - Mixins: utils/mixins.md
+                  - Warnings: utils/warnings.md
+
+      - Углублённый уровень:
+          - advanced_level.md
+      - Внутреннее устройство:
+          - internal_structure.md
       - Кастомизация зависимостей: modules.md
 # TODO запилить туториал для алисы
 #  - Туториал: # надо ли?
@@ -203,8 +204,8 @@ theme:
     text: Roboto Mono
     code: Monaco
 
-  logo: _static/logo_aliceio_white.png
-  favicon: _static/logo_aliceio_white.png
+  logo: _static/logo_aliceio_trans.png
+  favicon: _static/logo_aliceio_trans.png
 
 markdown_extensions:
   - admonition:
@@ -244,6 +245,7 @@ plugins:  # заменить всё
         python:
           options:
             group_by_category: true
+            show_root_heading: true
             members_order: alphabetical
             show_root_members_full_path: true
             show_symbol_type_heading: true
@@ -253,6 +255,7 @@ plugins:  # заменить всё
             show_docstring_attributes: true
             docstring_options:
               ignore_init_summary: false
+              trim_doctest_flags: true
             merge_init_into_class: false
 #  - redirects:
 #      redirect_maps:

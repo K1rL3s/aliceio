@@ -1,10 +1,7 @@
-# Класс SkillContextController(BaseModel)
-## Параметры
-- `_skill: Optional["Skill"] = PrivateAttr()`
-## Функции
-- `as_(self, skill: Optional["Skill"]) -> Self:`\
-Привязка объекта к экземпляру навыка.
-### @property
-  - `skill(self) -> Optional["Skill"]:`\
-Возвращает экземпляр класса `Skill`
+## SkillContextController
 
+::: aliceio.client.context_controller.SkillContextController
+    handler: python
+    options:
+      merge_init_into_class: true
+      members: true

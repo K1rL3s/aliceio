@@ -6,5 +6,3 @@
       members:
         - __init__
         - build
-      show_root_heading: false
-      show_source: false

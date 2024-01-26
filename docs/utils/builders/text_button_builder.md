@@ -1,4 +1,4 @@
-# `TextButtonsBuilder`
+# TextButtonsBuilder
 
 ::: aliceio.utils.builders.TextButtonsBuilder
     options:

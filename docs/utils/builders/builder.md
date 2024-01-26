@@ -1,4 +1,4 @@
-# `Builder`
+# Builder
 
 ::: aliceio.utils.builders.Builder
     handler: python
@@ -7,5 +7,3 @@
         - add
         - to_collection
         - __len__
-      show_root_heading: false
-      show_source: false

@@ -1,4 +1,4 @@
-# `ItemsListBuilder`
+# ItemsListBuilder
 
 ::: aliceio.utils.builders.ItemsListBuilder
     handler: python

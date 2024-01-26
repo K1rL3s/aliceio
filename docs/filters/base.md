@@ -7,8 +7,6 @@
         - __call__
         - update_handler_flags
         - _signature_to_string
-      show_root_heading: false
-      show_source: false
 
 
 
