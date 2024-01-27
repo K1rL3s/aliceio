@@ -20,12 +20,8 @@ Item = TypeVar("Item", ItemImage, ImageGalleryItem, TextButton)
 
 
 class Builder(ABC, Generic[Collection, Item]):
-    """Базовый класс билдера
-
-    Методы:
-        add: Добавить айтем в билдер.
-        to_collection: Создать коллекцию из текущего билдера.
-        __len__: Возвращает длину коллекции.
+    """
+    Базовый класс билдера
     """
     _items: List[Item]
 

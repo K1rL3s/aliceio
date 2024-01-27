@@ -1,5 +1,3 @@
-## IPFilter
-
 ::: aliceio.webhook.security.IPFilter
     handler: python
     options:

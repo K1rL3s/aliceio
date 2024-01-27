@@ -1,5 +1,3 @@
-## NLU
-
 ::: aliceio.types.nlu.NLU
     handler: python
     options:

@@ -1,9 +1,10 @@
-::: aliceio.types.audio_player_error.AudioPlayerError
+::: aliceio.utils.funcs.prepare_value
     handler: python
     options:
       members: true
 
-::: aliceio.types.audio_player_error.ErrorType
+::: aliceio.utils.funcs.build_json_payload
     handler: python
     options:
       members: true
+

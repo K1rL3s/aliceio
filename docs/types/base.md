@@ -1,13 +1,11 @@
-## AliceObject
-
 ::: aliceio.types.base.AliceObject
     handler: python
     options:
-      members: true
-
-## MutableAliceObject
+      members:
+        - model_config
 
 ::: aliceio.types.base.MutableAliceObject
     handler: python
     options:
-      members: true
+      members:
+        - model_config

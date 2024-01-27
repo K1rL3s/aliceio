@@ -1,5 +1,3 @@
-## MagicData
-
 ::: aliceio.filters.magic_data.MagicData
     handler: python
     options:

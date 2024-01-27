@@ -1,5 +1,3 @@
-# FSMContext
-
 ::: aliceio.fsm.context.FSMContext
     handler: python
     options:

@@ -17,12 +17,11 @@ class BaseMiddleware(ABC, Generic[EventType]):
         data: Dict[str, Any],
     ) -> Any:  # pragma: no cover
         """
-        Вызов мидлваря
+        Вызов мидлваря\n
 
-        :param handler: Обёрнутый обработчик в цепочке мидлварей
-        :param event: Входящее событие
-                      (Подклас :class:`aliceio.types.base.AliceObject`)
-        :param data: Данные контекста. Будет сопоставлен с аргументами обработчика.
+        :param handler: Обёрнутый обработчик в цепочке мидлварей\n
+        :param event: Входящее событие (Подкласс :class:`aliceio.types.base.AliceObject`)\n
+        :param data: Данные контекста. Будет сопоставлен с аргументами обработчика.\n
         :return: :class:`Any`
         """
         pass

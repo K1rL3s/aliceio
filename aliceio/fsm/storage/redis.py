@@ -19,10 +19,9 @@ class KeyBuilder(ABC):
     @abstractmethod
     def build(self, key: StorageKey, part: Literal["data", "state"]) -> str:
         """
-        Этот метод должен быть реализован в подклассах.
-
-        :param key: Ключ.
-        :param part: Часть записи.
+        Этот метод должен быть реализован в подклассах.\n
+        :param key: Ключ.\n
+        :param part: Часть записи.\n
         :return: ключ, который будет использоваться в запросах Redis.
         """
         pass
@@ -45,9 +44,9 @@ class DefaultKeyBuilder(KeyBuilder):
         with_destiny: bool = False,
     ) -> None:
         """
-        :param prefix: Префикс для всех записей.
-        :param separator: Разделитель.
-        :param with_session_id: Включая айди сессии.
+        :param prefix: Префикс для всех записей.\n
+        :param separator: Разделитель.\n
+        :param with_session_id: Включая айди сессии.\n
         :param with_destiny: Включая destiny-ключ.
         """
         self.prefix = prefix
@@ -87,11 +86,11 @@ class RedisStorage(BaseStorage):
         json_dumps: _JsonDumps = json.dumps,
     ) -> None:
         """
-        :param redis: Экземпляр подключения Redis.
-        :param key_builder: builder that helps to convert contextual key to string
-        :param state_ttl: TTL для записей состояния.
-        :param data_ttl: TTL для записей данных.
-        :param json_loads: JSON Loads.
+        :param redis: Экземпляр подключения Redis.\n
+        :param key_builder: builder that helps to convert contextual key to string\n
+        :param state_ttl: TTL для записей состояния.\n
+        :param data_ttl: TTL для записей данных.\n
+        :param json_loads: JSON Loads.\n
         :param json_dumps: JSON Dumps.
         """
         if key_builder is None:
@@ -113,9 +112,9 @@ class RedisStorage(BaseStorage):
         """
         Создаёт экземпляр :class:`RedisStorage` по строке подключения.
 
-        :param url: Например, :code:`redis://user:password@host:port/db`
-        :param connection_kwargs: см. документацию :code:`redis`.
-        :param kwargs: аргументы, которые будут переданы в :class:`RedisStorage`.
+        :param url: Например, :code:`redis://user:password@host:port/db`.\n
+        :param connection_kwargs: см. документацию :code:`redis`.\n
+        :param kwargs: аргументы, которые будут переданы в :class:`RedisStorage`.\n
         :return: Экземпляр :class:`RedisStorage`
         """
         if connection_kwargs is None:

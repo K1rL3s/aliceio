@@ -1,5 +1,3 @@
-## ImageGallery
-
 ::: aliceio.types.image_gallery.ImageGallery
     handler: python
     options:

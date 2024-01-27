@@ -1,10 +1,8 @@
-## MiddlewareManager
-
 ::: aliceio.dispatcher.middlewares.manager.MiddlewareManager
     handler: python
     options:
-      merge_init_into_class: true
       members:
+        - __init__
         - register
         - unregister
         - __call__

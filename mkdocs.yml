@@ -19,7 +19,7 @@ extra:
 nav:
   - Документация:
       - Пользовательский уровень:
-          - user_level.md
+          - index.md
           - Клиент:
               - Сессия:
                   - Мидлвари:
@@ -69,7 +69,7 @@ nav:
               - FSM:
                   - Storage:
                       - Базовый класс: fsm/storage/base.md
-                      - Хранилище: fsm/storage/memory.md
+                      - MemoryStorage: fsm/storage/memory.md
                       - Redis:
                           - Базовый класс: fsm/storage/redis/base.md
                           - DefaultKeyBuilder: fsm/storage/redis/default_key_builder.md
@@ -100,14 +100,14 @@ nav:
                   - AudioPlayerDirective: types/audio_player_directive.md
                   - AudioPlayerError: types/audio_player_error.md
                   - AudioPlayerItem: types/audio_player_item.md
-                  - Base: types/.base.md
+                  - Base: types/base.md
                   - BigImage: types/big_image.md
                   - ButtonPressed: types/button_pressed.md
                   - Card: types/card.md
                   - CardFooter: types/card_footer.md
                   - CardHeader: types/card_header.md
-                  - Datetime: datetime.md
-                  - Directives: directives.md
+                  - Datetime: types/datetime.md
+                  - Directives: types/directives.md
                   - Entity: types/entity.md
                   - ErrorEvent: types/error_event.md
                   - ErrorResult: types/error_result.md
@@ -116,11 +116,11 @@ nav:
                   - ImageGallery: types/image_gallery.md
                   - ImageGalleryItem: types/image_gallery_item.md
                   - InputFile: types/input_file.md
-                  - Interface: types/interface.md
+                  - Interface: types/interfaces.md
                   - ItemImage: types/item_image.md
                   - ItemsList: types/items_list.md
                   - Markup: types/markup.md
-                  - MediaButton: media_button.md
+                  - MediaButton: types/media_button.md
                   - Message: types/message.md
                   - Meta: types/meta.md
                   - MetaData: types/metadata.md
@@ -148,18 +148,20 @@ nav:
                   - User: types/user.md
               - Utils:
                   - Билдеры:
+                      - utils/builders.md
                       - Builder(Базовый класс): utils/builders/builder.md
                       - ImageGalleryBuilder: utils/builders/image_gallery_builder.md
                       - ItemsListBuilder: utils/builders/items_list_builder.md
                       - TextButtonBuilder: utils/builders/text_button_builder.md
+                  - Funcs: utils/funcs.md
                   - MagicFilter: utils/magic_filter.md
                   - Mixins: utils/mixins.md
                   - Warnings: utils/warnings.md
 
       - Углублённый уровень:
-          - advanced_level.md
+          - index.md
       - Внутреннее устройство:
-          - internal_structure.md
+          - index.md
       - Кастомизация зависимостей: modules.md
 # TODO запилить туториал для алисы
 #  - Туториал: # надо ли?
@@ -238,7 +240,7 @@ markdown_extensions:
   - pymdownx.tabbed:
   - pymdownx.saneheaders:
 
-plugins:  # заменить всё
+plugins:
   - search:
   - mkdocstrings:
       handlers:
@@ -247,12 +249,13 @@ plugins:  # заменить всё
             group_by_category: true
             show_root_heading: true
             members_order: alphabetical
+            show_signature: true
             show_root_members_full_path: true
             show_symbol_type_heading: true
             show_symbol_type_toc: true
             allow_inspection: true
             show_source: true
-            show_docstring_attributes: true
+            show_docstring_description: true
             docstring_options:
               ignore_init_summary: false
               trim_doctest_flags: true

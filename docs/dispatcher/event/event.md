@@ -1,10 +1,8 @@
-## EventObserver
-
 ::: aliceio.dispatcher.event.event.EventObserver
     handler: python
     options:
-      merge_init_into_class: true
       members:
+        - __init__
         - register
         - trigger
         - __call__

@@ -1,9 +1,4 @@
-# Builder
-
 ::: aliceio.utils.builders.Builder
     handler: python
     options:
-      members:
-        - add
-        - to_collection
-        - __len__
+      members: true

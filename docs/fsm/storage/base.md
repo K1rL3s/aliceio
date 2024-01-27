@@ -1,5 +1,3 @@
-# BaseStorage
-
 ::: aliceio.fsm.storage.base.BaseStorage
     handler: python
     options:

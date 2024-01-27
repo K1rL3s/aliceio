@@ -1,5 +1,3 @@
-## Metadata
-
 ::: aliceio.types.metadata.Metadata
     handler: python
     options:

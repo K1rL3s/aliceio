@@ -1,10 +1,8 @@
-## AliceEventObserver
-
 ::: aliceio.dispatcher.event.alice.AliceEventObserver
     handler: python
     options:
-      merge_init_into_class: true
       members:
+        - __init__
         - filter
         - register
         - wrap_outer_middleware

@@ -1,5 +1,3 @@
-# FSMContextMiddleware
-
 ::: aliceio.fsm.middleware.FSMContextMiddleware
     handler: python
     options:

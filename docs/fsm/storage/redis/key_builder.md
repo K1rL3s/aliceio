@@ -1,5 +1,3 @@
-# KeyBuilder
-
 ::: aliceio.fsm.storage.redis.KeyBuilder
     handler: python
     options:

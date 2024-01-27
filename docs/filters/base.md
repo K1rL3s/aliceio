@@ -1,5 +1,3 @@
-# Filter
-
 ::: aliceio.filters.base.Filter
     handler: python
     options:

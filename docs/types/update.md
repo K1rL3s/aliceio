@@ -1,5 +1,3 @@
-## Update
-
 ::: aliceio.types.update.Update
     handler: python
     options:

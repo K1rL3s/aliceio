@@ -1,5 +1,3 @@
-## User
-
 ::: aliceio.types.user.User
     handler: python
     options:

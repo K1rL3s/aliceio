@@ -1,5 +1,3 @@
-## StateFilter
-
 ::: aliceio.filters.state.StateFilter
     handler: python
     options:

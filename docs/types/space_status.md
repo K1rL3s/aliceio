@@ -1,5 +1,3 @@
-## SpaceStatus
-
 ::: aliceio.types.space_status.SpaceStatus
     handler: python
     options:
