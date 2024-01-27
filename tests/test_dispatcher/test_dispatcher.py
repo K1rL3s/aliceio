@@ -6,6 +6,8 @@ import pytest
 from aliceio.dispatcher.dispatcher import Dispatcher
 from aliceio.dispatcher.router import Router
 from aliceio.fsm.middlewares import FSMApiStorageMiddleware, FSMContextMiddleware
+from aliceio.fsm.storage.api import ApiStorage
+from aliceio.fsm.storage.memory import MemoryStorage
 from aliceio.types import Message, Response, Update
 from tests.mocked import MockedSkill
 
@@ -220,4 +222,45 @@ class TestDispatcher:
                 for middleware in dp.update.outer_middleware._middlewares
             )
             == 0
+        )
+
+    async def test_init_storage(self):
+        class MyStorage(MemoryStorage):
+            pass
+
+        dp = Dispatcher()
+        my_storage = MyStorage()
+
+        assert (
+            dp._init_storage(my_storage, disable_fsm=False, use_api_storage=False)
+            == my_storage
+        )
+        assert (
+            dp._init_storage(my_storage, disable_fsm=False, use_api_storage=True)
+            == my_storage
+        )
+        assert (
+            dp._init_storage(my_storage, disable_fsm=True, use_api_storage=False)
+            == my_storage
+        )
+        assert (
+            dp._init_storage(my_storage, disable_fsm=True, use_api_storage=True)
+            == my_storage
+        )
+
+        assert isinstance(
+            dp._init_storage(None, disable_fsm=False, use_api_storage=False),
+            MemoryStorage,
+        )
+        assert isinstance(
+            dp._init_storage(None, disable_fsm=False, use_api_storage=True),
+            ApiStorage,
+        )
+        assert isinstance(
+            dp._init_storage(None, disable_fsm=True, use_api_storage=False),
+            MemoryStorage,
+        )
+        assert isinstance(
+            dp._init_storage(None, disable_fsm=True, use_api_storage=True),
+            MemoryStorage,
         )

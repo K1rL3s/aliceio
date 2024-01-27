@@ -1,11 +1,14 @@
+import json
 from typing import Awaitable, Callable
 
+import pytest
 from aiohttp import web
 from aiohttp.test_utils import TestClient
 from aiohttp.web_app import Application
 
 from aliceio import Dispatcher, F
-from aliceio.types import AliceResponse, Message, Response
+from aliceio.enums import EventType
+from aliceio.types import AliceResponse, Message, Response, Session, Update, User
 from aliceio.webhook.aiohttp_server import (
     OneSkillRequestHandler,
     ip_filter_middleware,
@@ -182,3 +185,75 @@ class TestOneSkillRequestHandler:
         assert resp.status == 404
         assert resp.content_type == "application/json"
         assert await resp.json() is None
+
+    @pytest.mark.parametrize(
+        "event_type,update,",
+        [
+            [
+                EventType.AUDIO_PLAYER,
+                '{"meta": {"locale": "ru-RU", "timezone": "Europe/Moscow", "client_id": "ru.yandex.searchplugin/7.16 (none none; android 4.4.2)", "interfaces": {"screen": {}, "account_linking": {}, "audio_player": {}}}, "request": {"type": "AudioPlayer.PlaybackStarted"}, "session": {"message_id": 0, "session_id": "42:SESSION_ID", "skill_id": "42:SKILL_ID", "user_id": "42:DEPRECATED_USER_ID", "user": {"user_id": "42:USER_ID", "access_token": "42:ACCESS_TOKEN"}, "application": {"application_id": "42:APP_ID"}, "new": false}, "state": {"session": {"value": 10}, "user": {"value": 42}, "application": {"value": 37}}, "version": "1.0"}',  # noqa: E501
+            ],
+            [
+                EventType.AUDIO_PLAYER,
+                '{"meta": {"locale": "ru-RU", "timezone": "Europe/Moscow", "client_id": "ru.yandex.searchplugin/7.16 (none none; android 4.4.2)", "interfaces": {"screen": {}, "account_linking": {}, "audio_player": {}}}, "request": {"type": "AudioPlayer.PlaybackFinished"}, "session": {"message_id": 0, "session_id": "42:SESSION_ID", "skill_id": "42:SKILL_ID", "user_id": "42:DEPRECATED_USER_ID", "user": {"user_id": "42:USER_ID", "access_token": "42:ACCESS_TOKEN"}, "application": {"application_id": "42:APP_ID"}, "new": false}, "state": {"session": {"value": 10}, "user": {"value": 42}, "application": {"value": 37}}, "version": "1.0"}',  # noqa: E501
+            ],
+            [
+                EventType.AUDIO_PLAYER,
+                '{"meta": {"locale": "ru-RU", "timezone": "Europe/Moscow", "client_id": "ru.yandex.searchplugin/7.16 (none none; android 4.4.2)", "interfaces": {"screen": {}, "account_linking": {}, "audio_player": {}}}, "request": {"type": "AudioPlayer.PlaybackNearlyFinished"}, "session": {"message_id": 0, "session_id": "42:SESSION_ID", "skill_id": "42:SKILL_ID", "user_id": "42:DEPRECATED_USER_ID", "user": {"user_id": "42:USER_ID", "access_token": "42:ACCESS_TOKEN"}, "application": {"application_id": "42:APP_ID"}, "new": false}, "state": {"session": {"value": 10}, "user": {"value": 42}, "application": {"value": 37}}, "version": "1.0"}',  # noqa: E501
+            ],
+            [
+                EventType.AUDIO_PLAYER,
+                '{"meta": {"locale": "ru-RU", "timezone": "Europe/Moscow", "client_id": "ru.yandex.searchplugin/7.16 (none none; android 4.4.2)", "interfaces": {"screen": {}, "account_linking": {}, "audio_player": {}}}, "request": {"type": "AudioPlayer.PlaybackStopped"}, "session": {"message_id": 0, "session_id": "42:SESSION_ID", "skill_id": "42:SKILL_ID", "user_id": "42:DEPRECATED_USER_ID", "user": {"user_id": "42:USER_ID", "access_token": "42:ACCESS_TOKEN"}, "application": {"application_id": "42:APP_ID"}, "new": false}, "state": {"session": {"value": 10}, "user": {"value": 42}, "application": {"value": 37}}, "version": "1.0"}',  # noqa: E501
+            ],
+            [
+                EventType.AUDIO_PLAYER,
+                '{"meta": {"locale": "ru-RU", "timezone": "Europe/Moscow", "client_id": "ru.yandex.searchplugin/7.16 (none none; android 4.4.2)", "interfaces": {"screen": {}, "account_linking": {}, "audio_player": {}}}, "request": {"type": "AudioPlayer.PlaybackFailed", "error": {"message": "fail details", "type": "MEDIA_ERROR_UNKNOWN"}}, "session": {"message_id": 0, "session_id": "42:SESSION_ID", "skill_id": "42:SKILL_ID", "user_id": "42:DEPRECATED_USER_ID", "user": {"user_id": "42:USER_ID", "access_token": "42:ACCESS_TOKEN"}, "application": {"application_id": "42:APP_ID"}, "new": false}, "state": {"session": {"value": 10}, "user": {"value": 42}, "application": {"value": 37}}, "version": "1.0"}',  # noqa: E501
+            ],
+            [
+                EventType.BUTTON_PRESSED,
+                '{"meta": {"locale": "ru-RU", "timezone": "Europe/Moscow", "client_id": "ru.yandex.searchplugin/7.16 (none none; android 4.4.2)", "interfaces": {"screen": {}, "account_linking": {}, "audio_player": {}}}, "request": {"nlu": {"tokens": ["надпись", "на", "кнопке"], "entities": [], "intents": {}}, "payload": {}, "type": "ButtonPressed"}, "session": {"message_id": 0, "session_id": "42:SESSION_ID", "skill_id": "42:SKILL_ID", "user_id": "42:DEPRECATED_USER_ID", "user": {"user_id": "42:USER_ID", "access_token": "42:ACCESS_TOKEN"}, "application": {"application_id": "42:APP_ID"}, "new": false}, "state": {"session": {"value": 10}, "user": {"value": 42}, "application": {"value": 37}}, "version": "1.0"}',  # noqa: E501
+            ],
+            [
+                EventType.PURCHASE,
+                '{"meta": {"locale": "ru-RU", "timezone": "Europe/Moscow", "client_id": "ru.yandex.searchplugin/7.16 (none none; android 4.4.2)", "interfaces": {"screen": {}, "account_linking": {}, "audio_player": {}}}, "request": {"type": "Purchase.Confirmation", "purchase_request_id": "42:REQ_ID", "purchase_token": "42:TOKEN", "order_id": "42:ORDER_ID", "purchase_timestamp": 1600000000, "purchase_payload": {"value": "payload"}, "signed_data": "purchase_request_id=id_value&purchase_token=token_value&order_id=id_value&...", "signature": "42:SIGN"}, "session": {"message_id": 0, "session_id": "42:SESSION_ID", "skill_id": "42:SKILL_ID", "user_id": "42:DEPRECATED_USER_ID", "user": {"user_id": "42:USER_ID", "access_token": "42:ACCESS_TOKEN"}, "application": {"application_id": "42:APP_ID"}, "new": false}, "state": {"session": {"value": 10}, "user": {"value": 42}, "application": {"value": 37}}, "version": "1.0"}',  # noqa: E501
+            ],
+            [
+                EventType.SHOW_PULL,
+                '{"meta": {"locale": "ru-RU", "timezone": "Europe/Moscow", "client_id": "ru.yandex.searchplugin/7.16 (none none; android 4.4.2)", "interfaces": {"screen": {}, "account_linking": {}, "audio_player": {}}}, "request": {"type": "Show.Pull", "show_type": "MORNING"}, "session": {"message_id": 0, "session_id": "42:SESSION_ID", "skill_id": "42:SKILL_ID", "user_id": "42:DEPRECATED_USER_ID", "user": {"user_id": "42:USER_ID", "access_token": "42:ACCESS_TOKEN"}, "application": {"application_id": "42:APP_ID"}, "new": false}, "state": {"session": {"value": 10}, "user": {"value": 42}, "application": {"value": 37}}, "version": "1.0"}',  # noqa: E501
+            ],
+            [
+                EventType.MESSAGE,
+                '{"meta": {"locale": "ru-RU", "timezone": "Europe/Moscow", "client_id": "ru.yandex.searchplugin/7.16 (none none; android 4.4.2)", "interfaces": {"screen": {}, "account_linking": {}, "audio_player": {}}}, "request": {"command": "закажи пиццу на улицу льва толстого 16 на завтра", "original_utterance": "закажи пиццу на улицу льва толстого, 16 на завтра", "markup": {"dangerous_context": true}, "payload": {}, "nlu": {"tokens": ["закажи", "пиццу", "на", "льва", "толстого", "16", "на", "завтра"], "entities": [{"tokens": {"start": 2, "end": 6}, "type": "YANDEX.GEO", "value": {"house_number": "16", "street": "льва толстого"}}, {"tokens": {"start": 3, "end": 5}, "type": "YANDEX.FIO", "value": {"first_name": "лев", "last_name": "толстой"}}, {"tokens": {"start": 5, "end": 6}, "type": "YANDEX.NUMBER", "value": 16}, {"tokens": {"start": 6, "end": 8}, "type": "YANDEX.DATETIME", "value": {"day": 1, "day_is_relative": true}}], "intents": {}}, "type": "SimpleUtterance"}, "session": {"message_id": 0, "session_id": "42:SESSION_ID", "skill_id": "42:SKILL_ID", "user_id": "42:DEPRECATED_USER_ID", "user": {"user_id": "42:USER_ID", "access_token": "42:ACCESS_TOKEN"}, "application": {"application_id": "42:APP_ID"}, "new": false}, "state": {"session": {"value": 10}, "user": {"value": 42}, "application": {"value": 37}}, "version": "1.0"}',  # noqa: E501
+            ],
+        ],
+    )
+    async def test_feed_webhook_update(
+        self,
+        event_type: str,
+        update: str,
+        skill: MockedSkill,
+        aiohttp_client: Callable[..., Awaitable[TestClient]],
+    ):
+        async def fn_handler(
+            event, skill, event_update, event_from_user, event_session
+        ):
+            assert isinstance(skill, MockedSkill)
+            assert isinstance(event_update, Update)
+            assert isinstance(event_from_user, User)
+            assert isinstance(event_session, Session)
+            assert event_update.event == event
+            assert event_update.skill is event.skill is skill
+            assert event.user == event_from_user
+            assert event.session == event_session
+            return "Handled"
+
+        app = Application()
+        dp = Dispatcher()
+        observer = dp.observers[event_type]
+        observer.register(fn_handler)
+
+        handler = OneSkillRequestHandler(dispatcher=dp, skill=skill)
+        handler.register(app, path="/webhook")
+        client = await aiohttp_client(app)
+        resp = await client.post("/webhook", data=update)
+        assert resp.status == 200

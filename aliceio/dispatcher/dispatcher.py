@@ -197,8 +197,7 @@ class Dispatcher(Router):
         **kwargs: Any,
     ) -> Any:
         """
-        Основная точка входа для входящих обновлений.
-        с автоматическим сериализатором Dict->Update.
+        Точка входа для входящих обновлений без запуска таймаут-события.
 
         :param skill: Экземпляр навыка.
         :param update: Обновление.
@@ -263,6 +262,14 @@ class Dispatcher(Router):
         update: Union[Update, Dict[str, Any]],
         **kwargs: Any,
     ) -> Optional[AliceResponse]:
+        """
+        Основная точка входа для входящих обновлений
+        с сериализатором Dict->Update.
+
+        :param skill: Экземпляр навыка.
+        :param update: Обновление.
+        :param kwargs:
+        """
         if not isinstance(update, Update):  # Allow to use raw updates
             update = Update.model_validate(update, context={"skill": skill})
 

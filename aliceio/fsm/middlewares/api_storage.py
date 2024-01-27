@@ -48,12 +48,16 @@ class FSMApiStorageMiddleware(BaseMiddleware[Update]):
 
     def resolve_state_data(self, state: ApiState) -> ApiStorageRecord:
         if self.strategy == FSMStrategy.USER:
-            return ApiStorageRecord(**state.user)
+            return self._data_to_record(state.user)
         if self.strategy == FSMStrategy.SESSION:
-            return ApiStorageRecord(**state.session)
+            return self._data_to_record(state.session)
         if self.strategy == FSMStrategy.APPLICATION:
-            return ApiStorageRecord(**state.application)
-        return ApiStorageRecord(**state.session)
+            return self._data_to_record(state.application)
+        return self._data_to_record(state.session)
+
+    @staticmethod
+    def _data_to_record(data: Dict[str, Any]) -> ApiStorageRecord:
+        return ApiStorageRecord(data=data.get("data", {}), state=data.get("state"))
 
     async def post_update_state(
         self,
