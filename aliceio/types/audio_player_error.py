@@ -6,9 +6,8 @@ from .base import AliceObject
 
 
 class AudioPlayerError(AliceObject):
-    """Ошибка аудиоплеера.
-
-    https://yandex.ru/dev/dialogs/alice/doc/request-audioplayer.html#request-audioplayer__playback-failed
+    """
+    [Ошибка аудиоплеера](https://yandex.ru/dev/dialogs/alice/doc/request-audioplayer.html#request-audioplayer__playback-failed).
     """  # noqa: E501
 
     message: str

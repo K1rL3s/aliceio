@@ -6,9 +6,7 @@ from .base import MutableAliceObject
 
 class Analytics(MutableAliceObject):
     """
-    Данные для аналитики AppMetrica.
-
-    https://yandex.ru/dev/dialogs/alice/doc/response.html#response__analytics-desc
+    [Данные](https://yandex.ru/dev/dialogs/alice/doc/response.html#response__analytics-desc) для аналитики AppMetrica.
     """
 
     events: List[AnalyticEvent]

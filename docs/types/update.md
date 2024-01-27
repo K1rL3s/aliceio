@@ -1,0 +1,13 @@
+## Update
+
+::: aliceio.types.update.Update
+    handler: python
+    options:
+      members:
+        - __init__
+        - event
+        - event_type
+
+## UpdateTypeLookupError
+
+Запрос не содержит ни одного известного типа событий.

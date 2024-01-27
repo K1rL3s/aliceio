@@ -7,11 +7,9 @@ from .session import Session
 
 class AudioPlayer(AliceEvent):
     """
-    Навык получает запрос с типом AudioPlayer,
+    Навык получает [запрос с типом AudioPlayer](https://yandex.ru/dev/dialogs/alice/doc/request-audioplayer.html),
     если пользователь произносит команду управления аудиоплеером
     или нажимает соответствующую кнопку в интерфейсе.
-
-    https://yandex.ru/dev/dialogs/alice/doc/request-audioplayer.html
     """
 
     type: str

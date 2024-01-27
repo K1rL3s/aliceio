@@ -16,11 +16,9 @@ from .show_pull import ShowPull
 # Отнаследовать ли Update от AliceEvent'a?
 class Update(MutableAliceObject):
     """
-    Полный запрос от API Алисы.
+    [Полный запрос](https://yandex.ru/dev/dialogs/alice/doc/request.html) от API Алисы.
 
     В любом запросе может присутствовать не более **одного** необязательного параметра.
-
-    https://yandex.ru/dev/dialogs/alice/doc/request.html
     """
 
     meta: Meta

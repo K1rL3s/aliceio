@@ -6,9 +6,7 @@ from .payload import Payload
 
 class TextButton(MutableAliceObject):
     """
-    Кнопка под сообщением навыка или над клавиатурой пользователя.
-
-    https://yandex.ru/dev/dialogs/alice/doc/response.html#response__buttons-desc
+    [Кнопка](https://yandex.ru/dev/dialogs/alice/doc/response.html#response__buttons-desc) под сообщением навыка или над клавиатурой пользователя.
     """
 
     title: str

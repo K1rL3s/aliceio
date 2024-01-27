@@ -6,9 +6,7 @@ from .interfaces import Interfaces
 
 class Meta(AliceObject):
     """
-    Информация об устройстве, с которого пользователь разговаривает с Алисой.
-
-    https://yandex.ru/dev/dialogs/alice/doc/request.html#request__meta-desc
+    [Информация об устройстве](https://yandex.ru/dev/dialogs/alice/doc/request.html#request__meta-desc), с которого пользователь разговаривает с Алисой.
     """
 
     locale: str

@@ -9,9 +9,7 @@ from .state import ApplicationState, AuthorizedUserState, SessionState
 
 class AliceResponse(MutableAliceObject):
     """
-    Ответ на запрос API Алисы.
-
-    https://yandex.ru/dev/dialogs/alice/doc/response.html
+    [Ответ](https://yandex.ru/dev/dialogs/alice/doc/response.html) на запрос API Алисы.
     """
 
     response: Response

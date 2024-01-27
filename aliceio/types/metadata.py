@@ -6,9 +6,7 @@ from .url import URL
 
 class Metadata(MutableAliceObject):
     """
-    Метадата аудиоплеера.
-
-    https://yandex.ru/dev/dialogs/alice/doc/response-audio-player.html#direct-play__audio-player-item-metadata-desc
+    [Метадата](https://yandex.ru/dev/dialogs/alice/doc/response-audio-player.html#direct-play__audio-player-item-metadata-desc) аудиоплеера.
     """  # noqa: E501
 
     title: Optional[str] = None

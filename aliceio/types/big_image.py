@@ -10,9 +10,7 @@ from .media_button import MediaButton
 
 class BigImage(MutableAliceObject):
     """
-    :code:`Card` с типом :code:`BigImage`.
-
-    https://yandex.ru/dev/dialogs/alice/doc/response-card-bigimage.html
+    :code:`Card` с типом :code:[`BigImage`](https://yandex.ru/dev/dialogs/alice/doc/response-card-bigimage.html).
     """
 
     type: str = CardType.BIG_IMAGE

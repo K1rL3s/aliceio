@@ -7,9 +7,7 @@ from .user import User
 
 class Session(AliceObject):
     """
-    Информация о сессии в навыке.
-
-    https://yandex.ru/dev/dialogs/alice/doc/request.html#request__session-desc
+    [Информация о сессии в навыке](https://yandex.ru/dev/dialogs/alice/doc/request.html#request__session-desc).
     """
 
     message_id: int

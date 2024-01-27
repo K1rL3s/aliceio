@@ -7,10 +7,8 @@ from .session import Session
 
 class Purchase(AliceEvent):
     """
-    Навык получает запрос с объектом request и типом Purchase.Confirmation,
+    Навык получает запрос с объектом request и типом Purchase. [Confirmation](https://yandex.ru/dev/dialogs/alice/doc/request-purchase-confirmation.html),
     если пользователь выполняет оплату и навык должен отправить ему подтверждение.
-
-    https://yandex.ru/dev/dialogs/alice/doc/request-purchase-confirmation.html
     """
 
     type: str

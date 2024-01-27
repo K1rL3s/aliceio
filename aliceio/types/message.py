@@ -9,9 +9,7 @@ from .session import Session
 
 class Message(AliceEvent):
     """
-    :class:`AliceRequest` с типом :code:`SimpleUtterance`.
-
-    https://yandex.ru/dev/dialogs/alice/doc/request-simpleutterance.html
+    :class:`AliceRequest` с типом :code:[`SimpleUtterance`](https://yandex.ru/dev/dialogs/alice/doc/request-simpleutterance.html).
     """
 
     type: str

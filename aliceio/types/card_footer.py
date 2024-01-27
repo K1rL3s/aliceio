@@ -6,9 +6,7 @@ from .media_button import MediaButton
 
 class CardFooter(MutableAliceObject):
     """
-    Текст и кнопки под :class:`ItemsList`.
-
-    https://yandex.ru/dev/dialogs/alice/doc/response-card-itemslist.html#response-card-itemslist__footer-desc
+    [Текст и кнопки](https://yandex.ru/dev/dialogs/alice/doc/response-card-itemslist.html#response-card-itemslist__footer-desc) под :class:`ItemsList`.
     """  # noqa: E501
 
     text: Optional[str] = None  # Optional XD

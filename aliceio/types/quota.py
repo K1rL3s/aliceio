@@ -5,9 +5,7 @@ from .base import AliceObject
 
 class Quota(AliceObject):
     """
-    Доступный и израсходованный объём картинок или аудиофайлов. Значения в байтах.
-
-    https://yandex.ru/dev/dialogs/alice/doc/resource-upload.html
+    Доступный и израсходованный [объём](https://yandex.ru/dev/dialogs/alice/doc/resource-upload.html) картинок или аудиофайлов. Значения в байтах.
     """
 
     total: int
