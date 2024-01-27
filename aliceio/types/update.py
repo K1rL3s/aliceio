@@ -11,6 +11,7 @@ from .meta import Meta
 from .purchase import Purchase
 from .session import Session
 from .show_pull import ShowPull
+from .state import ApiState
 
 
 # Отнаследовать ли Update от AliceEvent'a?
@@ -34,6 +35,8 @@ class Update(MutableAliceObject):
     purchase: Optional[Purchase] = None
     show_pull: Optional[ShowPull] = None
 
+    state: ApiState
+
     if TYPE_CHECKING:
         event: ClassVar[AliceEvent]
         event_type: ClassVar[str]
@@ -45,6 +48,7 @@ class Update(MutableAliceObject):
             request: AliceRequest,
             session: Session,
             version: str,
+            state: ApiState,
             message: Optional[Message] = None,
             audio_player: Optional[AudioPlayer] = None,
             button: Optional[ButtonPressed] = None,
@@ -57,6 +61,7 @@ class Update(MutableAliceObject):
                 request=request,
                 session=session,
                 version=version,
+                state=state,
                 message=message,
                 audio_player=audio_player,
                 button=button,

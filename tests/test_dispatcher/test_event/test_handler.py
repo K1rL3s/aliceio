@@ -155,7 +155,7 @@ class TestFilterObject:
     def test_post_init(self):
         case = F.test
         filter_obj = FilterObject(callback=case)
-        print(filter_obj.callback)
+        # print(filter_obj.callback)
         assert filter_obj.callback == case.resolve
 
 

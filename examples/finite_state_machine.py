@@ -106,7 +106,7 @@ def show_summary(data: Dict[str, Any], positive: bool = True) -> str:
 
 
 def main() -> None:
-    dp = Dispatcher()
+    dp = Dispatcher(use_api_storage=True, response_timeout=10**9)
     dp.include_router(form_router)
 
     skill_id = os.environ["SKILL_ID"]

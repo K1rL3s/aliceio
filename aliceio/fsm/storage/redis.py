@@ -41,24 +41,25 @@ class DefaultKeyBuilder(KeyBuilder):
         *,
         prefix: str = "fsm",
         separator: str = ":",
-        with_session_id: bool = False,
         with_destiny: bool = False,
     ) -> None:
         """
         :param prefix: Префикс для всех записей.
         :param separator: Разделитель.
-        :param with_session_id: Включая айди сессии.
         :param with_destiny: Включая destiny-ключ.
         """
         self.prefix = prefix
         self.separator = separator
-        self.with_session_id = with_session_id
         self.with_destiny = with_destiny
 
     def build(self, key: StorageKey, part: Literal["data", "state"]) -> str:
-        parts = [self.prefix, key.skill_id, key.user_id]
-        if self.with_session_id:
-            parts.append(key.session_id)
+        parts = [
+            self.prefix,
+            key.skill_id,
+            key.user_id or "",
+            key.session_id or "",
+            key.application_id or "",
+        ]
         if self.with_destiny:
             parts.append(key.destiny)
         elif key.destiny != DEFAULT_DESTINY:

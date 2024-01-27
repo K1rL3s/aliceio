@@ -5,6 +5,7 @@ from aliceio.enums.update import RequestType
 from aliceio.types import (
     NLU,
     AliceRequest,
+    ApiState,
     Application,
     DateTimeEntity,
     Entity,
@@ -41,6 +42,10 @@ def create_mocked_update(
     tokens: Optional[List[str]] = None,
     intents: Optional[Dict[str, Any]] = None,
     entities: Optional[List[Entity]] = None,
+    state: Optional[ApiState] = None,
+    user_state: Optional[Dict[str, Any]] = None,
+    session_state: Optional[Dict[str, Any]] = None,
+    application_state: Optional[Dict[str, Any]] = None,
 ) -> Update:
     meta = create_mocked_meta(meta, interfaces)
     session = create_mocked_session(session, user, application, is_new)
@@ -56,15 +61,16 @@ def create_mocked_update(
         intents,
         entities,
     )
+    state = create_mocked_api_state(state, user_state, session_state, application_state)
 
-    mocked_update = Update(
+    return Update(
         meta=meta,
         session=session,
         request=request,
         version="1.0",
         context={"skill": skill} if skill else None,
+        state=state,
     )
-    return mocked_update
 
 
 def create_mocked_meta(
@@ -181,4 +187,15 @@ def create_mocked_alice_request(
                 ),
             ],
         ),
+    )
+
+
+def create_mocked_api_state(
+    state: Optional[ApiState] = None,
+    user: Optional[Dict[str, Any]] = None,
+    session: Optional[Dict[str, Any]] = None,
+    application: Optional[Dict[str, Any]] = None,
+) -> ApiState:
+    return state or ApiState(
+        user=user or {}, session=session or {}, application=application or {}
     )

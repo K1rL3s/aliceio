@@ -108,6 +108,7 @@ class TestUpdate:
                     "application": {"application_id": "42:APP"},
                     "new": True,
                 },
+                "state": {"session": {}, "user": {}, "application": {}},
                 "version": "1.0",
             }
         )

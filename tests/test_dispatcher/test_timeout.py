@@ -4,7 +4,7 @@ import pytest
 
 from aliceio import Dispatcher, Router
 from aliceio.fsm.context import FSMContext
-from aliceio.types import TimeoutUpdate, Update
+from aliceio.types import AliceResponse, TimeoutUpdate, Update
 from tests.mocked import MockedSkill
 
 
@@ -25,7 +25,9 @@ class TestDispatchTimeout:
             return "Handled"
 
         with pytest.warns(RuntimeWarning, match="Detected slow response into webhook"):
-            assert await dp.feed_webhook_update(skill, update) == "Handled"
+            result = await dp.feed_webhook_update(skill, update)
+            assert isinstance(result, AliceResponse)
+            assert result.response.text == "Handled"
 
     async def test_handle_timeout_routers(self, skill: MockedSkill, update: Update):
         router = Router()
@@ -45,4 +47,6 @@ class TestDispatchTimeout:
             return "Handled"
 
         with pytest.warns(RuntimeWarning, match="Detected slow response into webhook"):
-            assert await dp.feed_webhook_update(skill, update) == "Handled"
+            result = await dp.feed_webhook_update(skill, update)
+            assert isinstance(result, AliceResponse)
+            assert result.response.text == "Handled"

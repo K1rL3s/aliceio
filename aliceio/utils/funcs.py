@@ -9,35 +9,27 @@ from aliceio.dispatcher.event.bases import REJECTED, UNHANDLED
 from aliceio.types import InputFile
 
 
-class PrepareValue(Protocol):
+class PrepareValue(Protocol):  # pragma: no cover
     def __call__(self, value: Any, files: Dict[str, Any]) -> Any:
         ...
 
 
+# Ключи, у которых значение = None, не пропускаются, потому что иначе не получится
+# установить None в значение хранилища состояний API Алисы
 def prepare_value(value: Any, files: Dict[str, Any]) -> Any:
     """Подготовка значения перед отправкой."""
-    if value is None:
+    if value in (None, UNHANDLED, REJECTED):
         return None
     if isinstance(value, str):
         return value
-    if value in (UNHANDLED, REJECTED):
-        return None
     if isinstance(value, InputFile):
         key = "file"
         files[key] = value
         return f"attach://{key}"
     if isinstance(value, dict):
-        return {
-            key: prepared_item
-            for key, item in value.items()
-            if (prepared_item := prepare_value(item, files=files)) is not None
-        }
+        return {key: prepare_value(item, files=files) for key, item in value.items()}
     if isinstance(value, list):
-        return [
-            prepared_item
-            for item in value
-            if (prepared_item := prepare_value(item, files=files)) is not None
-        ]
+        return [prepare_value(item, files=files) for item in value]
     if isinstance(value, datetime.timedelta):
         now = datetime.datetime.now()
         return str(round((now + value).timestamp()))
