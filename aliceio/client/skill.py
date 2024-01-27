@@ -29,23 +29,24 @@ T = TypeVar("T")
 
 
 class Skill:
-    """
-    Класс Навыка.
-
-    :param skill_id: Идентификатор навыка можно посмотреть в консоли разработчика.
-        Зайдите на страницу навыка, откройте вкладку "Общие сведения"
-        и пролистайте вниз. Запросы без этого айди будут игнорироваться.\n
-    :param oauth_token: Токен для загрузки аудио и изображений.
-        Без [этого](https://yandex.ru/dev/direct/doc/start/token.html) токена нельзя взаимодействовать с API Алисы.\n
-    :param session: HTTP Client session (Например, AiohttpSession).
-        Если не указано, будет создано автоматически.
-    """
+    """Класс навыка."""
     def __init__(
         self,
         skill_id: str,
         oauth_token: Optional[str] = None,
         session: Optional[BaseSession] = None,
     ) -> None:
+        """
+        Класс Навыка
+
+        :param skill_id: Идентификатор навыка можно посмотреть в консоли разработчика.
+            Зайдите на страницу навыка, откройте вкладку "Общие сведения"
+            и пролистайте вниз. Запросы без этого айди будут игнорироваться.
+        :param oauth_token: Токен для загрузки аудио и изображений.
+            Без [этого](https://yandex.ru/dev/direct/doc/start/token.html) токена нельзя взаимодействовать с API Алисы.
+        :param session: HTTP Client session (Например, AiohttpSession).
+            Если не указано, будет создано автоматически.
+        """
         if session is None:
             session = AiohttpSession()
 

@@ -29,18 +29,7 @@ from .router import Router
 
 
 class Dispatcher(Router):
-    """
-    Главный роутер
-
-    :param storage: Хранилище для FSM.
-    :param fsm_strategy: Стратегия FSM.
-    :param disable_fsm: Отключить ли FSM.
-    :param name: Имя как роутера, полезно при дебаге.
-    :param response_timeout: Время для обработки события,
-        после которого будет вызван :class:`TimeoutUpdate`.
-    :param kwargs: Остальные аргументы,
-        будут переданы в обработчики как именованные аргументы
-    """
+    """Главный роутер."""
 
     def __init__(
         self,
@@ -52,6 +41,18 @@ class Dispatcher(Router):
         response_timeout: Union[int, float] = 4.0,
         **kwargs: Any,
     ) -> None:
+        """
+        Главный роутер
+
+        :param storage: Хранилище для FSM.
+        :param fsm_strategy: Стратегия FSM.
+        :param disable_fsm: Отключить ли FSM.
+        :param name: Имя как роутера, полезно при дебаге.
+        :param response_timeout: Время для обработки события,
+            после которого будет вызван :class:`TimeoutUpdate`.
+        :param kwargs: Остальные аргументы,
+            будут переданы в обработчики как именованные аргументы
+        """
         super(Dispatcher, self).__init__(name=name)
 
         self.update = self.observers["update"] = AliceEventObserver(
