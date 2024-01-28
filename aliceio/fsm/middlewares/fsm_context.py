@@ -47,11 +47,17 @@ class FSMContextMiddleware(BaseMiddleware[AliceObject]):
     ) -> FSMContext:
         session: Session = data["event_session"]
         user: Optional[User] = data.get("event_from_user")
+
+        # +- адекватное решение, т.к. если стратегия по юзер айди,
+        # то у юзера без аккаунта будет состояние по его устройству,
+        # а у авторизованного везде и всегда
         user_id = user.user_id if user else session.application.application_id
+
         return self.resolve_context(
             skill=skill,
             user_id=user_id,
             session_id=session.session_id,
+            application_id=session.application.application_id,
             destiny=destiny,
         )
 
@@ -60,33 +66,38 @@ class FSMContextMiddleware(BaseMiddleware[AliceObject]):
         skill: Skill,
         user_id: str,
         session_id: str,
+        application_id: str,
         destiny: str = DEFAULT_DESTINY,
     ) -> FSMContext:
-        user_id, session_id = apply_strategy(
+        user_id_or_none, session_id_or_none, application_id_or_none = apply_strategy(
             strategy=self.strategy,
             user_id=user_id,
             session_id=session_id,
+            application_id=application_id,
         )
         return self.get_context(
-            skill=skill,
-            user_id=user_id,
-            session_id=session_id,
+            skill_id=skill.id,
+            user_id=user_id_or_none,
+            session_id=session_id_or_none,
+            application_id=application_id_or_none,
             destiny=destiny,
         )
 
     def get_context(
         self,
-        skill: Skill,
-        user_id: str,
-        session_id: str,
+        skill_id: str,
+        user_id: Optional[str],
+        session_id: Optional[str],
+        application_id: Optional[str],
         destiny: str = DEFAULT_DESTINY,
     ) -> FSMContext:
         return FSMContext(
             storage=self.storage,
             key=StorageKey(
-                skill_id=skill.id,
+                skill_id=skill_id,
                 user_id=user_id,
                 session_id=session_id,
+                application_id=application_id,
                 destiny=destiny,
             ),
         )

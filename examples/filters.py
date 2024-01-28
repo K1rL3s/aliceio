@@ -22,8 +22,8 @@ class InWordsFilter(BaseFilter):  # Кастомный фильтр
 
 
 @router.message(InWordsFilter(["да", "ок", "хорошо"]))
-async def yes_message_handler(message: Message) -> Response:
-    return Response(text="Ну да так да, чё бубнеть-то")
+async def yes_message_handler(message: Message) -> str:
+    return "Ну да так да, чё бубнеть-то"
 
 
 # Один и тот же фильтр, но разная запись
@@ -33,8 +33,8 @@ async def yes_button_handler(button: ButtonPressed) -> Response:
 
 
 @router.message(InWordsFilter(["не", "нет", "неа"]))
-async def no_message_handler(message: Message) -> Response:
-    return Response(text="Ну на нет и суда нет")
+async def no_message_handler(message: Message) -> str:
+    return "Ну на нет и суда нет"
 
 
 # Один и тот же фильтр, но разная запись

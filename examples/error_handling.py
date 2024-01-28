@@ -23,28 +23,28 @@ class InvalidName(Exception):
 
 
 @router.errors(ExceptionTypeFilter(InvalidAge))
-async def handle_invalid_age_exception(event: ErrorEvent) -> Response:
+async def handle_invalid_age_exception(event: ErrorEvent) -> str:
     assert isinstance(event.exception, InvalidAge)
     logger.error("Error caught: %r while processing %r", event.exception, event.update)
 
     assert event.update.message is not None
     assert event.update.event is event.update.message
-    return Response(text=f"Произошла ошибка: {repr(event.exception)}")
+    return f"Произошла ошибка: {repr(event.exception)}"
 
 
 @router.errors(ExceptionMessageFilter("Invalid"))
-async def handle_invalid_exceptions(event: ErrorEvent) -> Response:
+async def handle_invalid_exceptions(event: ErrorEvent) -> str:
     # Так как мы определили `ExceptionTypeFilter` с типом ошибки `InvalidAge` ранее,
     # этот обработчик будет получать ошибки всех типов,
     # если сообщение в ней содержит подстроку "Invalid".
     logger.error(
         "Error `Invalid` caught: %r while processing %r", event.exception, event.update
     )
-    return Response(text=f"Произошла ошибка: {repr(event.exception)}")
+    return f"Произошла ошибка: {repr(event.exception)}"
 
 
 @router.message(F.command.startswith("мне"))
-async def handle_set_age(message: Message) -> Response:
+async def handle_set_age(message: Message) -> str:
     age = message.command.replace("мне", "", 1).strip()
     if not age:
         raise InvalidAge('Неверный возраст. Пожалуйста, напиши его как "мне <возраст>"')
@@ -52,16 +52,16 @@ async def handle_set_age(message: Message) -> Response:
     if not age.isdigit():
         raise InvalidAge("Возраст должен быть числом")
 
-    return Response(text=f"Твой возраст через год  - {int(age) + 1}")
+    return f"Твой возраст через год  - {int(age) + 1}"
 
 
 @router.message(F.command.startswith("я"))
-async def handle_set_name(message: Message) -> Response:
+async def handle_set_name(message: Message) -> str:
     name = message.command.replace("я", "", 1).strip()
     if not name:
         raise InvalidName('Invalid name (имя). Пожалуйста, напиши его как "я <имя>"')
 
-    return Response(text=f"Твоё имя - {name}")
+    return f"Твоё имя - {name}"
 
 
 @router.message(F.session.new)

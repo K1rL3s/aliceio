@@ -190,7 +190,7 @@ class BaseRequestHandler(ABC):
     def _build_web_response(self, result: Any) -> web.Response:
         return web.Response(
             body=self._build_json_response(result=result),
-            status=200 if result not in (UNHANDLED, REJECTED) else 404,
+            status=404 if result in (None, UNHANDLED, REJECTED) else 200,
         )
 
     def _build_json_response(self, result: Optional[AliceObject]) -> JsonPayload:

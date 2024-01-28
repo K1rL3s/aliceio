@@ -4,7 +4,7 @@ from aliceio.types.base import MutableAliceObject
 
 from .analytics import Analytics
 from .response import Response
-from .state import ApplicationState, AuthorizedUserState, SessionState
+from .state import ApplicationState, SessionState, UserState
 
 
 class AliceResponse(MutableAliceObject):
@@ -13,10 +13,12 @@ class AliceResponse(MutableAliceObject):
     """
 
     response: Response
+
     session_state: Optional[SessionState] = None
-    user_state_update: Optional[AuthorizedUserState] = None
+    user_state_update: Optional[UserState] = None
     application_state: Optional[ApplicationState] = None
     analytics: Optional[Analytics] = None
+
     version: str = "1.0"
 
     if TYPE_CHECKING:
@@ -26,7 +28,7 @@ class AliceResponse(MutableAliceObject):
             *,
             response: Response,
             session_state: Optional[SessionState] = None,
-            user_state_update: Optional[AuthorizedUserState] = None,
+            user_state_update: Optional[UserState] = None,
             application_state: Optional[ApplicationState] = None,
             analytics: Optional[Analytics] = None,
             version: str = "1.0",

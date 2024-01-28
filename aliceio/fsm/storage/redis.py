@@ -40,24 +40,25 @@ class DefaultKeyBuilder(KeyBuilder):
         *,
         prefix: str = "fsm",
         separator: str = ":",
-        with_session_id: bool = False,
         with_destiny: bool = False,
     ) -> None:
         """
-        :param prefix: Префикс для всех записей.\n
-        :param separator: Разделитель.\n
-        :param with_session_id: Включая айди сессии.\n
+        :param prefix: Префикс для всех записей.
+        :param separator: Разделитель.
         :param with_destiny: Включая destiny-ключ.
         """
         self.prefix = prefix
         self.separator = separator
-        self.with_session_id = with_session_id
         self.with_destiny = with_destiny
 
     def build(self, key: StorageKey, part: Literal["data", "state"]) -> str:
-        parts = [self.prefix, key.skill_id, key.user_id]
-        if self.with_session_id:
-            parts.append(key.session_id)
+        parts = [
+            self.prefix,
+            key.skill_id,
+            key.user_id or "",
+            key.session_id or "",
+            key.application_id or "",
+        ]
         if self.with_destiny:
             parts.append(key.destiny)
         elif key.destiny != DEFAULT_DESTINY:
@@ -86,11 +87,11 @@ class RedisStorage(BaseStorage):
         json_dumps: _JsonDumps = json.dumps,
     ) -> None:
         """
-        :param redis: Экземпляр подключения Redis.\n
-        :param key_builder: builder that helps to convert contextual key to string\n
-        :param state_ttl: TTL для записей состояния.\n
-        :param data_ttl: TTL для записей данных.\n
-        :param json_loads: JSON Loads.\n
+        :param redis: Экземпляр подключения Redis.
+        :param key_builder: builder that helps to convert contextual key to string
+        :param state_ttl: TTL для записей состояния.
+        :param data_ttl: TTL для записей данных.
+        :param json_loads: JSON Loads.
         :param json_dumps: JSON Dumps.
         """
         if key_builder is None:
@@ -112,9 +113,9 @@ class RedisStorage(BaseStorage):
         """
         Создаёт экземпляр :class:`RedisStorage` по строке подключения.
 
-        :param url: Например, :code:`redis://user:password@host:port/db`.\n
-        :param connection_kwargs: см. документацию :code:`redis`.\n
-        :param kwargs: аргументы, которые будут переданы в :class:`RedisStorage`.\n
+        :param url: Например, :code:`redis://user:password@host:port/db`.
+        :param connection_kwargs: см. документацию :code:`redis`.
+        :param kwargs: аргументы, которые будут переданы в :class:`RedisStorage`.
         :return: Экземпляр :class:`RedisStorage`
         """
         if connection_kwargs is None:
