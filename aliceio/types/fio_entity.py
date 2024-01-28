@@ -7,8 +7,8 @@ class FIOEntity(NLUEntity):
     """
     NLU Entity Фамилии, имени и отчества.
 
-    https://yandex.ru/dev/dialogs/alice/doc/naming-entities.html#naming-entities__fio
-    """
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/naming-entities.html#naming-entities__fio)
+    """  # noqa: E501
 
     first_name: Optional[str] = None
     patronymic_name: Optional[str] = None

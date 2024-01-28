@@ -7,6 +7,10 @@ from aliceio.types.user import User
 
 
 class AliceEvent(MutableAliceObject, ABC):
+    """
+    Родительский класс для событий от Алисы.
+    """
+
     session: Session
 
     if TYPE_CHECKING:

@@ -9,7 +9,7 @@ class AudioPlayerItem(MutableAliceObject):
     """
     Данные директивы аудиоплеера.
 
-    https://yandex.ru/dev/dialogs/alice/doc/response-audio-player.html#direct-play__audio-player-item-desc
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/response-audio-player.html#direct-play__audio-player-item-desc)
     """  # noqa: E501
 
     stream: Stream

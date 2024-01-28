@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING, Any, ClassVar, Dict, Optional, Type, cast
 from ..enums import EventType, RequestType
 from .alice_event import AliceEvent
 from .alice_request import AliceRequest
+from .api_state import ApiState
 from .audio_player import AudioPlayer
 from .base import MutableAliceObject
 from .button_pressed import ButtonPressed
@@ -11,7 +12,6 @@ from .meta import Meta
 from .purchase import Purchase
 from .session import Session
 from .show_pull import ShowPull
-from .state import ApiState
 
 
 # Отнаследовать ли Update от AliceEvent'a?
@@ -21,7 +21,7 @@ class Update(MutableAliceObject):
 
     В любом запросе может присутствовать не более **одного** необязательного параметра.
 
-    https://yandex.ru/dev/dialogs/alice/doc/request.html
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/request.html)
     """
 
     meta: Meta

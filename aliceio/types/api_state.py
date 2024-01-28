@@ -13,7 +13,7 @@ class ApiState(AliceObject):
     """
     Данные о сохранённом состоянии на стороне API Алисы.
 
-    https://yandex.ru/dev/dialogs/alice/doc/request.html#request__state-desc
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/request.html#request__state-desc)
     """
 
     user: UserState

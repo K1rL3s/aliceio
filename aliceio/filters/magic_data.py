@@ -20,6 +20,4 @@ class MagicData(Filter):
         )
 
     def __str__(self) -> str:
-        return self._signature_to_string(
-            magic_data=self.magic_data,
-        )
+        return self._signature_to_string(magic_data=self.magic_data)

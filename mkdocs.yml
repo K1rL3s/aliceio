@@ -1,0 +1,293 @@
+site_name: AliceIO Docs
+site_author: AliceIO
+site_description: Awesome Alice framework
+site_url: https://aliceio.rtfd.io/
+repo_name: aliceio
+repo_url: https://github.com/K1rL3s/aliceio
+edit_uri: edit/master/docs/
+copyright: <a href="https://github.com/K1rL3s/aliceio/tree/master/LICENSE" target="_blank" rel="noopener">View maintainers</a>
+
+extra:
+  generator: false
+  disqus: ""
+  social:
+    - icon: fontawesome/brands/telegram
+      link: https://t.me/aliceio_ru
+      name: Наш ТГ чат
+
+nav:
+  - Документация:
+
+      - Пользовательский уровень:
+          - index.md
+          - Handling:
+              - Handlers:
+                  - Base: handlers/base.md
+                  - AudioPlayer: handlers/audio_player.md
+                  - ButtonPressed: handlers/button_pressed.md
+                  - Message: handlers/message.md
+                  - Purchase: handlers/purchase.md
+                  - ShowPull: handlers/show_pull.md
+                  - Error: handlers/error.md
+              - Dispatcher:
+                  - Dispatcher: dispatcher/dispatcher.md
+                  - Flags: dispatcher/flags.md
+                  - Router: dispatcher/router.md
+                  - Middlewares:
+                      - Base: dispatcher/middlewares/base.md
+              - Webhook:
+                  - AiohttpServer: webhook/aiohttp_server.md
+
+          - Tools:
+              - Filters:
+                  - Base: filters/base.md
+                  - State: filters/state.md
+                  - Exception: filters/exception.md
+                  - Logic: filters/logic.md
+                  - MagicData: filters/magic_data.md
+              - FSM:
+                  - Context: fsm/context.md
+                  - State: fsm/state.md
+                  - Strategy: fsm/strategy.md
+                  - Storages:
+                      - Base: fsm/storage/base.md
+                      - MemoryStorage: fsm/storage/memory.md
+                      - ApiStorage: fsm/storage/api.md
+              - Methods:
+                  - Base: methods/base.md
+                  - Status: methods/status.md
+                  - Images:
+                      - Upload: methods/images/upload_image.md
+                      - Get: methods/images/get_images.md
+                      - Delete: methods/images/delete_image.md
+                  - Sounds:
+                      - Upload: methods/sounds/upload_sound.md
+                      - Get: methods/sounds/get_sounds.md
+                      - Delete: methods/sounds/delete_sound.md
+              - Types:
+                  - AliceEvent: types/alice_event.md
+                  - AliceRequest: types/alice_request.md
+                  - AliceResponse: types/alice_response.md
+                  - AnalyticEvent: types/analytic_event.md
+                  - Analytics: types/analytics.md
+                  - ApiState: types/api_state.md
+                  - Application: types/application.md
+                  - AudioPlayer: types/audio_player.md
+                  - AudioPlayerDirective: types/audio_player_directive.md
+                  - AudioPlayerError: types/audio_player_error.md
+                  - AudioPlayerItem: types/audio_player_item.md
+                  - Base: types/base.md
+                  - BigImage: types/big_image.md
+                  - ButtonPressed: types/button_pressed.md
+                  - Card: types/card.md
+                  - CardFooter: types/card_footer.md
+                  - CardHeader: types/card_header.md
+                  - Datetime: types/datetime.md
+                  - Directives: types/directives.md
+                  - Entity: types/entity.md
+                  - ErrorEvent: types/error_event.md
+                  - ErrorResult: types/error_result.md
+                  - FIOEntity: types/fio_entity.md
+                  - GEOEntity: types/geo_entity.md
+                  - ImageGallery: types/image_gallery.md
+                  - ImageGalleryItem: types/image_gallery_item.md
+                  - InputFile: types/input_file.md
+                  - Interface: types/interfaces.md
+                  - ItemImage: types/item_image.md
+                  - ItemsList: types/items_list.md
+                  - Markup: types/markup.md
+                  - MediaButton: types/media_button.md
+                  - Message: types/message.md
+                  - Meta: types/meta.md
+                  - MetaData: types/metadata.md
+                  - NLU: types/nlu.md
+                  - NLUEntity: types/nlu_entity.md
+                  - NumberEntity: types/number_entity.md
+                  - Payload: types/payload.md
+                  - Purchase: types/purchase.md
+                  - Quota: types/quota.md
+                  - Response: types/response.md
+                  - Result: types/result.md
+                  - Session: types/session.md
+                  - ShowItemMeta: types/show_item_meta.md
+                  - ShowPull: types/show_pull.md
+                  - SpaceStatus: types/space_status.md
+                  - Stream: types/stream.md
+                  - TextButton: types/text_button.md
+                  - TimeOutEvent: types/timeout_event.md
+                  - TokensEntity: types/tokens_entity.md
+                  - Update: types/update.md
+                  - UploadedImage: types/uploaded_image.md
+                  - UploadedSound: types/uploaded_sound.md
+                  - URL: types/url.md
+                  - User: types/user.md
+              - Utils:
+                  - MagicFilter: utils/magic_filter.md
+
+          - Client:
+              - Skill: client/skill.md
+
+
+      - Продвинутый уровень:
+          - index.md
+          - Handling:
+              - Webhook:
+                  - Security: webhook/security.md
+
+          - Tools:
+              - Enums:
+                  - enums/all_enums.md
+              - FSM:
+                  - Redis:
+                      - RedisStorage: fsm/storage/redis/redis.md
+                      - DefaultKeyBuilder: fsm/storage/redis/default_key_builder.md
+                      - KeyBuilder: fsm/storage/redis/key_builder.md
+              - Utils:
+                  - Builders:
+                      - Example: utils/builders.md
+                      - Base: utils/builders/builder.md
+                      - ImageGalleryBuilder: utils/builders/image_gallery_builder.md
+                      - ItemsListBuilder: utils/builders/items_list_builder.md
+                      - TextButtonBuilder: utils/builders/text_button_builder.md
+
+          - Client:
+              - Alice: client/alice.md
+              - ContextController: client/context_controller.md
+              - Session:
+                  - Base: client/session/base.md
+                  - Aiohttp: client/session/aiohttp.md
+                  - Middlewares:
+                      - Base: client/session/middlewares/base.md
+                      - Manager: client/session/middlewares/manager.md
+                      - RequestLogging: client/session/middlewares/request_logging.md
+
+
+      - Внутреннее устройство:
+          - index.md
+          - Handling:
+              - Dispatcher:
+                  - Observers:
+                      - Base: dispatcher/event/bases.md
+                      - EventObserver: dispatcher/event/event.md
+                      - AliceEventObserver: dispatcher/event/alice.md
+                      - Handlers: dispatcher/event/handler.md
+                  - Middlewares:
+                      - Manager: dispatcher/middlewares/manager.md
+                      - UserContext: dispatcher/middlewares/user_context.md
+                      - Error: dispatcher/middlewares/error.md
+                      - ResponseConvert: dispatcher/middlewares/response_convert.md
+
+          - Tools:
+              - FSM:
+                  - Middlewares:
+                      - FSMContextMiddleware: fsm/middlewares/fsm_context.md
+                      - FSMApiStorageMiddleware: fsm/middlewares/api_storage.md
+              - Utils:
+                  - Funcs: utils/funcs.md
+                  - Mixins: utils/mixins.md
+                  - Warnings: utils/warnings.md
+
+      - Кастомизация зависимостей: modules.md
+
+# TODO запилить туториал для алисы
+#  - Туториал:
+#      - tutorial/index.md
+#      - Первый бот: tutorial/first-bot.md
+#      - Правила: tutorial/rules.md
+#      - Разделение кода: tutorial/code-separation.md
+#      - Клавиатуры и вложения: tutorial/keyboards-attachments.md
+#      - Мидлвари и return менеджеры: tutorial/middlewares-return-managers.md
+#      - Обработка ошибок: tutorial/error-handling.md
+#      - Callback API: tutorial/callback-bot.md
+#      - Рекомендуемые IDE: tutorial/recommended-ide.md
+#      - FAQ: tutorial/faq.md
+
+
+theme:
+  name: material
+  language: ru
+  features:
+    - navigation.instant
+    - navigation.indexes
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.top
+    - search.suggest
+    - content.code.copy
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      accent: blue
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      accent: blue
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to light mode
+  font:
+    text: Roboto Mono
+    code: Monaco
+  logo: _static/logo_aliceio_trans.png
+  favicon: _static/logo_aliceio_trans.png
+
+
+markdown_extensions:
+  - admonition:
+  - md_in_html:
+  - toc:
+      slugify: !!python/object/apply:pymdownx.slugs.slugify  # noqa
+        kwds:
+          case: lower
+      permalink: ""
+  - pymdownx.magiclink:
+      repo_url_shortener: true
+      repo_url_shorthand: true
+      normalize_issue_symbols: true
+      user: K1rL3s
+      repo: aliceio
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+      linenums: true
+      guess_lang: true
+  - pymdownx.inlinehilite:
+  - pymdownx.superfences:
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.escapeall:
+      hardbreak: True
+      nbsp: True
+  - pymdownx.details:
+  - pymdownx.tabbed:
+  - pymdownx.saneheaders:
+
+
+plugins:
+  - search:
+  - mkdocstrings:
+      custom_templates: docs/templates
+      handlers:
+        python:
+          options:
+            docstring_options:
+              ignore_init_summary: false
+              trim_doctest_flags: true
+            docstring_section_style: list
+            docstring_style: sphinx
+            group_by_category: true
+            show_docstring_description: true
+            merge_init_into_class: false
+            show_root_heading: true
+            show_signature: true
+            show_signature_annotations: true
+            show_source: true
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
+
+
+extra_css:
+  - _css/style.css

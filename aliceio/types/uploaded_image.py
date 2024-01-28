@@ -7,11 +7,11 @@ class UploadedImage(AliceObject):
     """
     Загруженное изображение, доступное навыку.
 
-    https://yandex.ru/dev/dialogs/alice/doc/resource-upload.html#http-images-load__download-internet
+    [Source 1](https://yandex.ru/dev/dialogs/alice/doc/resource-upload.html#http-images-load__download-internet)
 
-    https://yandex.ru/dev/dialogs/alice/doc/resource-upload.html#http-images-load__upload-file
+    [Source 2](https://yandex.ru/dev/dialogs/alice/doc/resource-upload.html#http-images-load__upload-file)
 
-    https://yandex.ru/dev/dialogs/alice/doc/resource-upload.html#http-images-load__list
+    [Source 3](https://yandex.ru/dev/dialogs/alice/doc/resource-upload.html#http-images-load__list)
     """  # noqa: E501
 
     id: str

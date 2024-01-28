@@ -2,6 +2,7 @@ from .alice_request import AliceRequest
 from .alice_response import AliceResponse
 from .analytic_event import AnalyticEvent
 from .analytics import Analytics
+from .api_state import ApiState, ApplicationState, SessionState, StateDict, UserState
 from .application import Application
 from .audio_player import AudioPlayer
 from .audio_player_directive import AudioPlayerDirective
@@ -42,7 +43,6 @@ from .session import Session
 from .show_item_meta import ShowItemMeta
 from .show_pull import ShowPull
 from .space_status import SpaceStatus
-from .state import ApiState, ApplicationState, SessionState, StateDict, UserState
 from .stream import Stream
 from .text_button import TextButton
 from .timeout_event import TimeoutUpdate

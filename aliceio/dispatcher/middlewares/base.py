@@ -21,7 +21,7 @@ class BaseMiddleware(ABC, Generic[EventType]):
 
         :param handler: Обёрнутый обработчик в цепочке мидлварей
         :param event: Входящее событие
-                      (Подклас :class:`aliceio.types.base.AliceObject`)
+            (Подкласс :class:`aliceio.types.base.AliceObject`)
         :param data: Данные контекста. Будет сопоставлен с аргументами обработчика.
         :return: :class:`Any`
         """

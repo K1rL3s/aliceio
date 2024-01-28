@@ -10,9 +10,9 @@ from .image_gallery_item import ImageGalleryItem
 
 class ImageGallery(MutableAliceObject):
     """
-    :code:`Card` с типом :code:`ImageGallery`.
+    :code:`Card` с типом :code:`ImageGallery`
 
-    https://yandex.ru/dev/dialogs/alice/doc/response-card-imagegallery.html
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/response-card-imagegallery.html)
     """
 
     type: str = CardType.IMAGE_GALLERY

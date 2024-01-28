@@ -7,9 +7,7 @@ class Result(AliceObject):
     """
     Ответ на удаление файла.
 
-    https://yandex.ru/dev/dialogs/alice/doc/resource-upload.html#http-images-load__delete
-
-    https://yandex.ru/dev/dialogs/alice/doc/resource-upload.html#http-images-load__delete
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/resource-upload.html#http-images-load__delete)
     """  # noqa: E501
 
     result: str

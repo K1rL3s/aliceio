@@ -24,7 +24,7 @@ class InputFile(ABC):
     ) -> None:
         """
         Базовый класс для файлов. Не следует использовать напрямую.
-        См. :class:`BufferedInputFile`, :class:`FSInputFile` :class:`URLInputFile`
+        См. :class:`BufferedInputFile`, :class:`FSInputFile` и :class:`URLInputFile`
 
         :param chunk_size: Размер блоков чтения.
         """

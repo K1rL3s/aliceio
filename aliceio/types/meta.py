@@ -8,7 +8,7 @@ class Meta(AliceObject):
     """
     Информация об устройстве, с которого пользователь разговаривает с Алисой.
 
-    https://yandex.ru/dev/dialogs/alice/doc/request.html#request__meta-desc
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/request.html#request__meta-desc)
     """
 
     locale: str

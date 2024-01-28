@@ -8,8 +8,8 @@ class Analytics(MutableAliceObject):
     """
     Данные для аналитики AppMetrica.
 
-    https://yandex.ru/dev/dialogs/alice/doc/response.html#response__analytics-desc
-    """
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/response.html#response__analytics-desc)
+    """  # noqa: E501
 
     events: List[AnalyticEvent]
 

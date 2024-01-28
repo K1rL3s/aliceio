@@ -12,7 +12,7 @@ class FSMApiStorageMiddleware(BaseMiddleware[Update]):
     """
     Заполняет экземпляр FSMContext данными из состояний API Алисы.
 
-    Устанавливается только тогда, когда установлен флаг при создании диспетчера.
+    Регистрируется только тогда, когда установлен флаг при создании диспетчера.
 
     https://yandex.ru/dev/dialogs/alice/doc/session-persistence.html
     """

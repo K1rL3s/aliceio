@@ -46,6 +46,12 @@ class Filter(ABC):
         pass
 
     def _signature_to_string(self, *args: Any, **kwargs: Any) -> str:
+        """
+        Подпись к строке.
+
+        :param args:
+        :param kwargs:
+        """
         items = [repr(arg) for arg in args]
         items.extend([f"{k}={v!r}" for k, v in kwargs.items() if v is not None])
 

@@ -8,7 +8,7 @@ class ImageGalleryItem(MutableAliceObject):
     """
     Изображение в :class:`ImageGallery`.
 
-    https://yandex.ru/dev/dialogs/alice/doc/response-card-imagegallery.html#response-card-imagegallery__items-desc
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/response-card-imagegallery.html#response-card-imagegallery__items-desc)
     """  # noqa: E501
 
     image_id: str

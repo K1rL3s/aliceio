@@ -12,9 +12,9 @@ from .item_image import ItemImage
 
 class ItemsList(MutableAliceObject):
     """
-    :code:`Card` с типом :code:`ItemsList`
+    :code:`Card` с типом :code:`ItemsList`.
 
-    https://yandex.ru/dev/dialogs/alice/doc/response-card-itemslist.html
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/response-card-itemslist.html)
     """
 
     type: str = CardType.ITEMS_LIST

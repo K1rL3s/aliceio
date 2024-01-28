@@ -20,6 +20,9 @@ Item = TypeVar("Item", ItemImage, ImageGalleryItem, TextButton)
 
 
 class Builder(ABC, Generic[Collection, Item]):
+    """
+    Базовый класс билдера
+    """
     _items: List[Item]
 
     @abstractmethod
@@ -37,10 +40,15 @@ class Builder(ABC, Generic[Collection, Item]):
         pass
 
     def __len__(self) -> int:
+        """Узнать длину коллекции."""
         return len(self._items)
 
 
 class ItemsListBuilder(Builder[ItemsList, ItemImage]):
+    """
+    Билдер элементов списка.
+    """
+
     def __init__(self) -> None:
         self._items: List[ItemImage] = []
         self._header: Optional[CardHeader] = None
@@ -113,6 +121,9 @@ class ItemsListBuilder(Builder[ItemsList, ItemImage]):
         return self
 
     def to_collection(self) -> ItemsList:
+        """
+        Возвращает список элементов.
+        """
         return ItemsList(
             items=self._items.copy(),
             header=self._header.model_copy() if self._header else None,

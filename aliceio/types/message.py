@@ -11,7 +11,7 @@ class Message(AliceEvent):
     """
     :class:`AliceRequest` с типом :code:`SimpleUtterance`.
 
-    https://yandex.ru/dev/dialogs/alice/doc/request-simpleutterance.html
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/request-simpleutterance.html)
     """
 
     type: str

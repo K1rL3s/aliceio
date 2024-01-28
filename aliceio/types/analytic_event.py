@@ -9,8 +9,8 @@ class AnalyticEvent(MutableAliceObject):
     """
     Событие для аналитики.
 
-    https://yandex.ru/dev/dialogs/alice/doc/response.html#response__events-desc
-    """
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/response.html#response__events-desc)
+    """  # noqa: E501
 
     name: str
     value: CustomEventData

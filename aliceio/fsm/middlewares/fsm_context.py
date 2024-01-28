@@ -14,6 +14,11 @@ RAW_STATE_KEY = "raw_state"
 
 
 class FSMContextMiddleware(BaseMiddleware[AliceObject]):
+    """
+    Добавляет `fsm_storage`, `state` и `raw_state` в контекст
+    для обработчиков, фильтров и других мидлварей.
+    """
+
     def __init__(
         self,
         storage: BaseStorage,

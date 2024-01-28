@@ -8,15 +8,17 @@ from .event.alice import AliceEventObserver
 from .event.bases import REJECTED, UNHANDLED
 from .event.event import EventObserver
 
-INTERNAL_UPDATE_TYPES: Final[frozenset[str]] = frozenset({"update", "error"})
+INTERNAL_UPDATE_TYPES: Final[frozenset[str]] = frozenset({"update", "error", "timeout"})
 
 
 class Router:
     """
     Обработчики могут быть добавлены в наблюдатель двумя способами:
 
-    - Метод отслеживателя - :obj:`router.<event_type>.register(handler, <filters, ...>)`
-    - Декоратор - :obj:`@router.<event_type>(<filters, ...>)`
+    - Через метод:
+        `router.<event_type>.register(handler, <filters, ...>)`
+    - Через декоратор:
+        `@router.<event_type>(<filters, ...>)`
     """
 
     def __init__(self, *, name: Optional[str] = None) -> None:

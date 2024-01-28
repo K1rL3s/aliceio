@@ -8,7 +8,7 @@ class ItemImage(MutableAliceObject):
     """
     Изображение в :class:`ItemsList`
 
-    https://yandex.ru/dev/dialogs/alice/doc/response-card-itemslist.html#response-card-itemslist__items-desc
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/response-card-itemslist.html#response-card-itemslist__items-desc)
     """  # noqa: E501
 
     image_id: Optional[str] = None  # Optional XD

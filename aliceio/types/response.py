@@ -11,8 +11,8 @@ class Response(AliceObject):
     """
     Ответ для API Алисы с полезной для пользователя информацией.
 
-    https://yandex.ru/dev/dialogs/alice/doc/response.html#response__response-desc
-    """
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/response.html#response__response-desc)
+    """  # noqa: E501
 
     text: str
     tts: Optional[str] = None

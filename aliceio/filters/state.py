@@ -15,7 +15,7 @@ class StateFilter(Filter):
 
     def __init__(self, *states: StateType) -> None:
         """
-        :param exceptions: Состояния, на которые должен реагировать фильтр.
+        :param states: Состояния, на которые должен реагировать фильтр.
         """
         if not states:
             raise ValueError("At least one state is required")

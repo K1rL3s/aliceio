@@ -38,9 +38,4 @@ class SkillContextController(BaseModel):
 
     @property
     def skill(self) -> Optional["Skill"]:
-        """
-        Экземпляр навыка.
-
-        :return: Skill instance
-        """
         return self._skill

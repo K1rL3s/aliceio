@@ -7,7 +7,7 @@ class DateTimeEntity(NLUEntity):
     """
     NLU Entity Даты и времени.
 
-    https://yandex.ru/dev/dialogs/alice/doc/naming-entities.html#naming-entities__datetime
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/naming-entities.html#naming-entities__datetime)
     """  # noqa: E501
 
     year: Optional[int] = None

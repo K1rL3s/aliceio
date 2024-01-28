@@ -7,9 +7,9 @@ class UploadedSound(AliceObject):
     """
     Загруженное аудио, доступное навыку.
 
-    https://yandex.ru/dev/dialogs/alice/doc/resource-sounds-upload.html#http-load__upload-file
+    [Source 1](https://yandex.ru/dev/dialogs/alice/doc/resource-sounds-upload.html#http-load__upload-file)
 
-    https://yandex.ru/dev/dialogs/alice/doc/resource-sounds-upload.html#http-load__list
+    [Source 2](https://yandex.ru/dev/dialogs/alice/doc/resource-sounds-upload.html#http-load__list)
     """  # noqa: E501
 
     id: str

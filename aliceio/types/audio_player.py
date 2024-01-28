@@ -11,7 +11,7 @@ class AudioPlayer(AliceEvent):
     если пользователь произносит команду управления аудиоплеером
     или нажимает соответствующую кнопку в интерфейсе.
 
-    https://yandex.ru/dev/dialogs/alice/doc/request-audioplayer.html
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/request-audioplayer.html)
     """
 
     type: str

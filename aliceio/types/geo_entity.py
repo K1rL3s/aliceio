@@ -7,7 +7,7 @@ class GeoEntity(NLUEntity):
     """
     NLU Entity Местоположения.
 
-    https://yandex.ru/dev/dialogs/alice/doc/naming-entities.html#naming-entities__geo
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/naming-entities.html#naming-entities__geo)
     """
 
     country: Optional[str] = None

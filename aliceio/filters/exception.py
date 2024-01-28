@@ -28,7 +28,7 @@ class ExceptionMessageFilter(Filter):
 
     __slots__ = ("pattern",)
 
-    def __init__(self, pattern: Union[str, Pattern[str]]):
+    def __init__(self, pattern: Union[str, Pattern[str]]) -> None:
         """
         :param pattern: Regexp.
         """
@@ -37,9 +37,7 @@ class ExceptionMessageFilter(Filter):
         self.pattern = pattern
 
     def __str__(self) -> str:
-        return self._signature_to_string(
-            pattern=self.pattern,
-        )
+        return self._signature_to_string(pattern=self.pattern)
 
     async def __call__(
         self,
