@@ -246,7 +246,7 @@ markdown_extensions:
       repo_url_shortener: true
       repo_url_shorthand: true
       normalize_issue_symbols: true
-      user: K1rLes
+      user: K1rL3s
       repo: aliceio
   - pymdownx.highlight:
       anchor_linenums: true
@@ -279,6 +279,7 @@ plugins:
             docstring_section_style: list
             docstring_style: sphinx
             group_by_category: true
+            show_docstring_description: true
             merge_init_into_class: false
             show_root_heading: true
             show_signature: true
