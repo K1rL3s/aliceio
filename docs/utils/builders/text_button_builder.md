@@ -3,4 +3,3 @@
       members:
         - add
         - to_collection
-        - __len__

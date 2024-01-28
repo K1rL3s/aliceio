@@ -41,7 +41,7 @@ class Dispatcher(Router):
         :param storage: Хранилище для FSM.
         :param fsm_strategy: Стратегия FSM.
         :param disable_fsm: Отключить ли FSM.
-        :param use_alice_storage: Использовать ли хранилище API Алисы для FSM.
+        :param use_api_storage: Использовать ли хранилище API Алисы для FSM.
         :param name: Имя как роутера, полезно при дебаге.
         :param response_timeout: Время для обработки события,
             после которого будет вызван :class:`TimeoutUpdate`.

@@ -5,7 +5,9 @@ from .nlu_entity import NLUEntity
 
 class GeoEntity(NLUEntity):
     """
-    [NLU Entity](https://yandex.ru/dev/dialogs/alice/doc/naming-entities.html#naming-entities__geo) Местоположения.
+    NLU Entity Местоположения.
+
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/naming-entities.html#naming-entities__geo)
     """
 
     country: Optional[str] = None

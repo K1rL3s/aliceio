@@ -7,8 +7,10 @@ CustomEventData = Dict[str, Any]
 
 class AnalyticEvent(MutableAliceObject):
     """
-    [Событие](https://yandex.ru/dev/dialogs/alice/doc/response.html#response__events-desc) для аналитики.
-    """
+    Событие для аналитики.
+
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/response.html#response__events-desc)
+    """  # noqa: E501
 
     name: str
     value: CustomEventData

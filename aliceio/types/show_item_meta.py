@@ -4,7 +4,11 @@ from .base import MutableAliceObject
 
 
 class ShowItemMeta(MutableAliceObject):
-    """В ответе навык передает свойство [show_item_meta](https://yandex.ru/dev/dialogs/alice/doc/response-show-item-meta.html)"""
+    """
+    В ответе навык передает свойство :code`show_item_meta`.
+
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/response-show-item-meta.html)
+    """
 
     content_id: str
     publication_date: str

@@ -5,7 +5,9 @@ from .nlu_entity import NLUEntity
 
 class DateTimeEntity(NLUEntity):
     """
-    [NLU Entity](https://yandex.ru/dev/dialogs/alice/doc/naming-entities.html#naming-entities__datetime) Даты и времени.
+    NLU Entity Даты и времени.
+
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/naming-entities.html#naming-entities__datetime)
     """  # noqa: E501
 
     year: Optional[int] = None

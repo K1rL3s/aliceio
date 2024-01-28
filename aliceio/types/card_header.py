@@ -5,7 +5,9 @@ from aliceio.types.base import MutableAliceObject
 
 class CardHeader(MutableAliceObject):
     """
-    [Заголовок](https://yandex.ru/dev/dialogs/alice/doc/response-card-itemslist.html#response-card-itemslist__header-desc) :class:`ItemsList`.
+    Заголовок :class:`ItemsList`.
+
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/response-card-itemslist.html#response-card-itemslist__header-desc)
     """  # noqa: E501
 
     text: Optional[str] = None  # Optional XD

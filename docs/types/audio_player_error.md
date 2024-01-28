@@ -2,8 +2,3 @@
     handler: python
     options:
       members: true
-
-::: aliceio.types.audio_player_error.ErrorType
-    handler: python
-    options:
-      members: true

@@ -5,7 +5,9 @@ from .base import AliceObject
 
 class TokensEntity(AliceObject):
     """
-    start и end из [request.nlu.entities](https://yandex.ru/dev/dialogs/alice/doc/request-simpleutterance.html#request-simpleutterance__entities-desc).
+    start и end из request.nlu.entities.
+
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/request-simpleutterance.html#request-simpleutterance__entities-desc)
     """  # noqa: E501
 
     start: int

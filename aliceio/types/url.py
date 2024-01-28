@@ -5,7 +5,11 @@ from .base import AliceObject
 
 class URL(AliceObject):
     """
-    Ссылка на [аудио](https://yandex.ru/dev/dialogs/alice/doc/response-audio-player.html#direct-play__audio-player-item-metadata-art-desc) или [изображение](https://yandex.ru/dev/dialogs/alice/doc/response-audio-player.html#direct-play__audio-player-item-metadata-background-image-desc) в директиве аудио-плеера.
+    Ссылка на аудио или изображение в директиве аудио-плеера.
+
+    [Source 1](https://yandex.ru/dev/dialogs/alice/doc/response-audio-player.html#direct-play__audio-player-item-metadata-art-desc)
+
+    [Source 2](https://yandex.ru/dev/dialogs/alice/doc/response-audio-player.html#direct-play__audio-player-item-metadata-background-image-desc)
     """  # noqa: E501
 
     url: Optional[str] = None

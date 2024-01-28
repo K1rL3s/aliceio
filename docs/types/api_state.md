@@ -8,3 +8,8 @@ SessionState = StateDict
 AuthorizedUserState = StateDict
 ApplicationState = StateDict
 ```
+
+::: aliceio.types.api_state.ApiState
+    handler: python
+    options:
+      members: true

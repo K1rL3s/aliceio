@@ -30,6 +30,7 @@ T = TypeVar("T")
 
 class Skill:
     """Класс навыка."""
+
     def __init__(
         self,
         skill_id: str,
@@ -43,7 +44,8 @@ class Skill:
             Зайдите на страницу навыка, откройте вкладку "Общие сведения"
             и пролистайте вниз. Запросы без этого айди будут игнорироваться.
         :param oauth_token: Токен для загрузки аудио и изображений.
-            Без [этого](https://yandex.ru/dev/direct/doc/start/token.html) токена нельзя взаимодействовать с API Алисы.
+            Без этого токена нельзя взаимодействовать с API Алисы.
+            [Source](https://yandex.ru/dev/direct/doc/start/token.html)
         :param session: HTTP Client session (Например, AiohttpSession).
             Если не указано, будет создано автоматически.
         """

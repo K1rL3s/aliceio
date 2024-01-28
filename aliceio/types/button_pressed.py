@@ -9,7 +9,9 @@ from .session import Session
 
 class ButtonPressed(AliceEvent):
     """
-    [Нажатие пользователя на кнопку](https://yandex.ru/dev/dialogs/alice/doc/request-buttonpressed.html) с непустым Payload.
+    Нажатие пользователя на кнопку с непустым Payload.
+
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/request-buttonpressed.html)
     """
 
     type: str

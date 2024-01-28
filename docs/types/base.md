@@ -4,6 +4,8 @@
       members:
         - model_config
 
+<br/>
+
 ::: aliceio.types.base.MutableAliceObject
     handler: python
     options:

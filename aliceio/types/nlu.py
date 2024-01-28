@@ -8,7 +8,9 @@ Intents = Dict[str, Any]
 
 class NLU(AliceObject):
     """
-    [Слова и сущности](https://yandex.ru/dev/dialogs/alice/doc/request-simpleutterance.html#request-simpleutterance__nlu-desc), которые Диалоги извлекли из запроса пользователя.
+    Слова и сущности, которые Диалоги извлекли из запроса пользователя.
+
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/request-simpleutterance.html#request-simpleutterance__nlu-desc)
     """  # noqa: E501
 
     tokens: List[str]

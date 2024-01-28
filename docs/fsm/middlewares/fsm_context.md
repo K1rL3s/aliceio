@@ -1,4 +1,4 @@
-::: aliceio.fsm.middleware.FSMContextMiddleware
+::: aliceio.fsm.middlewares.fsm_context.FSMContextMiddleware
     handler: python
     options:
       members:

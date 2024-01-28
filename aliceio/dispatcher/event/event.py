@@ -9,19 +9,17 @@ class EventObserver:
     """
     Простой отслеживатель событий.
 
-    Используется для управления событиями, не связанными с Алисой.
-    (Например, запуск/выключение)
+    Используется для управления событиями, не связанными с Алисой
+    (например, запуск/выключение).
 
-    Обработчики можно зарегистрировать через декоратор или метод
-
-    .. code-block:: python
-
-        <observer>.register(my_handler)
-
-    .. code-block:: python
-
-        @<observer>()
-        async def my_handler(*args, **kwargs): ...
+    Обработчики можно зарегистрировать через метод или декоратор:
+    ``` py
+    <observer>.register(my_handler)
+    ```
+    ``` py
+    @<observer>()
+    async def my_handler(*args, **kwargs): ...
+    ```
     """
 
     def __init__(self) -> None:

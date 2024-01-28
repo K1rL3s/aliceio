@@ -8,7 +8,9 @@ class State:
     """Состояние."""
 
     def __init__(
-        self, state: Optional[str] = None, group_name: Optional[str] = None
+        self,
+        state: Optional[str] = None,
+        group_name: Optional[str] = None,
     ) -> None:
         self._state = state
         self._group_name = group_name

@@ -3,8 +3,8 @@
     options:
       members:
         - __call__
+        - __invert__
         - update_handler_flags
-        - _signature_to_string
 
 
 

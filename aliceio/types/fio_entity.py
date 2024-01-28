@@ -5,8 +5,10 @@ from .nlu_entity import NLUEntity
 
 class FIOEntity(NLUEntity):
     """
-    [NLU Entity](https://yandex.ru/dev/dialogs/alice/doc/naming-entities.html#naming-entities__fio) Фамилии, имени и отчества.
-    """
+    NLU Entity Фамилии, имени и отчества.
+
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/naming-entities.html#naming-entities__fio)
+    """  # noqa: E501
 
     first_name: Optional[str] = None
     patronymic_name: Optional[str] = None

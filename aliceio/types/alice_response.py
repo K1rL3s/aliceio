@@ -3,13 +3,15 @@ from typing import TYPE_CHECKING, Any, Optional
 from aliceio.types.base import MutableAliceObject
 
 from .analytics import Analytics
+from .api_state import ApplicationState, SessionState, UserState
 from .response import Response
-from .state import ApplicationState, SessionState, UserState
 
 
 class AliceResponse(MutableAliceObject):
     """
-    [Ответ](https://yandex.ru/dev/dialogs/alice/doc/response.html) на запрос API Алисы.
+    Ответ на запрос API Алисы.
+
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/response.html)
     """
 
     response: Response

@@ -5,7 +5,9 @@ from aliceio.types.base import AliceObject
 
 class Result(AliceObject):
     """
-    [Ответ](https://yandex.ru/dev/dialogs/alice/doc/resource-upload.html#http-images-load__delete) на удаление файла.
+    Ответ на удаление файла.
+
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/resource-upload.html#http-images-load__delete)
     """  # noqa: E501
 
     result: str

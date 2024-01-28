@@ -5,11 +5,15 @@
       members:
         - call
 
+<br/>
+
 ::: aliceio.dispatcher.event.handler.FilterObject
     handler: python
     options:
       merge_init_into_class: true
       members: false
+
+<br/>
 
 ::: aliceio.dispatcher.event.handler.HandlerObject
     handler: python

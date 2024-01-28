@@ -5,7 +5,8 @@ from aliceio.fsm.storage.base import BaseStorage, StateType, StorageKey
 
 class FSMContext:
     """
-    Класс для хранения контекста, в котором находятся пользователи при работе с машиной состояний.
+    Класс для доступа к информации состояния конкретного пользователя.
+    Создаётся и передаётся в обработчики при каждом событии.
     """
 
     def __init__(self, storage: BaseStorage, key: StorageKey) -> None:

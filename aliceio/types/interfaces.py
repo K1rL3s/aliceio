@@ -9,8 +9,10 @@ AudioPlayer = Dict[str, Any]
 
 class Interfaces(AliceObject):
     """
-    [Интерфейсы](https://yandex.ru/dev/dialogs/alice/doc/request.html#request__interfaces-desc), доступные на устройстве пользователя.
-    """
+    Интерфейсы, доступные на устройстве пользователя.
+
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/request.html#request__interfaces-desc)
+    """  # noqa: E501
 
     account_linking: Optional[AccountLinking] = None
     screen: Optional[Screen] = None

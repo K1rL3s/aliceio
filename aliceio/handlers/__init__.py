@@ -5,6 +5,7 @@ from .error import ErrorHandler
 from .message import MessageHandler
 from .purchase import PurchaseHandler
 from .show_pull import ShowPullHandler
+from .timeout import TimeoutHandler
 
 __all__ = (
     "AudioPlayerHandler",
@@ -15,4 +16,5 @@ __all__ = (
     "MessageHandler",
     "ShowPullHandler",
     "PurchaseHandler",
+    "TimeoutHandler",
 )

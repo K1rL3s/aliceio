@@ -9,8 +9,10 @@ from .text_button import TextButton
 
 class Response(AliceObject):
     """
-    [Ответ](https://yandex.ru/dev/dialogs/alice/doc/response.html#response__response-desc) для API Алисы с полезной для пользователя информацией.
-    """
+    Ответ для API Алисы с полезной для пользователя информацией.
+
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/response.html#response__response-desc)
+    """  # noqa: E501
 
     text: str
     tts: Optional[str] = None

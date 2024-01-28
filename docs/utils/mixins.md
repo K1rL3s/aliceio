@@ -3,6 +3,8 @@
     options:
       members: true
 
+<br/>
+
 ::: aliceio.utils.mixins.ContextInstanceMixin
     handler: python
     options:
@@ -10,4 +12,3 @@
         - get_current
         - set_current
         - reset_current
-

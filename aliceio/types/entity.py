@@ -12,7 +12,9 @@ from .tokens_entity import TokensEntity
 
 class Entity(MutableAliceObject):
     """
-    [NLU Entity](https://yandex.ru/dev/dialogs/alice/doc/request-simpleutterance.html#request-simpleutterance__entities-desc)
+    NLU Entity
+
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/request-simpleutterance.html#request-simpleutterance__entities-desc)
     """  # noqa: E501
 
     type: str

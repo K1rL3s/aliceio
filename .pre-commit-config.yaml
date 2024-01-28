@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.2.0
+    rev: v4.5.0
     hooks:
       - id: trailing-whitespace
       - id: check-case-conflict
@@ -10,6 +10,7 @@ repos:
       - id: mixed-line-ending
       - id: detect-private-key
       - id: check-yaml
+        args: [ --unsafe ]
       - id: check-toml
       - id: check-json
 

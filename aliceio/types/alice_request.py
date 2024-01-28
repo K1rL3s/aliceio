@@ -9,8 +9,10 @@ from .payload import Payload
 
 class AliceRequest(AliceObject):
     """
-    [Запрос](https://yandex.ru/dev/dialogs/alice/doc/request.html#request__request-desc) с информацией от пользователя от API Алисы.
-    """
+    Запрос с информацией от пользователя от API Алисы.
+
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/request.html#request__request-desc)
+    """  # noqa: E501
 
     type: str
     payload: Optional[Payload] = None
@@ -19,7 +21,8 @@ class AliceRequest(AliceObject):
     markup: Optional[Markup] = None
     nlu: Optional[NLU] = None
 
-    # Ошибка в [аудиоплеере](https://yandex.ru/dev/dialogs/alice/doc/request-audioplayer.html)
+    # Ошибка в аудиоплеере
+    # https://yandex.ru/dev/dialogs/alice/doc/request-audioplayer.html
     error: Optional[AudioPlayerError] = None
 
     # not null при type == RequestType.PURCHASE_CONFIRMATION
@@ -32,7 +35,8 @@ class AliceRequest(AliceObject):
     signed_data: Optional[str] = None
     signature: Optional[str] = None
 
-    # not null при запуске [утреннего шоу](https://yandex.ru/dev/dialogs/alice/doc/request-show-pull.html) Алисы
+    # not null при запуске утреннего шоу Алисы
+    # https://yandex.ru/dev/dialogs/alice/doc/request-show-pull.html
     show_type: Optional[str] = None
 
     if TYPE_CHECKING:

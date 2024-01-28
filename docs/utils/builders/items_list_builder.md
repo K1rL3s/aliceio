@@ -6,5 +6,3 @@
         - set_header
         - set_footer
         - to_collection
-        - __len__
-

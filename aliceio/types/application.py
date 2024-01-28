@@ -5,8 +5,10 @@ from aliceio.types.base import MutableAliceObject
 
 class Application(MutableAliceObject):
     """
-    [Приложение](https://yandex.ru/dev/dialogs/alice/doc/request.html#request__application-desc) из :class:`Session`.
-    """
+    Приложение из :class:`Session`.
+
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/request.html#request__application-desc)
+    """  # noqa: E501
 
     application_id: str
 

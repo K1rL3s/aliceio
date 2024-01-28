@@ -6,7 +6,9 @@ from .media_button import MediaButton
 
 class ItemImage(MutableAliceObject):
     """
-    [Изображение](https://yandex.ru/dev/dialogs/alice/doc/response-card-itemslist.html#response-card-itemslist__items-desc) в :class:`ItemsList`
+    Изображение в :class:`ItemsList`
+
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/response-card-itemslist.html#response-card-itemslist__items-desc)
     """  # noqa: E501
 
     image_id: Optional[str] = None  # Optional XD

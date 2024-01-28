@@ -5,7 +5,3 @@
         - __init__
         - event
         - event_type
-
-## UpdateTypeLookupError
-
-Запрос не содержит ни одного известного типа событий.

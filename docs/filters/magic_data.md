@@ -2,5 +2,5 @@
     handler: python
     options:
       members:
+        - __init__
         - __call__
-        - __str__

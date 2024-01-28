@@ -2,6 +2,7 @@
     handler: python
     options:
       members:
+        - __init__
         - set_state
         - get_state
         - set_data

@@ -6,9 +6,6 @@ from aliceio.types import AliceResponse, Response, Update
 
 
 class ResponseConvertMiddleware(BaseMiddleware[Update]):
-    def __init__(self) -> None:
-        pass
-
     async def __call__(
         self,
         handler: Callable[[Update, Dict[str, Any]], Awaitable[Any]],

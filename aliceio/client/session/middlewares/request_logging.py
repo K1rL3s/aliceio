@@ -17,15 +17,15 @@ logger = logging.getLogger(__name__)
 
 class RequestLogging(BaseRequestMiddleware):
     """
-    Мидлварь для логгирования исходящих запросов.\n
+    Мидлварь для логгирования исходящих запросов.
 
     :param ignore_methods: Ингорируемые методы при логгировании
     """
+
     def __init__(
         self,
         ignore_methods: Optional[List[Type[AliceMethod[Any]]]] = None,
     ) -> None:
-
         self.ignore_methods = ignore_methods if ignore_methods else []
 
     async def __call__(
