@@ -8,7 +8,7 @@ from aiohttp import web
 
 from aliceio import BaseMiddleware, Dispatcher, Router, Skill
 from aliceio.filters import BaseFilter
-from aliceio.types import Message, Response, User
+from aliceio.types import Message, User
 from aliceio.webhook.aiohttp_server import OneSkillRequestHandler, setup_application
 
 router = Router(name=__name__)
@@ -60,7 +60,7 @@ async def start_handler(
 ) -> str:
     return (
         '💻 Скажи "число", и я скажу число, которое я задумал\n'
-        "(точно не {yoy_num} и не {kek_num})"
+        f"(точно не {yoy_num} и не {kek_num})"
     )
 
 

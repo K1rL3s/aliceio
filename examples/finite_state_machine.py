@@ -106,6 +106,8 @@ def show_summary(data: Dict[str, Any], positive: bool = True) -> str:
 
 
 def main() -> None:
+    # use_api_storage можно и на False,
+    # тогда будет использоваться хранилище на текущей машине
     dp = Dispatcher(use_api_storage=True, response_timeout=10**9)
     dp.include_router(form_router)
 
