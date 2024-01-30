@@ -6,15 +6,3 @@
 - [`TextButtonBuilder`](builders/text_button_builder.md) - Билдер текстовых кнопок.
 
 ### [Примеры](https://github.com/K1rL3s/aliceio/blob/examples/examples/builders.py) использования билдеров
-
-
-
-
-
-
-
-
-
-
-
-
