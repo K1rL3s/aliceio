@@ -6,7 +6,7 @@ from typing import Any, Awaitable, Callable, Dict, Union
 
 from aiohttp import web
 
-from aliceio import BaseMiddleware, Dispatcher, Router, Skill
+from aliceio import BaseMiddleware, Dispatcher, F, Router, Skill
 from aliceio.filters import BaseFilter
 from aliceio.types import Message, User
 from aliceio.webhook.aiohttp_server import OneSkillRequestHandler, setup_application
@@ -52,12 +52,14 @@ async def random_number_handler(
     return f"🎲 Моё число... {int_num}!\n🤓Шанс на это был ~{float_num}%"
 
 
-@router.message()
+@router.message(F.text.as_("real_text"))
 async def start_handler(
     message: Message,
     yoy_num: int,  # Аргумент из даты диспетчера
     kek_num: int,  # Аргумент из даты RequestHandler'а
+    real_text: str,  # Аргумент из магического фильтра
 ) -> str:
+    assert real_text == message.text
     return (
         '💻 Скажи "число", и я скажу число, которое я задумал\n'
         f"(точно не {yoy_num} и не {kek_num})"

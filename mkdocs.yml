@@ -5,7 +5,7 @@ site_url: https://aliceio.rtfd.io/
 repo_name: aliceio
 repo_url: https://github.com/K1rL3s/aliceio
 edit_uri: edit/master/docs/
-copyright: <a href="https://github.com/K1rL3s/aliceio/tree/master/LICENSE" target="_blank" rel="noopener">View maintainers</a>
+copyright: <a href="https://github.com/K1rL3s/aliceio/tree/master/LICENSE" target="_blank" rel="noopener">Лицензия</a>
 
 extra:
   generator: false
@@ -190,6 +190,7 @@ nav:
       - Кнопки и альбомы: tutorial/builders.md
       - Обработка ошибок: tutorial/error-handling.md
       - Обработка таймаута: tutorial/timeout-handling.md
+      - Внедрение зависимостей: tutorial/dependency-injection.md
       - FAQ: tutorial/faq.md
 
 
