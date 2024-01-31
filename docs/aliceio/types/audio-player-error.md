@@ -2,5 +2,5 @@
     handler: python
     options:
       members:
-        - message: str
-        - type: str
+        - message
+        - type

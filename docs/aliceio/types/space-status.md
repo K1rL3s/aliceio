@@ -2,5 +2,5 @@
     handler: python
     options:
       members:
-        - images: PreQuota
-        - sounds: PreQuota
+        - images
+        - sounds

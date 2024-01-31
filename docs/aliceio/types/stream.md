@@ -2,6 +2,6 @@
     handler: python
     options:
       members:
-        - url: str
-        - offset_ms: int
-        - token: str
+        - url
+        - offset_ms
+        - token

@@ -2,7 +2,7 @@
     handler: python
     options:
       members:
-        - id: str
+        - id
         - skillId
         - skill_id
         - size

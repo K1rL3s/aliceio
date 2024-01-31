@@ -83,7 +83,7 @@ nav:
               - SpaceStatus: aliceio/types/space-status.md
               - Stream: aliceio/types/stream.md
               - TextButton: aliceio/types/text-button.md
-              - TimeOutEvent: aliceio/types/timeout-event.md
+              - TimeoutEvent: aliceio/types/timeout-event.md
               - TokensEntity: aliceio/types/tokens-entity.md
               - Update: aliceio/types/update.md
               - UploadedImage: aliceio/types/uploaded-image.md

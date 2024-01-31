@@ -1,4 +1,4 @@
-::: aliceio.types.alice_response.AliceResponse
+::: aliceio.types.alice_request.AliceRequest
     handler: python
     options:
       members:

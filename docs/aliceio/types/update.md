@@ -18,5 +18,5 @@
 
 <br/>
 
-::: aliceio.types.update.UpdateTypeLookupError:
+::: aliceio.types.update.UpdateTypeLookupError
     handler: python

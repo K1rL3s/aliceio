@@ -21,7 +21,7 @@ async def timeout_handler(event: TimeoutUpdate) -> str:
 
 ### Таймаут-событие
 
-#### ::: aliceio.types.timeout_event.TimeoutUpdate
+### ::: aliceio.types.timeout_event.TimeoutUpdate
     handler: python
     options:
       members:

@@ -2,6 +2,6 @@
     handler: python
     options:
       members:
-        - tokens: List[str]
-        - entities: List[Entity]
-        - intents: Intents
+        - tokens
+        - entities
+        - intents
