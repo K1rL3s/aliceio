@@ -1,4 +1,7 @@
 ::: aliceio.types.entity.Entity
     handler: python
     options:
-      members: true
+      members:
+        - type
+        - tokens
+        - value

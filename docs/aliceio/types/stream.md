@@ -1,4 +1,7 @@
 ::: aliceio.types.stream.Stream
     handler: python
     options:
-      members: true
+      members:
+        - url: str
+        - offset_ms: int
+        - token: str

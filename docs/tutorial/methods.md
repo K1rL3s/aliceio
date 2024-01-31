@@ -5,27 +5,31 @@
 !!! warning
     Без токена невозможно использовать все следующие методы.
 
-## Свободное место
+# Свободное место
 
-### ::: aliceio.client.skill.Skill.status
+## ::: aliceio.client.skill.Skill.status
     handler: python
+    options:
+      show_source: false
 
 Для каждого аккаунта Яндекса на Диалоги можно загрузить не больше 100 МБ картинок и 1 ГБ аудио. Чтобы узнать, сколько места уже занято, используйте этот метод.
 [Док 1](https://yandex.ru/dev/dialogs/alice/doc/resource-upload.html#http-images-load__quota)
 [Док 2](https://yandex.ru/dev/dialogs/alice/doc/resource-sounds-upload.html#http-load__quota)
 
 
-## Изображения
+# Изображения
 
-### ::: aliceio.client.skill.Skill.get_images
+## ::: aliceio.client.skill.Skill.get_images
     handler: python
-    show_source: false
+    options:
+      show_source: false
 
 Список изображений, загруженных для навыка, можно получить этим методом. [Док](https://yandex.ru/dev/dialogs/alice/doc/resource-upload.html#http-images-load__list)
 
-### ::: aliceio.client.skill.Skill.upload_image
+## ::: aliceio.client.skill.Skill.upload_image
     handler: python
-    show_source: false
+    options:
+      show_source: false
 
 
 Чтобы загрузить картинку из для навыка из интернета, передайте URL картинки в метод.
@@ -34,38 +38,42 @@
 Чтобы загрузить файл, передайте наследника `InputFile`'а в метод.
 [Док](https://yandex.ru/dev/dialogs/alice/doc/resource-upload.html#http-images-load__upload-file)
 
-### ::: aliceio.client.skill.Skill.delete_image
+## ::: aliceio.client.skill.Skill.delete_image
     handler: python
-    show_source: false
+    options:
+      show_source: false
 
 Чтобы удалить загруженное изображение, передайте его идентификатор в этот метод.
 [Док](https://yandex.ru/dev/dialogs/alice/doc/resource-upload.html#http-images-load__delete)
 
 
-## Аудио
+# Аудио
 
-### ::: aliceio.client.skill.Skill.get_sounds
+## ::: aliceio.client.skill.Skill.get_sounds
     handler: python
-    show_source: false
+    options:
+      show_source: false
 
 Чтобы посмотреть аудиофайлы, загруженные для навыка, используйте этот метод.
 [Док](https://yandex.ru/dev/dialogs/alice/doc/resource-sounds-upload.html#http-load__list)
 
-### ::: aliceio.client.skill.Skill.upload_sound
+## ::: aliceio.client.skill.Skill.upload_sound
     handler: python
-    show_source: false
+    options:
+      show_source: false
 
 Аудио можно загрузить только файлом, передайте наследника `InputFile`'а в метод.
 [Док](https://yandex.ru/dev/dialogs/alice/doc/resource-sounds-upload.html#http-load__upload-file)
 
-### ::: aliceio.client.skill.Skill.delete_sound
+## ::: aliceio.client.skill.Skill.delete_sound
     handler: python
-    show_source: false
+    options:
+      show_source: false
 
 Чтобы удалить загруженное аудио, передайте его идентификатор в этот метод.
 [Док](https://yandex.ru/dev/dialogs/alice/doc/resource-sounds-upload.html#http-load__delete)
 
 
-## Примеры
+# Примеры
 
 * [methods.py](https://ya.ru)

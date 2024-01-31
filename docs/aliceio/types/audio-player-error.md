@@ -1,4 +1,6 @@
 ::: aliceio.types.audio_player_error.AudioPlayerError
     handler: python
     options:
-      members: true
+      members:
+        - message: str
+        - type: str

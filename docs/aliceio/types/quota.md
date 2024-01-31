@@ -1,11 +1,15 @@
 ::: aliceio.types.quota.Quota
     handler: python
     options:
-      members: true
+      members:
+        - total
+        - used
+        - available
 
 <br/>
 
 ::: aliceio.types.quota.PreQuota
     handler: python
     options:
-      members: true
+      members:
+        - quota

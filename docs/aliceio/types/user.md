@@ -1,4 +1,6 @@
 ::: aliceio.types.user.User
     handler: python
     options:
-      members: true
+      members:
+        - user_id
+        - access_token

@@ -1,4 +1,7 @@
 ::: aliceio.types.nlu.NLU
     handler: python
     options:
-      members: true
+      members:
+        - tokens: List[str]
+        - entities: List[Entity]
+        - intents: Intents

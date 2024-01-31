@@ -1,4 +1,6 @@
 ::: aliceio.types.show_pull.ShowPull
     handler: python
     options:
-      members: true
+      members:
+        - type
+        - show_type

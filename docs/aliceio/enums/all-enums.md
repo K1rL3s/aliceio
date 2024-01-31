@@ -3,14 +3,16 @@
 ::: aliceio.enums.base.ValuesEnum
     handler: python
     options:
-      members: true
+      members:
+        - values
 
 <br/>
 
 ::: aliceio.enums.base.StrEnum
     handler: python
     options:
-      members: true
+      members:
+        - __str__
 
 <br/>
 

@@ -1,4 +1,5 @@
 ::: aliceio.types.markup.Markup
     handler: python
     options:
-      members: true
+      members:
+        - dangerous_context

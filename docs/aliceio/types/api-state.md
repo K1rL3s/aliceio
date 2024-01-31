@@ -12,4 +12,7 @@ ApplicationState = StateDict
 ::: aliceio.types.api_state.ApiState
     handler: python
     options:
-      members: true
+      members:
+        - user
+        - session
+        - application

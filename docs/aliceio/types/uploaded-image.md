@@ -1,18 +1,26 @@
 ::: aliceio.types.uploaded_image.UploadedImage
     handler: python
     options:
-      members: true
+      members:
+        - id
+        - size
+        - origUrl
+        - orig_url
+        - createdAt
+        - created_at
 
 <br/>
 
 ::: aliceio.types.uploaded_image.PreUploadedImage
     handler: python
     options:
-      members: true
+      members:
+        - image
 
 <br/>
 
 ::: aliceio.types.uploaded_image.UploadedImagesList
     handler: python
     options:
-      members: true
+      members:
+        - images

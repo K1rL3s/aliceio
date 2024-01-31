@@ -1,4 +1,8 @@
 ::: aliceio.types.button_pressed.ButtonPressed
     handler: python
     options:
-      members: true
+      members:
+        - type
+        - payload
+        - markup
+        - nlu

@@ -8,14 +8,14 @@
 >
 > <cite>[Википедия](https://en.wikipedia.org/wiki/Finite-state_machine)</cite>
 
-# Проблема
+## Проблема
 
 Не вся функциональность навыка может быть реализована в одном хэндлере.
 Если вам нужно получить некоторую информацию от пользователя в несколько шагов или нужно направить его в зависимости от ответа, то вам надо использовать FSM.
 
 Посмотрим, как это сделать пошагово.
 
-# Шаг за шагом
+## Решение
 
 Перед обработкой любый состояний вы должны определить какие именно состояния вы хотите использовать:
 
@@ -140,5 +140,5 @@ async def cancel_handler(message: Message, state: FSMContext) -> Response:
 
 ## Примеры
 
-* [finite-state-machine](https://ya.ru)
+* [finite_state_machine.py](https://ya.ru)
 * [aiogram](https://docs.aiogram.dev/en/dev-3.x/dispatcher/finite_state_machine/index.html)

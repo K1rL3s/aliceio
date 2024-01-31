@@ -1,4 +1,8 @@
 ::: aliceio.types.meta.Meta
     handler: python
     options:
-      members: true
+      members:
+        - locale
+        - timezone
+        - client_id
+        - interfaces

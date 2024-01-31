@@ -28,6 +28,7 @@
         - close
         - resolve_skill
         - handle
+        - __call__
 
 <br/>
 

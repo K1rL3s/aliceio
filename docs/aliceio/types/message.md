@@ -1,4 +1,10 @@
 ::: aliceio.types.message.Message
     handler: python
     options:
-      members: true
+      members:
+        - type
+        - command
+        - original_utterance
+        - payload
+        - markup
+        - nlu

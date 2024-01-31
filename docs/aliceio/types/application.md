@@ -1,4 +1,5 @@
 ::: aliceio.types.application.Application
     handler: python
     options:
-      members: true
+      members:
+        - application_id

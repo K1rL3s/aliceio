@@ -1,4 +1,10 @@
 ::: aliceio.types.session.Session
     handler: python
     options:
-      members: true
+      members:
+        - message_id
+        - session_id
+        - skill_id
+        - application
+        - new
+        - user

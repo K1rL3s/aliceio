@@ -94,5 +94,5 @@ async def start_handler(message: Message, real_text: str) -> str:
 
 ## Примеры
 
-* [context-addition](https://ya.ru)
+* [context_addition.py](https://ya.ru)
 * [aiogram](https://docs.aiogram.dev/en/dev-3.x/dispatcher/dependency_injection.html)

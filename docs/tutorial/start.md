@@ -8,5 +8,6 @@
 6. [Машина состояний](finite-state-machine.md)
 7. [Кнопки и альбомы](builders.md)
 8. [Обработка ошибок](error-handling.md)
-9. [Обработка таймаута](timeout-handling.md)
-10. [FAQ](faq.md)
+9. [Особые события](special-events.md)
+10. [Внедрение зависимостей](dependency-injection.md)
+11. [FAQ](faq.md)

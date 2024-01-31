@@ -1,7 +1,9 @@
 ::: aliceio.types.audio_player_directive.AudioPlayerDirective
     handler: python
     options:
-      members: true
+      members:
+        - action
+        - item
 
 <br/>
 

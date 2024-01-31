@@ -1,4 +1,8 @@
 ::: aliceio.types.metadata.Metadata
     handler: python
     options:
-      members: true
+      members:
+        - title
+        - sub_title
+        - art
+        - background_image
