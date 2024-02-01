@@ -34,10 +34,11 @@ classifiers = [
   "Topic :: Communications :: Chat",
 ]
 dependencies = [
-  "aiohttp~=3.9.0",
-  "pydantic>=2.4.1,<2.6",
   "aiofiles~=23.2.1",
+  "aiohttp~=3.9.0",
+  "certifi>=2023.7.22",
   "magic-filter>=1.0.12,<1.1",
+  "pydantic>=2.4.1,<2.6",
   "typing-extensions>=4.7.0,<=5.0",
 ]
 dynamic = ["version"]
@@ -77,6 +78,12 @@ dev = [
   "toml~=0.10.2",
   "pre-commit~=3.5.0",
   "packaging~=23.1",
+]
+docs = [
+  "mkdocs~=1.5.3",
+  "mkdocs_material~=9.5.5",
+  "mkdocstrings~=0.24.0",
+  "mkdocstrings_python~=1.8.0"
 ]
 
 [project.urls]
@@ -177,7 +184,7 @@ exclude = [
   "scripts",
   "*.egg-info",
 ]
-target-version = "py310"
+target-version = "py38"
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
@@ -240,8 +247,8 @@ ignore_missing_imports = true
 disallow_untyped_defs = true
 
 [tool.black]
-line-length = 99
-target-version = ['py38', 'py39', 'py310', 'py311']
+line-length = 88
+target-version = ['py38', 'py39', 'py310', 'py311', 'py312']
 exclude = '''
 (
     \.eggs

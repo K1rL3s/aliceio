@@ -1,0 +1,136 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - dev
+      - master
+    paths:
+      - ".github/workflows/tests.yml"
+      - "aliceio/**"
+      - "tests/**"
+      - "codecov.yaml"
+      - "pyproject.toml"
+  pull_request:
+    branches:
+      - dev
+      - master
+    paths:
+      - ".github/workflows/tests.yml"
+      - "aliceio/**"
+      - "tests/**"
+      - "pyproject.toml"
+
+jobs:
+  tests:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          # - macos-latest  # Открыть после окончания активной разработки, жрёт много минут
+          - windows-latest
+        python-version:
+          - '3.8'
+          - '3.9'
+          - '3.10'
+          - '3.11'
+          - '3.12'
+
+    defaults:
+      # Windows sucks. Force use bash instead of PowerShell
+      run:
+        shell: bash
+
+    runs-on: ${{ matrix.os }}
+
+    env:
+      # Windows has some limitations:
+      # – Redis is not supported on GitHub Windows runners;
+      IS_WINDOWS: ${{ startswith(matrix.os, 'windows') }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }} on ${{ matrix.os }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: pyproject.toml
+
+      - name: Install project dependencies
+        run: |
+          pip install -e .[dev,test,redis,proxy,i18n,fast]
+
+      - name: Lint code
+        run: |
+          ruff --output-format=github aliceio examples
+          mypy aliceio
+          black --check --diff aliceio tests
+
+      - name: Setup redis
+        if: ${{ env.IS_WINDOWS == 'false' }}
+        uses: shogo82148/actions-setup-redis@v1
+        with:
+          redis-version: 7
+
+      - name: Run tests
+        run: |
+          flags="$flags --cov=aliceio --cov-config .coveragerc --cov-report=xml"
+          [[ "$IS_WINDOWS" == "false" ]] && flags="$flags --redis redis://localhost:6379/0"
+          pytest $flags
+
+  #      - name: Upload coverage data
+  #        uses: codecov/codecov-action@v3
+  #        with:
+  #          token: ${{ secrets.CODECOV_TOKEN }}
+  #          files: coverage.xml
+  #          flags: unittests
+  #          name: py-${{ matrix.python-version }}-${{ matrix.os }}
+  #          fail_ci_if_error: true
+
+  pypy-tests:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          # - macos-latest  # Открыть после окончания активной разработки, жрёт много минут
+          # - windows-latest
+        python-version:
+          - 'pypy3.8'
+          - 'pypy3.9'
+
+    defaults:
+      # Windows sucks. Force use bash instead of PowerShell
+      run:
+        shell: bash
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }} on ${{ matrix.os }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: pyproject.toml
+
+      - name: Install project dependencies
+        run: |
+          pip install -e .[dev,test,redis,proxy,i18n,fast]
+
+      - name: Setup redis
+        uses: shogo82148/actions-setup-redis@v1
+        with:
+          redis-version: 7
+
+      - name: Run tests
+        run: |
+          flags=""
+          pytest $flags
