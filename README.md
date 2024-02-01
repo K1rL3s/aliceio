@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/K1rl3s/aliceio">
-    <img width="200px" height="200px" alt="aliceio" src="https://raw.githubusercontent.com/K1rL3s/aliceio/docs/docs/_static/logo_aliceio_trans_text.png">
+    <img width="200px" height="200px" alt="aliceio" src="https://raw.githubusercontent.com/K1rL3s/aliceio/master/docs/_static/logo_aliceio_trans_text.png">
   </a>
 </p>
 <h1 align="center">
@@ -33,8 +33,10 @@
 
 
 ## Документация
+- [Туториал](https://aliceio.readthedocs.io/ru/latest/tutorial/start/)
+- [Документация](https://aliceio.readthedocs.io/)
 - [Примеры](https://github.com/aliceio/aliceio/tree/master/examples)
-- [Техническая документация](https://aliceio.readthedocs.io/)
+
 
 ## Связь
 Если у вас есть вопросы, вы можете посетить чат сообщества в Telegram
