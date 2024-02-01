@@ -84,6 +84,7 @@ docs = [
 ]
 
 [project.urls]
+Documentation = "https://aliceio.rtfd.io"
 Repository = "https://github.com/K1rL3s/aliceio"
 
 [tool.hatch.envs.default]
