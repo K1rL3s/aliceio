@@ -13,7 +13,7 @@ class Directives(MutableAliceObject):
     Директивы.
 
     [Source 1](https://yandex.ru/dev/dialogs/alice/doc/response-audio-player.html)
-    [Source 2](https://yandex.ru/dev/dialogs/alice/doc/response-start-account-linking.html_
+    [Source 2](https://yandex.ru/dev/dialogs/alice/doc/response-start-account-linking.html)
     """  # noqa: E501
 
     audio_player: Optional[AudioPlayerDirective] = None

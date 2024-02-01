@@ -15,14 +15,14 @@ class UploadedImage(AliceObject):
     """  # noqa: E501
 
     id: str
+    size: int
     origUrl: Optional[str] = None
     # origUrl будет None если изображение загружено через файл, то есть не через url.
-    size: int
     createdAt: str
 
     if TYPE_CHECKING:
         orig_url: ClassVar[Optional[str]]
-        created_at: ClassVar[Optional[str]]
+        created_at: ClassVar[str]
 
         def __init__(
             __pydantic_self__,

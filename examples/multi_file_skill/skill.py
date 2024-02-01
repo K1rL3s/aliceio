@@ -4,6 +4,7 @@ import sys
 
 from aiohttp import web
 from handlers.echo import echo_router
+from handlers.ping import ping_router
 from handlers.start import start_router
 
 from aliceio import Dispatcher, Skill
@@ -12,7 +13,7 @@ from aliceio.webhook.aiohttp_server import OneSkillRequestHandler, setup_applica
 
 def main() -> None:
     dp = Dispatcher()
-    dp.include_routers(start_router, echo_router)
+    dp.include_routers(start_router, ping_router, echo_router)
 
     skill_id = os.environ["SKILL_ID"]
     oauth_token = os.getenv("OAUTH_TOKEN")

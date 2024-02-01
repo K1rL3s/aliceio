@@ -25,7 +25,7 @@
 - Роутеры (Blueprints)
 - Машина состояний (Finite State Machine)
 - Мидлвари (для входящих событий и вызовов API)
-- Использует мощные [магические фильтры](https://github.com/aiogram/magic-filter)
+- Мощные [магические фильтры](https://github.com/aiogram/magic-filter)
 
 
 ### Важно!

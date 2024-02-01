@@ -5,7 +5,7 @@ site_url: https://aliceio.rtfd.io/
 repo_name: aliceio
 repo_url: https://github.com/K1rL3s/aliceio
 edit_uri: edit/master/docs/
-copyright: <a href="https://github.com/K1rL3s/aliceio/tree/master/LICENSE" target="_blank" rel="noopener">View maintainers</a>
+copyright: <a href="https://github.com/K1rL3s/aliceio/tree/master/LICENSE" target="_blank" rel="noopener">Лицензия</a>
 
 extra:
   generator: false
@@ -17,190 +17,167 @@ extra:
 
 nav:
   - Документация:
+      - index.md
+      - Установка: install.md
+      - API Алисы:
+          - Навык: aliceio/client/skill.md
+          - Enums: aliceio/enums/all-enums.md
+          - Методы:
+              - Base: aliceio/methods/base.md
+              - Статус: aliceio/methods/status.md
+              - Изображения:
+                  - Загрузить: aliceio/methods/images/upload-image.md
+                  - Получить: aliceio/methods/images/get-images.md
+                  - Удалить: aliceio/methods/images/delete-image.md
+              - Звуки:
+                  - Загрузить: aliceio/methods/sounds/upload-sound.md
+                  - Получить: aliceio/methods/sounds/get-sounds.md
+                  - Удалить: aliceio/methods/sounds/delete-sound.md
+          - Типы:
+              - AliceEvent: aliceio/types/alice-event.md
+              - AliceRequest: aliceio/types/alice-request.md
+              - AliceResponse: aliceio/types/alice-response.md
+              - AnalyticEvent: aliceio/types/analytic-event.md
+              - Analytics: aliceio/types/analytics.md
+              - ApiState: aliceio/types/api-state.md
+              - Application: aliceio/types/application.md
+              - AudioPlayer: aliceio/types/audio-player.md
+              - AudioPlayerDirective: aliceio/types/audio-player-directive.md
+              - AudioPlayerError: aliceio/types/audio-player-error.md
+              - AudioPlayerItem: aliceio/types/audio-player-item.md
+              - Base: aliceio/types/base.md
+              - BigImage: aliceio/types/big-image.md
+              - ButtonPressed: aliceio/types/button-pressed.md
+              - Card: aliceio/types/card.md
+              - CardFooter: aliceio/types/card-footer.md
+              - CardHeader: aliceio/types/card-header.md
+              - Datetime: aliceio/types/datetime.md
+              - Directives: aliceio/types/directives.md
+              - Entity: aliceio/types/entity.md
+              - ErrorEvent: aliceio/types/error-event.md
+              - ErrorResult: aliceio/types/error-result.md
+              - FIOEntity: aliceio/types/fio-entity.md
+              - GEOEntity: aliceio/types/geo-entity.md
+              - ImageGallery: aliceio/types/image-gallery.md
+              - ImageGalleryItem: aliceio/types/image-gallery-item.md
+              - InputFile: aliceio/types/input-file.md
+              - Interface: aliceio/types/interfaces.md
+              - ItemImage: aliceio/types/item-image.md
+              - ItemsList: aliceio/types/items-list.md
+              - Markup: aliceio/types/markup.md
+              - MediaButton: aliceio/types/media-button.md
+              - Message: aliceio/types/message.md
+              - Meta: aliceio/types/meta.md
+              - MetaData: aliceio/types/metadata.md
+              - NLU: aliceio/types/nlu.md
+              - NLUEntity: aliceio/types/nlu-entity.md
+              - NumberEntity: aliceio/types/number-entity.md
+              - Payload: aliceio/types/payload.md
+              - Purchase: aliceio/types/purchase.md
+              - Quota: aliceio/types/quota.md
+              - Response: aliceio/types/response.md
+              - Result: aliceio/types/result.md
+              - Session: aliceio/types/session.md
+              - ShowItemMeta: aliceio/types/show-item-meta.md
+              - ShowPull: aliceio/types/show-pull.md
+              - SpaceStatus: aliceio/types/space-status.md
+              - Stream: aliceio/types/stream.md
+              - TextButton: aliceio/types/text-button.md
+              - TimeoutEvent: aliceio/types/timeout-event.md
+              - TokensEntity: aliceio/types/tokens-entity.md
+              - Update: aliceio/types/update.md
+              - UploadedImage: aliceio/types/uploaded-image.md
+              - UploadedSound: aliceio/types/uploaded-sound.md
+              - URL: aliceio/types/url.md
+              - User: aliceio/types/user.md
+          - Клиент:
+              - Сервер Алисы: aliceio/client/alice.md
+              - ContextController: aliceio/client/context-controller.md
+              - Сессия:
+                  - Base: aliceio/client/session/base.md
+                  - Aiohttp: aliceio/client/session/aiohttp.md
+                  - Мидлвари:
+                      - Base: aliceio/client/session/middlewares/base.md
+                      - Manager: aliceio/client/session/middlewares/manager.md
+                      - RequestLogging: aliceio/client/session/middlewares/request-logging.md
 
-      - Пользовательский уровень:
-          - index.md
-          - Handling:
-              - Handlers:
-                  - Base: handlers/base.md
-                  - AudioPlayer: handlers/audio_player.md
-                  - ButtonPressed: handlers/button_pressed.md
-                  - Message: handlers/message.md
-                  - Purchase: handlers/purchase.md
-                  - ShowPull: handlers/show_pull.md
-                  - Error: handlers/error.md
-              - Dispatcher:
-                  - Dispatcher: dispatcher/dispatcher.md
-                  - Flags: dispatcher/flags.md
-                  - Router: dispatcher/router.md
-                  - Middlewares:
-                      - Base: dispatcher/middlewares/base.md
-              - Webhook:
-                  - AiohttpServer: webhook/aiohttp_server.md
-
-          - Tools:
-              - Filters:
-                  - Base: filters/base.md
-                  - State: filters/state.md
-                  - Exception: filters/exception.md
-                  - Logic: filters/logic.md
-                  - MagicData: filters/magic_data.md
-              - FSM:
-                  - Context: fsm/context.md
-                  - State: fsm/state.md
-                  - Strategy: fsm/strategy.md
-                  - Storages:
-                      - Base: fsm/storage/base.md
-                      - MemoryStorage: fsm/storage/memory.md
-                      - ApiStorage: fsm/storage/api.md
-              - Methods:
-                  - Base: methods/base.md
-                  - Status: methods/status.md
-                  - Images:
-                      - Upload: methods/images/upload_image.md
-                      - Get: methods/images/get_images.md
-                      - Delete: methods/images/delete_image.md
-                  - Sounds:
-                      - Upload: methods/sounds/upload_sound.md
-                      - Get: methods/sounds/get_sounds.md
-                      - Delete: methods/sounds/delete_sound.md
-              - Types:
-                  - AliceEvent: types/alice_event.md
-                  - AliceRequest: types/alice_request.md
-                  - AliceResponse: types/alice_response.md
-                  - AnalyticEvent: types/analytic_event.md
-                  - Analytics: types/analytics.md
-                  - ApiState: types/api_state.md
-                  - Application: types/application.md
-                  - AudioPlayer: types/audio_player.md
-                  - AudioPlayerDirective: types/audio_player_directive.md
-                  - AudioPlayerError: types/audio_player_error.md
-                  - AudioPlayerItem: types/audio_player_item.md
-                  - Base: types/base.md
-                  - BigImage: types/big_image.md
-                  - ButtonPressed: types/button_pressed.md
-                  - Card: types/card.md
-                  - CardFooter: types/card_footer.md
-                  - CardHeader: types/card_header.md
-                  - Datetime: types/datetime.md
-                  - Directives: types/directives.md
-                  - Entity: types/entity.md
-                  - ErrorEvent: types/error_event.md
-                  - ErrorResult: types/error_result.md
-                  - FIOEntity: types/fio_entity.md
-                  - GEOEntity: types/geo_entity.md
-                  - ImageGallery: types/image_gallery.md
-                  - ImageGalleryItem: types/image_gallery_item.md
-                  - InputFile: types/input_file.md
-                  - Interface: types/interfaces.md
-                  - ItemImage: types/item_image.md
-                  - ItemsList: types/items_list.md
-                  - Markup: types/markup.md
-                  - MediaButton: types/media_button.md
-                  - Message: types/message.md
-                  - Meta: types/meta.md
-                  - MetaData: types/metadata.md
-                  - NLU: types/nlu.md
-                  - NLUEntity: types/nlu_entity.md
-                  - NumberEntity: types/number_entity.md
-                  - Payload: types/payload.md
-                  - Purchase: types/purchase.md
-                  - Quota: types/quota.md
-                  - Response: types/response.md
-                  - Result: types/result.md
-                  - Session: types/session.md
-                  - ShowItemMeta: types/show_item_meta.md
-                  - ShowPull: types/show_pull.md
-                  - SpaceStatus: types/space_status.md
-                  - Stream: types/stream.md
-                  - TextButton: types/text_button.md
-                  - TimeOutEvent: types/timeout_event.md
-                  - TokensEntity: types/tokens_entity.md
-                  - Update: types/update.md
-                  - UploadedImage: types/uploaded_image.md
-                  - UploadedSound: types/uploaded_sound.md
-                  - URL: types/url.md
-                  - User: types/user.md
-              - Utils:
-                  - MagicFilter: utils/magic_filter.md
-
-          - Client:
-              - Skill: client/skill.md
-
-
-      - Продвинутый уровень:
-          - index.md
-          - Handling:
-              - Webhook:
-                  - Security: webhook/security.md
-
-          - Tools:
-              - Enums:
-                  - enums/all_enums.md
-              - FSM:
+      - Обработка событий:
+          - Роутер: aliceio/dispatcher/router.md
+          - Диспетчер: aliceio/dispatcher/dispatcher.md
+          - Фильтрация:
+              - Base: aliceio/filters/base.md
+              - Состояния: aliceio/filters/state.md
+              - Исключение: aliceio/filters/exception.md
+              - Комбинации: aliceio/filters/logic.md
+              - MagicData: aliceio/filters/magic-data.md
+              - MagicFilter: aliceio/filters/magic-filter.md
+          - Вебхук:
+              - Aiohttp: aliceio/webhook/aiohttp-server.md
+              - Security: aliceio/webhook/security.md
+          - Машина состояний:
+              - Контекст: aliceio/fsm/context.md
+              - Состояние: aliceio/fsm/state.md
+              - Стратегия: aliceio/fsm/strategy.md
+              - Хранилища:
+                  - Base: aliceio/fsm/storage/base.md
+                  - MemoryStorage: aliceio/fsm/storage/memory.md
+                  - ApiStorage: aliceio/fsm/storage/api.md
                   - Redis:
-                      - RedisStorage: fsm/storage/redis/redis.md
-                      - DefaultKeyBuilder: fsm/storage/redis/default_key_builder.md
-                      - KeyBuilder: fsm/storage/redis/key_builder.md
-              - Utils:
-                  - Builders:
-                      - Example: utils/builders.md
-                      - Base: utils/builders/builder.md
-                      - ImageGalleryBuilder: utils/builders/image_gallery_builder.md
-                      - ItemsListBuilder: utils/builders/items_list_builder.md
-                      - TextButtonBuilder: utils/builders/text_button_builder.md
+                      - RedisStorage: aliceio/fsm/storage/redis/redis.md
+                      - DefaultKeyBuilder: aliceio/fsm/storage/redis/default-key-builder.md
+                      - KeyBuilder: aliceio/fsm/storage/redis/key-builder.md
+          - Мидлвари:
+              - Base: aliceio/dispatcher/middlewares/base.md
+          - Флаги: aliceio/dispatcher/flags.md
+          - Class-based хэндлеры:
+              - Base: aliceio/handlers/base.md
+              - AudioPlayer: aliceio/handlers/audio-player.md
+              - ButtonPressed: aliceio/handlers/button-pressed.md
+              - Message: aliceio/handlers/message.md
+              - Purchase: aliceio/handlers/purchase.md
+              - ShowPull: aliceio/handlers/show-pull.md
+              - Error: aliceio/handlers/error.md
+              - Timeout: aliceio/handlers/timeout.md
 
-          - Client:
-              - Alice: client/alice.md
-              - ContextController: client/context_controller.md
-              - Session:
-                  - Base: client/session/base.md
-                  - Aiohttp: client/session/aiohttp.md
-                  - Middlewares:
-                      - Base: client/session/middlewares/base.md
-                      - Manager: client/session/middlewares/manager.md
-                      - RequestLogging: client/session/middlewares/request_logging.md
-
+      - Утилсы:
+          - Билдеры:
+              - Описание: aliceio/utils/builders.md
+              - Base: aliceio/utils/builders/builder.md
+              - ImageGalleryBuilder: aliceio/utils/builders/image-gallery-builder.md
+              - ItemsListBuilder: aliceio/utils/builders/items-list-builder.md
+              - TextButtonBuilder: aliceio/utils/builders/text-button-builder.md
 
       - Внутреннее устройство:
-          - index.md
-          - Handling:
-              - Dispatcher:
-                  - Observers:
-                      - Base: dispatcher/event/bases.md
-                      - EventObserver: dispatcher/event/event.md
-                      - AliceEventObserver: dispatcher/event/alice.md
-                      - Handlers: dispatcher/event/handler.md
-                  - Middlewares:
-                      - Manager: dispatcher/middlewares/manager.md
-                      - UserContext: dispatcher/middlewares/user_context.md
-                      - Error: dispatcher/middlewares/error.md
-                      - ResponseConvert: dispatcher/middlewares/response_convert.md
+          - Наблюдатели:
+              - Base: aliceio/dispatcher/event/bases.md
+              - EventObserver: aliceio/dispatcher/event/event.md
+              - AliceEventObserver: aliceio/dispatcher/event/alice.md
+              - Handlers: aliceio/dispatcher/event/handler.md
+          - Мидлвари:
+              - Manager: aliceio/dispatcher/middlewares/manager.md
+              - UserContext: aliceio/dispatcher/middlewares/user-context.md
+              - Error: aliceio/dispatcher/middlewares/error.md
+              - ResponseConvert: aliceio/dispatcher/middlewares/response-convert.md
+              - FSMContextMiddleware: aliceio/fsm/middlewares/fsm-context.md
+              - FSMApiStorageMiddleware: aliceio/fsm/middlewares/api-storage.md
+          - Утилсы:
+              - Funcs: aliceio/utils/funcs.md
+              - Mixins: aliceio/utils/mixins.md
+              - Warnings: aliceio/utils/warnings.md
 
-          - Tools:
-              - FSM:
-                  - Middlewares:
-                      - FSMContextMiddleware: fsm/middlewares/fsm_context.md
-                      - FSMApiStorageMiddleware: fsm/middlewares/api_storage.md
-              - Utils:
-                  - Funcs: utils/funcs.md
-                  - Mixins: utils/mixins.md
-                  - Warnings: utils/warnings.md
-
-      - Кастомизация зависимостей: modules.md
-
-# TODO запилить туториал для алисы
-#  - Туториал:
-#      - tutorial/index.md
-#      - Первый бот: tutorial/first-bot.md
-#      - Правила: tutorial/rules.md
-#      - Разделение кода: tutorial/code-separation.md
-#      - Клавиатуры и вложения: tutorial/keyboards-attachments.md
-#      - Мидлвари и return менеджеры: tutorial/middlewares-return-managers.md
-#      - Обработка ошибок: tutorial/error-handling.md
-#      - Callback API: tutorial/callback-bot.md
-#      - Рекомендуемые IDE: tutorial/recommended-ide.md
-#      - FAQ: tutorial/faq.md
+  - Туториал:
+      - tutorial/start.md
+      - Первый навык: tutorial/first-skill.md
+      - Разделение кода: tutorial/code-separation.md
+      - Методы API: tutorial/methods.md
+      - Фильтры: tutorial/filters.md
+      - Мидлвари: tutorial/middlewares.md
+      - Машина состояний: tutorial/finite-state-machine.md
+      - Кнопки и альбомы: tutorial/builders.md
+      - Обработка ошибок: tutorial/error-handling.md
+      - Особые события: tutorial/special-events.md
+      - Внедрение зависимостей: tutorial/dependency-injection.md
+      - FAQ: tutorial/faq.md
 
 
 theme:
@@ -238,7 +215,7 @@ markdown_extensions:
   - admonition:
   - md_in_html:
   - toc:
-      slugify: !!python/object/apply:pymdownx.slugs.slugify  # noqa
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
         kwds:
           case: lower
       permalink: ""
@@ -284,7 +261,7 @@ plugins:
             show_root_heading: true
             show_signature: true
             show_signature_annotations: true
-            show_source: true
+            show_source: false
             show_symbol_type_heading: true
             show_symbol_type_toc: true
 

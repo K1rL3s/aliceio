@@ -67,6 +67,10 @@ html {
   }
 }
 
+.md-nav__item--section>.md-nav>.md-nav__list>.md-nav__item>.md-nav__link{
+  color: var(--md-typeset-a-color) !important;
+}
+
 @media screen and (max-width:76.1875em) {
   [data-md-color-scheme="slate"] .md-nav--primary .md-nav__title {
     background-color: var(--vkbottle-bg-darker);
@@ -91,4 +95,11 @@ html {
 
 .injected {
   display: none;
+}
+
+.md-typeset h1 {
+    color: var(--md-default-fg-color--light);
+    font-size: 2em;
+    line-height: 1.3;
+    margin: 1em 0 0.5em
 }
