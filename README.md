@@ -35,7 +35,7 @@
 ## Документация
 - [Туториал](https://aliceio.readthedocs.io/ru/latest/tutorial/start/)
 - [Документация](https://aliceio.readthedocs.io/)
-- [Примеры](https://github.com/aliceio/aliceio/tree/master/examples)
+- [Примеры](https://github.com/K1rL3s/aliceio/tree/master/examples)
 
 
 ## Связь
