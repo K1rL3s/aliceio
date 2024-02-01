@@ -1,3 +1,7 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
 name = "aliceio"
 description = "Asynchronous framework for Alice from Yandex Dialogs"
@@ -41,7 +45,10 @@ dependencies = [
   "pydantic>=2.4.1,<2.6",
   "typing-extensions>=4.7.0,<=5.0",
 ]
+
 dynamic = ["version"]
+[tool.hatch.version]
+path = "aliceio/__meta__.py"
 
 [project.optional-dependencies]
 fast = [
