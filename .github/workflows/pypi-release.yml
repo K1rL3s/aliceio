@@ -1,7 +1,9 @@
 name: "PyPI Release"
 
 on:
-  push:
+  release:
+    types:
+      - published
     tags:
       - 'v0.*'
 
