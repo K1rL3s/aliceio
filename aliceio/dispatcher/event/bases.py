@@ -9,7 +9,7 @@ from aliceio.types.base import AliceObject
 MiddlewareEventType = TypeVar("MiddlewareEventType", bound=AliceObject)
 NextMiddlewareType = Callable[[MiddlewareEventType, Dict[str, Any]], Awaitable[Any]]
 MiddlewareType = Union[
-    BaseMiddleware,
+    BaseMiddleware[Any],
     Callable[
         [NextMiddlewareType[MiddlewareEventType], MiddlewareEventType, Dict[str, Any]],
         Awaitable[Any],

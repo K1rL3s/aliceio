@@ -140,5 +140,5 @@ async def cancel_handler(message: Message, state: FSMContext) -> Response:
 
 ## Примеры
 
-* [finite_state_machine.py](https://ya.ru)
+* [finite_state_machine.py](https://github.com/K1rL3s/aliceio/blob/master/examples/finite_state_machine.py)
 * [aiogram](https://docs.aiogram.dev/en/dev-3.x/dispatcher/finite_state_machine/index.html)

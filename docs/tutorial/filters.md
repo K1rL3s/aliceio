@@ -18,8 +18,8 @@
 * Синхронными функциями (`#!python def my_filter(*args, **kwargs): pass`)
 * Анонимными функциями (`#!python lambda event: True`)
 * Любым awaitable объектом
-* Подклассом [`aliceio.filters.base.Filter`](https://ya.ru)
-* Экземпляром [`Магического фильтра`](https://ya.ru)
+* Подклассом [`aliceio.filters.base.Filter`](../aliceio/filters/base.md)
+* Экземпляром [`Магического фильтра`](../aliceio/filters/magic-filter.md)
 
 И они должны возвращать `bool` или `dict`.
 Если возвращается словарь, полученные данные будут переданы следующим фильтрам и обработчику в качестве ключевых аргументов.
@@ -135,6 +135,6 @@ async def any_message_handler(message: ...) -> Response:
 
 ## Примеры
 
-* [filters.py](https://ya.ru)
+* [filters.py](https://github.com/K1rL3s/aliceio/blob/master/examples/filters.py)
 * [aiogram](https://docs.aiogram.dev/en/dev-3.x/dispatcher/filters/index.html)
 * [aiogram-magic](https://docs.aiogram.dev/en/dev-3.x/dispatcher/filters/magic_filters.html)

@@ -94,5 +94,5 @@ async def check_authorization(
 
 # Примеры
 
-* [middlewares.py](https://ya.ru)
+* [middlewares.py](https://github.com/K1rL3s/aliceio/blob/master/examples/middlewares.py)
 * [aiogram](https://docs.aiogram.dev/en/dev-3.x/dispatcher/middlewares.html)

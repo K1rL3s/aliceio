@@ -114,5 +114,5 @@ if __name__ == "__main__":
 
 ## Примеры
 
-* [multi_file_skill](https://ya.ru)
+* [multi_file_skill](https://github.com/K1rL3s/aliceio/tree/master/examples/multi_file_skill)
 * [vkbottle](https://vkbottle.readthedocs.io/ru/latest/tutorial/code-separation/)

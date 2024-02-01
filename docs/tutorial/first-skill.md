@@ -101,8 +101,8 @@ if __name__ == "__main__":
 
 # Примеры
 
-* [echo_bot.py](https://ya.ru)
-* [echo_bot_ssl.py](https://ya.ru)
+* [echo_bot.py](https://github.com/K1rL3s/aliceio/blob/master/examples/echo_bot.py)
+* [echo_bot_ssl.py](https://github.com/K1rL3s/aliceio/blob/master/examples/echo_bot_ssl.py)
 
 Полный код из этой главы:
 

@@ -18,7 +18,7 @@ keywords = [
 ]
 classifiers = [
   "License :: OSI Approved :: MIT License",
-  "Development Status :: 1 - Planning",
+  "Development Status :: 4 - Beta",
   "Environment :: Console",
   "Framework :: AsyncIO",
   "Typing :: Typed",
@@ -53,9 +53,6 @@ redis = [
 ]
 proxy = [
   "aiohttp-socks~=0.8.3",
-]
-i18n = [
-  "Babel~=2.13.0",
 ]
 test = [
   "pytest~=7.4.2",
@@ -95,8 +92,6 @@ features = [
   "fast",
   "redis",
   "proxy",
-  "i18n",
-  "cli",
 ]
 post-install-commands = [
   "pre-commit install",
@@ -114,9 +109,7 @@ features = [
   "fast",
   "redis",
   "proxy",
-  "i18n",
   "docs",
-  "cli",
 ]
 
 [tool.hatch.envs.dev]
@@ -126,9 +119,7 @@ features = [
   "fast",
   "redis",
   "proxy",
-  "i18n",
   "test",
-  "cli",
 ]
 
 [tool.hatch.envs.test]
@@ -136,9 +127,7 @@ features = [
   "fast",
   "redis",
   "proxy",
-  "i18n",
   "test",
-  "cli",
 ]
 
 [tool.hatch.envs.test.scripts]
@@ -241,7 +230,6 @@ module = [
   "async_lru",
   "uvloop",
   "redis.*",
-  "babel.*",
 ]
 ignore_missing_imports = true
 disallow_untyped_defs = true

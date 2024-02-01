@@ -76,4 +76,4 @@
 
 # Примеры
 
-* [methods.py](https://ya.ru)
+* [methods.py](https://github.com/K1rL3s/aliceio/blob/master/examples/methods.py)
