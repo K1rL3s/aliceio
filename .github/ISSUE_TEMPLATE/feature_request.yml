@@ -42,7 +42,7 @@ body:
       label: Пример кода
       description: Небольшой пример кода, демонстрирующий поведение, которое вы хотели бы видеть
       placeholder: |
-        await bot.send_photo(user_id, photo_url)
+        await skill.response(text, tts, buttons=[...])
         ...
       render: python3
 

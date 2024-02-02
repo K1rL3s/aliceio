@@ -1,7 +1,7 @@
 site_name: AliceIO Docs
 site_author: AliceIO
 site_description: Awesome Alice framework
-site_url: https://aliceio.rtfd.io/
+site_url: https://aliceio.rtfd.io/ru/latest/
 repo_name: aliceio
 repo_url: https://github.com/K1rL3s/aliceio
 edit_uri: edit/master/docs/
@@ -167,8 +167,8 @@ nav:
 
   - Туториал:
       - tutorial/start.md
+      - Настройка навыка: tutorial/skill-settings.md
       - Первый навык: tutorial/first-skill.md
-      - Разделение кода: tutorial/code-separation.md
       - Методы API: tutorial/methods.md
       - Фильтры: tutorial/filters.md
       - Мидлвари: tutorial/middlewares.md
@@ -177,6 +177,7 @@ nav:
       - Обработка ошибок: tutorial/error-handling.md
       - Особые события: tutorial/special-events.md
       - Внедрение зависимостей: tutorial/dependency-injection.md
+      - Полноценный навык: tutorial/full-skill.md
       - FAQ: tutorial/faq.md
 
 
@@ -207,8 +208,8 @@ theme:
   font:
     text: Roboto Mono
     code: Monaco
-  logo: _static/logo_aliceio_trans.png
-  favicon: _static/logo_aliceio_trans.png
+  logo: _static/logo-aliceio-trans.png
+  favicon: _static/logo-aliceio-trans.png
 
 
 markdown_extensions:

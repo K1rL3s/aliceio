@@ -1,3 +1,7 @@
-# Installation
-## From PyPI
-```pip install -U aliceio```
+# Установка
+
+## Через PyPI
+
+```console
+pip install -U aliceio
+```

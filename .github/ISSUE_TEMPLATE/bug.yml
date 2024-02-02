@@ -77,7 +77,7 @@ body:
       label: Пример кода
       description: Предоставьте [минимальный, воспроизводимый] (https://stackoverflow.com/help/minimal-reproducible-example) и правильно отформатированный пример (если применимо)
       placeholder: |
-        from aliceio import Bot, Dispatcher
+        from aliceio import Skill, Dispatcher
         ...
       render: python3
 
@@ -100,4 +100,3 @@ body:
         Например, такое поведение воспроизводится только для новых пользователей
 
         Вы также можете прикрепить дополнительные снимки экрана, журналы или другие файлы
-
