@@ -69,6 +69,7 @@ class TestFSMApiStorageMiddleware:
         middleware = FSMApiStorageMiddleware(strategy=strategy)
 
         record = middleware.resolve_state_data(api_state)
+
         assert record.state == strategy
         assert record.data == {"foo": "bar"}
 
@@ -96,8 +97,18 @@ class TestFSMApiStorageMiddleware:
         middleware = FSMApiStorageMiddleware(strategy=strategy)
 
         record = middleware.resolve_state_data(api_state)
+
         assert record.state == FSMStrategy.SESSION
         assert record.data == {"sess": "ion"}
+
+    # В навыках в черновиках, вероятно, не работают состояния на стороне Алисы
+    async def test_resolve_state_none(self):
+        middleware = FSMApiStorageMiddleware(strategy=None)
+
+        record = middleware.resolve_state_data(None)
+
+        assert record.state is None
+        assert record.data == {}
 
     async def test_pre_set_state_no_data(self, state: FSMContext, update: Update):
         for strategy in (

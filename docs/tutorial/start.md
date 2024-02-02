@@ -1,14 +1,106 @@
-# Содержание
+# Старт
 
-1. [Настройка Алисы](skill-settings.md)
-2. [Первый навык](first-skill.md)
-3. [Методы API](methods.md)
-4. [Фильтры](filters.md)
-5. [Мидлвари](middlewares.md)
-6. [Машина состояний](finite-state-machine.md)
-7. [Кнопки и альбомы](builders.md)
-8. [Обработка ошибок](error-handling.md)
-9. [Особые события](special-events.md)
-10. [Внедрение зависимостей](dependency-injection.md)
-11. [Полноценный навык](full-skill.md)
-12. [FAQ](faq.md)
+Чтобы интерактивно взаимодействовать с будущими примерами работы фреймворка, необходимо создать тестовый навык в Алисе.
+
+## [Создание навыка](https://yandex.ru/dev/dialogs/alice/doc/skill-create-console.html)
+
+1. Зарегистрируйтесь в Яндексе или залогиньтесь, если вы уже зарегистрированы.
+2. Перейдите в [панель разработчика](https://dialogs.yandex.ru/developer/).
+3. Нажмите **Cоздать диалог**.
+
+    ![create-dialog.png](../_static/create-dialog.png)
+
+4. Выберите **Навык в Алисе**
+
+    ![alice-skill.png](../_static/alice-skill.png)
+
+5. Заполните поля и выберите **Webhook URL** в поле **Backend**:
+
+    ### Ngrok
+
+    Чтобы провести первый запуск, нужно подключить вебхук к Диалогам.
+
+    Его можно сделать через [ngrok](https://ngrok.com/) - это сервис, который позволяет сделать локальный порт доступным из интернета без настройки NAT, роутера, DDNS и других протоколов.
+    Программа создает туннель между вашим компьютером и удалённым сервером и предоставляет доступ к нему с уникального домена.
+
+    1. [Установите](https://dashboard.ngrok.com/get-started/setup), разархивируйте и запустите ngrok.
+    2. Добавьте ваш [auth-token](https://dashboard.ngrok.com/get-started/your-authtoken) в консоль ngrok'а.
+        ```console
+        ngrok config add-authtoken <your-token-here>
+        ```
+    3. Запустите ngrok
+        ```console
+        ngrok http 80
+        ```
+    4. Через пару секунд появится длинная ссылка. Её надо указать как вебхук юрл и добавить **/alice** после ссылки:
+       
+        !!! warning ""Важно"
+            Не выключайте ngrok, иначе туннель закроется.
+
+        ![ngrok.png](../_static/ngrok.png)
+
+        ![skill-settings.png](../_static/skill-settings.png)
+
+6. Сохраните изменения внизу страницы.
+
+    ![save-settings.png](../_static/save-settings.png)
+
+### Айди навыка
+
+Его можно найти на вкладке **Общие сведения** в панели разработчика:
+
+![skill-id.png](../_static/skill-id.png)
+
+Или в ссылке в поисковой строке:
+
+![skill-id-url.png](../_static/skill-id-url.png)
+
+
+!!! note "Примечание"
+    Для запуска в прод вам нужен свой домен и SSL сертификат, об этом подробнее в [официальной документации](https://yandex.ru/dev/dialogs/alice/doc/deploy-overview.html).
+
+
+## [Пример](https://github.com/K1rL3s/aliceio/blob/master/examples/fast_start.py)
+
+Самый простой навык, который умеет только приветствовать пользователя.
+
+Скопируйте его, укажите айди вашего навыка и запустите скрипт.
+
+```python
+from aiohttp import web
+from aliceio import Dispatcher, Skill
+from aliceio.types import Message
+from aliceio.webhook.aiohttp_server import OneSkillRequestHandler, setup_application
+
+dp = Dispatcher()
+skill = Skill(skill_id="...")  # Вставьте сюда айди навыка
+
+@dp.message()
+async def hello(message: Message) -> str:
+    return f"Привет, {message.session.application.application_id}!"
+
+def main() -> None:
+    app = web.Application()
+    webhook_requests_handler = OneSkillRequestHandler(dispatcher=dp, skill=skill)
+
+    WEB_SERVER_HOST = "127.0.0.1"
+    WEB_SERVER_PORT = 80
+    WEBHOOK_PATH = "/alice"
+
+    webhook_requests_handler.register(app, path=WEBHOOK_PATH)
+    setup_application(app, dp, skill=skill)
+    web.run_app(app, host=WEB_SERVER_HOST, port=WEB_SERVER_PORT)
+
+if __name__ == "__main__":
+    main()
+```
+
+## Тестирование
+
+Перейдите на вкладку **Тестирование** и проверьте работу вашего навыка:
+
+![testing.png](../_static/testing.png)
+
+## Примеры
+
+* [fast_start.py](https://github.com/K1rL3s/aliceio/blob/master/examples/fast_start.py)

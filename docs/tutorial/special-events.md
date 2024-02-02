@@ -50,4 +50,4 @@ dispatcher.shutdown.register(on_shutdown)
 
 ## Примеры
 
-* [on_dispatcher_event.py](https://github.com/K1rL3s/aliceio/blob/master/examples/on_dispatcher_event.py)
+* [special_events.py](https://github.com/K1rL3s/aliceio/blob/master/examples/special_events.py)

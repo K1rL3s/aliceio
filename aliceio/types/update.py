@@ -35,7 +35,7 @@ class Update(MutableAliceObject):
     purchase: Optional[Purchase] = None
     show_pull: Optional[ShowPull] = None
 
-    state: ApiState
+    state: Optional[ApiState] = None
 
     if TYPE_CHECKING:
         event: ClassVar[AliceEvent]
@@ -48,7 +48,7 @@ class Update(MutableAliceObject):
             request: AliceRequest,
             session: Session,
             version: str,
-            state: ApiState,
+            state: Optional[ApiState] = None,
             message: Optional[Message] = None,
             audio_player: Optional[AudioPlayer] = None,
             button: Optional[ButtonPressed] = None,
