@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/K1rl3s/aliceio">
-    <img width="200px" height="200px" alt="aliceio" src="https://raw.githubusercontent.com/K1rL3s/aliceio/master/docs/_static/logo_aliceio_trans_text.png">
+    <img width="200px" height="200px" alt="aliceio" src="https://raw.githubusercontent.com/K1rL3s/aliceio/master/docs/_static/logo-aliceio-trans-text.png">
   </a>
 </p>
 <h1 align="center">

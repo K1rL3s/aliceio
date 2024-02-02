@@ -99,6 +99,7 @@ if __name__ == "__main__":
 
 * [echo_skill.py](https://github.com/K1rL3s/aliceio/blob/master/examples/echo_skill.py)
 * [echo_skill_ssl.py](https://github.com/K1rL3s/aliceio/blob/master/examples/echo_skill_ssl.py)
+* [fast_start.py](https://github.com/K1rL3s/aliceio/blob/master/examples/fast_start.py)
 
 Полный код из этой главы:
 

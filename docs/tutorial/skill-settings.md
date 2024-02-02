@@ -32,7 +32,7 @@
     Для запуска в прод вам нужен свой домен и SSL сертификат, об этом подробнее в [официальной документации](https://yandex.ru/dev/dialogs/alice/doc/deploy-overview.html).
 
 
-## Пример
+## [Пример](https://github.com/K1rL3s/aliceio/blob/master/examples/fast_start.py)
 
 Самый простой навык, который умеет только приветствовать пользователя.
 
