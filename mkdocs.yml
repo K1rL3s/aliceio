@@ -166,8 +166,8 @@ nav:
               - Warnings: aliceio/utils/warnings.md
 
   - Туториал:
-      - tutorial/start.md
-      - Настройка навыка: tutorial/skill-settings.md
+      - tutorial/index.md
+      - Начало: tutorial/start.md
       - Первый навык: tutorial/first-skill.md
       - Методы API: tutorial/methods.md
       - Фильтры: tutorial/filters.md

@@ -46,7 +46,9 @@ class FSMApiStorageMiddleware(BaseMiddleware[Update]):
         await fsm_context.set_state(state.state)
         await fsm_context.set_data(state.data)
 
-    def resolve_state_data(self, state: ApiState) -> ApiStorageRecord:
+    def resolve_state_data(self, state: Optional[ApiState]) -> ApiStorageRecord:
+        if state is None:
+            return self._data_to_record({})
         if self.strategy == FSMStrategy.USER:
             return self._data_to_record(state.user)
         if self.strategy == FSMStrategy.SESSION:

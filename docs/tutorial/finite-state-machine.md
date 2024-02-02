@@ -138,6 +138,9 @@ async def cancel_handler(message: Message, state: FSMContext) -> Response:
 
 Готово!
 
+!!! warning "Важно"
+    Вероятно, в навыках в черновиках не работают состояния на стороне Алисы. Используйте MemoryStorage для тестирования.
+
 ## Примеры
 
 * [finite_state_machine.py](https://github.com/K1rL3s/aliceio/blob/master/examples/finite_state_machine.py)
