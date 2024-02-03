@@ -38,7 +38,9 @@ async def items_list(message: Message) -> Response:
     ).add(
         IMAGE_ID,
         button=MediaButton(text="3.5", url="https://ya.ru"),
-    ).add(ItemImage(image_id=IMAGE_ID, title="Четвёртая"))
+    ).add(
+        ItemImage(image_id=IMAGE_ID, title="Четвёртая"),
+    )
 
     return Response(
         text="Список айтемов",
@@ -134,11 +136,7 @@ def main() -> None:
     dp.include_router(router)
 
     skill_id = os.environ["SKILL_ID"]
-    oauth_token = os.environ["OAUTH_TOKEN"]
-    skill = Skill(
-        skill_id=skill_id,
-        oauth_token=oauth_token,
-    )
+    skill = Skill(skill_id=skill_id)
 
     app = web.Application()
     webhook_requests_handler = OneSkillRequestHandler(

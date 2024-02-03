@@ -170,6 +170,7 @@ nav:
       - Начало: tutorial/start.md
       - Первый навык: tutorial/first-skill.md
       - Методы API: tutorial/methods.md
+      - Роутеры: tutorial/routers.md
       - Фильтры: tutorial/filters.md
       - Мидлвари: tutorial/middlewares.md
       - Машина состояний: tutorial/finite-state-machine.md

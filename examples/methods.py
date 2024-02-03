@@ -10,6 +10,8 @@ from aliceio import Dispatcher, F, Router, Skill
 from aliceio.types import BufferedInputFile, FSInputFile, Message, Response
 from aliceio.webhook.aiohttp_server import OneSkillRequestHandler, setup_application
 
+# Для использования методов API Алисы обязательно нужен oauth token!
+
 router = Router()
 DATA_DIR = Path(__file__).parent / "data"
 
@@ -102,6 +104,7 @@ def main() -> None:
     dp = Dispatcher()
     dp.include_router(router)
 
+    # ouath_token обязателен!
     skill_id = os.environ["SKILL_ID"]
     oauth_token = os.getenv("OAUTH_TOKEN")
     skill = Skill(

@@ -18,13 +18,13 @@
 <p align="center">
     <b>
         Асинхронный фреймворк для
-        <a href="https://dialogs.yandex.ru/store">навыков Алисы</a>
+        <a target="_blank" href="https://dialogs.yandex.ru/store">навыков Алисы</a>
         из
-        <a href="https://dialogs.yandex.ru/development">Яндекс.Диалогов</a>
+        <a target="_blank" href="https://dialogs.yandex.ru/development">Яндекс.Диалогов</a>
     </b>
 </p>
 <p align="center">
-    Based on <a href="https://github.com/aiogram/aiogram/tree/dev-3.x">aiogram v3</a>
+    Based on <a target="_blank" href="https://github.com/aiogram/aiogram/tree/dev-3.x">aiogram v3</a>
 </p>
 
 ## Особенности
@@ -42,7 +42,9 @@
 Настоятельно рекомендуется иметь опыт работы с [asyncio](https://docs.python.org/3/library/asyncio.html) перед использование **aliceio**
 
 
-## [Быстрый старт](https://aliceio.readthedocs.io/ru/latest/tutorial/skill-settings/)
+## Быстрый старт
+
+Как получить `skill_id` и подключить навык к Алисе можно прочитать <a target="_blank" href="https://aliceio.readthedocs.io/ru/latest/tutorial/skill-settings/">тут</a>.
 
 ```python
 from aiohttp import web
