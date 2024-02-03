@@ -44,7 +44,7 @@
 
 ## Быстрый старт
 
-Как получить `skill_id` и подключить навык к Алисе можно прочитать <a target="_blank" href="https://aliceio.readthedocs.io/ru/latest/tutorial/skill-settings/">тут</a>.
+Как получить `skill_id` и подключить навык к Алисе можно прочитать <a target="_blank" href="https://aliceio.readthedocs.io/ru/latest/tutorial/start/">тут</a>.
 
 ```python
 from aiohttp import web

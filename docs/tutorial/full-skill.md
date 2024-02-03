@@ -116,4 +116,3 @@ if __name__ == "__main__":
 ## Примеры
 
 * [multi_file_skill](https://github.com/K1rL3s/aliceio/tree/master/examples/multi_file_skill){:target="_blank"}
-* [vkbottle](https://vkbottle.readthedocs.io/ru/latest/tutorial/code-separation/){:target="_blank"}

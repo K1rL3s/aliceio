@@ -2,7 +2,7 @@
 
 Чтобы интерактивно взаимодействовать с будущими примерами работы фреймворка, необходимо создать тестовый навык в Алисе.
 
-## [Создание навыка](https://yandex.ru/dev/dialogs/alice/doc/skill-create-console.html)
+## [Создание навыка](https://yandex.ru/dev/dialogs/alice/doc/skill-create-console.html){:target="_blank"}
 
 1. Зарегистрируйтесь в Яндексе или залогиньтесь, если вы уже зарегистрированы.
 2. Перейдите в [панель разработчика](https://dialogs.yandex.ru/developer/){:target="_blank"}.
@@ -60,7 +60,7 @@
     Для запуска в прод вам нужен свой домен и SSL сертификат, об этом подробнее в [официальной документации](https://yandex.ru/dev/dialogs/alice/doc/deploy-overview.html){:target="_blank"}.
 
 
-## [Пример](https://github.com/K1rL3s/aliceio/blob/master/examples/fast_start.py){:target="_blank"}
+## [Код](https://github.com/K1rL3s/aliceio/blob/master/examples/fast_start.py){:target="_blank"}
 
 Самый простой навык, который умеет только приветствовать пользователя. \
 Скопируйте его, укажите айди вашего навыка и запустите скрипт.

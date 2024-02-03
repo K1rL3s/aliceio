@@ -17,4 +17,4 @@ router = Router(name=__name__)
 # __name__ - имя текущего модуля. Указывать `name=...` необязательно
 ```
 
-* [multi_file_skill](https://github.com/K1rL3s/aliceio/tree/master/examples/multi_file_skill)
+* [multi_file_skill](https://github.com/K1rL3s/aliceio/tree/master/examples/multi_file_skill){:target="_blank"}
