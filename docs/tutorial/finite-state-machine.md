@@ -6,7 +6,7 @@
 >
 > Конечный автомат определяется списком его состояний, его начальным состоянием и входными данными, которые запускают каждый переход.
 >
-> <cite>[Википедия](https://en.wikipedia.org/wiki/Finite-state_machine)</cite>
+> <cite>[Википедия](https://en.wikipedia.org/wiki/Finite-state_machine){:target="_blank"}</cite>
 
 ## Проблема
 
@@ -143,5 +143,5 @@ async def cancel_handler(message: Message, state: FSMContext) -> Response:
 
 ## Примеры
 
-* [finite_state_machine.py](https://github.com/K1rL3s/aliceio/blob/master/examples/finite_state_machine.py)
-* [aiogram](https://docs.aiogram.dev/en/dev-3.x/dispatcher/finite_state_machine/index.html)
+* [finite_state_machine.py](https://github.com/K1rL3s/aliceio/blob/master/examples/finite_state_machine.py){:target="_blank"}
+* [aiogram](https://docs.aiogram.dev/en/dev-3.x/dispatcher/finite_state_machine/index.html){:target="_blank"}

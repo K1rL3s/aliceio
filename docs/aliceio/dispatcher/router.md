@@ -74,4 +74,4 @@ async def update_handler(update: Update) -> Any: pass
 
 ## Источники
 
-* [aiogram](https://docs.aiogram.dev/en/dev-3.x/dispatcher/router.html)
+* [aiogram](https://docs.aiogram.dev/en/dev-3.x/dispatcher/router.html){:target="_blank"}

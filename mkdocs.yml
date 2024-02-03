@@ -213,6 +213,7 @@ theme:
 
 
 markdown_extensions:
+  - attr_list:
   - admonition:
   - md_in_html:
   - pymdownx.magiclink:

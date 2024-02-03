@@ -51,4 +51,4 @@
 
 ## Источники
 
-* [aiogram](https://docs.aiogram.dev/en/dev-3.x/dispatcher/flags.html)
+* [aiogram](https://docs.aiogram.dev/en/dev-3.x/dispatcher/flags.html){:target="_blank"}

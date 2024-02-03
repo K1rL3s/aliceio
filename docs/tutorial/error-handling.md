@@ -74,4 +74,4 @@ async def error_handler(event: ErrorEvent):
 
 ## Примеры
 
-* [error_handling.py](https://github.com/K1rL3s/aliceio/blob/master/examples/error_handling.py)
+* [error_handling.py](https://github.com/K1rL3s/aliceio/blob/master/examples/error_handling.py){:target="_blank"}

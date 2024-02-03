@@ -2,10 +2,10 @@
 
 Чтобы интерактивно взаимодействовать с будущими примерами работы фреймворка, необходимо создать тестовый навык в Алисе.
 
-## [Создание навыка](https://yandex.ru/dev/dialogs/alice/doc/skill-create-console.html)
+## [Создание навыка](https://yandex.ru/dev/dialogs/alice/doc/skill-create-console.html){:target="_blank"}
 
 1. Зарегистрируйтесь в Яндексе или залогиньтесь, если вы уже зарегистрированы.
-2. Перейдите в [панель разработчика](https://dialogs.yandex.ru/developer/).
+2. Перейдите в [панель разработчика](https://dialogs.yandex.ru/developer/){:target="_blank"}.
 3. Нажмите **Cоздать диалог**.
 
     ![create-dialog.png](../_static/create-dialog.png)
@@ -20,11 +20,11 @@
 
     Чтобы провести первый запуск, нужно подключить вебхук к Диалогам.
 
-    Его можно сделать через [ngrok](https://ngrok.com/) - это сервис, который позволяет сделать локальный порт доступным из интернета без настройки NAT, роутера, DDNS и других протоколов.
+    Его можно сделать через [ngrok](https://ngrok.com/){:target="_blank"} - это сервис, который позволяет сделать локальный порт доступным из интернета без настройки NAT, роутера, DDNS и других протоколов.
     Программа создает туннель между вашим компьютером и удалённым сервером и предоставляет доступ к нему с уникального домена.
 
-    1. [Установите](https://dashboard.ngrok.com/get-started/setup), разархивируйте и запустите ngrok.
-    2. Добавьте ваш [auth-token](https://dashboard.ngrok.com/get-started/your-authtoken) в консоль ngrok'а.
+    1. [Установите](https://dashboard.ngrok.com/get-started/setup){:target="_blank"}, разархивируйте и запустите ngrok.
+    2. Добавьте ваш [auth-token](https://dashboard.ngrok.com/get-started/your-authtoken){:target="_blank"} в консоль ngrok'а.
         ```console
         ngrok config add-authtoken <your-token-here>
         ```
@@ -57,10 +57,10 @@
 
 
 !!! note "Примечание"
-    Для запуска в прод вам нужен свой домен и SSL сертификат, об этом подробнее в [официальной документации](https://yandex.ru/dev/dialogs/alice/doc/deploy-overview.html).
+    Для запуска в прод вам нужен свой домен и SSL сертификат, об этом подробнее в [официальной документации](https://yandex.ru/dev/dialogs/alice/doc/deploy-overview.html){:target="_blank"}.
 
 
-## [Пример](https://github.com/K1rL3s/aliceio/blob/master/examples/fast_start.py)
+## [Пример](https://github.com/K1rL3s/aliceio/blob/master/examples/fast_start.py){:target="_blank"}
 
 Самый простой навык, который умеет только приветствовать пользователя.
 
@@ -103,4 +103,4 @@ if __name__ == "__main__":
 
 ## Примеры
 
-* [fast_start.py](https://github.com/K1rL3s/aliceio/blob/master/examples/fast_start.py)
+* [fast_start.py](https://github.com/K1rL3s/aliceio/blob/master/examples/fast_start.py){:target="_blank"}

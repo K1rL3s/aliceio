@@ -3,9 +3,9 @@
 aliceio предоставляет мощный механизм настройки обработчиков событий через мидлвари
 
 Мидлвари здесь похожи на мидлвари в веб-фреймворках, таких как
-[aiohttp](https://docs.aiohttp.org/en/stable/web_advanced.html#aiohttp-web-middlewares),
-[fastapi](https://fastapi.tiangolo.com/tutorial/middleware/),
-[Django](https://docs.djangoproject.com/en/5.0/topics/http/middleware/) и т.д.
+[aiohttp](https://docs.aiohttp.org/en/stable/web_advanced.html#aiohttp-web-middlewares){:target="_blank"},
+[fastapi](https://fastapi.tiangolo.com/tutorial/middleware/){:target="_blank"},
+[Django](https://docs.djangoproject.com/en/5.0/topics/http/middleware/){:target="_blank"} и т.д.
 с небольшой разницей - здесь реализованы два уровня промежуточного программного обеспечения (до и после фильтров).
 
 !!! info "Примечание"
@@ -94,5 +94,5 @@ async def check_authorization(
 
 ## Примеры
 
-* [middlewares.py](https://github.com/K1rL3s/aliceio/blob/master/examples/middlewares.py)
-* [aiogram](https://docs.aiogram.dev/en/dev-3.x/dispatcher/middlewares.html)
+* [middlewares.py](https://github.com/K1rL3s/aliceio/blob/master/examples/middlewares.py){:target="_blank"}
+* [aiogram](https://docs.aiogram.dev/en/dev-3.x/dispatcher/middlewares.html){:target="_blank"}

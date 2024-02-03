@@ -11,4 +11,4 @@
 
 
 ## Примеры
-* [finite_state_machine.py](https://github.com/K1rL3s/aliceio/blob/examples/examples/finite_state_machine.py)
+* [finite_state_machine.py](https://github.com/K1rL3s/aliceio/blob/examples/examples/finite_state_machine.py){:target="_blank"}
