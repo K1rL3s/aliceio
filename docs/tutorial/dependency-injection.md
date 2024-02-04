@@ -2,14 +2,14 @@
 
 DI - это метод программирования, который делает класс независимым от его зависимостей.
 Это достигается путем отделения использования объекта от его создания.
-Это поможет вам следовать принципу инверсии зависимостей [SOLID](https://en.wikipedia.org/wiki/SOLID) и принципу единой ответственности.
+Это поможет вам следовать принципу инверсии зависимостей [SOLID](https://en.wikipedia.org/wiki/SOLID){:target="_blank"} и принципу единой ответственности.
 
 ## Как это работает в aliceio
 
 Для каждого события в `aliceio.dispatcher.dispatcher.Dispatcher` проходит обработка контекстных данных. Фильтры и мидлвари также могут вносить изменения в контекст.
 
 Для доступа к контекстным данным необходимо указать соответствующий ключевой параметр в хэндлере или фильтре.
-Например, чтобы получить `aliceio.fsm.context.FSMContext`, надо сделать так:
+Например, чтобы получить `aliceio.fsm.context.FSMContext`, достаточно сделать так:
 
 ```python
 @router.message(...)
@@ -94,5 +94,5 @@ async def start_handler(message: Message, real_text: str) -> str:
 
 ## Примеры
 
-* [context_addition.py](https://github.com/K1rL3s/aliceio/blob/master/examples/context_addition.py)
-* [aiogram](https://docs.aiogram.dev/en/dev-3.x/dispatcher/dependency_injection.html)
+* [context_addition.py](https://github.com/K1rL3s/aliceio/blob/master/examples/context_addition.py){:target="_blank"}
+* [aiogram](https://docs.aiogram.dev/en/dev-3.x/dispatcher/dependency_injection.html){:target="_blank"}

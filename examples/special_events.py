@@ -52,7 +52,7 @@ def main() -> None:
     dp.shutdown.register(on_shutdown)
 
     skill_id = os.environ["SKILL_ID"]
-    oauth_token = os.environ.get("OAUTH_TOKEN")
+    oauth_token = os.getenv("OAUTH_TOKEN")
     skill = Skill(
         skill_id=skill_id,
         oauth_token=oauth_token,

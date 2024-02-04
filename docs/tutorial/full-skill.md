@@ -2,7 +2,7 @@
 
 И теперь нам осталось только написать **серьёзный** многофайловый проект.
 
-Чтобы сделать это, в aliceio можно использовать такой инструмент как `Router`.
+Чтобы сделать это, в aliceio можно использовать такой инструмент как `Router`. \
 Его применение даёт возможность добавлять фильтры и мидлвари для конкретных групп обработчиков и групп роутеров.
 
 ## Стандартная иерархия файлов
@@ -115,5 +115,4 @@ if __name__ == "__main__":
 
 ## Примеры
 
-* [multi_file_skill](https://github.com/K1rL3s/aliceio/tree/master/examples/multi_file_skill)
-* [vkbottle](https://vkbottle.readthedocs.io/ru/latest/tutorial/code-separation/)
+* [multi_file_skill](https://github.com/K1rL3s/aliceio/tree/master/examples/multi_file_skill){:target="_blank"}

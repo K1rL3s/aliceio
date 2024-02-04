@@ -2,10 +2,11 @@
 
 Чтобы не городить сотни if'ов в одном хэндлере, были придуманы фильтры (правила).
 
-Фильтры необходимы для маршрутизации событий конкретным хэндлерам. Поиск обработчика всегда останавливается при прохождении первого соответствующего набора фильтров.
+Фильтры необходимы для маршрутизации событий конкретным хэндлерам. \
+Поиск обработчика всегда останавливается при прохождении первого соответствующего набора фильтров.
 По умолчанию все хэндлеры не имеют фильтров, поэтому все события будут передаваться первому обработчику без фильтров.
 
-Основной и самый удобный фильтр - [магический](https://github.com/aiogram/magic-filter) `F`-фильтр.
+Основной и самый удобный фильтр - [магический](https://github.com/aiogram/magic-filter){:target="_blank"} `F`-фильтр. \
 Пользоваться им крайне легко - просто представьте, что вместо него стоит обрабатываемое событие, и обращайтесь к его атрибутам.
 
 ## Кастомный фильтр
@@ -18,8 +19,8 @@
 * Синхронными функциями (`#!python def my_filter(*args, **kwargs): pass`)
 * Анонимными функциями (`#!python lambda event: True`)
 * Любым awaitable объектом
-* Подклассом [`aliceio.filters.base.Filter`](../aliceio/filters/base.md)
-* Экземпляром [`Магического фильтра`](../aliceio/filters/magic-filter.md)
+* Подклассом [`aliceio.filters.base.Filter`](../aliceio/filters/base.md){:target="_blank"}
+* Экземпляром [`Магического фильтра`](../aliceio/filters/magic-filter.md){:target="_blank"}
 
 И они должны возвращать `bool` или `dict`.
 Если возвращается словарь, полученные данные будут переданы следующим фильтрам и обработчику в качестве ключевых аргументов.
@@ -53,13 +54,15 @@ async def no_message_handler(message: Message) -> str:
 
 ## Магический фильтр
 
-Для начала этот фильтр нужно импортировать из aliceio. Если импортировать его из magic-filter, то метод `.as_()` не будет доступен (о нём в главе про DI и про магический фильтр).
+Для начала этот фильтр нужно импортировать из aliceio. \
+Если импортировать его из magic-filter, то метод `.as_()` не будет доступен
+(о нём в главе про [DI](dependency-injection.md){:target="_blank"} и про [магический фильтр](../aliceio/filters/magic-filter.md){:target="_blank"}).
 
 ```python
 from aliceio import F
 ```
 
-К уже написанным обработчикам создадим ещё два, которые будут реагировать на [нажатия кнопок с payload'ом](https://yandex.ru/dev/dialogs/alice/doc/request-buttonpressed.html):
+К уже написанным обработчикам создадим ещё два, которые будут реагировать на [нажатия кнопок с payload'ом](https://yandex.ru/dev/dialogs/alice/doc/request-buttonpressed.html){:target="_blank"}:
 
 ```python
 # Один и тот же фильтр, но разная запись
@@ -135,6 +138,6 @@ async def any_message_handler(message: ...) -> Response:
 
 ## Примеры
 
-* [filters.py](https://github.com/K1rL3s/aliceio/blob/master/examples/filters.py)
-* [aiogram](https://docs.aiogram.dev/en/dev-3.x/dispatcher/filters/index.html)
-* [aiogram-magic](https://docs.aiogram.dev/en/dev-3.x/dispatcher/filters/magic_filters.html)
+* [filters.py](https://github.com/K1rL3s/aliceio/blob/master/examples/filters.py){:target="_blank"}
+* [aiogram](https://docs.aiogram.dev/en/dev-3.x/dispatcher/filters/index.html){:target="_blank"}
+* [aiogram-magic](https://docs.aiogram.dev/en/dev-3.x/dispatcher/filters/magic_filters.html){:target="_blank"}

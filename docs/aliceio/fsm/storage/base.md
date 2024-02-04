@@ -11,4 +11,5 @@
 
 
 ## Примеры
-* [finite_state_machine.py](https://github.com/K1rL3s/aliceio/blob/examples/examples/finite_state_machine.py)
+* [fsm_form](https://github.com/K1rL3s/aliceio/blob/master/examples/fsm_form.py){:target="_blank"}
+* [fsm_games](https://github.com/K1rL3s/aliceio/blob/master/examples/fsm_games.py){:target="_blank"}

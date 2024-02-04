@@ -9,6 +9,6 @@
 
 
 ## Примеры
-1. [Пример](https://github.com/K1rL3s/aliceio/blob/examples/examples/filters.py)
-2. [Пример](https://github.com/K1rL3s/aliceio/blob/examples/examples/custom_filter.py)
-3. [Пример](https://github.com/K1rL3s/aliceio/blob/examples/examples/context_addition.py)
+1. [Пример](https://github.com/K1rL3s/aliceio/blob/examples/examples/filters.py){:target="_blank"}
+2. [Пример](https://github.com/K1rL3s/aliceio/blob/examples/examples/custom_filter.py){:target="_blank"}
+3. [Пример](https://github.com/K1rL3s/aliceio/blob/examples/examples/context_addition.py){:target="_blank"}

@@ -1,4 +1,4 @@
-[IP-адреса Яндекса](https://yandex.ru/ips)
+[IP-адреса Яндекса](https://yandex.ru/ips){:target="_blank"}
 ```python
 from ipaddress import IPv4Network
 

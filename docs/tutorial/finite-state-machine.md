@@ -6,18 +6,18 @@
 >
 > Конечный автомат определяется списком его состояний, его начальным состоянием и входными данными, которые запускают каждый переход.
 >
-> <cite>[Википедия](https://en.wikipedia.org/wiki/Finite-state_machine)</cite>
+> <cite>[Википедия](https://en.wikipedia.org/wiki/Finite-state_machine){:target="_blank"}</cite>
 
 ## Проблема
 
-Не вся функциональность навыка может быть реализована в одном хэндлере.
+Не вся функциональность навыка может быть реализована в одном хэндлере. \
 Если вам нужно получить некоторую информацию от пользователя в несколько шагов или нужно направить его в зависимости от ответа, то вам надо использовать FSM.
 
 Посмотрим, как это сделать пошагово.
 
 ## Решение
 
-Перед обработкой любый состояний вы должны определить какие именно состояния вы хотите использовать:
+Перед обработкой любых состояний надо определить какие именно состояния будут использованы:
 
 ```python
 class Form(StatesGroup):
@@ -26,7 +26,7 @@ class Form(StatesGroup):
     device = State()
 ```
 
-И теперь напишите хэндлер для каждого состояния отдельно от старта диалога.
+И теперь напишем хэндлер для каждого состояния отдельно от старта диалога.
 
 Диалоги начинаются с новой сессией, поэтому давайте поймаем это и переместим пользователя в состояние `Form.name`:
 
@@ -37,7 +37,7 @@ async def new_session(message: Message, state: FSMContext) -> str:
     return "Привет! Как тебя зовут?"
 ```
 
-После этого вы должны сохранить эти данные в хранилище и переместить пользователя в следующее состояние:
+После этого мы должны сохранить эти данные в хранилище и переместить пользователя в следующее состояние:
 
 ```python
 @form_router.message(Form.name)
@@ -127,7 +127,6 @@ def show_summary(data: Dict[str, Any], positive: bool = True) -> str:
 ```python
 @form_router.message(F.command == "отмена")
 async def cancel_handler(message: Message, state: FSMContext) -> Response:
-    """Позволяет пользователю отменить любое действие."""
     current_state = await state.get_state()
     if current_state is not None:
         logging.info("Cancelling state %r", current_state)
@@ -143,5 +142,6 @@ async def cancel_handler(message: Message, state: FSMContext) -> Response:
 
 ## Примеры
 
-* [finite_state_machine.py](https://github.com/K1rL3s/aliceio/blob/master/examples/finite_state_machine.py)
-* [aiogram](https://docs.aiogram.dev/en/dev-3.x/dispatcher/finite_state_machine/index.html)
+* [fsm_form](https://github.com/K1rL3s/aliceio/blob/master/examples/fsm_form.py){:target="_blank"}
+* [fsm_games](https://github.com/K1rL3s/aliceio/blob/master/examples/fsm_games.py){:target="_blank"}
+* [aiogram](https://docs.aiogram.dev/en/dev-3.x/dispatcher/finite_state_machine/index.html){:target="_blank"}

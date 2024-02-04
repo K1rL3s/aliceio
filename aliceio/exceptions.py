@@ -59,8 +59,8 @@ class AliceWrongFieldError(AliceAPIError):
 
 class ClientDecodeError(AliceioError):
     """
-    Исключение возникает, когда клиент не может декодировать ответ.
-    (Неверный ответ или запрос и тд)
+    Исключение возникает, когда клиент не может декодировать ответ
+    (неверный ответ или запрос и тд).
     """
 
     def __init__(self, message: str, original: Exception, data: Any) -> None:
