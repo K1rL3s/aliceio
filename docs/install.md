@@ -2,6 +2,6 @@
 
 ## Через PyPI
 
-```console
+```bash
 pip install -U aliceio
 ```

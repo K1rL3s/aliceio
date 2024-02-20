@@ -9,4 +9,4 @@
 > [vkbottle](https://github.com/vkbottle/vkbottle/){:target="_blank"}
 > и [aioalice](https://github.com/mahenzon/aioalice){:target="_blank"}
 >
-> Спасибо авторам и участникам этих замечательных библиотек
+> Спасибо авторам и участникам этих замечательных библиотек **<3**

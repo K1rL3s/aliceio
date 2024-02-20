@@ -1,6 +1,6 @@
 import os
 import random
-from typing import List, Sequence
+from typing import Any, Dict, List, Sequence, cast
 
 from aiohttp import web
 
@@ -129,7 +129,7 @@ async def thimbles_message(message: Message) -> Response:
 # Создаёт три напёрстка, среди которых один выигрышный
 def generate_thimbles() -> List[TextButton]:
     buttons = [TextButton(title=THIMBLE, payload={"win": False}) for _ in range(3)]
-    random.choice(buttons).payload["win"] = True
+    cast(Dict[str, Any], random.choice(buttons).payload)["win"] = True
     return buttons
 
 
@@ -145,7 +145,7 @@ async def wtf_is_happened(event: AliceEvent, state: FSMContext) -> Response:
     )
 
 
-def main():
+def main() -> None:
     dp = Dispatcher()
     dp.include_router(router)
 

@@ -67,10 +67,6 @@ html {
   }
 }
 
-.md-nav__item--section>.md-nav>.md-nav__list>.md-nav__item>.md-nav__link{
-  color: var(--md-typeset-a-color) !important;
-}
-
 @media screen and (max-width:76.1875em) {
   [data-md-color-scheme="slate"] .md-nav--primary .md-nav__title {
     background-color: var(--vkbottle-bg-darker);

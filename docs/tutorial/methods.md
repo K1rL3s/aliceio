@@ -6,7 +6,7 @@
 skill = Skill(skill_id="...", oauth_token="it_is_required_for_methods")
 ```
 
-!!! warning "Предупреждение"
+!!! warning "Важно"
     Без токена невозможно использовать все следующие методы.
 
 ## Свободное место
