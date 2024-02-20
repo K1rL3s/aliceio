@@ -7,9 +7,9 @@ aliceio - проект с открытым исходным кодом, и ка�
 ## Разработка
 
 Прежде чем вносить какие-либо изменения в код фреймворка,
-необходимо [форкнуть проект](https://docs.github.com/ru/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo)
-и [клонировать его](https://docs.github.com/ru/repositories/creating-and-managing-repositories/cloning-a-repository) на свой ПК,
-а также знать, [как сделать пул-реквест](https://docs.github.com/ru/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request).
+необходимо [форкнуть проект](https://docs.github.com/ru/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo){:target="_blank"}
+и [клонировать его](https://docs.github.com/ru/repositories/creating-and-managing-repositories/cloning-a-repository){:target="_blank"} на свой ПК,
+а также знать, [как сделать пул-реквест](https://docs.github.com/ru/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request){:target="_blank"}.
 
 Также, поскольку этот проект написан на Python, вам потребуется его установить (рекомендуется использовать последние версии, но можно использовать любую, начиная с 3.8).
 
@@ -103,7 +103,7 @@ pytest --redis redis://<host>:<port>/<db> tests
 ### Документация
 
 Мы используем `MkDocs` для создания документации, все исходники расположены в директории *docs*. \
-Вы можете изменить их и [запустить сервер](https://www.mkdocs.org/user-guide/cli/#mkdocs-serve) для предварительного просмотра:
+Вы можете изменить их и [запустить сервер](https://www.mkdocs.org/user-guide/cli/#mkdocs-serve){:target="_blank"} для предварительного просмотра:
 ```bash
 mkdosc serve
 ```
@@ -118,4 +118,4 @@ mkdosc serve
 
 ## Связь
 
-Заходите в наш [тг-чатик](https://t.me/aliceio_ru), задавайте и отвечайте на вопросы
+Заходите в наш [тг-чатик](https://t.me/aliceio_ru){:target="_blank"}, задавайте и отвечайте на вопросы
