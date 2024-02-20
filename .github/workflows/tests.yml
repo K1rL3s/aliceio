@@ -62,7 +62,7 @@ jobs:
 
       - name: Install project dependencies
         run: |
-          pip install -e .[dev,test,redis,proxy,i18n,fast]
+          pip install -e .[dev,test,redis,proxy,fast]
 
       - name: Lint code
         run: |
@@ -123,7 +123,7 @@ jobs:
 
       - name: Install project dependencies
         run: |
-          pip install -e .[dev,test,redis,proxy,i18n,fast]
+          pip install -e .[dev,test,redis,proxy,fast]
 
       - name: Setup redis
         uses: shogo82148/actions-setup-redis@v1

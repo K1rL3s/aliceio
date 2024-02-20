@@ -24,16 +24,16 @@
 
     1. [Установите](https://dashboard.ngrok.com/get-started/setup){:target="_blank"}, разархивируйте и запустите ngrok.
     2. Добавьте ваш [auth-token](https://dashboard.ngrok.com/get-started/your-authtoken){:target="_blank"} в консоль ngrok'а.
-        ```console
+        ```bash
         ngrok config add-authtoken <your-token-here>
         ```
     3. Запустите ngrok
-        ```console
+        ```bash
         ngrok http 80
         ```
     4. Через пару секунд появится длинная ссылка. Её надо указать как вебхук юрл и добавить **/alice** после ссылки:
 
-        !!! warning ""Важно"
+        !!! warning "Важно"
             Не выключайте ngrok, иначе туннель закроется.
 
         ![ngrok.png](../_static/ngrok.png)
@@ -57,7 +57,8 @@
 
 
 !!! note "Примечание"
-    Для запуска в прод вам нужен свой домен и SSL сертификат, об этом подробнее в [официальной документации](https://yandex.ru/dev/dialogs/alice/doc/deploy-overview.html){:target="_blank"}.
+    Для запуска в прод вам нужен свой домен и [SSL сертификат](https://wiki.yaboard.com/s/zc){:target="_blank"},
+    об этом подробнее в [официальной документации](https://yandex.ru/dev/dialogs/alice/doc/deploy-overview.html){:target="_blank"}.
 
 
 ## [Код](https://github.com/K1rL3s/aliceio/blob/master/examples/fast_start.py){:target="_blank"}

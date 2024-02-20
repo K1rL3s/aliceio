@@ -164,6 +164,7 @@ nav:
               - Funcs: aliceio/utils/funcs.md
               - Mixins: aliceio/utils/mixins.md
               - Warnings: aliceio/utils/warnings.md
+      - Контрибьютинг: contributing.md
 
   - Туториал:
       - tutorial/index.md
