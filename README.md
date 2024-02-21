@@ -8,12 +8,33 @@
 </h1>
 
 <p align="center">
-  <img alt="License" src="https://img.shields.io/pypi/l/aliceio.svg?style=flat-square">
-  <img alt="Status" src="https://img.shields.io/pypi/status/aliceio.svg?style=flat-square">
-  <img alt="PyPI" src="https://img.shields.io/pypi/v/aliceio?label=pypi&style=flat-square">
-  <img alt="Downloads" src="https://img.shields.io/pypi/dm/aliceio.svg?style=flat-square">
-  <img alt="Supported python versions" src="https://img.shields.io/pypi/pyversions/aliceio.svg?style=flat-square">
-  <img alt="Tests" src="https://img.shields.io/github/actions/workflow/status/K1rL3s/aliceio/tests.yml?style=flat-square">
+  <a href="https://github.com/K1rL3s/aliceio/blob/master/LICENSE">
+    <img alt="License" src="https://img.shields.io/pypi/l/aliceio.svg?style=flat-square">
+  </a>
+
+  <a href="https://pypi.org/project/aliceio/">
+    <img alt="Status" src="https://img.shields.io/pypi/status/aliceio.svg?style=flat-square">
+  </a>
+
+  <a href="https://pypi.org/project/aliceio/">
+    <img alt="PyPI" src="https://img.shields.io/pypi/v/aliceio?label=pypi&style=flat-square">
+  </a>
+
+  <a href="https://pypi.org/project/aliceio/">
+   <img alt="Downloads" src="https://img.shields.io/pypi/dm/aliceio.svg?style=flat-square">
+  </a>
+
+  <a href="https://pypi.org/project/aliceio/">
+    <img alt="Supported python versions" src="https://img.shields.io/pypi/pyversions/aliceio.svg?style=flat-square">
+  </a>
+
+  <a href="https://github.com/K1rL3s/aliceio/actions">
+    <img alt="Tests" src="https://img.shields.io/github/actions/workflow/status/K1rL3s/aliceio/tests.yml?style=flat-square">
+  </a>
+
+  <a href="https://codecov.io/gh/K1rL3s/aliceio">
+    <img alt="Coverage" src="https://codecov.io/gh/K1rL3s/aliceio/graph/badge.svg">
+  </a>
 </p>
 <p align="center">
     <b>

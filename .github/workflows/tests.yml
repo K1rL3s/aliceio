@@ -82,14 +82,14 @@ jobs:
           [[ "$IS_WINDOWS" == "false" ]] && flags="$flags --redis redis://localhost:6379/0"
           pytest $flags
 
-  #      - name: Upload coverage data
-  #        uses: codecov/codecov-action@v3
-  #        with:
-  #          token: ${{ secrets.CODECOV_TOKEN }}
-  #          files: coverage.xml
-  #          flags: unittests
-  #          name: py-${{ matrix.python-version }}-${{ matrix.os }}
-  #          fail_ci_if_error: true
+      - name: Upload coverage data
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: coverage.xml
+          flags: unittests
+          name: py-${{ matrix.python-version }}-${{ matrix.os }}
+          fail_ci_if_error: true
 
   pypy-tests:
     strategy:
