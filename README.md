@@ -7,35 +7,18 @@
   AliceIO
 </h1>
 
-<p align="center">
-  <a href="https://github.com/K1rL3s/aliceio/blob/master/LICENSE">
-    <img alt="License" src="https://img.shields.io/pypi/l/aliceio.svg?style=flat-square">
-  </a>
+<div align="center">
 
-  <a href="https://pypi.org/project/aliceio/">
-    <img alt="Status" src="https://img.shields.io/pypi/status/aliceio.svg?style=flat-square">
-  </a>
+[![License](https://img.shields.io/pypi/l/aliceio.svg?style=flat)](https://github.com/K1rL3s/aliceio/blob/master/LICENSE)
+[![Status](https://img.shields.io/pypi/status/aliceio.svg?style=flat)](https://pypi.org/project/aliceio/)
+[![PyPI](https://img.shields.io/pypi/v/aliceio?label=pypi&style=flat)](https://pypi.org/project/aliceio/)
+[![Downloads](https://img.shields.io/pypi/dm/aliceio.svg?style=flat)](https://pypi.org/project/aliceio/)
+[![GitHub Repo stars](https://img.shields.io/github/stars/K1rL3s/aliceio?style=flat)](https://github.com/K1rL3s/aliceio/stargazers)
+[![Supported python versions](https://img.shields.io/pypi/pyversions/aliceio.svg?style=flat)](https://pypi.org/project/aliceio/)
+[![Tests](https://img.shields.io/github/actions/workflow/status/K1rL3s/aliceio/tests.yml?style=flat)](https://github.com/K1rL3s/aliceio/actions)
+[![Coverage](https://codecov.io/gh/K1rL3s/aliceio/graph/badge.svg?style=flat)](https://codecov.io/gh/K1rL3s/aliceio)
 
-  <a href="https://pypi.org/project/aliceio/">
-    <img alt="PyPI" src="https://img.shields.io/pypi/v/aliceio?label=pypi&style=flat-square">
-  </a>
-
-  <a href="https://pypi.org/project/aliceio/">
-   <img alt="Downloads" src="https://img.shields.io/pypi/dm/aliceio.svg?style=flat-square">
-  </a>
-
-  <a href="https://pypi.org/project/aliceio/">
-    <img alt="Supported python versions" src="https://img.shields.io/pypi/pyversions/aliceio.svg?style=flat-square">
-  </a>
-
-  <a href="https://github.com/K1rL3s/aliceio/actions">
-    <img alt="Tests" src="https://img.shields.io/github/actions/workflow/status/K1rL3s/aliceio/tests.yml?style=flat-square">
-  </a>
-
-  <a href="https://codecov.io/gh/K1rL3s/aliceio">
-    <img alt="Coverage" src="https://codecov.io/gh/K1rL3s/aliceio/graph/badge.svg">
-  </a>
-</p>
+</div>
 <p align="center">
     <b>
         Асинхронный фреймворк, упрощающий разработку
