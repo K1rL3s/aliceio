@@ -1,6 +1,9 @@
 # Хаб
 
 Добро пожаловать в документацию AliceIO!
+Алисия - это асинхронный фреймворк на [python](https://www.python.org/){:target="_blank"},
+упрощающий разработку [навыков Алисы](https://dialogs.yandex.ru/store){:target="_blank"}
+из [Яндекс.Диалогов](https://dialogs.yandex.ru/development){:target="_blank"}.
 
 Начинающим рекомендуется ознакомиться с [туториалом](tutorial/index.md).
 Знание Python'а приветствуется и рекомендуется.

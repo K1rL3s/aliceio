@@ -71,7 +71,7 @@ class Dispatcher(Router):
         # экземпляров пользователя и сессиив контексте событий.
         self.update.outer_middleware(UserContextMiddleware())
 
-        storage = self._init_storage(storage, disable_fsm, use_api_storage)
+        storage = self._create_storage(storage, disable_fsm, use_api_storage)
         # FSMContextMiddleware всегда следует регистрировать после UserContextMiddleware
         # поскольку здесь используется контекст из предыдущего шага.
         self.fsm = FSMContextMiddleware(
@@ -126,8 +126,11 @@ class Dispatcher(Router):
         """
         raise RuntimeError("Dispatcher can not be attached to another Router.")
 
+    # Правильнее всего будет оставить только одно условие `storage is not None`,
+    # а после возвращать MemoryStorage. Но что-то может произойти с ApiStorage'ом,
+    # поэтому пока так
     @staticmethod
-    def _init_storage(
+    def _create_storage(
         storage: Optional[BaseStorage],
         disable_fsm: bool,
         use_api_storage: bool,

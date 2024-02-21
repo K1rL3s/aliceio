@@ -11,13 +11,13 @@
   <img alt="License" src="https://img.shields.io/pypi/l/aliceio.svg?style=flat-square">
   <img alt="Status" src="https://img.shields.io/pypi/status/aliceio.svg?style=flat-square">
   <img alt="PyPI" src="https://img.shields.io/pypi/v/aliceio?label=pypi&style=flat-square">
-  <img alt="Downloads" src="https://img.shields.io/pypi/dw/aliceio.svg?style=flat-square">
+  <img alt="Downloads" src="https://img.shields.io/pypi/dm/aliceio.svg?style=flat-square">
   <img alt="Supported python versions" src="https://img.shields.io/pypi/pyversions/aliceio.svg?style=flat-square">
   <img alt="Tests" src="https://img.shields.io/github/actions/workflow/status/K1rL3s/aliceio/tests.yml?style=flat-square">
 </p>
 <p align="center">
     <b>
-        Асинхронный фреймворк для
+        Асинхронный фреймворк, упрощающий разработку
         <a target="_blank" href="https://dialogs.yandex.ru/store">навыков Алисы</a>
         из
         <a target="_blank" href="https://dialogs.yandex.ru/development">Яндекс.Диалогов</a>
@@ -39,7 +39,7 @@
 
 
 ### Важно!
-Настоятельно рекомендуется иметь опыт работы с [asyncio](https://docs.python.org/3/library/asyncio.html) перед использование **aliceio**
+Настоятельно рекомендуется иметь опыт работы с [asyncio](https://docs.python.org/3/library/asyncio.html) перед использованием **aliceio**
 
 
 ## Быстрый старт
@@ -83,7 +83,7 @@ if __name__ == "__main__":
 
 ## Связь
 Если у вас есть вопросы, вы можете посетить чат сообщества в Telegram
--   🇷🇺 [\@aliceio_ru](https://t.me/aliceio_ru)
+-   🇷🇺 [\@aliceio_chat](https://t.me/aliceio_chat)
 
 
 ## Лицензия

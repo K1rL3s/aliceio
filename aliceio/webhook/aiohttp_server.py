@@ -179,8 +179,10 @@ class BaseRequestHandler(ABC):
     def _convert_show_pull_to_normal_request(update: Dict[str, Any]) -> Dict[str, Any]:
         """
         При получении события запуска утреннего шоу вся информация
-        (мета, сессия, версия и реквест) находится по ключу body.
+        (мета, сессия, версия и реквест) вероятно находится по ключу body.
         Эта функция выносит всю информацию за это поле.
+
+        https://yandex.ru/dev/dialogs/alice/doc/request-show-pull.html
 
         :param update:
         :return:

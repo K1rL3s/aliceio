@@ -118,4 +118,4 @@ mkdosc serve
 
 ## Связь
 
-Заходите в наш [тг-чатик](https://t.me/aliceio_ru){:target="_blank"}, задавайте и отвечайте на вопросы
+Заходите в наш [тг-чатик](https://t.me/aliceio_chat){:target="_blank"}, задавайте и отвечайте на вопросы

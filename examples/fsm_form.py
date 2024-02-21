@@ -106,9 +106,9 @@ def show_summary(data: Dict[str, Any], positive: bool = True) -> str:
 
 
 def main() -> None:
-    # use_api_storage можно и на False,
-    # тогда будет использоваться хранилище на текущей машине
-    dp = Dispatcher(use_api_storage=True, response_timeout=10**9)
+    # use_api_storage можно и на True,
+    # тогда будет использоваться хранилище на стороне Алисы
+    dp = Dispatcher(use_api_storage=False)
     dp.include_router(form_router)
 
     skill_id = os.environ["SKILL_ID"]

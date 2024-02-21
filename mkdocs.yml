@@ -12,7 +12,7 @@ extra:
   disqus: ""
   social:
     - icon: fontawesome/brands/telegram
-      link: https://t.me/aliceio_ru
+      link: https://t.me/aliceio_chat
       name: Наш ТГ чат
 
 nav:

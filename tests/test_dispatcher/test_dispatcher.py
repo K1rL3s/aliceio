@@ -232,35 +232,35 @@ class TestDispatcher:
         my_storage = MyStorage()
 
         assert (
-            dp._init_storage(my_storage, disable_fsm=False, use_api_storage=False)
+            dp._create_storage(my_storage, disable_fsm=False, use_api_storage=False)
             == my_storage
         )
         assert (
-            dp._init_storage(my_storage, disable_fsm=False, use_api_storage=True)
+            dp._create_storage(my_storage, disable_fsm=False, use_api_storage=True)
             == my_storage
         )
         assert (
-            dp._init_storage(my_storage, disable_fsm=True, use_api_storage=False)
+            dp._create_storage(my_storage, disable_fsm=True, use_api_storage=False)
             == my_storage
         )
         assert (
-            dp._init_storage(my_storage, disable_fsm=True, use_api_storage=True)
+            dp._create_storage(my_storage, disable_fsm=True, use_api_storage=True)
             == my_storage
         )
 
         assert isinstance(
-            dp._init_storage(None, disable_fsm=False, use_api_storage=False),
+            dp._create_storage(None, disable_fsm=False, use_api_storage=False),
             MemoryStorage,
         )
         assert isinstance(
-            dp._init_storage(None, disable_fsm=False, use_api_storage=True),
+            dp._create_storage(None, disable_fsm=False, use_api_storage=True),
             ApiStorage,
         )
         assert isinstance(
-            dp._init_storage(None, disable_fsm=True, use_api_storage=False),
+            dp._create_storage(None, disable_fsm=True, use_api_storage=False),
             MemoryStorage,
         )
         assert isinstance(
-            dp._init_storage(None, disable_fsm=True, use_api_storage=True),
+            dp._create_storage(None, disable_fsm=True, use_api_storage=True),
             MemoryStorage,
         )

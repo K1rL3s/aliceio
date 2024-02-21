@@ -63,6 +63,15 @@
 
 ## [Код](https://github.com/K1rL3s/aliceio/blob/master/examples/fast_start.py){:target="_blank"}
 
+> Если вы ещё не установили библиотеку, то это можно сделать так:
+> ```bash
+> pip install -U aliceio
+> ```
+> Или:
+> ```bash
+> python -m pip install -U aliceio
+> ```
+
 Самый простой навык, который умеет только приветствовать пользователя. \
 Скопируйте его, укажите айди вашего навыка и запустите скрипт.
 
