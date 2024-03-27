@@ -138,7 +138,9 @@ async def cancel_handler(message: Message, state: FSMContext) -> Response:
 Готово!
 
 !!! warning "Важно"
-    Вероятно, в навыках в черновиках не работают состояния на стороне Алисы. Используйте MemoryStorage для тестирования.
+    Чтобы использовать хранилище на стороне Алисы, включите его в настройках навыка.
+
+    ![alice-storage.png](../_static/alice-storage.png)
 
 ## Примеры
 
