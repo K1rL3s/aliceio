@@ -142,6 +142,13 @@ async def cancel_handler(message: Message, state: FSMContext) -> Response:
 
     ![alice-storage.png](../_static/alice-storage.png)
 
+!!! note "Примечание"
+    Если навыком пользуется неавторизованный пользователь, то FSMStrategy.USER будет как FSMStrategy.APPLICATION:
+
+    - для локальных хранилищ user_id будет равен application_id
+    - в хранилище на стороне Алисы состояние будет храниться по устройству
+
+
 ## Примеры
 
 * [fsm_form](https://github.com/K1rL3s/aliceio/blob/master/examples/fsm_form.py){:target="_blank"}
