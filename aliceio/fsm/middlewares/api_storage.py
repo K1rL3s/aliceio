@@ -28,20 +28,28 @@ class FSMApiStorageMiddleware(BaseMiddleware[Update]):
     ) -> Any:
         fsm_context: FSMContext = data[FSM_CONTEXT_KEY]
 
-        await self.pre_set_state(event, fsm_context)
-        data.update({RAW_STATE_KEY: await fsm_context.get_state()})
+        await self.set_state_from_alice(event, fsm_context)
+        data[RAW_STATE_KEY] = await fsm_context.get_state()
 
         response: Optional[AliceResponse] = await handler(event, data)
 
         if response:
-            await self.post_update_state(response, fsm_context)
+            await self.set_state_to_alice(
+                response,
+                fsm_context,
+                event.session.is_anonymous,
+            )
 
         # Очистка ключа, так как невозможно изменить состояние не через ответ на запрос
         await fsm_context.clear()
 
         return response
 
-    async def pre_set_state(self, event: Update, fsm_context: FSMContext) -> None:
+    async def set_state_from_alice(
+        self,
+        event: Update,
+        fsm_context: FSMContext,
+    ) -> None:
         state = self.resolve_state_data(event.state)
         await fsm_context.set_state(state.state)
         await fsm_context.set_data(state.data)
@@ -50,6 +58,10 @@ class FSMApiStorageMiddleware(BaseMiddleware[Update]):
         if state is None:
             return self.create_record_from_data({})
         if self.strategy == FSMStrategy.USER:
+            # Если анонимный пользователь (Алиса не отправляет state.user),
+            # то сохраняем состояние по устройству
+            if state.user is None:
+                return self.create_record_from_data(state.application)
             return self.create_record_from_data(state.user)
         if self.strategy == FSMStrategy.SESSION:
             return self.create_record_from_data(state.session)
@@ -60,24 +72,31 @@ class FSMApiStorageMiddleware(BaseMiddleware[Update]):
     def create_record_from_data(self, data: Dict[str, Any]) -> ApiStorageRecord:
         return ApiStorageRecord(data=data.get("data", {}), state=data.get("state"))
 
-    async def post_update_state(
+    async def set_state_to_alice(
         self,
         response: AliceResponse,
         fsm_context: FSMContext,
+        is_anonymous: bool = False,
     ) -> None:
         new_state = {
             "state": await fsm_context.get_state(),
             "data": await fsm_context.get_data(),
         }
-        self.set_new_state(response, new_state)
+        self.set_new_state(response, new_state, is_anonymous)
 
     def set_new_state(
         self,
         response: AliceResponse,
         new_state: Dict[str, Any],
+        is_anonymous: bool = False,
     ) -> None:
         if self.strategy == FSMStrategy.USER:
-            response.user_state_update = new_state
+            if is_anonymous:
+                # Если анонимный пользователь и стратегия по юзеру,
+                # то сохраняем состояние по устройству
+                response.application_state = new_state
+            else:
+                response.user_state_update = new_state
         elif self.strategy == FSMStrategy.SESSION:
             response.session_state = new_state
         elif self.strategy == FSMStrategy.APPLICATION:

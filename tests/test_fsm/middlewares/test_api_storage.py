@@ -59,6 +59,17 @@ class TestFSMApiStorageMiddleware:
                     },
                 ),
             ],
+            [
+                FSMStrategy.USER,
+                ApiState(
+                    user=None,
+                    session={},
+                    application={
+                        "state": FSMStrategy.USER,
+                        "data": {"foo": "bar"},
+                    },
+                ),
+            ],
         ],
     )
     async def test_resolve_state_data(
@@ -101,7 +112,6 @@ class TestFSMApiStorageMiddleware:
         assert record.state == FSMStrategy.SESSION
         assert record.data == {"sess": "ion"}
 
-    # В навыках в черновиках, вероятно, не работают состояния на стороне Алисы
     async def test_resolve_state_none(self):
         middleware = FSMApiStorageMiddleware(strategy=None)
 
@@ -110,21 +120,18 @@ class TestFSMApiStorageMiddleware:
         assert record.state is None
         assert record.data == {}
 
-    async def test_pre_set_state_no_data(self, state: FSMContext, update: Update):
+    async def test_state_from_alice_no_data(self, state: FSMContext, update: Update):
         for strategy in (
             FSMStrategy.USER,
             FSMStrategy.SESSION,
             FSMStrategy.APPLICATION,
         ):
             middleware = FSMApiStorageMiddleware(strategy=strategy)
-            await middleware.pre_set_state(update, state)
+            await middleware.set_state_from_alice(update, state)
             assert await state.get_state() is None
             assert await state.get_data() == {}
 
-    async def test_pre_set_state_data_and_strategy(
-        self,
-        state: FSMContext,
-    ):
+    async def test_state_from_alice_data_and_strategy(self, state: FSMContext):
         update = create_mocked_update(
             user_state={"state": "MyState", "data": {"foo": "bar"}}
         )
@@ -133,7 +140,7 @@ class TestFSMApiStorageMiddleware:
         assert await state.get_state() is None
         assert await state.get_data() == {}
 
-        await middleware.pre_set_state(update, state)
+        await middleware.set_state_from_alice(update, state)
 
         assert await state.get_state() == "MyState"
         assert await state.get_data() == {"foo": "bar"}
@@ -207,7 +214,23 @@ class TestFSMApiStorageMiddleware:
         for attr in state_attrs:
             assert getattr(response, attr) is None
 
-    async def test_post_update(self, state: FSMContext):
+    async def test_set_new_state_with_anonymous_user(self, state: FSMContext):
+        middleware = FSMApiStorageMiddleware(strategy=FSMStrategy.USER)
+        response = AliceResponse(response=Response(text="test"))
+        new_state = {"state": "session", "data": {"foo": "bar"}}
+
+        state_attrs = ["user_state_update", "session_state", "application_state"]
+        for attr in state_attrs:
+            assert getattr(response, attr) is None
+        state_attrs.remove("application_state")
+
+        middleware.set_new_state(response, new_state, is_anonymous=True)
+
+        assert response.application_state == new_state
+        for attr in state_attrs:
+            assert getattr(response, attr) is None
+
+    async def test_set_state_to_alice(self, state: FSMContext):
         middleware = FSMApiStorageMiddleware(strategy=FSMStrategy.USER)
         result = AliceResponse(response=Response(text="test"))
         await state.set_state("MyState")
@@ -216,7 +239,7 @@ class TestFSMApiStorageMiddleware:
 
         assert result.user_state_update is None
 
-        await middleware.post_update_state(result, state)
+        await middleware.set_state_to_alice(result, state)
 
         assert result.user_state_update == {
             "state": "MyState",
@@ -225,7 +248,7 @@ class TestFSMApiStorageMiddleware:
         assert await state.get_state() == "MyState"
         assert await state.get_data() == {"foo": "bar", "bar": "foo"}  # нет очистки
 
-    async def test_post_update_empty_context(self, state: FSMContext):
+    async def test_set_state_to_alice_empty_context(self, state: FSMContext):
         middleware = FSMApiStorageMiddleware(strategy=FSMStrategy.USER)
         result = AliceResponse(response=Response(text="test"))
 
@@ -233,7 +256,7 @@ class TestFSMApiStorageMiddleware:
         assert result.session_state is None
         assert result.application_state is None
 
-        await middleware.post_update_state(result, state)
+        await middleware.set_state_to_alice(result, state)
 
         assert result.user_state_update == {"state": None, "data": {}}
         assert result.session_state is None

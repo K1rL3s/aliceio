@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Dict
+from typing import TYPE_CHECKING, Any, Dict, Optional
 
 from aliceio.types.base import AliceObject
 
@@ -16,7 +16,7 @@ class ApiState(AliceObject):
     [Source](https://yandex.ru/dev/dialogs/alice/doc/request.html#request__state-desc)
     """
 
-    user: UserState
+    user: Optional[UserState] = None
     session: SessionState
     application: ApplicationState
 
@@ -25,7 +25,7 @@ class ApiState(AliceObject):
         def __init__(
             __pydantic_self__,
             *,
-            user: UserState,
+            user: Optional[UserState] = None,
             session: SessionState,
             application: ApplicationState,
             **__pydantic_kwargs: Any,

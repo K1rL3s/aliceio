@@ -1,4 +1,3 @@
-import json
 from typing import Awaitable, Callable
 
 import pytest
@@ -225,6 +224,11 @@ class TestOneSkillRequestHandler:
                 EventType.MESSAGE,
                 '{"meta": {"locale": "ru-RU", "timezone": "Europe/Moscow", "client_id": "ru.yandex.searchplugin/7.16 (none none; android 4.4.2)", "interfaces": {"screen": {}, "account_linking": {}, "audio_player": {}}}, "request": {"command": "закажи пиццу на улицу льва толстого 16 на завтра", "original_utterance": "закажи пиццу на улицу льва толстого, 16 на завтра", "markup": {"dangerous_context": true}, "payload": {}, "nlu": {"tokens": ["закажи", "пиццу", "на", "льва", "толстого", "16", "на", "завтра"], "entities": [{"tokens": {"start": 2, "end": 6}, "type": "YANDEX.GEO", "value": {"house_number": "16", "street": "льва толстого"}}, {"tokens": {"start": 3, "end": 5}, "type": "YANDEX.FIO", "value": {"first_name": "лев", "last_name": "толстой"}}, {"tokens": {"start": 5, "end": 6}, "type": "YANDEX.NUMBER", "value": 16}, {"tokens": {"start": 6, "end": 8}, "type": "YANDEX.DATETIME", "value": {"day": 1, "day_is_relative": true}}], "intents": {}}, "type": "SimpleUtterance"}, "session": {"message_id": 0, "session_id": "42:SESSION_ID", "skill_id": "42:SKILL_ID", "user_id": "42:DEPRECATED_USER_ID", "user": {"user_id": "42:USER_ID", "access_token": "42:ACCESS_TOKEN"}, "application": {"application_id": "42:APP_ID"}, "new": false}, "state": {"session": {"value": 10}, "user": {"value": 42}, "application": {"value": 37}}, "version": "1.0"}',  # noqa: E501
             ],
+            [
+                # Запрос от анонимного пользователя
+                EventType.MESSAGE,
+                '{"meta": {"locale": "ru-RU", "timezone": "Europe/Moscow", "client_id": "ru.yandex.searchplugin/7.16 (none none; android 4.4.2)", "interfaces": {"screen": {}, "account_linking": {}, "audio_player": {}}}, "request": {"command": "закажи пиццу на улицу льва толстого 16 на завтра", "original_utterance": "закажи пиццу на улицу льва толстого, 16 на завтра", "markup": {"dangerous_context": true}, "payload": {}, "nlu": {"tokens": ["закажи", "пиццу", "на", "льва", "толстого", "16", "на", "завтра"], "entities": [{"tokens": {"start": 2, "end": 6}, "type": "YANDEX.GEO", "value": {"house_number": "16", "street": "льва толстого"}}, {"tokens": {"start": 3, "end": 5}, "type": "YANDEX.FIO", "value": {"first_name": "лев", "last_name": "толстой"}}, {"tokens": {"start": 5, "end": 6}, "type": "YANDEX.NUMBER", "value": 16}, {"tokens": {"start": 6, "end": 8}, "type": "YANDEX.DATETIME", "value": {"day": 1, "day_is_relative": true}}], "intents": {}}, "type": "SimpleUtterance"}, "session": {"message_id": 0, "session_id": "42:SESSION_ID", "skill_id": "42:SKILL_ID", "user_id": "42:DEPRECATED_USER_ID", "application": {"application_id": "42:APP_ID"}, "new": false}, "state": {"session": {"value": 10}, "application": {"value": 37}}, "version": "1.0"}',  # noqa: E501
+            ],
         ],
     )
     async def test_feed_webhook_update(
@@ -235,11 +239,11 @@ class TestOneSkillRequestHandler:
         aiohttp_client: Callable[..., Awaitable[TestClient]],
     ):
         async def fn_handler(
-            event, skill, event_update, event_from_user, event_session
+            event, skill, event_update, event_session, event_from_user=None
         ):
             assert isinstance(skill, MockedSkill)
             assert isinstance(event_update, Update)
-            assert isinstance(event_from_user, User)
+            assert isinstance(event_from_user, User) or event_from_user is None
             assert isinstance(event_session, Session)
             assert event_update.event == event
             assert event_update.skill is event.skill is skill
