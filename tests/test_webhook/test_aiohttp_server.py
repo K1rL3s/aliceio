@@ -1,4 +1,4 @@
-from typing import Awaitable, Callable, Optional
+from typing import Awaitable, Callable
 
 import pytest
 from aiohttp import web
@@ -243,7 +243,7 @@ class TestOneSkillRequestHandler:
         ):
             assert isinstance(skill, MockedSkill)
             assert isinstance(event_update, Update)
-            assert isinstance(event_from_user, Optional[User])
+            assert isinstance(event_from_user, User) or event_from_user is None
             assert isinstance(event_session, Session)
             assert event_update.event == event
             assert event_update.skill is event.skill is skill
