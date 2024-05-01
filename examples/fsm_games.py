@@ -146,7 +146,9 @@ async def wtf_is_happened(event: AliceEvent, state: FSMContext) -> Response:
 
 
 def main() -> None:
-    dp = Dispatcher()
+    # use_api_storage можно и на True,
+    # тогда будет использоваться хранилище на стороне Алисы
+    dp = Dispatcher(use_api_storage=False)
     dp.include_router(router)
 
     skill_id = os.environ["SKILL_ID"]

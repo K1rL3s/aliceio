@@ -1,5 +1,6 @@
 from typing import Any, Dict, List, Optional
 
+from aliceio import __api_version__
 from aliceio.enums.entity import EntityType
 from aliceio.enums.update import RequestType
 from aliceio.types import (
@@ -67,7 +68,7 @@ def create_mocked_update(
         meta=meta,
         session=session,
         request=request,
-        version="1.0",
+        version=__api_version__,
         context={"skill": skill} if skill else None,
         state=state,
     )
