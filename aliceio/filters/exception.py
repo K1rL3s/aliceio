@@ -11,7 +11,7 @@ class ExceptionTypeFilter(Filter):
 
     __slots__ = ("exceptions",)
 
-    def __init__(self, *exceptions: Type[Exception]):
+    def __init__(self, *exceptions: Type[Exception]) -> None:
         """
         :param exceptions: Типы исключений, на которые должен реагировать фильтр.
         """

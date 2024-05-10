@@ -54,7 +54,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Python ${{ matrix.python-version }} on ${{ matrix.os }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
           cache: "pip"
@@ -102,6 +102,7 @@ jobs:
         python-version:
           - 'pypy3.8'
           - 'pypy3.9'
+          - 'pypy3.10'
 
     defaults:
       # Windows sucks. Force use bash instead of PowerShell
@@ -115,7 +116,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Python ${{ matrix.python-version }} on ${{ matrix.os }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
           cache: "pip"

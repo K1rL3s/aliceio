@@ -8,7 +8,7 @@ class AudioPlayerError(AliceObject):
     Ошибка аудиоплеера.
 
     [Source](https://yandex.ru/dev/dialogs/alice/doc/request-audioplayer.html#request-audioplayer__playback-failed)
-    """  # noqa: E501
+    """
 
     message: str
     type: str

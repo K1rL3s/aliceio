@@ -36,13 +36,16 @@ class Router:
         self.purchase = AliceEventObserver(router=self, event_name=EventType.PURCHASE)
         self.show_pull = AliceEventObserver(router=self, event_name=EventType.SHOW_PULL)
         self.button_pressed = AliceEventObserver(
-            router=self, event_name=EventType.BUTTON_PRESSED
+            router=self,
+            event_name=EventType.BUTTON_PRESSED,
         )
         self.audio_player = AliceEventObserver(
-            router=self, event_name=EventType.AUDIO_PLAYER
+            router=self,
+            event_name=EventType.AUDIO_PLAYER,
         )
         self.errors = self.error = AliceEventObserver(
-            router=self, event_name=EventType.ERROR
+            router=self,
+            event_name=EventType.ERROR,
         )
         self.timeout = AliceEventObserver(router=self, event_name=EventType.TIMEOUT)
 
@@ -157,7 +160,7 @@ class Router:
         """
         if not isinstance(router, Router):
             raise ValueError(
-                f"router should be instance of Router not {type(router).__name__!r}"
+                f"router should be instance of Router not {type(router).__name__!r}",
             )
         if self._parent_router:
             raise RuntimeError(f"Router is already attached to {self._parent_router!r}")
@@ -172,7 +175,7 @@ class Router:
             parent = parent.parent_router
 
         self._parent_router = router
-        router._sub_routers.append(self)
+        router._sub_routers.append(self)  # noqa: SLF001
 
     def include_routers(self, *routers: Router) -> None:
         """
@@ -195,7 +198,7 @@ class Router:
         if not isinstance(router, Router):
             raise ValueError(
                 f"router should be instance of Router, "
-                f"not {type(router).__class__.__name__}"
+                f"not {type(router).__class__.__name__}",
             )
         router.parent_router = self
         return router

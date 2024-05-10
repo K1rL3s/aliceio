@@ -12,7 +12,7 @@ class Interfaces(AliceObject):
     Интерфейсы, доступные на устройстве пользователя.
 
     [Source](https://yandex.ru/dev/dialogs/alice/doc/request.html#request__interfaces-desc)
-    """  # noqa: E501
+    """
 
     account_linking: Optional[AccountLinking] = None
     screen: Optional[Screen] = None

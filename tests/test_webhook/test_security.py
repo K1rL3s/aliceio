@@ -31,7 +31,7 @@ class TestSecurity:
                 "127.0.0.1",
                 IPv4Address("178.154.128.1"),
                 IPv4Network("10.111.0.0/24"),
-            ]
+            ],
         )
         assert (ip in ip_filter) is result
 

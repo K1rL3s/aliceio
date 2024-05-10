@@ -63,7 +63,7 @@ class BaseSession(abc.ABC):
         except Exception as e:
             # Обрабатываемая ошибка не может быть поймана конкретным типом,
             # поскольку декодер можно кастомизировать и вызвать любое исключение.
-            raise ClientDecodeError("Failed to decode object", e, content)
+            raise ClientDecodeError("Failed to decode object", e, content) from e
 
         if HTTPStatus.OK <= status_code <= HTTPStatus.IM_USED:
             try:
@@ -73,19 +73,22 @@ class BaseSession(abc.ABC):
                     context={"skill": skill},
                 )
             except ValidationError as e:
-                raise ClientDecodeError("Failed to deserialize object", e, json_data)
+                raise ClientDecodeError(
+                    "Failed to deserialize object",
+                    e,
+                    json_data,
+                ) from e
 
         try:
             response = ErrorResult.model_validate(json_data)
         except ValidationError as e:
-            raise ClientDecodeError("Failed to deserialize object", e, json_data)
+            raise ClientDecodeError("Failed to deserialize object", e, json_data) from e
 
         raise AliceAPIError(message=response.message)
 
     @abc.abstractmethod
     async def close(self) -> None:  # pragma: no cover
         """Закрыть клиентскую сессию."""
-        pass
 
     @abc.abstractmethod
     async def make_request(
@@ -103,7 +106,6 @@ class BaseSession(abc.ABC):
         :return:
         :raise AliceApiError:
         """
-        pass
 
     async def __call__(
         self,

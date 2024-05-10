@@ -10,12 +10,14 @@ __all__ = ("ContextInstanceMixin", "DataMixin")
 
 
 class DataMixin:
+    _data: Optional[Dict[str, Any]]
+
     @property
     def data(self) -> Dict[str, Any]:
         data: Optional[Dict[str, Any]] = getattr(self, "_data", None)
         if data is None:
             data = {}
-            setattr(self, "_data", data)
+            self._data = data
         return data
 
     def __getitem__(self, key: str) -> Any:
@@ -44,33 +46,37 @@ class ContextInstanceMixin(Generic[ContextInstance]):
         super().__init_subclass__()
         cls.__context_instance = contextvars.ContextVar(f"instance_{cls.__name__}")
 
-    @overload  # noqa: F811
+    @overload
     @classmethod
-    def get_current(cls) -> Optional[ContextInstance]:  # pragma: no cover  # noqa: F811
+    def get_current(cls) -> Optional[ContextInstance]:  # pragma: no cover
         ...
 
-    @overload  # noqa: F811
+    @overload
     @classmethod
-    def get_current(  # noqa: F811
-        cls, no_error: Literal[True]
-    ) -> Optional[ContextInstance]:  # pragma: no cover  # noqa: F811
+    def get_current(
+        cls,
+        no_error: Literal[True],
+    ) -> Optional[ContextInstance]:  # pragma: no cover
         ...
 
-    @overload  # noqa: F811
+    @overload
     @classmethod
-    def get_current(  # noqa: F811
-        cls, no_error: Literal[False]
-    ) -> ContextInstance:  # pragma: no cover  # noqa: F811
+    def get_current(
+        cls,
+        no_error: Literal[False],
+    ) -> ContextInstance:  # pragma: no cover
         ...
 
-    @classmethod  # noqa: F811
-    def get_current(  # noqa: F811
-        cls, no_error: bool = True
-    ) -> Optional[ContextInstance]:  # pragma: no cover  # noqa: F811
+    @classmethod
+    def get_current(
+        cls,
+        no_error: bool = True,
+    ) -> Optional[ContextInstance]:  # pragma: no cover
         # on mypy 0.770 I catch that contextvars.ContextVar
         # always contextvars.ContextVar[Any]
         cls.__context_instance = cast(
-            contextvars.ContextVar[ContextInstance], cls.__context_instance
+            contextvars.ContextVar[ContextInstance],
+            cls.__context_instance,
         )
 
         try:
@@ -88,7 +94,7 @@ class ContextInstanceMixin(Generic[ContextInstance]):
         if not isinstance(value, cls):
             raise TypeError(
                 f"Value should be instance of {cls.__name__!r} "
-                f"not {type(value).__name__!r}"
+                f"not {type(value).__name__!r}",
             )
         return cls.__context_instance.set(value)
 

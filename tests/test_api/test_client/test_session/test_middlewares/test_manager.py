@@ -1,3 +1,5 @@
+from typing import Optional
+
 import pytest
 
 from aliceio import Skill
@@ -42,7 +44,7 @@ class TestMiddlewareManager:
         async def middleware(make_request, skill, method):
             return await make_request(skill, method)
 
-        async def target_call(skill, method, timeout: int = None):
+        async def target_call(skill, method, timeout: Optional[int] = None):
             return timeout
 
         assert await manager.wrap_middlewares(target_call, timeout=42)(None, None) == 42

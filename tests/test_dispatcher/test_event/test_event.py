@@ -15,7 +15,8 @@ async def my_handler(value: str, index: int = 0) -> Any:
 class TestEventObserver:
     @pytest.mark.parametrize("via_decorator", [True, False])
     @pytest.mark.parametrize(
-        "count,handler", ([5, my_handler], [3, my_handler], [2, my_handler])
+        "count,handler",
+        ([5, my_handler], [3, my_handler], [2, my_handler]),
     )
     def test_register_filters(self, via_decorator, count, handler):
         observer = EventObserver()

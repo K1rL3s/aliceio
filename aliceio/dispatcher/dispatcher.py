@@ -48,7 +48,7 @@ class Dispatcher(Router):
         :param kwargs: Остальные аргументы,
             будут переданы в обработчики как именованные аргументы
         """
-        super(Dispatcher, self).__init__(name=name)
+        super().__init__(name=name)
 
         self.update = self.observers["update"] = AliceEventObserver(
             router=self,
@@ -82,7 +82,7 @@ class Dispatcher(Router):
             self.update.outer_middleware(self.fsm)
             if use_api_storage:
                 self.update.outer_middleware(
-                    FSMApiStorageMiddleware(strategy=fsm_strategy)
+                    FSMApiStorageMiddleware(strategy=fsm_strategy),
                 )
                 self.update.outer_middleware(ResponseConvertMiddleware())
         self.shutdown.register(self.fsm.close)
@@ -116,7 +116,7 @@ class Dispatcher(Router):
         У диспетчера нет родительского маршрутизатора
         и он не может быть включен ни в какие другие роутеры или диспетчеры.
         """
-        return None  # noqa: RET501
+        return None
 
     @parent_router.setter
     def parent_router(self, value: Router) -> None:
@@ -207,7 +207,11 @@ class Dispatcher(Router):
         :param kwargs:
         """
         parsed_update = Update.model_validate(update, context={"skill": skill})
-        return await self.feed_update(skill=skill, update=parsed_update, **kwargs)
+        return await self._feed_webhook_update(
+            skill=skill,
+            update=parsed_update,
+            **kwargs,
+        )
 
     async def _listen_update(self, update: Update, **kwargs: Any) -> Any:
         """
@@ -228,8 +232,9 @@ class Dispatcher(Router):
                 "installed not latest version of aliceio framework"
                 f"\nUpdate: {update.model_dump_json(exclude_unset=True)}",
                 RuntimeWarning,
+                stacklevel=1,
             )
-            raise SkipHandler() from e
+            raise SkipHandler from e
 
         kwargs.update(event_update=update)
 
@@ -287,7 +292,7 @@ class Dispatcher(Router):
         timeout_handle = loop.call_later(self.response_timeout, release_waiter)
 
         process_updates: Future[Optional[AliceResponse]] = asyncio.ensure_future(
-            self._feed_webhook_update(skill=skill, update=update, **kwargs)
+            self._feed_webhook_update(skill=skill, update=update, **kwargs),
         )
         process_updates.add_done_callback(release_waiter, context=ctx)
 
@@ -325,6 +330,7 @@ class Dispatcher(Router):
             "the skill dialog, so be careful and register ultra-fast handlers "
             "by `@<router>.timeout` to respond to timeouted updates.",
             RuntimeWarning,
+            stacklevel=1,
         )
         return await self._feed_webhook_update(
             skill=skill,

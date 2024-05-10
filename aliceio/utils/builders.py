@@ -23,6 +23,7 @@ class Builder(ABC, Generic[Collection, Item]):
     """
     Базовый класс билдера
     """
+
     _items: List[Item]
 
     @abstractmethod
@@ -32,12 +33,10 @@ class Builder(ABC, Generic[Collection, Item]):
     @abstractmethod
     def add(self, item: Item) -> Self:
         """Добавить айтем в билдер."""
-        pass
 
     @abstractmethod
     def to_collection(self) -> Collection:
         """Создать коллекцию из текущего билдера."""
-        pass
 
     def __len__(self) -> int:
         """Узнать длину коллекции."""
@@ -62,12 +61,10 @@ class ItemsListBuilder(Builder[ItemsList, ItemImage]):
         title: Optional[str] = None,
         description: Optional[str] = None,
         button: Optional[MediaButton] = None,
-    ) -> Self:
-        ...
+    ) -> Self: ...
 
     @overload
-    def add(self, item: ItemImage, /) -> Self:
-        ...
+    def add(self, item: ItemImage, /) -> Self: ...
 
     def add(
         self,
@@ -88,12 +85,10 @@ class ItemsListBuilder(Builder[ItemsList, ItemImage]):
         return self
 
     @overload
-    def set_header(self, text: str, /) -> Self:
-        ...
+    def set_header(self, text: str, /) -> Self: ...
 
     @overload
-    def set_header(self, header: CardHeader, /) -> Self:
-        ...
+    def set_header(self, header: CardHeader, /) -> Self: ...
 
     def set_header(self, header: Union[CardHeader, str], /) -> Self:
         if isinstance(header, str):
@@ -102,12 +97,15 @@ class ItemsListBuilder(Builder[ItemsList, ItemImage]):
         return self
 
     @overload
-    def set_footer(self, text: str, /, button: Optional[MediaButton] = None) -> Self:
-        ...
+    def set_footer(
+        self,
+        text: str,
+        /,
+        button: Optional[MediaButton] = None,
+    ) -> Self: ...
 
     @overload
-    def set_footer(self, footer: CardFooter, /) -> Self:
-        ...
+    def set_footer(self, footer: CardFooter, /) -> Self: ...
 
     def set_footer(
         self,
@@ -142,12 +140,10 @@ class ImageGalleryBuilder(Builder[ImageGallery, ImageGalleryItem]):
         /,
         title: Optional[str] = None,
         button: Optional[MediaButton] = None,
-    ) -> Self:
-        ...
+    ) -> Self: ...
 
     @overload
-    def add(self, item: ImageGalleryItem, /) -> Self:
-        ...
+    def add(self, item: ImageGalleryItem, /) -> Self: ...
 
     def add(
         self,
@@ -177,12 +173,10 @@ class TextButtonsBuilder(Builder[List[TextButton], TextButton]):
         url: Optional[str] = None,
         payload: Optional[Payload] = None,
         hide: bool = True,
-    ) -> Self:
-        ...
+    ) -> Self: ...
 
     @overload
-    def add(self, item: TextButton, /) -> Self:
-        ...
+    def add(self, item: TextButton, /) -> Self: ...
 
     def add(
         self,

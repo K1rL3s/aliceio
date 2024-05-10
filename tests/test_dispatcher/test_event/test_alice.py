@@ -21,7 +21,7 @@ async def my_handler(event: Any, index: int = 0) -> Any:
 
 
 async def skip_my_handler(event: Any) -> NoReturn:
-    raise SkipHandler()
+    raise SkipHandler
 
 
 async def pipe_handler(*args, **kwargs):

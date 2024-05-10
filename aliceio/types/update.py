@@ -1,3 +1,4 @@
+import contextlib
 from typing import TYPE_CHECKING, Any, ClassVar, Dict, Optional, Type, cast
 
 from ..enums import EventType, RequestType
@@ -80,18 +81,16 @@ class Update(MutableAliceObject):
         def event_type(self) -> str:
             if (event_type := req_type_to_event_type.get(self.request.type)) is None:
                 raise UpdateTypeLookupError(
-                    "Update does not contain any known event type."
+                    "Update does not contain any known event type.",
                 )
             return str(event_type)
 
     def model_post_init(self, __context: Any) -> None:
         super().model_post_init(__context)
-        try:
-            self._event_model_validate(self.event_type, __context)
-        except UpdateTypeLookupError:
+        with contextlib.suppress(UpdateTypeLookupError):
             # При работе ошибка возникнет ещё раз в диспетчере,
             # здесь она глушится для работы тестов
-            pass
+            self._event_model_validate(self.event_type, __context)
 
     def _event_model_validate(self, event_type: str, __context: Any) -> None:
         """
@@ -103,7 +102,8 @@ class Update(MutableAliceObject):
             self,
             event_type,
             event_type_to_event_model[event_type].model_validate(
-                dump, context=__context
+                dump,
+                context=__context,
             ),
         )
 

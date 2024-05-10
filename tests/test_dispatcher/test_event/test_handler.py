@@ -30,7 +30,10 @@ async def callback4(foo: int, *, bar: int, baz: int):
 
 class TestFilter(Filter):
     async def __call__(
-        self, foo: int, bar: int, baz: int
+        self,
+        foo: int,
+        bar: int,
+        baz: int,
     ) -> Union[bool, Dict[str, Any]]:
         return locals()
 
@@ -133,7 +136,10 @@ class TestCallableObject:
         ],
     )
     def test_prepare_kwargs(
-        self, callback: Callable, kwargs: Dict[str, Any], result: Dict[str, Any]
+        self,
+        callback: Callable,
+        kwargs: Dict[str, Any],
+        result: Dict[str, Any],
     ):
         obj = CallableObject(callback)
         assert obj._prepare_kwargs(kwargs) == result
@@ -176,8 +182,9 @@ class TestHandlerObject:
             [
                 FilterObject(
                     functools.partial(
-                        lambda value, index: {f"test{index}": "ok"}, index=item
-                    )
+                        lambda value, index: {f"test{index}": "ok"},
+                        index=item,
+                    ),
                 )
                 for item in range(3)
             ],

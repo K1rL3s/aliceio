@@ -11,7 +11,8 @@ class TestAudioPlayerHandler:
         event = AudioPlayer(
             type=RequestType.AUDIO_PLAYER_FAILED,
             error=AudioPlayerError(
-                message="Something wrong", type="MEDIA_ERROR_UNKNOWN"
+                message="Something wrong",
+                type="MEDIA_ERROR_UNKNOWN",
             ),
             session=create_mocked_session(),
         )

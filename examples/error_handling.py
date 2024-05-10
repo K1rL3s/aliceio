@@ -18,7 +18,7 @@ class InvalidAge(Exception):
 
 
 class InvalidName(Exception):
-    def __init__(self, message: str):
+    def __init__(self, message: str) -> None:
         super().__init__(message)
 
 
@@ -29,7 +29,7 @@ async def handle_invalid_age_exception(event: ErrorEvent) -> str:
 
     assert event.update.message is not None
     assert event.update.event is event.update.message
-    return f"Произошла ошибка: {repr(event.exception)}"
+    return f"Произошла ошибка: {event.exception!r}"
 
 
 @router.errors(ExceptionMessageFilter("Invalid"))
@@ -38,9 +38,11 @@ async def handle_invalid_exceptions(event: ErrorEvent) -> str:
     # этот обработчик будет получать ошибки всех типов,
     # если сообщение в ней содержит подстроку "Invalid".
     logger.error(
-        "Error `Invalid` caught: %r while processing %r", event.exception, event.update
+        "Error `Invalid` caught: %r while processing %r",
+        event.exception,
+        event.update,
     )
-    return f"Произошла ошибка: {repr(event.exception)}"
+    return f"Произошла ошибка: {event.exception!r}"
 
 
 @router.message(F.command.startswith("мне"))

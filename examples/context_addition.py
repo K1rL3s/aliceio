@@ -34,7 +34,7 @@ class RandomNumberFilter(BaseFilter):
     async def __call__(
         self,
         message: Message,
-        event_from_user: User
+        event_from_user: User,
         # Фильтры также могут принимать данные из контекста как обработчики
     ) -> Union[bool, Dict[str, Any]]:
         if message.command == "число":

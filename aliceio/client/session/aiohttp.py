@@ -7,7 +7,6 @@ from typing import (
     Any,
     Dict,
     Iterable,
-    List,
     Optional,
     Tuple,
     Type,
@@ -63,7 +62,7 @@ def _retrieve_basic(basic: _ProxyBasic) -> Dict[str, Any]:
 
 def _prepare_connector(
     chain_or_plain: _ProxyType,
-) -> Tuple[Type["TCPConnector"], Dict[str, Any]]:
+) -> Tuple[Type[TCPConnector], Dict[str, Any]]:
     from aiohttp_socks import (  # type: ignore
         ChainProxyConnector,
         ProxyConnector,
@@ -80,9 +79,7 @@ def _prepare_connector(
         return ProxyConnector, _retrieve_basic(chain_or_plain)
 
     chain_or_plain = cast(_ProxyChain, chain_or_plain)
-    infos: List[ProxyInfo] = []
-    for basic in chain_or_plain:
-        infos.append(ProxyInfo(**_retrieve_basic(basic)))
+    infos = [ProxyInfo(**_retrieve_basic(basic)) for basic in chain_or_plain]
 
     return ChainProxyConnector, {"proxy_infos": infos}
 
@@ -105,7 +102,7 @@ class AiohttpSession(BaseSession):
             except ImportError as exc:  # pragma: no cover
                 raise RuntimeError(
                     "In order to use aiohttp client for proxy requests, install "
-                    "https://pypi.org/project/aiohttp-socks/"
+                    "https://pypi.org/project/aiohttp-socks/",
                 ) from exc
 
     def _setup_proxy_connector(self, proxy: _ProxyType) -> None:
@@ -205,10 +202,10 @@ class AiohttpSession(BaseSession):
                 headers=self._build_request_headers(skill),
             ) as resp:
                 raw_result = await resp.text()
-        except asyncio.TimeoutError:
-            raise AliceNetworkError(message="AliceRequest timeout error")
+        except asyncio.TimeoutError as e:
+            raise AliceNetworkError(message="AliceRequest timeout error") from e
         except ClientError as e:
-            raise AliceNetworkError(message=f"{type(e).__name__}: {e}")
+            raise AliceNetworkError(message=f"{type(e).__name__}: {e}") from e
         response = self.check_response(
             skill=skill,
             method=method,

@@ -77,7 +77,8 @@ class TestAiohttpSession:
 
             aiohttp_session = await session.create_session()
             assert isinstance(
-                aiohttp_session.connector, aiohttp_socks.ChainProxyConnector
+                aiohttp_session.connector,
+                aiohttp_socks.ChainProxyConnector,
             )
 
     async def test_reset_connector(self):
@@ -135,7 +136,7 @@ class TestAiohttpSession:
 
         assert form is None
         assert len(json_data) == 5
-        assert "null_" not in json_data.keys()
+        assert "null_" not in json_data
 
     def test_build_form_data_with_files(self, skill: Skill):
         class TestMethod(AliceMethod[bool]):

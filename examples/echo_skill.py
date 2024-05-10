@@ -13,10 +13,7 @@ router = Router()
 
 @router.message()
 async def echo(message: Message) -> AliceResponse:
-    if message.session.new:
-        text = "Привет!"
-    else:
-        text = message.original_utterance
+    text = "Привет!" if message.session.new else message.original_utterance
     return AliceResponse(response=Response(text=text))
 
 

@@ -49,6 +49,6 @@ class ItemsList(MutableAliceObject):
     def type_validate(cls, v: str) -> str:
         if v.lower() != CardType.ITEMS_LIST.lower():
             raise AliceWrongFieldError(
-                f'ItemsList type must be "{CardType.ITEMS_LIST}", not "{v}"'
+                f'ItemsList type must be "{CardType.ITEMS_LIST}", not "{v}"',
             )
         return CardType.ITEMS_LIST

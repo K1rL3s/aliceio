@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 class NextRequestMiddlewareType(Protocol[AliceType]):  # pragma: no cover
     async def __call__(
         self,
-        skill: "Skill",
+        skill: Skill,
         method: AliceMethod[AliceType],
     ) -> ApiResponse[AliceType]:
         pass
@@ -23,7 +23,7 @@ class RequestMiddlewareType(Protocol):  # pragma: no cover
     async def __call__(
         self,
         make_request: NextRequestMiddlewareType[AliceType],
-        skill: "Skill",
+        skill: Skill,
         method: AliceMethod[AliceType],
     ) -> ApiResponse[AliceType]:
         pass
@@ -36,7 +36,7 @@ class BaseRequestMiddleware(ABC):
     async def __call__(
         self,
         make_request: NextRequestMiddlewareType[AliceType],
-        skill: "Skill",
+        skill: Skill,
         method: AliceMethod[AliceType],
     ) -> ApiResponse[AliceType]:
         """
@@ -49,4 +49,3 @@ class BaseRequestMiddleware(ABC):
 
         :return: :class:`aiolice.methods.ApiResponse`
         """
-        pass

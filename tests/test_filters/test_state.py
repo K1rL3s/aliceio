@@ -67,7 +67,7 @@ class TestStateFilter:
         assert SG.state == copy(SG.state)
 
         assert SG.state == "SG:state"
-        assert "SG:state" == SG.state
+        assert SG.state == "SG:state"
 
         assert State() == State()
         assert SG.state != 1

@@ -25,7 +25,9 @@ class TestUserContextMiddleware:
         middleware = UserContextMiddleware()
         data = {}
         with patch.object(
-            UserContextMiddleware, "resolve_event_context", return_value=[1, 2]
+            UserContextMiddleware,
+            "resolve_event_context",
+            return_value=[1, 2],
         ):
             await middleware(next_handler, update, data)
 

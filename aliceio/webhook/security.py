@@ -18,7 +18,6 @@ DEFAULT_YANDEX_NETWORKS = [
     IPv4Network("178.154.128.0/18"),
     IPv4Network("185.32.187.0/24"),
     IPv4Network("213.180.192.0/19"),
-    # IPv6Network("2a02:6b8::/29"),  # ? :(
 ]
 
 

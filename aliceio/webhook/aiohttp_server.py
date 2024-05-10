@@ -83,9 +83,10 @@ def ip_filter_middleware(
         ip_address, accept = check_ip(ip_filter=ip_filter, request=request)
         if not accept:
             loggers.webhook.warning(
-                "Blocking request from an unauthorized IP: %s", ip_address
+                "Blocking request from an unauthorized IP: %s",
+                ip_address,
             )
-            raise web.HTTPUnauthorized()
+            raise web.HTTPUnauthorized
         return await handler(request)
 
     return _ip_filter_middleware
@@ -142,7 +143,6 @@ class BaseRequestHandler(ABC):
         :param request:
         :return: Экземпляр навыка.
         """
-        pass
 
     @abstractmethod
     async def _handle_request(
@@ -164,7 +164,7 @@ class BaseRequestHandler(ABC):
     # Сделать здесь обработку, если прилетает некорректный update?
     async def _update_validate(self, skill: Skill, request: web.Request) -> Update:
         json_data = self._convert_show_pull_to_normal_request(
-            await request.json(loads=self.json_loads)
+            await request.json(loads=self.json_loads),
         )
         return Update.model_validate(json_data, context={"skill": skill})
 

@@ -12,7 +12,7 @@ class AliceRequest(AliceObject):
     Запрос с информацией от пользователя от API Алисы.
 
     [Source](https://yandex.ru/dev/dialogs/alice/doc/request.html#request__request-desc)
-    """  # noqa: E501
+    """
 
     type: str
     payload: Optional[Payload] = None

@@ -1,3 +1,4 @@
+import contextlib
 from typing import TYPE_CHECKING, Any, cast
 
 from ..enums import EventType
@@ -25,10 +26,8 @@ class TimeoutUpdate(Update):
 
     def model_post_init(self, __context: Any) -> None:
         MutableAliceObject.model_post_init(self, __context)
-        try:
+        with contextlib.suppress(UpdateTypeLookupError):
             self._event_model_validate(self._real_event_type, __context)
-        except UpdateTypeLookupError:  # pragma: no cover
-            pass
 
     @property
     def _real_event_type(self) -> str:

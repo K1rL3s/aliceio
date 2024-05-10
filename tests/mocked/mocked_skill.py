@@ -9,7 +9,7 @@ from aliceio.methods.base import AliceType, ApiResponse
 
 class MockedSession(BaseSession):
     def __init__(self) -> None:
-        super(MockedSession, self).__init__()
+        super().__init__()
         self.responses: Deque[ApiResponse[AliceType]] = deque()
         self.requests: Deque[AliceMethod[AliceType]] = deque()
         self.closed = True
@@ -58,7 +58,7 @@ class MockedSkill(Skill):
         session: MockedSession
 
     def __init__(self, **kwargs) -> None:
-        super(MockedSkill, self).__init__(
+        super().__init__(
             kwargs.pop("token", "42:SKILL_ID"),
             session=MockedSession(),
             **kwargs,

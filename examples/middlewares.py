@@ -80,7 +80,7 @@ class UserAuthorizedMiddleware(BaseMiddleware[Update]):
             logging.info("Замечен пользователь без аккаунта, блокирую!")
             return Response(
                 text="Я вас не знаю, у вас нет аккаунта в Яндексе. "
-                "А чтобы пользоваться мной, он нужен!"
+                "А чтобы пользоваться мной, он нужен!",
             )
         return await handler(event, data)
 

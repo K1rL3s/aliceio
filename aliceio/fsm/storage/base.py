@@ -29,7 +29,6 @@ class BaseStorage(ABC):
         :param key: Ключ.
         :param state: Новое состояние.
         """
-        pass
 
     @abstractmethod
     async def get_state(self, key: StorageKey) -> Optional[str]:
@@ -39,7 +38,6 @@ class BaseStorage(ABC):
         :param key: Ключ.
         :return: Текущее состояние.
         """
-        pass
 
     @abstractmethod
     async def set_data(self, key: StorageKey, data: Dict[str, Any]) -> None:
@@ -49,7 +47,6 @@ class BaseStorage(ABC):
         :param key: Ключ.
         :param data: Новые данные.
         """
-        pass
 
     @abstractmethod
     async def get_data(self, key: StorageKey) -> Dict[str, Any]:
@@ -59,7 +56,6 @@ class BaseStorage(ABC):
         :param key: Ключ.
         :return: Текущие данные.
         """
-        pass
 
     async def update_data(
         self,
@@ -83,4 +79,3 @@ class BaseStorage(ABC):
         """
         Закрыть хранилище (подключение к бд, файлу итп.)
         """
-        pass

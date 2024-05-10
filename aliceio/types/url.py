@@ -10,7 +10,7 @@ class URL(AliceObject):
     [Source 1](https://yandex.ru/dev/dialogs/alice/doc/response-audio-player.html#direct-play__audio-player-item-metadata-art-desc)
 
     [Source 2](https://yandex.ru/dev/dialogs/alice/doc/response-audio-player.html#direct-play__audio-player-item-metadata-background-image-desc)
-    """  # noqa: E501
+    """
 
     url: Optional[str] = None
 

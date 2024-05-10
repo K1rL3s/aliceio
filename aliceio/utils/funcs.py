@@ -10,8 +10,7 @@ from aliceio.types import InputFile
 
 
 class PrepareValue(Protocol):  # pragma: no cover
-    def __call__(self, value: Any, files: Dict[str, Any]) -> Any:
-        ...
+    def __call__(self, value: Any, files: Dict[str, Any]) -> Any: ...
 
 
 # Ключи, у которых значение = None, не пропускаются, потому что иначе не получится

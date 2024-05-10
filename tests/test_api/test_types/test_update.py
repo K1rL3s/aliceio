@@ -58,7 +58,7 @@ class TestUpdate:
                         "purchase_payload": {"value": "payload"},
                         "signed_data": "purchase_request_id=id_value&...",
                         "signature": "Pi6JNCFeeleRa...",
-                    }
+                    },
                 },
                 Purchase,
                 "purchase",
@@ -74,7 +74,7 @@ class TestUpdate:
                         "type": "SimpleUtterance",
                         "command": "test",
                         "original_utterance": "test",
-                    }
+                    },
                 },
                 Message,
                 "message",
@@ -110,7 +110,7 @@ class TestUpdate:
                 },
                 "state": {"session": {}, "user": {}, "application": {}},
                 "version": "1.0",
-            }
+            },
         )
 
         update = Update.model_validate(event)

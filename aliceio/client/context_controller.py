@@ -15,7 +15,7 @@ class SkillContextController(BaseModel):
         def __init__(
             __pydantic_self__,
             *,
-            _skill: Optional["Skill"] = PrivateAttr(),
+            _skill: Optional["Skill"],
             **__pydantic_kwargs: Any,
         ) -> None:
             super().__init__(

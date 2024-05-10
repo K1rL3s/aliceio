@@ -74,13 +74,18 @@ class StatesGroupMeta(type):
     __state_names__: Tuple[str, ...]
 
     @no_type_check
-    def __new__(mcs, name, bases, namespace, **kwargs):
-        cls = super(StatesGroupMeta, mcs).__new__(mcs, name, bases, namespace)
+    def __new__(mcs, name, bases, namespace, **kwargs):  # noqa: ANN204, ANN001, ANN003
+        cls = super(StatesGroupMeta, mcs).__new__(  # noqa: UP008
+            mcs,
+            name,
+            bases,
+            namespace,
+        )
 
         states = []
         childs = []
 
-        for name, arg in namespace.items():
+        for arg in namespace.values():
             if isinstance(arg, State):
                 states.append(arg)
             elif inspect.isclass(arg) and issubclass(arg, StatesGroup):
@@ -97,7 +102,7 @@ class StatesGroupMeta(type):
     @property
     def __full_group_name__(cls) -> str:
         if cls.__parent__:
-            return ".".join((cls.__parent__.__full_group_name__, cls.__name__))
+            return f"{cls.__parent__.__full_group_name__}.{cls.__name__}"
         return cls.__name__
 
     @property

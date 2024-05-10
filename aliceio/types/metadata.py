@@ -9,7 +9,7 @@ class Metadata(MutableAliceObject):
     Метадата аудиоплеера.
 
     [Source](https://yandex.ru/dev/dialogs/alice/doc/response-audio-player.html#direct-play__audio-player-item-metadata-desc)
-    """  # noqa: E501
+    """
 
     title: Optional[str] = None
     sub_title: Optional[str] = None

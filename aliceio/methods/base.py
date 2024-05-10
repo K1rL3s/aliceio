@@ -48,7 +48,7 @@ class AliceMethod(SkillContextController, BaseModel, Generic[AliceType], ABC):
     def api_url(self, api_server: AliceAPIServer) -> str:
         pass
 
-    async def emit(self, skill: "Skill") -> AliceType:
+    async def emit(self, skill: Skill) -> AliceType:
         if not self._skill:
             self._skill = self.skill
         return await skill(self)
@@ -61,6 +61,6 @@ class AliceMethod(SkillContextController, BaseModel, Generic[AliceType], ABC):
                 "please call it explicilty "
                 "with skill instance `await skill(method)`\n"
                 "or mount method to a skill instance `method.as_(skill)` "
-                "and then call it `await method()`"
+                "and then call it `await method()`",
             )
         return self.emit(skill).__await__()
