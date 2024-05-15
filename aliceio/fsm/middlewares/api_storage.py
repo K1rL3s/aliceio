@@ -17,7 +17,7 @@ class FSMApiStorageMiddleware(BaseMiddleware[Update]):
     https://yandex.ru/dev/dialogs/alice/doc/session-persistence.html
     """
 
-    def __init__(self, strategy: FSMStrategy = FSMStrategy.USER):
+    def __init__(self, strategy: FSMStrategy = FSMStrategy.USER) -> None:
         self.strategy = strategy
 
     async def __call__(

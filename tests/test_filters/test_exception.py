@@ -26,7 +26,7 @@ class TestExceptionMessageFilter:
                 update=update,
                 exception=Exception(),
                 session=update.session,
-            )
+            ),
         )
         assert result is False
 
@@ -35,7 +35,7 @@ class TestExceptionMessageFilter:
                 update=update,
                 exception=Exception("BOOM"),
                 session=update.session,
-            )
+            ),
         )
         assert isinstance(result, dict)
         assert "match_exception" in result
@@ -73,7 +73,7 @@ class TestExceptionTypeFilter:
         f = ExceptionTypeFilter(MyException)
 
         result = await f(
-            ErrorEvent(update=update, exception=exception, session=update.session)
+            ErrorEvent(update=update, exception=exception, session=update.session),
         )
 
         assert result == value

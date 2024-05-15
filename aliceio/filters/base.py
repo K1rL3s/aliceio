@@ -5,7 +5,7 @@ if TYPE_CHECKING:
     from aliceio.filters.logic import _InvertFilter
 
 
-class Filter(ABC):
+class Filter(ABC):  # noqa: B024
     """
     Если вы хотите сделать собственные фильтры, такие же как встроенные фильтры,
     вам нужно будет написать подкласс с переопределением метода :code:`__call__`
@@ -29,21 +29,19 @@ class Filter(ABC):
 
             :return: :class:`bool` или :class:`Dict[str, Any]`
             """
-            pass
 
     def __invert__(self) -> "_InvertFilter":
         from aliceio.filters.logic import invert_f
 
         return invert_f(self)
 
-    def update_handler_flags(self, flags: Dict[str, Any]) -> None:
+    def update_handler_flags(self, flags: Dict[str, Any]) -> None:  # noqa: B027
         """
         Также, если вы хотите расширить флаги обработчика с помощью этого фильтра,
         вам следует реализовать этот метод
 
         :param flags: Существующие флаги, могут быть обновлены напрямую.
         """
-        pass
 
     def _signature_to_string(self, *args: Any, **kwargs: Any) -> str:
         """
@@ -57,6 +55,6 @@ class Filter(ABC):
 
         return f"{type(self).__name__}({', '.join(items)})"
 
-    def __await__(self):  # type: ignore # pragma: no cover
+    def __await__(self):  # type: ignore # pragma: no cover # noqa: ANN204
         # Этот метод нужен только для проверки, никогда не вызывается
         return self.__call__

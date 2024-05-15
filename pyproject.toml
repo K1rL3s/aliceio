@@ -42,7 +42,7 @@ dependencies = [
   "aiohttp~=3.9.0",
   "certifi>=2023.7.22",
   "magic-filter>=1.0.12,<1.1",
-  "pydantic>=2.4.1,<2.6",
+  "pydantic>=2.4.1,<2.8",
   "typing-extensions>=4.7.0,<=5.0",
 ]
 
@@ -75,10 +75,10 @@ test = [
   "pycryptodomex~=3.19.0",
 ]
 dev = [
-  "black~=23.10.0",
-  "isort~=5.12.0",
-  "ruff~=0.1.1",
-  "mypy~=1.6.1",
+  "black~=24.4.0",
+  "isort~=5.13.2",
+  "ruff~=0.4.1",
+  "mypy~=1.9.0",
   "toml~=0.10.2",
   "pre-commit~=3.5.0",
   "packaging~=23.1",
@@ -155,18 +155,45 @@ python = ["38", "39", "310", "311", "312"]
 
 [tool.ruff]
 line-length = 88
-select = [
-  "C",
-  "C4",
-  "E",
-  "F",
-  "T10",
-  "T20",
-  "Q",
-  "RET",
+lint.select = [
+  "F", # Pyflakes
+  "E", # pycodestyle
+  "W", # pycodestyle
+  "UP", # pyupgrade
+  "ANN", # flake8-annotations
+  "TRIO", # flake8-trio
+  "BLE", # flake8-blind-except
+  "B", # flake8-bugbear
+  "COM", # flake8-commas
+  "C4", # flake8-comprehensions
+  "PLC", # Pylint
+  "ISC", # flake8-implicit-str-concat
+  "INP", # flake8-no-pep420
+  "PIE", # flake8-pie
+  "Q", # flake8-quotes
+  "RSE", # flake8-raise
+  "RET", # flake8-return
+  "SLF", # flake8-self
+  "SIM", # flake8-simplify
+  "FLY", # flynt
+  "PERF", # Perflint
+  "RUF", # Ruff-specific rules
+  "T10", # flake8-debugger
+  "T20", # flake8-print
 ]
-ignore = [
-  "F401"
+lint.ignore = [
+  "ANN101", # missing-type-self | Missing type annotation for {name} in method
+  "ANN102", # missing-type-cls | Missing type annotation for {name} in classmethod
+  "ANN401", # any-type | Dynamically typed expressions (typing.Any) are disallowed in {name}
+  "UP038", # Use `X | Y` in `isinstance` call instead of `(X, Y)`
+  "B905", # `zip()` without an explicit `strict=` parameter
+  "RUF001", # ambiguous-unicode-character-string | String contains ambiguous {}. Did you mean {}?
+  "RUF002", # ambiguous-unicode-character-docstring | Docstring contains ambiguous {}. Did you mean {}?
+  "RUF003", # ambiguous-unicode-character-comment | Comment contains ambiguous {}. Did you mean {}?
+  "UP042", # Class StrEnum inherits from both `str` and `enum.Enum`
+  "UP007", # Use `X | Y` for type annotations
+  "UP006", # Use `dict` instead of `Dict` for type annotation
+  "SIM102", # Use a single `if` statement instead of nested `if` statements
 ]
 src = ["aliceio", "tests"]
 exclude = [
@@ -182,6 +209,16 @@ exclude = [
   "*.egg-info",
 ]
 target-version = "py38"
+indent-width = 4
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["ANN", "SLF", "B"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"

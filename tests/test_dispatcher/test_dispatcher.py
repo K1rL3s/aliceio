@@ -136,11 +136,12 @@ class TestDispatcher:
             await dispatcher.feed_raw_update(skill, RAW_UPDATE, data={"k": "v"})
             mock.assert_awaited_once()
 
-            args = mock.await_args_list[0][1]
-            assert len(args) == 3
-            assert args["skill"] == skill
-            assert isinstance(args["update"], Update)
-            assert args["data"] == {"k": "v"}
+            args, kwargs = mock.await_args_list[0]
+            assert len(args) == 2
+            assert args[0] == skill
+            assert isinstance(args[1], Update)
+            assert len(kwargs) == 1
+            assert kwargs["data"] == {"k": "v"}
 
     async def test_feed_webhook_update_exception(
         self,

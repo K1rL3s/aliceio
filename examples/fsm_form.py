@@ -64,7 +64,7 @@ async def process_dont_like_skills(message: Message, state: FSMContext) -> Respo
 async def process_like_skills(message: Message, state: FSMContext) -> Response:
     await state.set_state(Form.device)
     return Response(
-        text="Класс! Мне тоже!\nЧерез какое устройство ты обычно их используешь?"
+        text="Класс! Мне тоже!\nЧерез какое устройство ты обычно их используешь?",
     )
 
 

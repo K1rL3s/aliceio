@@ -198,5 +198,7 @@ def create_mocked_api_state(
     application: Optional[Dict[str, Any]] = None,
 ) -> ApiState:
     return state or ApiState(
-        user=user or {}, session=session or {}, application=application or {}
+        user=user or {},
+        session=session or {},
+        application=application or {},
     )

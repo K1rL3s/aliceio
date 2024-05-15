@@ -54,8 +54,8 @@ class TestRequestLogging:
                         id="42:IMAGE",
                         size=100,
                         createdAt="date",
-                    )
-                ]
+                    ),
+                ],
             ),
         )
         assert await skill.get_images()

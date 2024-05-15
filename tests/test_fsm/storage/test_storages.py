@@ -55,7 +55,7 @@ class TestStorages:
     ) -> None:
         assert await storage.get_data(key=storage_key) == {}
         assert await storage.update_data(key=storage_key, data={"foo": "bar"}) == {
-            "foo": "bar"
+            "foo": "bar",
         }
         assert await storage.update_data(key=storage_key, data={"baz": "spam"}) == {
             "foo": "bar",

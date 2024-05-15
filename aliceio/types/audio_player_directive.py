@@ -39,7 +39,7 @@ class AudioPlayerDirective(MutableAliceObject):
         if v.capitalize() not in Action.values():
             raise AliceWrongFieldError(
                 f"AudioPlayer action must be "
-                f'{", ".join(atype for atype in Action)}, not "{v}"'
+                f'{", ".join(atype for atype in Action)}, not "{v}"',
             )
         return v.capitalize()
 

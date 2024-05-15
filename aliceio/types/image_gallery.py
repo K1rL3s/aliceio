@@ -40,6 +40,6 @@ class ImageGallery(MutableAliceObject):
     def type_validate(cls, v: str) -> str:
         if v.lower() != CardType.IMAGE_GALLERY.lower():
             raise AliceWrongFieldError(
-                f'ImageGallery type must be "{CardType.IMAGE_GALLERY}", not "{v}"'
+                f'ImageGallery type must be "{CardType.IMAGE_GALLERY}", not "{v}"',
             )
         return CardType.IMAGE_GALLERY

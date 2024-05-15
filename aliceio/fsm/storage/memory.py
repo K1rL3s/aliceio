@@ -24,7 +24,7 @@ class MemoryStorage(BaseStorage):
 
     def __init__(self) -> None:
         self.storage: DefaultDict[StorageKey, MemoryStorageRecord] = defaultdict(
-            MemoryStorageRecord
+            MemoryStorageRecord,
         )
 
     async def close(self) -> None:

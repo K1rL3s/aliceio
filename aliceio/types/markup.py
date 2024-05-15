@@ -9,7 +9,7 @@ class Markup(AliceObject):
     Объект отсутствует, если ни одно из вложенных свойств не применимо.
 
     [Source](https://yandex.ru/dev/dialogs/alice/doc/request-simpleutterance.html#request-simpleutterance__markup-desc)
-    """  # noqa: E501
+    """
 
     dangerous_context: bool
 

@@ -14,8 +14,10 @@ class TestAudioPlayerDirective:
     def test_wrong_action(self, action) -> None:
         item = AudioPlayerItem(
             stream=Stream(
-                url="https://example.com/stream-audio-url", offset_ms=0, token="token"
-            )
+                url="https://example.com/stream-audio-url",
+                offset_ms=0,
+                token="token",
+            ),
         )
         if isinstance(action, str):
             with pytest.raises(AliceWrongFieldError):
@@ -36,6 +38,6 @@ class TestAudioPlayerDirective:
                     url="https://example.com/stream-audio-url",
                     offset_ms=0,
                     token="token",
-                )
+                ),
             ),
         )

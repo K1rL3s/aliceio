@@ -21,7 +21,9 @@ class TestResponseConverter:
         middleware = ResponseConvertMiddleware()
 
         result = await middleware(
-            create_handler(AliceResponse(response=Response(text="test"))), None, {}
+            create_handler(AliceResponse(response=Response(text="test"))),
+            None,
+            {},
         )
         assert isinstance(result, AliceResponse)
         assert result.response.text == "test"

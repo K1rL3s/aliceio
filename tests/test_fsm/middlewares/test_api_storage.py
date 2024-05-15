@@ -133,7 +133,7 @@ class TestFSMApiStorageMiddleware:
 
     async def test_state_from_alice_data_and_strategy(self, state: FSMContext):
         update = create_mocked_update(
-            user_state={"state": "MyState", "data": {"foo": "bar"}}
+            user_state={"state": "MyState", "data": {"foo": "bar"}},
         )
         middleware = FSMApiStorageMiddleware(strategy=FSMStrategy.USER)
 
@@ -277,7 +277,7 @@ class TestFSMApiStorageMiddleware:
             return AliceResponse(response=Response(text="test"))
 
         update = create_mocked_update(
-            user_state={"state": "MyState", "data": {"foo": "bar"}}
+            user_state={"state": "MyState", "data": {"foo": "bar"}},
         )
         middleware = FSMApiStorageMiddleware(strategy=FSMStrategy.USER)
         data = {"state": state}
@@ -300,7 +300,7 @@ class TestFSMApiStorageMiddleware:
             await state.update_data(bar="foo")
 
         update = create_mocked_update(
-            user_state={"state": "MyState", "data": {"foo": "bar"}}
+            user_state={"state": "MyState", "data": {"foo": "bar"}},
         )
         middleware = FSMApiStorageMiddleware(strategy=FSMStrategy.USER)
         data = {"state": state}

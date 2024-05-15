@@ -25,4 +25,3 @@ class BaseMiddleware(ABC, Generic[EventType]):
         :param data: Данные контекста. Будет сопоставлен с аргументами обработчика.
         :return: :class:`Any`
         """
-        pass

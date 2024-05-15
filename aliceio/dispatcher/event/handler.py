@@ -27,7 +27,7 @@ class CallableObject:
     def __post_init__(self) -> None:
         callback = inspect.unwrap(self.callback)
         self.awaitable = inspect.isawaitable(callback) or inspect.iscoroutinefunction(
-            callback
+            callback,
         )
         spec = inspect.getfullargspec(callback)
         self.params = {*spec.args, *spec.kwonlyargs}
@@ -71,7 +71,7 @@ class FilterObject(CallableObject):
                     stacklevel=6,
                 )
 
-        super(FilterObject, self).__post_init__()
+        super(FilterObject, self).__post_init__()  # noqa: UP008
 
         if isinstance(self.callback, Filter):
             self.awaitable = True
@@ -83,7 +83,7 @@ class HandlerObject(CallableObject):
     flags: Dict[str, Any] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
-        super(HandlerObject, self).__post_init__()
+        super(HandlerObject, self).__post_init__()  # noqa: UP008
         callback = inspect.unwrap(self.callback)
         if inspect.isclass(callback) and issubclass(callback, BaseHandler):
             self.awaitable = True

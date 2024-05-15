@@ -108,12 +108,8 @@ async def guess_num_not_digit(message: Message) -> Response:
 # Сработает на нажатие кнопки с напёрстком в состоянии Game.thimbles
 @router.button_pressed(Game.thimbles)
 async def thimbles_button(button: ButtonPressed) -> Response:
-    if button.payload["win"]:
-        text = "Верно! Ты угадал!"
-    else:
-        text = "Неа, давай ещё разок."
+    text = "Верно! Ты угадал!" if button.payload["win"] else "Неа, давай ещё разок."
     text += "\nКручу, верчу! Где?"
-
     return Response(text=text, buttons=generate_thimbles())
 
 

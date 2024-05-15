@@ -9,7 +9,10 @@ class TestFSMContext:
         storage = MemoryStorage()
         ctx = storage.storage[
             StorageKey(
-                session_id="-42", user_id="42", skill_id=skill.id, application_id="420"
+                session_id="-42",
+                user_id="42",
+                skill_id=skill.id,
+                application_id="420",
             )
         ]
         ctx.state = "test"

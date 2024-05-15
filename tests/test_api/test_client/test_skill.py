@@ -120,7 +120,7 @@ class TestSkill:
         skill.add_result_for(
             UploadImage,
             result=PreUploadedImage(
-                image=UploadedImage(id="id1", size=100, createdAt="1")
+                image=UploadedImage(id="id1", size=100, createdAt="1"),
             ),
         )
         image = await skill.upload_image(BufferedInputFile(b""))

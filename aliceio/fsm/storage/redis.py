@@ -24,7 +24,6 @@ class KeyBuilder(ABC):
         :param part: Часть записи.
         :return: ключ, который будет использоваться в запросах Redis.
         """
-        pass
 
 
 class DefaultKeyBuilder(KeyBuilder):
@@ -66,7 +65,7 @@ class DefaultKeyBuilder(KeyBuilder):
                 "Redis key builder is not configured to use key destiny other the default.\n"  # noqa: E501
                 "\n"
                 "Probably, you should set `with_destiny=True` in for DefaultKeyBuilder.\n"  # noqa: E501
-                "E.g: `RedisStorage(redis, key_builder=DefaultKeyBuilder(with_destiny=True))`"  # noqa: E501
+                "E.g: `RedisStorage(redis, key_builder=DefaultKeyBuilder(with_destiny=True))`",  # noqa: E501
             )
         parts.append(part)
         return self.separator.join(parts)

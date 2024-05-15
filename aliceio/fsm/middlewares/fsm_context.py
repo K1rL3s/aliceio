@@ -40,7 +40,7 @@ class FSMContextMiddleware(BaseMiddleware[AliceObject]):
                 FSM_STORAGE_KEY: self.storage,
                 FSM_CONTEXT_KEY: context,
                 RAW_STATE_KEY: await context.get_state(),
-            }
+            },
         )
         return await handler(event, data)
 

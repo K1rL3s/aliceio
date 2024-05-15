@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 
 
 class ErrorsMiddleware(BaseMiddleware[Update]):
-    def __init__(self, router: Router):
+    def __init__(self, router: Router) -> None:
         self.router = router
 
     async def __call__(

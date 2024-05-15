@@ -71,7 +71,7 @@ class AliceEventObserver:
                 callback=callback,
                 filters=[FilterObject(filter_) for filter_ in filters],
                 flags=flags,
-            )
+            ),
         )
 
         return callback

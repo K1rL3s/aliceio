@@ -15,7 +15,8 @@ class TestRouter:
         assert router3.parent_router is None
 
         with pytest.raises(
-            RuntimeError, match="Self-referencing routers is not allowed"
+            RuntimeError,
+            match="Self-referencing routers is not allowed",
         ):
             router1.include_router(router1)
 
@@ -27,7 +28,8 @@ class TestRouter:
         router2.include_router(router3)
 
         with pytest.raises(
-            RuntimeError, match="Circular referencing of Router is not allowed"
+            RuntimeError,
+            match="Circular referencing of Router is not allowed",
         ):
             router3.include_router(router1)
 

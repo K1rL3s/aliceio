@@ -44,7 +44,7 @@ class FlagDecorator:
     ) -> Union[Callable[..., Any], "FlagDecorator"]:
         if value and kwargs:
             raise ValueError(
-                "The arguments `value` and **kwargs can not be used together"
+                "The arguments `value` and **kwargs can not be used together",
             )
 
         if value is not None and callable(value):

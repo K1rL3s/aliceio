@@ -239,7 +239,11 @@ class TestOneSkillRequestHandler:
         aiohttp_client: Callable[..., Awaitable[TestClient]],
     ):
         async def fn_handler(
-            event, skill, event_update, event_session, event_from_user=None
+            event,
+            skill,
+            event_update,
+            event_session,
+            event_from_user=None,
         ):
             assert isinstance(skill, MockedSkill)
             assert isinstance(event_update, Update)

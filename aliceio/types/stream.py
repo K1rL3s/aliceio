@@ -8,7 +8,7 @@ class Stream(MutableAliceObject):
     Описание аудиопотока.
 
     [Source](https://yandex.ru/dev/dialogs/alice/doc/response-audio-player.html#direct-play__audio-player-item-stream-desc)
-    """  # noqa: E501
+    """
 
     url: str
     offset_ms: int
