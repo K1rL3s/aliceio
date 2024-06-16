@@ -10,19 +10,6 @@ if TYPE_CHECKING:
 class SkillContextController(BaseModel):
     _skill: Optional["Skill"] = PrivateAttr()
 
-    if TYPE_CHECKING:
-
-        def __init__(
-            __pydantic_self__,
-            *,
-            _skill: Optional["Skill"],
-            **__pydantic_kwargs: Any,
-        ) -> None:
-            super().__init__(
-                _skill=_skill,
-                **__pydantic_kwargs,
-            )
-
     def model_post_init(self, __context: Any) -> None:
         self._skill = __context.get("skill") if __context else None
 
