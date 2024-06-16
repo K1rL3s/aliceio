@@ -80,8 +80,8 @@ pip install -e .[dev,test,docs,fast,redis,proxy]
 ```bash
 black aliceio tests examples
 isort aliceio tests examples
-ruff --fix aliceio tests examples
-mypy aliceio examples
+ruff check --fix aliceio tests examples
+mypy aliceio
 ```
 
 Также можно установить pre-commit хук:

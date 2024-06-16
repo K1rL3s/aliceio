@@ -66,7 +66,7 @@ jobs:
 
       - name: Lint code
         run: |
-          ruff --output-format=github aliceio examples
+          ruff check --output-format=github aliceio examples
           mypy aliceio
           black --check --diff aliceio tests
 

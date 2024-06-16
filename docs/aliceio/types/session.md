@@ -8,3 +8,4 @@
         - application
         - new
         - user
+        - is_anonymous
