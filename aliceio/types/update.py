@@ -1,6 +1,8 @@
 import contextlib
 from typing import TYPE_CHECKING, Any, ClassVar, Dict, Optional, Type, cast
 
+from pydantic import model_validator
+
 from ..enums import EventType, RequestType
 from .account_linking_complete import AccountLinkingComplete
 from .alice_event import AliceEvent
@@ -83,14 +85,22 @@ class Update(MutableAliceObject):
 
         @property
         def event_type(self) -> str:
-            if self.account_linking_complete_event:
-                return EventType.ACCOUNT_LINKING_COMPLETE
-
             if (event_type := req_type_to_event_type.get(self.request.type)) is None:
                 raise UpdateTypeLookupError(
                     "Update does not contain any known event type.",
                 )
             return str(event_type)
+
+    # Это костыль для account_linking_complete_event, при нём нет поля request
+    @model_validator(mode="before")
+    @classmethod
+    def _set_request_if_account_linking(cls, data: Any) -> Any:
+        if isinstance(data, dict) and isinstance(
+            data.get("account_linking_complete_event"),
+            dict,
+        ):
+            data["request"] = {"type": RequestType.ACCOUNT_LINKING_COMPLETE}
+        return data
 
     def model_post_init(self, __context: Any) -> None:
         super().model_post_init(__context)
@@ -130,6 +140,7 @@ req_type_to_event_type: Dict[str, str] = {
     RequestType.AUDIO_PLAYER_NEARLY_FINISHED: EventType.AUDIO_PLAYER,
     RequestType.AUDIO_PLAYER_STOPPED: EventType.AUDIO_PLAYER,
     RequestType.AUDIO_PLAYER_FAILED: EventType.AUDIO_PLAYER,
+    RequestType.ACCOUNT_LINKING_COMPLETE: EventType.ACCOUNT_LINKING_COMPLETE,
 }
 
 event_type_to_event_model: Dict[str, Type[MutableAliceObject]] = {

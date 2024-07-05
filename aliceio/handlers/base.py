@@ -19,7 +19,7 @@ class BaseHandler(BaseHandlerMixin[T], ABC):
     """Базовый класс для всех class-based обработчиков."""
 
     def __init__(self, event: T, **kwargs: Any) -> None:
-        self.event: T = event
+        self.event = event
         self.data: Dict[str, Any] = kwargs
 
     @property

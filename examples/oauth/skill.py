@@ -4,7 +4,7 @@ from aliceio.types import AccountLinkingComplete, Directives, Message, Response,
 router = Router()
 
 
-@router.message(~F.meta.interfaces.account_linking)
+@router.message(F.meta.interfaces.account_linking.is_(None))
 async def auth_impossible(message: Message) -> str:
     return "Авторизация невозможна на вашем устройстве :("
 
