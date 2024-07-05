@@ -8,6 +8,7 @@ class EventType(StrEnum, ValuesEnum):
     MESSAGE = "message"
     SHOW_PULL = "show_pull"
     PURCHASE = "purchase"
+    ACCOUNT_LINKING_COMPLETE = "account_linking_complete_event"
     UPDATE = "update"
     TIMEOUT = "timeout"
 
@@ -22,6 +23,7 @@ class RequestType(StrEnum, ValuesEnum):
     PURCHASE_CONFIRMATION = "Purchase.Confirmation"
     SHOW_PULL = "Show.Pull"
     SIMPLE_UTTERANCE = "SimpleUtterance"
+    ACCOUNT_LINKING_COMPLETE = "AccountLinkigCompleteEvent"  # Нужен ли?
 
 
 class ShowType(StrEnum, ValuesEnum):

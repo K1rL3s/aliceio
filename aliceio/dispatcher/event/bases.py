@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from typing import Any, Awaitable, Callable, Dict, NoReturn, Optional, TypeVar, Union
 from unittest.mock import sentinel
 

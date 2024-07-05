@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Any, ClassVar, Generator, Generic, Optional, TypeVar
 
@@ -48,7 +46,7 @@ class AliceMethod(SkillContextController, BaseModel, Generic[AliceType], ABC):
     def api_url(self, api_server: AliceAPIServer) -> str:
         pass
 
-    async def emit(self, skill: Skill) -> AliceType:
+    async def emit(self, skill: "Skill") -> AliceType:
         if not self._skill:
             self._skill = self.skill
         return await skill(self)

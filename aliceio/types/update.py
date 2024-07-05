@@ -2,6 +2,7 @@ import contextlib
 from typing import TYPE_CHECKING, Any, ClassVar, Dict, Optional, Type, cast
 
 from ..enums import EventType, RequestType
+from .account_linking_complete import AccountLinkingComplete
 from .alice_event import AliceEvent
 from .alice_request import AliceRequest
 from .api_state import ApiState
@@ -35,6 +36,7 @@ class Update(MutableAliceObject):
     button_pressed: Optional[ButtonPressed] = None
     purchase: Optional[Purchase] = None
     show_pull: Optional[ShowPull] = None
+    account_linking_complete_event: Optional[AccountLinkingComplete] = None
 
     state: Optional[ApiState] = None
 
@@ -49,12 +51,13 @@ class Update(MutableAliceObject):
             request: AliceRequest,
             session: Session,
             version: str,
-            state: Optional[ApiState] = None,
             message: Optional[Message] = None,
             audio_player: Optional[AudioPlayer] = None,
-            button: Optional[ButtonPressed] = None,
+            button_pressed: Optional[ButtonPressed] = None,
             purchase: Optional[Purchase] = None,
-            pull: Optional[ShowPull] = None,
+            show_pull: Optional[ShowPull] = None,
+            account_linking_complete_event: Optional[AccountLinkingComplete] = None,
+            state: Optional[ApiState] = None,
             **__pydantic_kwargs: Any,
         ) -> None:
             super().__init__(
@@ -65,9 +68,10 @@ class Update(MutableAliceObject):
                 state=state,
                 message=message,
                 audio_player=audio_player,
-                button=button,
+                button_pressed=button_pressed,
                 purchase=purchase,
-                pull=pull,
+                account_linking_complete_event=account_linking_complete_event,
+                show_pull=show_pull,
                 **__pydantic_kwargs,
             )
 
@@ -79,6 +83,9 @@ class Update(MutableAliceObject):
 
         @property
         def event_type(self) -> str:
+            if self.account_linking_complete_event:
+                return EventType.ACCOUNT_LINKING_COMPLETE
+
             if (event_type := req_type_to_event_type.get(self.request.type)) is None:
                 raise UpdateTypeLookupError(
                     "Update does not contain any known event type.",
@@ -90,6 +97,7 @@ class Update(MutableAliceObject):
         with contextlib.suppress(UpdateTypeLookupError):
             # При работе ошибка возникнет ещё раз в диспетчере,
             # здесь она глушится для работы тестов
+            # (убрать здесь suppress и переделать тесты)
             self._event_model_validate(self.event_type, __context)
 
     def _event_model_validate(self, event_type: str, __context: Any) -> None:
@@ -131,4 +139,5 @@ event_type_to_event_model: Dict[str, Type[MutableAliceObject]] = {
     EventType.SHOW_PULL: ShowPull,
     EventType.PURCHASE: Purchase,
     EventType.UPDATE: Update,
+    EventType.ACCOUNT_LINKING_COMPLETE: AccountLinkingComplete,
 }

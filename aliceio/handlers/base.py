@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Any, Dict, Generic, TypeVar, cast
 
@@ -25,7 +23,7 @@ class BaseHandler(BaseHandlerMixin[T], ABC):
         self.data: Dict[str, Any] = kwargs
 
     @property
-    def skill(self) -> Skill:
+    def skill(self) -> "Skill":
         from aliceio import Skill
 
         if "skill" in self.data:

@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional
 
 from aliceio.dispatcher.event.bases import UNHANDLED, MiddlewareType, SkipHandler
@@ -20,7 +18,7 @@ class AliceEventObserver:
     Он остановит распространение события, когда пройдут фильтры любого обработчика.
     """
 
-    def __init__(self, router: Router, event_name: str) -> None:
+    def __init__(self, router: "Router", event_name: str) -> None:
         self.router = router
         self.event_name = event_name
 
