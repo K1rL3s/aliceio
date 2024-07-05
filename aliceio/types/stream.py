@@ -7,7 +7,7 @@ class Stream(MutableAliceObject):
     """
     Описание аудиопотока.
 
-    [Source](https://yandex.ru/dev/dialogs/alice/doc/response-audio-player.html#direct-play__audio-player-item-stream-desc)
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/ru/response-audio-player#audio-player-item-stream-desc)
     """
 
     url: str

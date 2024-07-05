@@ -25,7 +25,7 @@ class Update(MutableAliceObject):
 
     В любом запросе может присутствовать не более **одного** необязательного параметра.
 
-    [Source](https://yandex.ru/dev/dialogs/alice/doc/request.html)
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/ru/request)
     """
 
     meta: Meta

@@ -10,7 +10,7 @@ class NLU(AliceObject):
     """
     Слова и сущности, которые Диалоги извлекли из запроса пользователя.
 
-    [Source](https://yandex.ru/dev/dialogs/alice/doc/request-simpleutterance.html#request-simpleutterance__nlu-desc)
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/ru/request-simpleutterance#nlu-desc)
     """
 
     tokens: List[str]

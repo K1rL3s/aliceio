@@ -8,7 +8,7 @@ class Analytics(MutableAliceObject):
     """
     Данные для аналитики AppMetrica.
 
-    [Source](https://yandex.ru/dev/dialogs/alice/doc/response.html#response__analytics-desc)
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/ru/response#analytics-desc)
     """
 
     events: List[AnalyticEvent]

@@ -7,7 +7,7 @@ class CardHeader(MutableAliceObject):
     """
     Заголовок :class:`ItemsList`.
 
-    [Source](https://yandex.ru/dev/dialogs/alice/doc/response-card-itemslist.html#response-card-itemslist__header-desc)
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/ru/response-card-itemslist#header-desc)
     """
 
     text: Optional[str] = None  # Optional XD

@@ -11,7 +11,7 @@ class ButtonPressed(AliceEvent):
     """
     Нажатие пользователя на кнопку с непустым Payload.
 
-    [Source](https://yandex.ru/dev/dialogs/alice/doc/request-buttonpressed.html)
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/ru/response-card-bigimage)
     """
 
     type: str

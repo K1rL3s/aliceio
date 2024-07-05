@@ -7,7 +7,7 @@ class FIOEntity(NLUEntity):
     """
     NLU Entity Фамилии, имени и отчества.
 
-    [Source](https://yandex.ru/dev/dialogs/alice/doc/naming-entities.html#naming-entities__fio)
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/ru/naming-entities#fio)
     """
 
     first_name: Optional[str] = None

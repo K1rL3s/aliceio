@@ -7,7 +7,7 @@ class TokensEntity(AliceObject):
     """
     start и end из request.nlu.entities.
 
-    [Source](https://yandex.ru/dev/dialogs/alice/doc/request-simpleutterance.html#request-simpleutterance__entities-desc)
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/ru/request-simpleutterance#entities-desc)
     """
 
     start: int

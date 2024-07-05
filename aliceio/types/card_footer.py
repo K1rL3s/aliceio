@@ -8,7 +8,7 @@ class CardFooter(MutableAliceObject):
     """
     Текст и кнопки под :class:`ItemsList`.
 
-    [Source](https://yandex.ru/dev/dialogs/alice/doc/response-card-itemslist.html#response-card-itemslist__footer-desc)
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/ru/response-card-itemslist#footer-desc)
     """
 
     text: Optional[str] = None  # Optional XD

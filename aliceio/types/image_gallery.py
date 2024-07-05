@@ -12,7 +12,7 @@ class ImageGallery(MutableAliceObject):
     """
     :code:`Card` с типом :code:`ImageGallery`
 
-    [Source](https://yandex.ru/dev/dialogs/alice/doc/response-card-imagegallery.html)
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/ru/response-card-imagegallery)
     """
 
     type: str = CardType.IMAGE_GALLERY

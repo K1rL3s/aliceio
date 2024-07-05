@@ -12,7 +12,7 @@ class AudioPlayerDirective(MutableAliceObject):
     """
     Директива аудиоплеера.
 
-    [Source](https://yandex.ru/dev/dialogs/alice/doc/response-audio-player.html)
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/ru/response-audio-player)
     """
 
     action: str

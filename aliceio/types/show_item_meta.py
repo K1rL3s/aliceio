@@ -7,7 +7,7 @@ class ShowItemMeta(MutableAliceObject):
     """
     В ответе навык передает свойство :code`show_item_meta`.
 
-    [Source](https://yandex.ru/dev/dialogs/alice/doc/response-show-item-meta.html)
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/ru/response-show-item-meta)
     """
 
     content_id: str
