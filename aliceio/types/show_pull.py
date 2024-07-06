@@ -20,14 +20,14 @@ class ShowPull(AliceEvent):
         def __init__(
             __pydantic_self__,
             *,
+            session: Session,  # из AliceEvent
             type: str,
             show_type: str,
-            session: Session,  # из AliceEvent
             **__pydantic_kwargs: Any,
         ) -> None:
             super().__init__(
+                session=session,
                 type=type,
                 show_type=show_type,
-                session=session,
                 **__pydantic_kwargs,
             )

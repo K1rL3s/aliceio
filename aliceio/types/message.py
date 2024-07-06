@@ -29,20 +29,20 @@ class Message(AliceEvent):
         def __init__(
             __pydantic_self__,
             *,
+            session: Session,  # из AliceEvent
             type: str,
             command: str,
             original_utterance: str,
-            session: Session,  # из AliceEvent
             payload: Optional[Payload] = None,
             markup: Optional[Markup] = None,
             nlu: Optional[NLU] = None,
             **__pydantic_kwargs: Any,
         ) -> None:
             super().__init__(
+                session=session,
                 type=type,
                 command=command,
                 original_utterance=original_utterance,
-                session=session,
                 payload=payload,
                 markup=markup,
                 nlu=nlu,

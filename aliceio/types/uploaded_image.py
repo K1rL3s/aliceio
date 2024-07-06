@@ -28,15 +28,15 @@ class UploadedImage(AliceObject):
             __pydantic_self__,
             *,
             id: str,
-            origUrl: Optional[str] = None,
             size: int,
+            origUrl: Optional[str] = None,
             createdAt: str,
             **__pydantic_kwargs: Any,
         ) -> None:
             super().__init__(
                 id=id,
-                origUrl=origUrl,
                 size=size,
+                origUrl=origUrl,
                 createdAt=createdAt,
                 **__pydantic_kwargs,
             )
