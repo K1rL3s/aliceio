@@ -7,13 +7,15 @@
 3. [Роутеры](routers.md)
 4. [Фильтры](filters.md)
 5. [Мидлвари](middlewares.md)
-6. [Машина состояний](finite-state-machine.md)
-7. [Кнопки и альбомы](builders.md)
-8. [Обработка ошибок](error-handling.md)
-9. [Особые события](special-events.md)
-10. [Внедрение зависимостей](dependency-injection.md)
-11. [Полноценный навык](full-skill.md)
-12. [FAQ](faq.md)
+6. [Флаги](flags.md)
+7. [Машина состояний](finite-state-machine.md)
+8. [Кнопки и альбомы](builders.md)
+9. [Обработка ошибок](error-handling.md)
+10. [Особые события](special-events.md)
+11. [Внедрение зависимостей](dependency-injection.md)
+12. [Полноценный навык](full-skill.md)
+
+[FAQ](faq.md)
 
 !!! info "Примечание"
     "Яндекс", "Алиса" и "Диалоги" будут обозначать сторону, от которой приходят запросы. \
