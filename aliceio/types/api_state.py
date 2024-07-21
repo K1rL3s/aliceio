@@ -6,14 +6,14 @@ StateDict = Dict[str, Any]
 SessionState = StateDict
 UserState = StateDict
 ApplicationState = StateDict
-# https://yandex.ru/dev/dialogs/alice/doc/session-persistence.html
+# https://yandex.ru/dev/dialogs/alice/doc/ru/session-persistence
 
 
 class ApiState(AliceObject):
     """
     Данные о сохранённом состоянии на стороне API Алисы.
 
-    [Source](https://yandex.ru/dev/dialogs/alice/doc/request.html#request__state-desc)
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/ru/request#state-desc)
     """
 
     user: Optional[UserState] = None

@@ -1,3 +1,4 @@
+from .account_linking_complete import AccountLinkingComplete
 from .alice_request import AliceRequest
 from .alice_response import AliceResponse
 from .analytic_event import AnalyticEvent
@@ -54,6 +55,7 @@ from .url import URL
 from .user import User
 
 __all__ = (
+    "AccountLinkingComplete",
     "AliceRequest",
     "AliceResponse",
     "AnalyticEvent",

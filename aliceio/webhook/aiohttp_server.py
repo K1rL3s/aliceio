@@ -182,7 +182,7 @@ class BaseRequestHandler(ABC):
         (мета, сессия, версия и реквест) вероятно находится по ключу body.
         Эта функция выносит всю информацию за это поле.
 
-        https://yandex.ru/dev/dialogs/alice/doc/request-show-pull.html
+        https://yandex.ru/dev/dialogs/alice/doc/ru/request-show-pull
 
         :param update:
         :return:

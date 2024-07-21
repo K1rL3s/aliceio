@@ -14,7 +14,7 @@ class FSMApiStorageMiddleware(BaseMiddleware[Update]):
 
     Регистрируется только тогда, когда установлен флаг при создании диспетчера.
 
-    https://yandex.ru/dev/dialogs/alice/doc/session-persistence.html
+    https://yandex.ru/dev/dialogs/alice/doc/ru/session-persistence
     """
 
     def __init__(self, strategy: FSMStrategy = FSMStrategy.USER) -> None:

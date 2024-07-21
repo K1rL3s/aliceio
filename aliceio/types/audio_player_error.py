@@ -7,7 +7,7 @@ class AudioPlayerError(AliceObject):
     """
     Ошибка аудиоплеера.
 
-    [Source](https://yandex.ru/dev/dialogs/alice/doc/request-audioplayer.html#request-audioplayer__playback-failed)
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/ru/request-audioplayer#playback-failed)
     """
 
     message: str

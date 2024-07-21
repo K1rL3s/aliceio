@@ -12,7 +12,7 @@ class BigImage(MutableAliceObject):
     """
     :code:`Card` с типом :code:`BigImage`.
 
-    [Source](https://yandex.ru/dev/dialogs/alice/doc/response-card-bigimage.html)
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/ru/response-card-bigimage)
     """
 
     type: str = CardType.BIG_IMAGE

@@ -1,7 +1,10 @@
 import contextlib
 from typing import TYPE_CHECKING, Any, ClassVar, Dict, Optional, Type, cast
 
+from pydantic import model_validator
+
 from ..enums import EventType, RequestType
+from .account_linking_complete import AccountLinkingComplete
 from .alice_event import AliceEvent
 from .alice_request import AliceRequest
 from .api_state import ApiState
@@ -22,7 +25,7 @@ class Update(MutableAliceObject):
 
     В любом запросе может присутствовать не более **одного** необязательного параметра.
 
-    [Source](https://yandex.ru/dev/dialogs/alice/doc/request.html)
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/ru/request)
     """
 
     meta: Meta
@@ -35,6 +38,7 @@ class Update(MutableAliceObject):
     button_pressed: Optional[ButtonPressed] = None
     purchase: Optional[Purchase] = None
     show_pull: Optional[ShowPull] = None
+    account_linking_complete_event: Optional[AccountLinkingComplete] = None
 
     state: Optional[ApiState] = None
 
@@ -49,12 +53,13 @@ class Update(MutableAliceObject):
             request: AliceRequest,
             session: Session,
             version: str,
-            state: Optional[ApiState] = None,
             message: Optional[Message] = None,
             audio_player: Optional[AudioPlayer] = None,
-            button: Optional[ButtonPressed] = None,
+            button_pressed: Optional[ButtonPressed] = None,
             purchase: Optional[Purchase] = None,
-            pull: Optional[ShowPull] = None,
+            show_pull: Optional[ShowPull] = None,
+            account_linking_complete_event: Optional[AccountLinkingComplete] = None,
+            state: Optional[ApiState] = None,
             **__pydantic_kwargs: Any,
         ) -> None:
             super().__init__(
@@ -65,9 +70,10 @@ class Update(MutableAliceObject):
                 state=state,
                 message=message,
                 audio_player=audio_player,
-                button=button,
+                button_pressed=button_pressed,
                 purchase=purchase,
-                pull=pull,
+                account_linking_complete_event=account_linking_complete_event,
+                show_pull=show_pull,
                 **__pydantic_kwargs,
             )
 
@@ -85,11 +91,23 @@ class Update(MutableAliceObject):
                 )
             return str(event_type)
 
+    # Это костыль для account_linking_complete_event, при нём нет поля request
+    @model_validator(mode="before")
+    @classmethod
+    def _set_request_if_account_linking(cls, data: Any) -> Any:
+        if isinstance(data, dict) and isinstance(
+            data.get("account_linking_complete_event"),
+            dict,
+        ):
+            data["request"] = {"type": RequestType.ACCOUNT_LINKING_COMPLETE}
+        return data
+
     def model_post_init(self, __context: Any) -> None:
         super().model_post_init(__context)
         with contextlib.suppress(UpdateTypeLookupError):
             # При работе ошибка возникнет ещё раз в диспетчере,
             # здесь она глушится для работы тестов
+            # (убрать здесь suppress и переделать тесты)
             self._event_model_validate(self.event_type, __context)
 
     def _event_model_validate(self, event_type: str, __context: Any) -> None:
@@ -122,6 +140,7 @@ req_type_to_event_type: Dict[str, str] = {
     RequestType.AUDIO_PLAYER_NEARLY_FINISHED: EventType.AUDIO_PLAYER,
     RequestType.AUDIO_PLAYER_STOPPED: EventType.AUDIO_PLAYER,
     RequestType.AUDIO_PLAYER_FAILED: EventType.AUDIO_PLAYER,
+    RequestType.ACCOUNT_LINKING_COMPLETE: EventType.ACCOUNT_LINKING_COMPLETE,
 }
 
 event_type_to_event_model: Dict[str, Type[MutableAliceObject]] = {
@@ -131,4 +150,5 @@ event_type_to_event_model: Dict[str, Type[MutableAliceObject]] = {
     EventType.SHOW_PULL: ShowPull,
     EventType.PURCHASE: Purchase,
     EventType.UPDATE: Update,
+    EventType.ACCOUNT_LINKING_COMPLETE: AccountLinkingComplete,
 }

@@ -11,7 +11,7 @@ class ButtonPressed(AliceEvent):
     """
     Нажатие пользователя на кнопку с непустым Payload.
 
-    [Source](https://yandex.ru/dev/dialogs/alice/doc/request-buttonpressed.html)
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/ru/response-card-bigimage)
     """
 
     type: str
@@ -24,17 +24,17 @@ class ButtonPressed(AliceEvent):
         def __init__(
             __pydantic_self__,
             *,
+            session: Session,  # из AliceEvent
             type: str,
             payload: Payload,
-            session: Session,  # из AliceEvent
             markup: Optional[Markup] = None,
             nlu: Optional[NLU] = None,
             **__pydantic_kwargs: Any,
         ) -> None:
             super().__init__(
+                session=session,
                 type=type,
                 payload=payload,
-                session=session,
                 markup=markup,
                 nlu=nlu,
                 **__pydantic_kwargs,

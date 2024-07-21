@@ -3,7 +3,8 @@
     options:
       members:
         - __call__
-        - pre_set_state
+        - set_state_from_alice
         - resolve_state_data
-        - post_update_state
+        - create_record_from_data
+        - set_state_to_alice
         - set_new_state

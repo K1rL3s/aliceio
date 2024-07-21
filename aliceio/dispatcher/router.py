@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Dict, Final, Generator, List, Optional
+from typing import Any, Dict, Final, FrozenSet, Generator, List, Optional
 
 from ..enums import EventType
 from ..types.base import AliceObject
@@ -8,7 +8,7 @@ from .event.alice import AliceEventObserver
 from .event.bases import REJECTED, UNHANDLED
 from .event.event import EventObserver
 
-INTERNAL_UPDATE_TYPES: Final[frozenset[str]] = frozenset({"update", "error", "timeout"})
+INTERNAL_UPDATE_TYPES: Final[FrozenSet[str]] = frozenset({"update", "error", "timeout"})
 
 
 class Router:
@@ -43,6 +43,10 @@ class Router:
             router=self,
             event_name=EventType.AUDIO_PLAYER,
         )
+        self.account_linking_complete = AliceEventObserver(
+            router=self,
+            event_name=EventType.ACCOUNT_LINKING_COMPLETE,
+        )
         self.errors = self.error = AliceEventObserver(
             router=self,
             event_name=EventType.ERROR,
@@ -58,6 +62,7 @@ class Router:
             EventType.PURCHASE: self.purchase,
             EventType.SHOW_PULL: self.show_pull,
             EventType.AUDIO_PLAYER: self.audio_player,
+            EventType.ACCOUNT_LINKING_COMPLETE: self.account_linking_complete,
             EventType.ERROR: self.errors,
             EventType.TIMEOUT: self.timeout,
         }

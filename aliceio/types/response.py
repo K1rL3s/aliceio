@@ -11,7 +11,7 @@ class Response(AliceObject):
     """
     Ответ для API Алисы с полезной для пользователя информацией.
 
-    [Source](https://yandex.ru/dev/dialogs/alice/doc/response.html#response__response-desc)
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/ru/response#response-desc)
     """
 
     text: str

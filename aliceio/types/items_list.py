@@ -14,7 +14,7 @@ class ItemsList(MutableAliceObject):
     """
     :code:`Card` с типом :code:`ItemsList`.
 
-    [Source](https://yandex.ru/dev/dialogs/alice/doc/response-card-itemslist.html)
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/ru/response-card-itemslist)
     """
 
     type: str = CardType.ITEMS_LIST

@@ -13,6 +13,7 @@ maintainers = [{ name = "K1rL3s - Kirill Lesovoy" }]
 keywords = [
   "alice",
   "yandex",
+  "dialogs",
   "aliceio",
   "bot",
   "api",
@@ -42,7 +43,7 @@ dependencies = [
   "aiohttp~=3.9.0",
   "certifi>=2023.7.22",
   "magic-filter>=1.0.12,<1.1",
-  "pydantic>=2.4.1,<2.8",
+  "pydantic>=2.4.1,<2.9",
   "typing-extensions>=4.7.0,<=5.0",
 ]
 
@@ -77,11 +78,11 @@ test = [
 dev = [
   "black~=24.4.0",
   "isort~=5.13.2",
-  "ruff~=0.4.1",
-  "mypy~=1.9.0",
+  "ruff~=0.4.9",
+  "mypy~=1.10.0",
   "toml~=0.10.2",
   "pre-commit~=3.5.0",
-  "packaging~=23.1",
+  "packaging~=24.1",
 ]
 docs = [
   "mkdocs~=1.5.3",
@@ -107,10 +108,10 @@ post-install-commands = [
 
 [tool.hatch.envs.default.scripts]
 reformat = [
-  "black aliceio tests",
-  "isort aliceio tests",
+  "black aliceio tests examples",
+  "isort aliceio tests examples",
 ]
-lint = "ruff aliceio"
+lint = "ruff check aliceio tests examples"
 
 [tool.hatch.envs.docs]
 features = [

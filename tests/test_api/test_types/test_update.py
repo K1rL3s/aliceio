@@ -3,6 +3,7 @@ from typing import Any, Dict, Type
 import pytest
 
 from aliceio.types import (
+    AccountLinkingComplete,
     AudioPlayer,
     ButtonPressed,
     Message,
@@ -78,6 +79,13 @@ class TestUpdate:
                 },
                 Message,
                 "message",
+            ],
+            [
+                {
+                    "account_linking_complete_event": {},
+                },
+                AccountLinkingComplete,
+                "account_linking_complete_event",
             ],
         ],
     )

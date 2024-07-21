@@ -7,7 +7,7 @@ class Quota(AliceObject):
     """
     Доступный и израсходованный объём картинок или аудиофайлов. Значения в байтах.
 
-    [Source](https://yandex.ru/dev/dialogs/alice/doc/resource-upload.html)
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/ru/resource-upload)
     """
 
     total: int

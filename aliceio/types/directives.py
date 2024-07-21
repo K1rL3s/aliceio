@@ -4,16 +4,17 @@ from .audio_player_directive import AudioPlayerDirective
 from .base import MutableAliceObject
 
 StartAccountLinking = Dict[str, Any]
-# https://yandex.ru/dev/dialogs/alice/doc/response-start-account-linking.html
-# https://yandex.ru/dev/dialogs/alice/doc/auth/how-it-works.html
+# https://yandex.ru/dev/dialogs/alice/doc/ru/response-start-account-linking
+# https://yandex.ru/dev/dialogs/alice/doc/ru/auth/how-it-works
 
 
 class Directives(MutableAliceObject):
     """
     Директивы.
 
-    [Source 1](https://yandex.ru/dev/dialogs/alice/doc/response-audio-player.html)
-    [Source 2](https://yandex.ru/dev/dialogs/alice/doc/response-start-account-linking.html)
+    [Source 1](https://yandex.ru/dev/dialogs/alice/doc/ru/response-audio-player)
+
+    [Source 2](https://yandex.ru/dev/dialogs/alice/doc/ru/response-start-account-linking)
     """
 
     audio_player: Optional[AudioPlayerDirective] = None

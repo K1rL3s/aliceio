@@ -11,7 +11,7 @@ class AudioPlayer(AliceEvent):
     если пользователь произносит команду управления аудиоплеером
     или нажимает соответствующую кнопку в интерфейсе.
 
-    [Source](https://yandex.ru/dev/dialogs/alice/doc/request-audioplayer.html)
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/ru/request-audioplayer)
     """
 
     type: str
@@ -22,14 +22,14 @@ class AudioPlayer(AliceEvent):
         def __init__(
             __pydantic_self__,
             *,
-            type: str,
             session: Session,  # из AliceEvent
+            type: str,
             error: Optional[AudioPlayerError] = None,
             **__pydantic_kwargs: Any,
         ) -> None:
             super().__init__(
-                type=type,
                 session=session,
+                type=type,
                 error=error,
                 **__pydantic_kwargs,
             )

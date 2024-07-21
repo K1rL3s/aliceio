@@ -8,7 +8,7 @@ class TextButton(MutableAliceObject):
     """
     Кнопка под сообщением навыка или над клавиатурой пользователя.
 
-    [Source](https://yandex.ru/dev/dialogs/alice/doc/response.html#response__buttons-desc)
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/ru/response#buttons-desc)
     """
 
     title: str

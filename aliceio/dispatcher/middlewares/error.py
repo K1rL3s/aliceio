@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from typing import TYPE_CHECKING, Any, Awaitable, Callable, Dict
 
 from aliceio.dispatcher.event.bases import UNHANDLED, CancelHandler, SkipHandler
@@ -12,7 +10,7 @@ if TYPE_CHECKING:
 
 
 class ErrorsMiddleware(BaseMiddleware[Update]):
-    def __init__(self, router: Router) -> None:
+    def __init__(self, router: "Router") -> None:
         self.router = router
 
     async def __call__(

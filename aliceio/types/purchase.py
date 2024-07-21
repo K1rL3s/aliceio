@@ -10,7 +10,7 @@ class Purchase(AliceEvent):
     Навык получает запрос с объектом request и типом Purchase.Confirmation,
     если пользователь выполняет оплату и навык должен отправить ему подтверждение.
 
-    [Source](https://yandex.ru/dev/dialogs/alice/doc/request-purchase-confirmation.html)
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/ru/request-purchase-confirmation)
     """
 
     type: str
@@ -27,6 +27,7 @@ class Purchase(AliceEvent):
         def __init__(
             __pydantic_self__,
             *,
+            session: Session,  # из AliceEvent
             type: str,
             purchase_request_id: str,
             purchase_token: str,
@@ -35,10 +36,10 @@ class Purchase(AliceEvent):
             purchase_payload: Payload,
             signed_data: str,
             signature: str,
-            session: Session,  # из AliceEvent
             **__pydantic_kwargs: Any,
         ) -> None:
             super().__init__(
+                session=session,
                 type=type,
                 purchase_request_id=purchase_request_id,
                 purchase_token=purchase_token,
@@ -47,6 +48,5 @@ class Purchase(AliceEvent):
                 purchase_payload=purchase_payload,
                 signed_data=signed_data,
                 signature=signature,
-                session=session,
                 **__pydantic_kwargs,
             )

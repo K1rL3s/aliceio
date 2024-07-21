@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Any, Dict, Generic, TypeVar, cast
 
@@ -21,11 +19,11 @@ class BaseHandler(BaseHandlerMixin[T], ABC):
     """Базовый класс для всех class-based обработчиков."""
 
     def __init__(self, event: T, **kwargs: Any) -> None:
-        self.event: T = event
+        self.event = event
         self.data: Dict[str, Any] = kwargs
 
     @property
-    def skill(self) -> Skill:
+    def skill(self) -> "Skill":
         from aliceio import Skill
 
         if "skill" in self.data:

@@ -1,3 +1,4 @@
+from .account_linking_complete import AccountLinkingCompleteHandler
 from .audio_player import AudioPlayerHandler
 from .base import BaseHandler, BaseHandlerMixin
 from .button_pressed import ButtonPressedHandler
@@ -8,6 +9,7 @@ from .show_pull import ShowPullHandler
 from .timeout import TimeoutHandler
 
 __all__ = (
+    "AccountLinkingCompleteHandler",
     "AudioPlayerHandler",
     "BaseHandler",
     "BaseHandlerMixin",

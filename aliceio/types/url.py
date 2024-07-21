@@ -7,9 +7,9 @@ class URL(AliceObject):
     """
     Ссылка на аудио или изображение в директиве аудио-плеера.
 
-    [Source 1](https://yandex.ru/dev/dialogs/alice/doc/response-audio-player.html#direct-play__audio-player-item-metadata-art-desc)
+    [Source 1](https://yandex.ru/dev/dialogs/alice/doc/ru/response-audio-player#audio-player-item-metadata-art-desc)
 
-    [Source 2](https://yandex.ru/dev/dialogs/alice/doc/response-audio-player.html#direct-play__audio-player-item-metadata-background-image-desc)
+    [Source 2](https://yandex.ru/dev/dialogs/alice/doc/ru/response-audio-player#audio-player-item-metadata-background-image-desc)
     """
 
     url: Optional[str] = None

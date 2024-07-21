@@ -11,7 +11,7 @@ class AliceRequest(AliceObject):
     """
     Запрос с информацией от пользователя от API Алисы.
 
-    [Source](https://yandex.ru/dev/dialogs/alice/doc/request.html#request__request-desc)
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/ru/request#request-desc)
     """
 
     type: str
@@ -22,11 +22,11 @@ class AliceRequest(AliceObject):
     nlu: Optional[NLU] = None
 
     # Ошибка в аудиоплеере
-    # https://yandex.ru/dev/dialogs/alice/doc/request-audioplayer.html
+    # https://yandex.ru/dev/dialogs/alice/doc/ru/request-audioplayer
     error: Optional[AudioPlayerError] = None
 
     # not null при type == RequestType.PURCHASE_CONFIRMATION
-    # https://yandex.ru/dev/dialogs/alice/doc/request-purchase-confirmation.html
+    # https://yandex.ru/dev/dialogs/alice/doc/ru/request-purchase-confirmation
     purchase_request_id: Optional[str] = None
     purchase_token: Optional[str] = None
     order_id: Optional[str] = None
@@ -36,7 +36,7 @@ class AliceRequest(AliceObject):
     signature: Optional[str] = None
 
     # not null при запуске утреннего шоу Алисы
-    # https://yandex.ru/dev/dialogs/alice/doc/request-show-pull.html
+    # https://yandex.ru/dev/dialogs/alice/doc/ru/request-show-pull
     show_type: Optional[str] = None
 
     if TYPE_CHECKING:

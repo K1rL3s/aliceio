@@ -21,7 +21,7 @@
 </div>
 <p align="center">
     <b>
-        Асинхронный фреймворк, упрощающий разработку
+        Асинхронный фреймворк для разработки
         <a target="_blank" href="https://dialogs.yandex.ru/store">навыков Алисы</a>
         из
         <a target="_blank" href="https://dialogs.yandex.ru/development">Яндекс.Диалогов</a>

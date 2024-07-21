@@ -8,6 +8,7 @@ from aiohttp.web_app import Application
 from aliceio import Dispatcher, F
 from aliceio.enums import EventType
 from aliceio.types import AliceResponse, Message, Response, Session, Update, User
+from aliceio.types.alice_event import AliceEvent
 from aliceio.webhook.aiohttp_server import (
     OneSkillRequestHandler,
     ip_filter_middleware,
@@ -229,6 +230,10 @@ class TestOneSkillRequestHandler:
                 EventType.MESSAGE,
                 '{"meta": {"locale": "ru-RU", "timezone": "Europe/Moscow", "client_id": "ru.yandex.searchplugin/7.16 (none none; android 4.4.2)", "interfaces": {"screen": {}, "account_linking": {}, "audio_player": {}}}, "request": {"command": "закажи пиццу на улицу льва толстого 16 на завтра", "original_utterance": "закажи пиццу на улицу льва толстого, 16 на завтра", "markup": {"dangerous_context": true}, "payload": {}, "nlu": {"tokens": ["закажи", "пиццу", "на", "льва", "толстого", "16", "на", "завтра"], "entities": [{"tokens": {"start": 2, "end": 6}, "type": "YANDEX.GEO", "value": {"house_number": "16", "street": "льва толстого"}}, {"tokens": {"start": 3, "end": 5}, "type": "YANDEX.FIO", "value": {"first_name": "лев", "last_name": "толстой"}}, {"tokens": {"start": 5, "end": 6}, "type": "YANDEX.NUMBER", "value": 16}, {"tokens": {"start": 6, "end": 8}, "type": "YANDEX.DATETIME", "value": {"day": 1, "day_is_relative": true}}], "intents": {}}, "type": "SimpleUtterance"}, "session": {"message_id": 0, "session_id": "42:SESSION_ID", "skill_id": "42:SKILL_ID", "user_id": "42:DEPRECATED_USER_ID", "application": {"application_id": "42:APP_ID"}, "new": false}, "state": {"session": {"value": 10}, "application": {"value": 37}}, "version": "1.0"}',  # noqa: E501
             ],
+            [
+                EventType.ACCOUNT_LINKING_COMPLETE,
+                '{"meta": {"locale": "ru-RU", "timezone": "Asia/Yekaterinburg", "client_id": "ru.yandex.searchplugin/7.16 (none none; android 4.4.2)", "interfaces": {"screen": {}, "account_linking": {}, "audio_player": {}}}, "session": {"message_id": 0, "session_id": "42:SESSION_ID", "skill_id": "42:SKILL_ID", "user_id": "42:DEPRECATED_USER_ID", "user": {"user_id": "42:USER_ID", "access_token": "42:ACCESS_TOKEN"}, "application": {"application_id": "42:APP_ID"}, "new": false}, "state": {"session": {}, "user": {"data": {}}, "application": {}}, "version": "1.0", "account_linking_complete_event": {}}',  # noqa: E501
+            ],
         ],
     )
     async def test_feed_webhook_update(
@@ -251,8 +256,9 @@ class TestOneSkillRequestHandler:
             assert isinstance(event_session, Session)
             assert event_update.event == event
             assert event_update.skill is event.skill is skill
-            assert event.user == event_from_user
-            assert event.session == event_session
+            if isinstance(event, AliceEvent):
+                assert event.user == event_from_user
+                assert event.session == event_session
             return "Handled"
 
         app = Application()

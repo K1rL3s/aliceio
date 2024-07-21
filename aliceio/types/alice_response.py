@@ -11,7 +11,7 @@ class AliceResponse(MutableAliceObject):
     """
     Ответ на запрос API Алисы.
 
-    [Source](https://yandex.ru/dev/dialogs/alice/doc/response.html)
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/ru/response)
     """
 
     response: Response

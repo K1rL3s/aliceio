@@ -29,7 +29,7 @@ class UploadSound(AliceMethod[PreUploadedSound]):
             )
 
     def api_url(self, api_server: AliceAPIServer) -> str:
-        skill: "Skill" = cast("Skill", self.skill)
+        skill: Skill = cast("Skill", self.skill)
         return api_server.upload_file_url(
             skill_id=skill.id,
             file_type=FileType.SOUNDS,

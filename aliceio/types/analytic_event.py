@@ -9,7 +9,7 @@ class AnalyticEvent(MutableAliceObject):
     """
     Событие для аналитики.
 
-    [Source](https://yandex.ru/dev/dialogs/alice/doc/response.html#response__events-desc)
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/ru/response#events-desc)
     """
 
     name: str

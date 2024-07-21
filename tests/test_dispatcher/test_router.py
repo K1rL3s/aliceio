@@ -74,6 +74,10 @@ class TestRouter:
         assert router.observers["audio_player"] == router.audio_player
         assert router.observers["error"] == router.errors
         assert router.observers["timeout"] == router.timeout
+        assert (
+            router.observers["account_linking_complete_event"]
+            == router.account_linking_complete
+        )
 
     async def test_emit_startup(self):
         router1 = Router()

@@ -9,7 +9,7 @@ class Session(AliceObject):
     """
     Информация о сессии пользователя в навыке.
 
-    [Source](https://yandex.ru/dev/dialogs/alice/doc/request.html#request__session-desc)
+    [Source](https://yandex.ru/dev/dialogs/alice/doc/ru/request#session-desc)
     """
 
     message_id: int

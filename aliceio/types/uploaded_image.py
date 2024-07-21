@@ -7,11 +7,11 @@ class UploadedImage(AliceObject):
     """
     Загруженное изображение, доступное навыку.
 
-    [Source 1](https://yandex.ru/dev/dialogs/alice/doc/resource-upload.html#http-images-load__download-internet)
+    [Source 1](https://yandex.ru/dev/dialogs/alice/doc/ru/resource-upload#download-internet)
 
-    [Source 2](https://yandex.ru/dev/dialogs/alice/doc/resource-upload.html#http-images-load__upload-file)
+    [Source 2](https://yandex.ru/dev/dialogs/alice/doc/ru/resource-upload#upload-file)
 
-    [Source 3](https://yandex.ru/dev/dialogs/alice/doc/resource-upload.html#http-images-load__list)
+    [Source 3](https://yandex.ru/dev/dialogs/alice/doc/ru/resource-upload#list)
     """
 
     id: str
@@ -28,15 +28,15 @@ class UploadedImage(AliceObject):
             __pydantic_self__,
             *,
             id: str,
-            origUrl: Optional[str] = None,
             size: int,
+            origUrl: Optional[str] = None,
             createdAt: str,
             **__pydantic_kwargs: Any,
         ) -> None:
             super().__init__(
                 id=id,
-                origUrl=origUrl,
                 size=size,
+                origUrl=origUrl,
                 createdAt=createdAt,
                 **__pydantic_kwargs,
             )
