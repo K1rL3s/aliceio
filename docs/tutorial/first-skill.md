@@ -24,13 +24,13 @@
 ## Первые шаги
 
 Начнём с написания простого эхо-навыка.
-Для начала работы следует ознакомиться с основными классами фреймворка: `Skill`, `Dispatcher`, и `OneSkillRequestHandler`.
+Для начала работы следует ознакомиться с основными классами фреймворка: `Skill`, `Dispatcher`, и `OneSkillAiohttpRequestHandler`.
 
 ```python
 from aiohttp import web
 from aliceio import Dispatcher, Skill
 from aliceio.types import AliceResponse, Message, Response  # О типах чуть позже
-from aliceio.webhook.aiohttp_server import OneSkillRequestHandler, setup_application
+from aliceio.webhook.aiohttp_server import OneSkillAiohttpRequestHandler, setup_application
 
 dp = Dispatcher()
 skill = Skill(skill_id="...")
@@ -73,7 +73,7 @@ async def message_handler(message: Message) -> AliceResponse:
 ```python
 def main() -> None:
     app = web.Application()
-    webhook_requests_handler = OneSkillRequestHandler(
+    requests_handler = OneSkillAiohttpRequestHandler(
         dispatcher=dp,
         skill=skill,
     )
@@ -83,7 +83,7 @@ def main() -> None:
     WEB_SERVER_PORT = 80
     WEBHOOK_PATH = "/alice"
 
-    webhook_requests_handler.register(app, path=WEBHOOK_PATH)
+    requests_handler.register(app, path=WEBHOOK_PATH)
     setup_application(app, dp, skill=skill)
     web.run_app(app, host=WEB_SERVER_HOST, port=WEB_SERVER_PORT)
 
@@ -105,7 +105,7 @@ from aiohttp import web
 
 from aliceio import Dispatcher, Skill
 from aliceio.types import AliceResponse, Message, Response
-from aliceio.webhook.aiohttp_server import OneSkillRequestHandler, setup_application
+from aliceio.webhook.aiohttp_server import OneSkillAiohttpRequestHandler, setup_application
 
 
 dp = Dispatcher()
@@ -123,7 +123,7 @@ async def message_handler(message: Message) -> AliceResponse:
 
 def main() -> None:
     app = web.Application()
-    webhook_requests_handler = OneSkillRequestHandler(
+    requests_handler = OneSkillAiohttpRequestHandler(
         dispatcher=dp,
         skill=skill,
     )
@@ -132,7 +132,7 @@ def main() -> None:
     WEB_SERVER_PORT = 80
     WEBHOOK_PATH = "/alice"
 
-    webhook_requests_handler.register(app, path=WEBHOOK_PATH)
+    requests_handler.register(app, path=WEBHOOK_PATH)
     setup_application(app, dp, skill=skill)
     web.run_app(app, host=WEB_SERVER_HOST, port=WEB_SERVER_PORT)
 

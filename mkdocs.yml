@@ -111,9 +111,15 @@ nav:
               - Комбинации: aliceio/filters/logic.md
               - MagicData: aliceio/filters/magic-data.md
               - MagicFilter: aliceio/filters/magic-filter.md
-          - Вебхук:
-              - Aiohttp: aliceio/webhook/aiohttp-server.md
-              - Security: aliceio/webhook/security.md
+          - Вебхук и облачные функции:
+              - Aiohttp:
+                  - Base: aliceio/webhook/aiohttp-server/base.md
+                  - OneSkill: aliceio/webhook/aiohttp-server/one-skill.md
+                  - Set Up: aliceio/webhook/aiohttp-server/setup.md
+                  - Security: aliceio/webhook/aiohttp-server/security.md
+              - Yandex Functions:
+                  - Base: aliceio/webhook/yandex-functions/base.md
+                  - OneSkill: aliceio/webhook/yandex-functions/one-skill.md
           - Машина состояний:
               - Контекст: aliceio/fsm/context.md
               - Состояние: aliceio/fsm/state.md

@@ -22,7 +22,7 @@ DEFAULT_YANDEX_NETWORKS = [
 ```
 
 
-::: aliceio.webhook.security.IPFilter
+::: aliceio.webhook.aiohttp_server.security.IPFilter
     handler: python
     options:
       members:
@@ -32,3 +32,17 @@ DEFAULT_YANDEX_NETWORKS = [
         - allow_ip
         - check
         - __contains__
+
+<br/>
+
+::: aliceio.webhook.aiohttp_server.security.check_ip
+    handler: python
+    options:
+      members: true
+
+<br/>
+
+::: aliceio.webhook.aiohttp_server.security.ip_filter_middleware
+    handler: python
+    options:
+      members: true

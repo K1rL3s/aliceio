@@ -3,7 +3,7 @@ from typing import Set
 
 import pytest
 
-from aliceio.webhook.security import IPFilter
+from aliceio.webhook.aiohttp_server.security import IPFilter
 
 
 class TestSecurity:

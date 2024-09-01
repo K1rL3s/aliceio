@@ -23,7 +23,7 @@ Aliceio предоставляет несколько способов допо�
 
 ### Инициализация
 
-Первый и самый простой способ - просто указать именованные аргументы при иницализации `aliceio.dispatcher.dispatcher.Dispatcher` или `aliceio.webhook.aiohttp_server.OneSkillRequestHandler`.
+Первый и самый простой способ - просто указать именованные аргументы при иницализации `aliceio.dispatcher.dispatcher.Dispatcher` или `aliceio.webhook.aiohttp_server.OneSkillAiohttpRequestHandler`.
 
 ```python
 def main() -> None:
@@ -33,7 +33,7 @@ def main() -> None:
 ```python
 def main() -> None:
     dp = Dispatcher(..., foo=42)
-    handler = OneSkillRequestHandler(dispatcher=dp, skill=skill, bar="Bazz")
+    handler = OneSkillAiohttpRequestHandler(dispatcher=dp, skill=skill, bar="Bazz")
     ...
 ```
 

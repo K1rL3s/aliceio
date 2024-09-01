@@ -10,11 +10,10 @@ from aliceio.enums import EventType
 from aliceio.types import AliceResponse, Message, Response, Session, Update, User
 from aliceio.types.alice_event import AliceEvent
 from aliceio.webhook.aiohttp_server import (
-    OneSkillRequestHandler,
-    ip_filter_middleware,
+    OneSkillAiohttpRequestHandler,
     setup_application,
 )
-from aliceio.webhook.security import IPFilter
+from aliceio.webhook.aiohttp_server.security import IPFilter, ip_filter_middleware
 from tests.mocked.mocked_skill import MockedSkill
 
 
@@ -56,7 +55,7 @@ class TestAiohttpServer:
         assert resp.status == 200
 
 
-class TestOneSkillRequestHandler:
+class TestOneSkillAiohttpRequestHandler:
     async def make_reqest(
         self,
         client: TestClient,
@@ -116,7 +115,7 @@ class TestOneSkillRequestHandler:
         def handle_message(msg: Message) -> AliceResponse:
             return AliceResponse(response=Response(text="test"))
 
-        handler = OneSkillRequestHandler(dispatcher=dp, skill=skill)
+        handler = OneSkillAiohttpRequestHandler(dispatcher=dp, skill=skill)
         handler.register(app, path="/webhook")
         client: TestClient = await aiohttp_client(app)
 
@@ -140,7 +139,7 @@ class TestOneSkillRequestHandler:
         def handle_message(msg: Message) -> Response:
             return Response(text="test")
 
-        handler = OneSkillRequestHandler(dispatcher=dp, skill=skill)
+        handler = OneSkillAiohttpRequestHandler(dispatcher=dp, skill=skill)
         handler.register(app, path="/webhook")
         client = await aiohttp_client(app)
 
@@ -177,7 +176,7 @@ class TestOneSkillRequestHandler:
         def handle_message(msg: Message) -> Response:
             return Response(text="test")
 
-        handler = OneSkillRequestHandler(dispatcher=dp, skill=skill)
+        handler = OneSkillAiohttpRequestHandler(dispatcher=dp, skill=skill)
         handler.register(app, path="/webhook")
         client = await aiohttp_client(app)
 
@@ -266,7 +265,7 @@ class TestOneSkillRequestHandler:
         observer = dp.observers[event_type]
         observer.register(fn_handler)
 
-        handler = OneSkillRequestHandler(dispatcher=dp, skill=skill)
+        handler = OneSkillAiohttpRequestHandler(dispatcher=dp, skill=skill)
         handler.register(app, path="/webhook")
         client = await aiohttp_client(app)
         resp = await client.post("/webhook", data=update)
