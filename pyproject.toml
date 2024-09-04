@@ -88,7 +88,9 @@ docs = [
   "mkdocs~=1.5.3",
   "mkdocs_material~=9.5.5",
   "mkdocstrings~=0.24.0",
-  "mkdocstrings_python~=1.8.0"
+  "mkdocstrings_python~=1.9.2",
+  "mkdocs_autorefs~=1.0.1",
+  "griffe~=0.45.0"
 ]
 
 [project.urls]

@@ -7,7 +7,7 @@
 
 Перед тем, как начать разработку навыка для Алисы, важно знать [официальную документацию](https://yandex.ru/dev/dialogs/alice/doc/){:target="_blank"} и принцип работы навыков.
 
-Взаимодействие с Алисой происходит через [webhook](https://www.google.com/search?q=%D0%B2%D0%B5%D0%B1%D1%85%D1%83%D0%BA+%D1%8D%D1%82%D0%BE){:target="_blank"}'и -
+Взаимодействие с Алисой происходит через [webhook](https://www.google.com/search?q=%D0%B2%D0%B5%D0%B1%D1%85%D1%83%D0%BA+%D1%8D%D1%82%D0%BE){:target="_blank"}'и (или облачные функции) -
 Яндекс отправляет запрос с новым событие навыка, он что-то думает и возвращает ответ. Навыки не опрашивают Алису на предмет новых сообщений, действий и так далее. \
 Здесь нет [pooling](https://www.google.com/search?q=%D0%BF%D1%83%D0%BB%D0%B8%D0%BD%D0%B3+%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5+%D1%8D%D1%82%D0%BE){:target="_blank"}'а,
 поэтому нельзя узнать, принял ли Яндекс ваш ответ без ошибок (но не всегда).
@@ -24,13 +24,13 @@
 ## Первые шаги
 
 Начнём с написания простого эхо-навыка.
-Для начала работы следует ознакомиться с основными классами фреймворка: `Skill`, `Dispatcher`, и `OneSkillRequestHandler`.
+Для начала работы следует ознакомиться с основными классами фреймворка: `Skill`, `Dispatcher`, и `OneSkillAiohttpRequestHandler`.
 
 ```python
 from aiohttp import web
 from aliceio import Dispatcher, Skill
 from aliceio.types import AliceResponse, Message, Response  # О типах чуть позже
-from aliceio.webhook.aiohttp_server import OneSkillRequestHandler, setup_application
+from aliceio.webhook.aiohttp_server import OneSkillAiohttpRequestHandler, setup_application
 
 dp = Dispatcher()
 skill = Skill(skill_id="...")
@@ -73,7 +73,7 @@ async def message_handler(message: Message) -> AliceResponse:
 ```python
 def main() -> None:
     app = web.Application()
-    webhook_requests_handler = OneSkillRequestHandler(
+    requests_handler = OneSkillAiohttpRequestHandler(
         dispatcher=dp,
         skill=skill,
     )
@@ -83,7 +83,7 @@ def main() -> None:
     WEB_SERVER_PORT = 80
     WEBHOOK_PATH = "/alice"
 
-    webhook_requests_handler.register(app, path=WEBHOOK_PATH)
+    requests_handler.register(app, path=WEBHOOK_PATH)
     setup_application(app, dp, skill=skill)
     web.run_app(app, host=WEB_SERVER_HOST, port=WEB_SERVER_PORT)
 
@@ -105,7 +105,7 @@ from aiohttp import web
 
 from aliceio import Dispatcher, Skill
 from aliceio.types import AliceResponse, Message, Response
-from aliceio.webhook.aiohttp_server import OneSkillRequestHandler, setup_application
+from aliceio.webhook.aiohttp_server import OneSkillAiohttpRequestHandler, setup_application
 
 
 dp = Dispatcher()
@@ -123,7 +123,7 @@ async def message_handler(message: Message) -> AliceResponse:
 
 def main() -> None:
     app = web.Application()
-    webhook_requests_handler = OneSkillRequestHandler(
+    requests_handler = OneSkillAiohttpRequestHandler(
         dispatcher=dp,
         skill=skill,
     )
@@ -132,7 +132,7 @@ def main() -> None:
     WEB_SERVER_PORT = 80
     WEBHOOK_PATH = "/alice"
 
-    webhook_requests_handler.register(app, path=WEBHOOK_PATH)
+    requests_handler.register(app, path=WEBHOOK_PATH)
     setup_application(app, dp, skill=skill)
     web.run_app(app, host=WEB_SERVER_HOST, port=WEB_SERVER_PORT)
 

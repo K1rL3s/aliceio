@@ -6,7 +6,10 @@ from aiohttp import web
 
 from aliceio import Dispatcher, Router, Skill
 from aliceio.types import AliceResponse, Message, Response
-from aliceio.webhook.aiohttp_server import OneSkillRequestHandler, setup_application
+from aliceio.webhook.aiohttp_server import (
+    OneSkillAiohttpRequestHandler,
+    setup_application,
+)
 
 router = Router()
 
@@ -25,7 +28,7 @@ def main() -> None:
     skill = Skill(skill_id=skill_id)
 
     app = web.Application()
-    webhook_requests_handler = OneSkillRequestHandler(
+    requests_handler = OneSkillAiohttpRequestHandler(
         dispatcher=dp,
         skill=skill,
     )
@@ -34,7 +37,7 @@ def main() -> None:
     WEB_SERVER_PORT = 80
     WEBHOOK_PATH = "/alice"
 
-    webhook_requests_handler.register(app, path=WEBHOOK_PATH)
+    requests_handler.register(app, path=WEBHOOK_PATH)
     setup_application(app, dp, skill=skill)
     web.run_app(app, host=WEB_SERVER_HOST, port=WEB_SERVER_PORT)
 
