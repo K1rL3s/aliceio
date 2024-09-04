@@ -48,7 +48,7 @@ class OneSkillAiohttpRequestHandler(BaseAiohttpRequestHandler):
         request: web.Request,
         update: Optional[Update] = None,
     ) -> web.Response:
-        update = await self._update_validate(skill, request)
+        update = await self._validate_update(skill, request)
 
         # Проверка айди навыка в поступившем событии
         if update.session.skill_id != skill.skill_id:

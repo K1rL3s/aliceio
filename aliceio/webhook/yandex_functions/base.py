@@ -37,7 +37,7 @@ class BaseYandexFunctionsRequestHandler(ABC):
         update: Optional[Update] = None,
     ) -> _Response:
         if update is None:
-            update = await self._update_validate(skill, event, context)
+            update = await self._validate_update(skill, event, context)
 
         result = await self.dispatcher.feed_webhook_update(
             skill,
@@ -50,7 +50,7 @@ class BaseYandexFunctionsRequestHandler(ABC):
     async def resolve_skill(self, event: _Event, context: _Context) -> Skill:
         pass
 
-    async def _update_validate(
+    async def _validate_update(
         self,
         skill: Skill,
         event: _Event,

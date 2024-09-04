@@ -76,7 +76,7 @@ class BaseAiohttpRequestHandler(ABC):
         update: Optional[Update] = None,
     ) -> web.Response:
         if update is None:
-            update = await self._update_validate(skill, request)
+            update = await self._validate_update(skill, request)
 
         result = await self.dispatcher.feed_webhook_update(
             skill,
@@ -86,7 +86,7 @@ class BaseAiohttpRequestHandler(ABC):
         return self._build_web_response(result)
 
     # Сделать здесь обработку, если прилетает некорректный update?
-    async def _update_validate(self, skill: Skill, request: web.Request) -> Update:
+    async def _validate_update(self, skill: Skill, request: web.Request) -> Update:
         json_data = self._convert_show_pull_to_normal_request(
             await request.json(loads=self.json_loads),
         )

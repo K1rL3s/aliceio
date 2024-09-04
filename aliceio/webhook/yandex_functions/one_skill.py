@@ -26,10 +26,6 @@ class OneSkillYandexFunctionsRequestHandler(BaseYandexFunctionsRequestHandler):
         super().__init__(dispatcher=dispatcher, **data)
         self.skill = skill
 
-    async def close(self) -> None:
-        """Закрыть сессию навыка."""
-        await self.skill.session.close()
-
     async def resolve_skill(self, event: _Event, context: _Context) -> Skill:
         return self.skill
 
@@ -40,7 +36,7 @@ class OneSkillYandexFunctionsRequestHandler(BaseYandexFunctionsRequestHandler):
         context: _Context,
         update: Optional[Update] = None,
     ) -> _Response:
-        update = await self._update_validate(skill, event, context)
+        update = await self._validate_update(skill, event, context)
 
         # Проверка айди навыка в поступившем событии
         if update.session.skill_id != skill.skill_id:
