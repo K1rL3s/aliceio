@@ -40,22 +40,41 @@
 - Мидлвари (для входящих событий и вызовов API)
 - Мощные [магические фильтры](https://github.com/aiogram/magic-filter)
 - Реакция на [долгое время работы](https://yandex.ru/dev/dialogs/alice/doc/publish-settings.html#troubleshooting)
+- Поддержка [облачных функций Яндекса](https://yandex.cloud/ru/services/functions)
 
 
 ### Важно!
-Настоятельно рекомендуется иметь опыт работы с [asyncio](https://docs.python.org/3/library/asyncio.html) перед использованием **aliceio**
+Рекомендуется иметь опыт работы с [asyncio](https://docs.python.org/3/library/asyncio.html) перед использованием **aliceio**
 
 
 ## Быстрый старт
 
 Как получить `skill_id` и подключить навык к Алисе можно прочитать <a target="_blank" href="https://aliceio.readthedocs.io/ru/latest/tutorial/start/">тут</a>.
 
+### [Yandex Cloud Functions](https://yandex.ru/dev/dialogs/alice/doc/ru/quickstart-programming):
+```python
+from aliceio import Dispatcher, Skill
+from aliceio.types import Message
+from aliceio.webhook.yandex_functions import OneSkillYandexFunctionsRequestHandler
+
+dp = Dispatcher()
+skill = Skill(skill_id="...")
+requests_handler = OneSkillYandexFunctionsRequestHandler(dispatcher=dp, skill=skill)
+
+@dp.message()
+async def hello(message: Message) -> str:
+    return f"Привет, {message.session.application.application_id}!"
+
+async def main(event, context):
+    return await requests_handler(event, context)
+```
+
+### Вебхук:
 ```python
 from aiohttp import web
 from aliceio import Dispatcher, Skill
 from aliceio.types import Message
-from aliceio.webhook.aiohttp_server.one_skill import OneSkillAiohttpRequestHandler
-from aliceio.webhook.aiohttp_server.setup import setup_application
+from aliceio.webhook.aiohttp_server import OneSkillAiohttpRequestHandler, setup_application
 
 dp = Dispatcher()
 skill = Skill(skill_id="...")
@@ -66,13 +85,13 @@ async def hello(message: Message) -> str:
 
 def main() -> None:
     app = web.Application()
-    webhook_requests_handler = OneSkillAiohttpRequestHandler(dispatcher=dp, skill=skill)
+    requests_handler = OneSkillAiohttpRequestHandler(dispatcher=dp, skill=skill)
 
     WEB_SERVER_HOST = "127.0.0.1"
     WEB_SERVER_PORT = 80
     WEBHOOK_PATH = "/alice"
 
-    webhook_requests_handler.register(app, path=WEBHOOK_PATH)
+    requests_handler.register(app, path=WEBHOOK_PATH)
     setup_application(app, dp, skill=skill)
     web.run_app(app, host=WEB_SERVER_HOST, port=WEB_SERVER_PORT)
 
@@ -80,15 +99,16 @@ if __name__ == "__main__":
     main()
 ```
 
-## Документация
+
+## Материалы
 - [Туториал](https://aliceio.readthedocs.io/ru/latest/tutorial/start/)
 - [Документация](https://aliceio.readthedocs.io/)
 - [Примеры](https://github.com/K1rL3s/aliceio/tree/master/examples)
 
 
 ## Связь
-Если у вас есть вопросы, вы можете посетить чат сообщества в Telegram
--   🇷🇺 [\@aliceio_chat](https://t.me/aliceio_chat)
+Если у вас есть вопросы, вы можете задать их в Телеграм чате
+- 🇷🇺 [\@aliceio_chat](https://t.me/aliceio_chat)
 
 
 ## Лицензия

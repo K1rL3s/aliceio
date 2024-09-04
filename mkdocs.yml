@@ -34,6 +34,7 @@ nav:
                   - Получить: aliceio/methods/sounds/get-sounds.md
                   - Удалить: aliceio/methods/sounds/delete-sound.md
           - Типы:
+              - AccountLinkingComplete: aliceio/types/account-linking-complete.md
               - AliceEvent: aliceio/types/alice-event.md
               - AliceRequest: aliceio/types/alice-request.md
               - AliceResponse: aliceio/types/alice-response.md
@@ -174,7 +175,9 @@ nav:
 
   - Туториал:
       - tutorial/index.md
-      - Начало: tutorial/start.md
+      - Создать навык: tutorial/create-skill.md
+      - Вебхук: tutorial/connect-webhook.md
+      - Яндекс Функция: tutorial/connect-yandex-functions.md
       - Первый навык: tutorial/first-skill.md
       - Методы API: tutorial/methods.md
       - Роутеры: tutorial/routers.md

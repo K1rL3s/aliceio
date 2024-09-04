@@ -6,7 +6,7 @@ from aliceio.webhook.yandex_functions import OneSkillYandexFunctionsRequestHandl
 
 dp = Dispatcher()
 skill = Skill(skill_id="...")  # Вставьте айди навыка
-request_handler = OneSkillYandexFunctionsRequestHandler(dp, skill)
+requests_handler = OneSkillYandexFunctionsRequestHandler(dp, skill)
 
 
 @dp.message()
@@ -17,6 +17,6 @@ async def message_handler(message: Message) -> AliceResponse:
 
 # Нужно поставить эту функцию как точку входа
 async def main(event: Any, context: Any) -> Any:
-    return await request_handler(event, context)
+    return await requests_handler(event, context)
     # аналогично:
-    # return await request_handler.handle(event, context)
+    # return await requests_handler.handle(event, context)
