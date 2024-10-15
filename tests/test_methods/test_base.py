@@ -4,6 +4,7 @@ import pytest
 
 from aliceio.client.alice import AliceAPIServer
 from aliceio.enums import HttpMethod
+from aliceio.exceptions import MethodNotMountedToSkillError
 from aliceio.methods.base import AliceMethod
 from tests.mocked import MockedSkill
 
@@ -37,7 +38,7 @@ class TestAliceMethod:
 
     async def test_await_without_skill(self, skill: MockedSkill):
         method = MyMethod()
-        with pytest.raises(RuntimeError):
+        with pytest.raises(MethodNotMountedToSkillError):
             await method
 
     async def test_skill_call(self, skill: MockedSkill):

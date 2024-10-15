@@ -1,13 +1,10 @@
-from typing import TYPE_CHECKING, Any, Optional, cast
+from typing import TYPE_CHECKING, Any, Optional
 
 from aliceio.client.alice import AliceAPIServer
 from aliceio.enums import FileType, HttpMethod
-from aliceio.exceptions import AliceWrongFieldError
+from aliceio.exceptions import AliceWrongFieldError, MethodNotMountedToSkillError
 from aliceio.methods.base import AliceMethod
 from aliceio.types import InputFile, PreUploadedImage
-
-if TYPE_CHECKING:
-    from aliceio.client.skill import Skill
 
 
 class UploadImage(AliceMethod[PreUploadedImage]):
@@ -41,8 +38,9 @@ class UploadImage(AliceMethod[PreUploadedImage]):
             raise AliceWrongFieldError('"file" and "url" cannot be specified together')
 
     def api_url(self, api_server: AliceAPIServer) -> str:
-        skill: Skill = cast("Skill", self.skill)
+        if self.skill is None:
+            raise MethodNotMountedToSkillError
         return api_server.upload_file_url(
-            skill_id=skill.id,
+            skill_id=self.skill.id,
             file_type=FileType.IMAGES,
         )

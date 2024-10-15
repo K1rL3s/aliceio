@@ -76,3 +76,14 @@ class ClientDecodeError(AliceioError):
             f"{original_type.__module__}.{original_type.__name__}: {self.original}\n"
             f"Content: {self.data}"
         )
+
+
+class MethodNotMountedToSkillError(DetailedAliceioError):
+    def __init__(self) -> None:
+        super().__init__(
+            message="This method is not mounted to a any skill instance, "
+            "please call it explicilty "
+            "with skill instance `await skill(method)`\n"
+            "or mount method to a skill instance `method.as_(skill)` "
+            "and then call it `await method()`",
+        )
