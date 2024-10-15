@@ -1,7 +1,7 @@
 import pytest
 
 from aliceio.client.alice import PRODUCTION
-from aliceio.exceptions import AliceWrongFieldError
+from aliceio.exceptions import AliceWrongFieldError, MethodNotMountedToSkillError
 from aliceio.methods import DeleteImage, GetImages, UploadImage
 from aliceio.types import BufferedInputFile
 from tests.mocked import MockedSkill
@@ -11,7 +11,7 @@ class TestUploadImage:
     def test_api_url(self, skill: MockedSkill):
         method = UploadImage(file=BufferedInputFile(file=b""))
 
-        with pytest.raises(AttributeError):
+        with pytest.raises(MethodNotMountedToSkillError):
             method.api_url(PRODUCTION)
 
         method.as_(skill)
@@ -32,7 +32,7 @@ class TestGetImages:
     def test_api_url(self, skill: MockedSkill):
         method = GetImages(file=BufferedInputFile(file=b""))
 
-        with pytest.raises(AttributeError):
+        with pytest.raises(MethodNotMountedToSkillError):
             method.api_url(PRODUCTION)
 
         method.as_(skill)
@@ -44,7 +44,7 @@ class TestDeleteImage:
     def test_api_url(self, skill: MockedSkill):
         method = DeleteImage(file_id="FILE_ID")
 
-        with pytest.raises(AttributeError):
+        with pytest.raises(MethodNotMountedToSkillError):
             method.api_url(PRODUCTION)
 
         method.as_(skill)

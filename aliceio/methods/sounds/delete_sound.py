@@ -1,12 +1,10 @@
-from typing import TYPE_CHECKING, Any, cast
+from typing import TYPE_CHECKING, Any
 
 from aliceio.client.alice import AliceAPIServer
 from aliceio.enums import FileType, HttpMethod
+from aliceio.exceptions import MethodNotMountedToSkillError
 from aliceio.methods.base import AliceMethod
 from aliceio.types import Result
-
-if TYPE_CHECKING:
-    from aliceio.client.skill import Skill
 
 
 class DeleteSound(AliceMethod[Result]):
@@ -29,9 +27,10 @@ class DeleteSound(AliceMethod[Result]):
             )
 
     def api_url(self, api_server: AliceAPIServer) -> str:
-        skill: Skill = cast("Skill", self.skill)
+        if self.skill is None:
+            raise MethodNotMountedToSkillError
         return api_server.delete_file_url(
-            skill_id=skill.id,
+            skill_id=self.skill.id,
             file_type=FileType.SOUNDS,
             file_id=self.file_id,
         )
