@@ -1,10 +1,11 @@
+import asyncio
+import sys
 from pathlib import Path
-from typing import AsyncGenerator, List, Optional
+from typing import AsyncGenerator, List
 
 import pytest
 from _pytest.config import Config, UsageError
 from _pytest.config.argparsing import Parser
-from _pytest.fixtures import SubRequest
 from _pytest.python import Function
 from redis.asyncio.connection import parse_url as parse_redis_url
 
@@ -17,6 +18,8 @@ from tests.mocked.mocked_skill import MockedSkill
 from tests.mocked.mocked_update import create_mocked_update
 
 DATA_DIR = Path(__file__).parent / "data"
+SKIP_MESSAGE_PATTERN = 'Need "--{db}" option with {db} URI to run'
+INVALID_URI_PATTERN = "Invalid {db} URI {uri!r}: {err}"
 
 
 def pytest_addoption(parser: Parser) -> None:
@@ -32,6 +35,11 @@ def pytest_configure(config: Config) -> None:
         "markers",
         "redis: marked tests require redis connection to run",
     )
+
+    if sys.platform == "win32":
+        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+    else:
+        asyncio.set_event_loop_policy(asyncio.DefaultEventLoopPolicy())
 
 
 def pytest_collection_modifyitems(config: Config, items: List[Function]) -> None:
@@ -51,20 +59,27 @@ def pytest_collection_modifyitems(config: Config, items: List[Function]) -> None
 
 
 @pytest.fixture()
-def redis_server(request: SubRequest) -> Optional[str]:
-    return request.config.getoption("--redis")
+def redis_server(request):
+    redis_uri = request.config.getoption("--redis")
+    if redis_uri is None:
+        pytest.skip(SKIP_MESSAGE_PATTERN.format(db="redis"))
+    else:
+        return redis_uri
 
 
 @pytest.fixture()
-@pytest.mark.redis
-async def redis_storage(redis_server) -> AsyncGenerator[RedisStorage, None]:
-    if not redis_server:
-        pytest.skip("Redis is not available here")
+async def redis_storage(redis_server):
+    try:
+        parse_redis_url(redis_server)
+    except ValueError as e:
+        raise UsageError(
+            INVALID_URI_PATTERN.format(db="redis", uri=redis_server, err=e),
+        )
     storage = RedisStorage.from_url(redis_server)
     try:
         await storage.redis.info()
     except ConnectionError as e:
-        pytest.skip(str(e))
+        pytest.fail(str(e))
     try:
         yield storage
     finally:
