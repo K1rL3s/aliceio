@@ -1,4 +1,5 @@
-from typing import Any, Awaitable, Callable, Dict, Optional, cast
+from collections.abc import Awaitable
+from typing import Any, Callable, Optional, cast
 
 from aliceio import Skill
 from aliceio.dispatcher.middlewares.base import BaseMiddleware
@@ -29,9 +30,9 @@ class FSMContextMiddleware(BaseMiddleware[AliceObject]):
 
     async def __call__(
         self,
-        handler: Callable[[AliceObject, Dict[str, Any]], Awaitable[Any]],
+        handler: Callable[[AliceObject, dict[str, Any]], Awaitable[Any]],
         event: AliceObject,
-        data: Dict[str, Any],
+        data: dict[str, Any],
     ) -> Any:
         skill: Skill = cast(Skill, data["skill"])
         context = self.resolve_event_context(skill, data)
@@ -47,7 +48,7 @@ class FSMContextMiddleware(BaseMiddleware[AliceObject]):
     def resolve_event_context(
         self,
         skill: Skill,
-        data: Dict[str, Any],
+        data: dict[str, Any],
         destiny: str = DEFAULT_DESTINY,
     ) -> FSMContext:
         session: Session = data["event_session"]

@@ -4,7 +4,7 @@ import abc
 import json
 from http import HTTPStatus
 from types import TracebackType
-from typing import TYPE_CHECKING, Any, Callable, Final, Optional, Type, cast
+from typing import TYPE_CHECKING, Any, Callable, Final, Optional, cast
 
 from pydantic import ValidationError
 
@@ -124,7 +124,7 @@ class BaseSession(abc.ABC):
 
     async def __aexit__(
         self,
-        exc_type: Optional[Type[BaseException]],
+        exc_type: Optional[type[BaseException]],
         exc_value: Optional[BaseException],
         traceback: Optional[TracebackType],
     ) -> None:

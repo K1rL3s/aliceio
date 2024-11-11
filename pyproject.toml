@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "aliceio"
 description = "Asynchronous framework for Alice from Yandex Dialogs"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 license = { file = "LICENSE" }
 authors = [{ name = "K1rL3s - Kirill Lesovoy" }]
 maintainers = [{ name = "K1rL3s - Kirill Lesovoy" }]
@@ -29,11 +29,11 @@ classifiers = [
   "Typing :: Typed",
   "Intended Audience :: Developers",
   "Intended Audience :: System Administrators",
-  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
   "Topic :: Software Development :: Libraries :: Application Frameworks",
   "Topic :: Software Development :: Libraries :: Python Modules",
   "Topic :: Communications :: Chat",
@@ -43,8 +43,7 @@ dependencies = [
   "aiohttp>=3.9.0,<3.11",
   "certifi>=2023.7.22",
   "magic-filter>=1.0.12,<1.1",
-  "pydantic>=2.4.1,<2.9; python_version < '3.9'", # v2.9 breaks compatibility with Python 3.8 without any reason
-  "pydantic>=2.4.1,<2.10; python_version >= '3.9'",
+  "pydantic>=2.4.1,<2.10",
   "typing-extensions>=4.7.0,<=5.0",
 ]
 
@@ -54,7 +53,8 @@ path = "aliceio/__meta__.py"
 
 [project.optional-dependencies]
 fast = [
-  "uvloop>=0.17.0; (sys_platform == 'darwin' or sys_platform == 'linux') and platform_python_implementation != 'PyPy'",
+  "uvloop>=0.17.0; (sys_platform == 'darwin' or sys_platform == 'linux') and platform_python_implementation != 'PyPy' and python_version < '3.13'",
+  "uvloop>=0.21.0; (sys_platform == 'darwin' or sys_platform == 'linux') and platform_python_implementation != 'PyPy' and python_version >= '3.13'",
   "aiodns>=3.0.0",
 ]
 redis = [
@@ -155,7 +155,7 @@ view-cov = "google-chrome-stable reports/py{matrix:python}/coverage/index.html"
 
 
 [[tool.hatch.envs.test.matrix]]
-python = ["38", "39", "310", "311", "312"]
+python = ["39", "310", "311", "312", "313"]
 
 [tool.ruff]
 line-length = 88
@@ -196,10 +196,9 @@ lint.ignore = [
   "RUF003", # ambiguous-unicode-character-comment | Comment contains ambiguous {}. Did you mean {}?
   "UP042", # Class StrEnum inherits from both `str` and `enum.Enum`
   "UP007", # Use `X | Y` for type annotations
-  "UP006", # Use `dict` instead of `Dict` for type annotation
   "SIM102", # Use a single `if` statement instead of nested `if` statements
 ]
-src = ["aliceio", "tests"]
+src = ["aliceio", "tests", "examples"]
 exclude = [
   ".git",
   "build",
@@ -212,7 +211,7 @@ exclude = [
   "scripts",
   "*.egg-info",
 ]
-target-version = "py38"
+target-version = "py39"
 indent-width = 4
 
 [tool.ruff.format]
@@ -252,7 +251,7 @@ exclude_lines = [
 
 [tool.mypy]
 plugins = "pydantic.mypy"
-python_version = "3.8"
+python_version = "3.9"
 show_error_codes = true
 show_error_context = true
 pretty = true
@@ -285,7 +284,7 @@ disallow_untyped_defs = true
 
 [tool.black]
 line-length = 88
-target-version = ['py38', 'py39', 'py310', 'py311', 'py312']
+target-version = ['py39', 'py310', 'py311', 'py312', 'py313']
 exclude = '''
 (
     \.eggs
@@ -294,6 +293,7 @@ exclude = '''
   | build
   | dist
   | venv
+  | .venv
   | docs
 )
 '''

@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
-from typing import Any, Awaitable, Callable, Dict, Generic, TypeVar
+from collections.abc import Awaitable
+from typing import Any, Callable, Generic, TypeVar
 
 from aliceio.types.base import AliceObject
 
@@ -12,9 +13,9 @@ class BaseMiddleware(ABC, Generic[EventType]):
     @abstractmethod
     async def __call__(
         self,
-        handler: Callable[[EventType, Dict[str, Any]], Awaitable[Any]],
+        handler: Callable[[EventType, dict[str, Any]], Awaitable[Any]],
         event: EventType,
-        data: Dict[str, Any],
+        data: dict[str, Any],
     ) -> Any:  # pragma: no cover
         """
         Вызов мидлваря

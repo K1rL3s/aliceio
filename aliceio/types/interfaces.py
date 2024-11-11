@@ -1,10 +1,10 @@
-from typing import TYPE_CHECKING, Any, Dict, Optional
+from typing import TYPE_CHECKING, Any, Optional
 
 from aliceio.types.base import AliceObject
 
-AccountLinking = Dict[str, Any]
-Screen = Dict[str, Any]
-AudioPlayer = Dict[str, Any]
+AccountLinking = dict[str, Any]
+Screen = dict[str, Any]
+AudioPlayer = dict[str, Any]
 
 
 class Interfaces(AliceObject):

@@ -1,7 +1,7 @@
 import asyncio
 import sys
+from collections.abc import AsyncGenerator
 from pathlib import Path
-from typing import AsyncGenerator, List
 
 import pytest
 from _pytest.config import Config, UsageError
@@ -42,7 +42,7 @@ def pytest_configure(config: Config) -> None:
         asyncio.set_event_loop_policy(asyncio.DefaultEventLoopPolicy())
 
 
-def pytest_collection_modifyitems(config: Config, items: List[Function]) -> None:
+def pytest_collection_modifyitems(config: Config, items: list[Function]) -> None:
     redis_uri = config.getoption("--redis")
     if redis_uri is None:
         skip_redis = pytest.mark.skip(

@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, ClassVar, List, Optional
+from typing import TYPE_CHECKING, Any, ClassVar, Optional
 
 from .base import AliceObject
 
@@ -90,14 +90,14 @@ class PreUploadedSound(AliceObject):
 class UploadedSoundsList(AliceObject):
     """Список аудио."""
 
-    sounds: List[UploadedSound]
+    sounds: list[UploadedSound]
 
     if TYPE_CHECKING:
 
         def __init__(
             __pydantic_self__,
             *,
-            sounds: List[UploadedSound],
+            sounds: list[UploadedSound],
             **__pydantic_kwargs: Any,
         ) -> None:
             super().__init__(

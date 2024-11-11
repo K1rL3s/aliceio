@@ -1,7 +1,7 @@
 import datetime
 import json
 from enum import Enum
-from typing import Any, Callable, Dict, Protocol
+from typing import Any, Callable, Protocol
 
 from aiohttp import JsonPayload
 
@@ -10,12 +10,12 @@ from aliceio.types import InputFile
 
 
 class PrepareValue(Protocol):  # pragma: no cover
-    def __call__(self, value: Any, files: Dict[str, Any]) -> Any: ...
+    def __call__(self, value: Any, files: dict[str, Any]) -> Any: ...
 
 
 # Ключи, у которых значение = None, не пропускаются, потому что иначе не получится
 # установить None в значение хранилища состояний API Алисы
-def prepare_value(value: Any, files: Dict[str, Any]) -> Any:
+def prepare_value(value: Any, files: dict[str, Any]) -> Any:
     """Подготовка значения перед отправкой."""
     if value in (None, UNHANDLED, REJECTED):
         return None

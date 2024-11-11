@@ -1,4 +1,5 @@
-from typing import Any, Awaitable, Callable, Dict, Optional
+from collections.abc import Awaitable
+from typing import Any, Callable, Optional
 
 from aliceio.dispatcher.middlewares.base import BaseMiddleware
 from aliceio.fsm.context import FSMContext
@@ -22,9 +23,9 @@ class FSMApiStorageMiddleware(BaseMiddleware[Update]):
 
     async def __call__(
         self,
-        handler: Callable[[Update, Dict[str, Any]], Awaitable[Any]],
+        handler: Callable[[Update, dict[str, Any]], Awaitable[Any]],
         event: Update,
-        data: Dict[str, Any],
+        data: dict[str, Any],
     ) -> Any:
         fsm_context: FSMContext = data[FSM_CONTEXT_KEY]
 
@@ -69,7 +70,7 @@ class FSMApiStorageMiddleware(BaseMiddleware[Update]):
             return self.create_record_from_data(state.application)
         return self.create_record_from_data(state.session)
 
-    def create_record_from_data(self, data: Dict[str, Any]) -> ApiStorageRecord:
+    def create_record_from_data(self, data: dict[str, Any]) -> ApiStorageRecord:
         return ApiStorageRecord(data=data.get("data", {}), state=data.get("state"))
 
     async def set_state_to_alice(
@@ -87,7 +88,7 @@ class FSMApiStorageMiddleware(BaseMiddleware[Update]):
     def set_new_state(
         self,
         response: AliceResponse,
-        new_state: Dict[str, Any],
+        new_state: dict[str, Any],
         is_anonymous: bool = False,
     ) -> None:
         if self.strategy == FSMStrategy.USER:

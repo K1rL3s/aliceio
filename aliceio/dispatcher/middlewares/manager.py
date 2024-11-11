@@ -1,5 +1,6 @@
 import functools
-from typing import Any, Callable, Dict, List, Optional, Sequence, Union, overload
+from collections.abc import Sequence
+from typing import Any, Callable, Optional, Union, overload
 
 from aliceio.dispatcher.event.bases import (
     MiddlewareEventType,
@@ -12,7 +13,7 @@ from aliceio.types.base import AliceObject
 
 class MiddlewareManager(Sequence[MiddlewareType[AliceObject]]):
     def __init__(self) -> None:
-        self._middlewares: List[MiddlewareType[AliceObject]] = []
+        self._middlewares: list[MiddlewareType[AliceObject]] = []
 
     def register(
         self,
@@ -58,7 +59,7 @@ class MiddlewareManager(Sequence[MiddlewareType[AliceObject]]):
         handler: CallbackType,
     ) -> NextMiddlewareType[MiddlewareEventType]:
         @functools.wraps(handler)
-        def handler_wrapper(event: AliceObject, kwargs: Dict[str, Any]) -> Any:
+        def handler_wrapper(event: AliceObject, kwargs: dict[str, Any]) -> Any:
             return handler(event, **kwargs)
 
         middleware = handler_wrapper

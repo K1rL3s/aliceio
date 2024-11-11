@@ -2,17 +2,8 @@ from __future__ import annotations
 
 import asyncio
 import ssl
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Dict,
-    Iterable,
-    Optional,
-    Tuple,
-    Type,
-    Union,
-    cast,
-)
+from collections.abc import Iterable
+from typing import TYPE_CHECKING, Any, Optional, Union, cast
 
 import certifi
 from aiohttp import BasicAuth, ClientError, ClientSession, FormData, TCPConnector
@@ -30,12 +21,12 @@ from aliceio.utils.funcs import prepare_value
 if TYPE_CHECKING:
     from aliceio.client.skill import Skill
 
-_ProxyBasic = Union[str, Tuple[str, BasicAuth]]
+_ProxyBasic = Union[str, tuple[str, BasicAuth]]
 _ProxyChain = Iterable[_ProxyBasic]
 _ProxyType = Union[_ProxyChain, _ProxyBasic]
 
 
-def _retrieve_basic(basic: _ProxyBasic) -> Dict[str, Any]:
+def _retrieve_basic(basic: _ProxyBasic) -> dict[str, Any]:
     from aiohttp_socks.utils import parse_proxy_url  # type: ignore
 
     proxy_auth: Optional[BasicAuth] = None
@@ -62,7 +53,7 @@ def _retrieve_basic(basic: _ProxyBasic) -> Dict[str, Any]:
 
 def _prepare_connector(
     chain_or_plain: _ProxyType,
-) -> Tuple[Type[TCPConnector], Dict[str, Any]]:
+) -> tuple[type[TCPConnector], dict[str, Any]]:
     from aiohttp_socks import (  # type: ignore
         ChainProxyConnector,
         ProxyConnector,
@@ -100,8 +91,8 @@ class AiohttpSession(BaseSession):
         super().__init__(**kwargs)
 
         self._session: Optional[ClientSession] = None
-        self._connector_type: Type[TCPConnector] = TCPConnector
-        self._connector_init: Dict[str, Any] = {
+        self._connector_type: type[TCPConnector] = TCPConnector
+        self._connector_init: dict[str, Any] = {
             "ssl": ssl.create_default_context(cafile=certifi.where()),
             "limit": limit,
             "ttl_dns_cache": 3600,  # https://github.com/aiogram/aiogram/issues/1500
@@ -155,9 +146,9 @@ class AiohttpSession(BaseSession):
     def build_request_data(
         self,
         method: AliceMethod[AliceType],
-    ) -> Tuple[Optional[FormData], Optional[Dict[str, Any]]]:
+    ) -> tuple[Optional[FormData], Optional[dict[str, Any]]]:
         form = FormData(quote_fields=False)
-        files: Dict[str, InputFile] = {}
+        files: dict[str, InputFile] = {}
         for key, value in method.model_dump(warnings=False).items():
             value = prepare_value(value, files=files)
             if not value:
@@ -176,17 +167,17 @@ class AiohttpSession(BaseSession):
         return form, None
 
     @staticmethod
-    def _build_json_data(method: AliceMethod[AliceType]) -> Dict[str, Any]:
-        data: Dict[str, Any] = {}
+    def _build_json_data(method: AliceMethod[AliceType]) -> dict[str, Any]:
+        data: dict[str, Any] = {}
         for key, value in method.model_dump(warnings=False).items():
             value = prepare_value(value, files={})
             if not value:
                 continue
             data[key] = value
-        return cast(Dict[str, Any], prepare_value(data, {}))
+        return cast(dict[str, Any], prepare_value(data, {}))
 
     @staticmethod
-    def _build_request_headers(skill: Skill) -> Dict[str, Any]:
+    def _build_request_headers(skill: Skill) -> dict[str, Any]:
         if skill.oauth_token is None:
             raise AliceNoCredentialsError(
                 "To use the Alice API, "

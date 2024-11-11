@@ -1,6 +1,6 @@
-from typing import Any, Dict
+from typing import Any
 
-Payload = Dict[str, Any]
+Payload = dict[str, Any]
 # Произвольный JSON-объект, который Яндекс Диалоги должны отправить обработчику,
 # если данная кнопка будет нажата.
 # Максимум 4096 байт.

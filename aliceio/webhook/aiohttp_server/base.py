@@ -1,6 +1,6 @@
 import json
 from abc import ABC, abstractmethod
-from typing import Any, Callable, Dict, Optional, cast
+from typing import Any, Callable, Optional, cast
 
 from aiohttp import JsonPayload, web
 from aiohttp.abc import Application
@@ -100,7 +100,7 @@ class BaseAiohttpRequestHandler(ABC):
 
     # TODO: Проверить, помогает ли про запуске шоу Алисы
     @staticmethod
-    def _convert_show_pull_to_normal_request(update: Dict[str, Any]) -> Dict[str, Any]:
+    def _convert_show_pull_to_normal_request(update: dict[str, Any]) -> dict[str, Any]:
         """
         При получении события запуска утреннего шоу вся информация
         (мета, сессия, версия и реквест) вероятно находится по ключу body.
@@ -111,7 +111,7 @@ class BaseAiohttpRequestHandler(ABC):
         :param update:
         :return:
         """
-        return cast(Dict[str, Any], update.get("body", update))
+        return cast(dict[str, Any], update.get("body", update))
 
     def _build_web_response(self, result: Any) -> web.Response:
         return web.Response(

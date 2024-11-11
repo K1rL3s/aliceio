@@ -4,7 +4,7 @@ import inspect
 import warnings
 from dataclasses import dataclass, field
 from functools import partial
-from typing import Any, Callable, Dict, List, Optional, Set, Tuple
+from typing import Any, Callable, Optional
 
 from magic_filter.magic import MagicFilter as OriginalMagicFilter
 
@@ -21,7 +21,7 @@ CallbackType = Callable[..., Any]
 class CallableObject:
     callback: CallbackType
     awaitable: bool = field(init=False)
-    params: Set[str] = field(init=False)
+    params: set[str] = field(init=False)
     varkw: bool = field(init=False)
 
     def __post_init__(self) -> None:
@@ -33,7 +33,7 @@ class CallableObject:
         self.params = {*spec.args, *spec.kwonlyargs}
         self.varkw = spec.varkw is not None
 
-    def _prepare_kwargs(self, kwargs: Dict[str, Any]) -> Dict[str, Any]:
+    def _prepare_kwargs(self, kwargs: dict[str, Any]) -> dict[str, Any]:
         if self.varkw:
             return kwargs
 
@@ -79,8 +79,8 @@ class FilterObject(CallableObject):
 
 @dataclass
 class HandlerObject(CallableObject):
-    filters: Optional[List[FilterObject]] = None
-    flags: Dict[str, Any] = field(default_factory=dict)
+    filters: Optional[list[FilterObject]] = None
+    flags: dict[str, Any] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
         super(HandlerObject, self).__post_init__()  # noqa: UP008
@@ -89,7 +89,7 @@ class HandlerObject(CallableObject):
             self.awaitable = True
         self.flags.update(extract_flags_from_object(callback))
 
-    async def check(self, *args: Any, **kwargs: Any) -> Tuple[bool, Dict[str, Any]]:
+    async def check(self, *args: Any, **kwargs: Any) -> tuple[bool, dict[str, Any]]:
         if not self.filters:
             return True, kwargs
         for event_filter in self.filters:

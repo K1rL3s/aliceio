@@ -1,5 +1,6 @@
 import asyncio
-from typing import Any, AsyncContextManager, AsyncIterable, Dict, List
+from collections.abc import AsyncIterable
+from typing import Any, AsyncContextManager  # noqa: UP035
 from unittest.mock import AsyncMock, patch
 
 import aiohttp_socks
@@ -119,8 +120,8 @@ class TestAiohttpSession:
             int_: int
             bool_: bool
             null_: None
-            list_: List[str]
-            dict_: Dict[str, Any]
+            list_: list[str]
+            dict_: dict[str, Any]
 
         session = AiohttpSession()
         form, json_data = session.build_request_data(
@@ -212,13 +213,16 @@ class TestAiohttpSession:
         async with AiohttpSession() as session:
             assert isinstance(session, AsyncContextManager)
 
-            with patch(
-                "aliceio.client.session.aiohttp.AiohttpSession.create_session",
-                new_callable=AsyncMock,
-            ) as mocked_create_session, patch(
-                "aliceio.client.session.aiohttp.AiohttpSession.close",
-                new_callable=AsyncMock,
-            ) as mocked_close:
+            with (
+                patch(
+                    "aliceio.client.session.aiohttp.AiohttpSession.create_session",
+                    new_callable=AsyncMock,
+                ) as mocked_create_session,
+                patch(
+                    "aliceio.client.session.aiohttp.AiohttpSession.close",
+                    new_callable=AsyncMock,
+                ) as mocked_close,
+            ):
                 async with session as ctx:
                     assert session == ctx
                 mocked_close.assert_awaited_once()

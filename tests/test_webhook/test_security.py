@@ -1,5 +1,4 @@
 from ipaddress import IPv4Address, IPv4Network
-from typing import Set
 
 import pytest
 
@@ -63,7 +62,7 @@ class TestSecurity:
             [42, set()],
         ],
     )
-    def test_allow_ip(self, ip, ip_range: Set[IPv4Address]):
+    def test_allow_ip(self, ip, ip_range: set[IPv4Address]):
         ip_filter = IPFilter()
         if not ip_range:
             with pytest.raises(ValueError):

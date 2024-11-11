@@ -2,7 +2,7 @@ import asyncio
 import contextvars
 import warnings
 from asyncio import CancelledError, Event, Future, Lock
-from typing import Any, Dict, Optional, Set, Union, cast
+from typing import Any, Optional, Union, cast
 
 from .. import loggers
 from ..client.skill import Skill
@@ -88,11 +88,11 @@ class Dispatcher(Router):
         self.shutdown.register(self.fsm.close)
 
         self.response_timeout = response_timeout
-        self.workflow_data: Dict[str, Any] = kwargs
+        self.workflow_data: dict[str, Any] = kwargs
         self._running_lock = Lock()
         self._stop_signal: Optional[Event] = None
         self._stopped_signal: Optional[Event] = None
-        self._handle_update_tasks: Set[asyncio.Task[Any]] = set()
+        self._handle_update_tasks: set[asyncio.Task[Any]] = set()
 
     def __getitem__(self, item: str) -> Any:
         return self.workflow_data[item]
@@ -196,7 +196,7 @@ class Dispatcher(Router):
     async def feed_raw_update(
         self,
         skill: Skill,
-        update: Dict[str, Any],
+        update: dict[str, Any],
         **kwargs: Any,
     ) -> Any:
         """
@@ -267,7 +267,7 @@ class Dispatcher(Router):
     async def feed_webhook_update(
         self,
         skill: Skill,
-        update: Union[Update, Dict[str, Any]],
+        update: Union[Update, dict[str, Any]],
         **kwargs: Any,
     ) -> Optional[AliceResponse]:
         """

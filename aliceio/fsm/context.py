@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional
+from typing import Any, Optional
 
 from aliceio.fsm.storage.base import BaseStorage, StateType, StorageKey
 
@@ -35,7 +35,7 @@ class FSMContext:
 
     async def set_data(
         self,
-        data: Optional[Dict[str, Any]] = None,
+        data: Optional[dict[str, Any]] = None,
         **kwargs: Any,
     ) -> None:
         """
@@ -47,7 +47,7 @@ class FSMContext:
             kwargs.update(data)
         await self.storage.set_data(key=self.key, data=kwargs)
 
-    async def get_data(self) -> Dict[str, Any]:
+    async def get_data(self) -> dict[str, Any]:
         """
         Получить данные по ключу.
 
@@ -57,9 +57,9 @@ class FSMContext:
 
     async def update_data(
         self,
-        data: Optional[Dict[str, Any]] = None,
+        data: Optional[dict[str, Any]] = None,
         **kwargs: Any,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """
         Обновление данные в хранилище по ключу (like dict.update)
 

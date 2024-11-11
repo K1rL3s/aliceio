@@ -1,5 +1,6 @@
+from collections.abc import Sequence
 from functools import partial
-from typing import Any, Callable, List, Optional, Sequence, Union, cast, overload
+from typing import Any, Callable, Optional, Union, cast, overload
 
 from aliceio.client.session.middlewares.base import (
     NextRequestMiddlewareType,
@@ -10,7 +11,7 @@ from aliceio.methods.base import AliceType
 
 class RequestMiddlewareManager(Sequence[RequestMiddlewareType]):
     def __init__(self) -> None:
-        self._middlewares: List[RequestMiddlewareType] = []
+        self._middlewares: list[RequestMiddlewareType] = []
 
     def register(
         self,

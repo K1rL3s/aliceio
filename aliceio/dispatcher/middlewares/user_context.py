@@ -1,4 +1,5 @@
-from typing import Any, Awaitable, Callable, Dict, Optional, Tuple
+from collections.abc import Awaitable
+from typing import Any, Callable, Optional
 
 from aliceio.dispatcher.middlewares.base import BaseMiddleware
 from aliceio.types import Session, Update, User
@@ -11,9 +12,9 @@ EVENT_UPDATE_KEY = "event_update"
 class UserContextMiddleware(BaseMiddleware[Update]):
     async def __call__(
         self,
-        handler: Callable[[Update, Dict[str, Any]], Awaitable[Any]],
+        handler: Callable[[Update, dict[str, Any]], Awaitable[Any]],
         event: Update,
-        data: Dict[str, Any],
+        data: dict[str, Any],
     ) -> Any:
         if not isinstance(event, Update):
             raise RuntimeError("UserContextMiddleware got an unexpected event type!")
@@ -31,5 +32,5 @@ class UserContextMiddleware(BaseMiddleware[Update]):
     def resolve_event_context(
         cls,
         event: Update,
-    ) -> Tuple[Session, Optional[User]]:
+    ) -> tuple[Session, Optional[User]]:
         return event.session, event.session.user

@@ -1,6 +1,7 @@
+from collections.abc import Iterable
 from copy import copy
 from inspect import isclass
-from typing import Iterable, Optional, Type, Union
+from typing import Optional, Union
 
 import pytest
 
@@ -44,7 +45,7 @@ class TestStateFilter:
     )
     async def test_filter(
         self,
-        state: Iterable[Union[str, None, State, StatesGroup, Type[StatesGroup]]],
+        state: Iterable[Union[str, None, State, StatesGroup, type[StatesGroup]]],
         current_state: Optional[str],
         result: bool,
         event: AliceRequest,

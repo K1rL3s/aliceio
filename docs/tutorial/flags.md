@@ -26,7 +26,7 @@ async def my_handler(message: Message):
 class Command(Filter):
     ...
 
-    def update_handler_flags(self, flags: Dict[str, Any]) -> None:
+    def update_handler_flags(self, flags: dict[str, Any]) -> None:
         commands = flags.setdefault("commands", [])
         commands.append(self)
 ```

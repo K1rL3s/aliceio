@@ -5,7 +5,7 @@
 Максимум 4096 байт.
 
 ```python
-from typing import Any, Dict
+from typing import Any
 
-Payload = Dict[str, Any]
+Payload = dict[str, Any]
 ```

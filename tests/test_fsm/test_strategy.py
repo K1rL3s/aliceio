@@ -1,4 +1,4 @@
-from typing import Optional, Tuple
+from typing import Optional
 
 import pytest
 
@@ -22,7 +22,7 @@ class TestStrategy:
     def test_strategy(
         self,
         strategy: FSMStrategy,
-        expected: Tuple[Optional[str], Optional[str], Optional[str]],
+        expected: tuple[Optional[str], Optional[str], Optional[str]],
     ) -> None:
         assert (
             apply_strategy(

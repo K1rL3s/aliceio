@@ -1,4 +1,5 @@
-from typing import TYPE_CHECKING, Any, Awaitable, Callable, Dict
+from collections.abc import Awaitable
+from typing import TYPE_CHECKING, Any, Callable
 
 from aliceio.dispatcher.event.bases import UNHANDLED, CancelHandler, SkipHandler
 from aliceio.dispatcher.middlewares.base import BaseMiddleware
@@ -15,9 +16,9 @@ class ErrorsMiddleware(BaseMiddleware[Update]):
 
     async def __call__(
         self,
-        handler: Callable[[Update, Dict[str, Any]], Awaitable[Any]],
+        handler: Callable[[Update, dict[str, Any]], Awaitable[Any]],
         event: Update,
-        data: Dict[str, Any],
+        data: dict[str, Any],
     ) -> Any:
         try:
             return await handler(event, data)

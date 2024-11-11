@@ -1,5 +1,5 @@
 import logging
-from typing import TYPE_CHECKING, Any, List, Optional, Type
+from typing import TYPE_CHECKING, Any, Optional
 
 from aliceio import loggers
 from aliceio.client.session.middlewares.base import (
@@ -24,7 +24,7 @@ class RequestLogging(BaseRequestMiddleware):
 
     def __init__(
         self,
-        ignore_methods: Optional[List[Type[AliceMethod[Any]]]] = None,
+        ignore_methods: Optional[list[type[AliceMethod[Any]]]] = None,
     ) -> None:
         self.ignore_methods = ignore_methods if ignore_methods else []
 

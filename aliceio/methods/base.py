@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING, Any, ClassVar, Generator, Generic, Optional, TypeVar
+from collections.abc import Generator
+from typing import TYPE_CHECKING, Any, ClassVar, Generic, Optional, TypeVar
 
 from pydantic import BaseModel, ConfigDict
 

@@ -1,9 +1,9 @@
-from typing import TYPE_CHECKING, Any, Dict, List
+from typing import TYPE_CHECKING, Any
 
 from .base import AliceObject
 from .entity import Entity
 
-Intents = Dict[str, Any]
+Intents = dict[str, Any]
 
 
 class NLU(AliceObject):
@@ -13,8 +13,8 @@ class NLU(AliceObject):
     [Source](https://yandex.ru/dev/dialogs/alice/doc/ru/request-simpleutterance#nlu-desc)
     """
 
-    tokens: List[str]
-    entities: List[Entity]
+    tokens: list[str]
+    entities: list[Entity]
     intents: Intents
 
     if TYPE_CHECKING:
@@ -22,8 +22,8 @@ class NLU(AliceObject):
         def __init__(
             __pydantic_self__,
             *,
-            tokens: List[str],
-            entities: List[Entity],
+            tokens: list[str],
+            entities: list[Entity],
             intents: Intents,
             **__pydantic_kwargs: Any,
         ) -> None:

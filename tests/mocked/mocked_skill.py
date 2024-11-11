@@ -1,5 +1,6 @@
 from collections import deque
-from typing import TYPE_CHECKING, Any, AsyncGenerator, Deque, Dict, Optional, Type
+from collections.abc import AsyncGenerator
+from typing import TYPE_CHECKING, Any, Optional
 
 from aliceio import Skill
 from aliceio.client.session.base import BaseSession
@@ -10,8 +11,8 @@ from aliceio.methods.base import AliceType, ApiResponse
 class MockedSession(BaseSession):
     def __init__(self) -> None:
         super().__init__()
-        self.responses: Deque[ApiResponse[AliceType]] = deque()
-        self.requests: Deque[AliceMethod[AliceType]] = deque()
+        self.responses: deque[ApiResponse[AliceType]] = deque()
+        self.requests: deque[AliceMethod[AliceType]] = deque()
         self.closed = True
 
     def add_result(self, response: ApiResponse[AliceType]) -> ApiResponse[AliceType]:
@@ -45,7 +46,7 @@ class MockedSession(BaseSession):
     async def stream_content(
         self,
         url: str,
-        headers: Optional[Dict[str, Any]] = None,
+        headers: Optional[dict[str, Any]] = None,
         timeout: int = 30,
         chunk_size: int = 65536,
         raise_for_status: bool = True,
@@ -66,7 +67,7 @@ class MockedSkill(Skill):
 
     def add_result_for(
         self,
-        method: Type[AliceMethod[AliceType]],
+        method: type[AliceMethod[AliceType]],
         result: Optional[AliceType] = None,
         status_code: int = 200,
     ) -> ApiResponse[AliceType]:

@@ -2,8 +2,9 @@ from __future__ import annotations
 
 import io
 from abc import ABC, abstractmethod
+from collections.abc import AsyncGenerator
 from pathlib import Path
-from typing import AsyncGenerator, Union
+from typing import Union
 
 import aiofiles
 

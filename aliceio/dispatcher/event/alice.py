@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional
+from typing import TYPE_CHECKING, Any, Callable, Optional
 
 from aliceio.dispatcher.event.bases import UNHANDLED, MiddlewareType, SkipHandler
 from aliceio.dispatcher.event.handler import CallbackType, FilterObject, HandlerObject
@@ -22,7 +22,7 @@ class AliceEventObserver:
         self.router = router
         self.event_name = event_name
 
-        self.handlers: List[HandlerObject] = []
+        self.handlers: list[HandlerObject] = []
 
         self.middleware = MiddlewareManager()
         self.outer_middleware = MiddlewareManager()
@@ -41,8 +41,8 @@ class AliceEventObserver:
             self._handler.filters = []
         self._handler.filters.extend([FilterObject(filter_) for filter_ in filters])
 
-    def _resolve_middlewares(self) -> List[MiddlewareType[AliceObject]]:
-        middlewares: List[MiddlewareType[AliceObject]] = []
+    def _resolve_middlewares(self) -> list[MiddlewareType[AliceObject]]:
+        middlewares: list[MiddlewareType[AliceObject]] = []
         for router in reversed(tuple(self.router.chain_head)):
             observer = router.observers.get(self.event_name)
             if observer:
@@ -54,7 +54,7 @@ class AliceEventObserver:
         self,
         callback: CallbackType,
         *filters: CallbackType,
-        flags: Optional[Dict[str, Any]] = None,
+        flags: Optional[dict[str, Any]] = None,
     ) -> CallbackType:
         """Добавление обработчика."""
         if flags is None:
@@ -78,7 +78,7 @@ class AliceEventObserver:
         self,
         callback: Any,
         event: AliceObject,
-        data: Dict[str, Any],
+        data: dict[str, Any],
     ) -> Any:
         wrapped_outer = self.middleware.wrap_middlewares(
             self.outer_middleware,
@@ -113,7 +113,7 @@ class AliceEventObserver:
     def __call__(
         self,
         *filters: CallbackType,
-        flags: Optional[Dict[str, Any]] = None,
+        flags: Optional[dict[str, Any]] = None,
     ) -> Callable[[CallbackType], CallbackType]:
         """Декоратор для регистрации обработчиков."""
 

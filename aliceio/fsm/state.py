@@ -1,5 +1,6 @@
 import inspect
-from typing import Any, Iterator, Optional, Tuple, Type, no_type_check
+from collections.abc import Iterator
+from typing import Any, Optional, no_type_check
 
 from aliceio.types.base import AliceObject
 
@@ -14,10 +15,10 @@ class State:
     ) -> None:
         self._state = state
         self._group_name = group_name
-        self._group: Optional[Type[StatesGroup]] = None
+        self._group: Optional[type[StatesGroup]] = None
 
     @property
-    def group(self) -> "Type[StatesGroup]":
+    def group(self) -> "type[StatesGroup]":
         if not self._group:
             raise RuntimeError("This state is not in any group.")
         return self._group
@@ -36,12 +37,12 @@ class State:
 
         return f"{group}:{self._state}"
 
-    def set_parent(self, group: "Type[StatesGroup]") -> None:
+    def set_parent(self, group: "type[StatesGroup]") -> None:
         if not issubclass(group, StatesGroup):
             raise ValueError("Group must be subclass of StatesGroup")
         self._group = group
 
-    def __set_name__(self, owner: "Type[StatesGroup]", name: str) -> None:
+    def __set_name__(self, owner: "type[StatesGroup]", name: str) -> None:
         if self._state is None:
             self._state = name
         self.set_parent(owner)
@@ -68,13 +69,13 @@ class State:
 
 
 class StatesGroupMeta(type):
-    __parent__: "Optional[Type[StatesGroup]]"
-    __childs__: "Tuple[Type[StatesGroup], ...]"
-    __states__: Tuple[State, ...]
-    __state_names__: Tuple[str, ...]
-    __all_childs__: Tuple[Type["StatesGroup"], ...]
-    __all_states__: Tuple[State, ...]
-    __all_states_names__: Tuple[str, ...]
+    __parent__: "Optional[type[StatesGroup]]"
+    __childs__: "tuple[type[StatesGroup], ...]"
+    __states__: tuple[State, ...]
+    __state_names__: tuple[str, ...]
+    __all_childs__: tuple[type["StatesGroup"], ...]
+    __all_states__: tuple[State, ...]
+    __all_states_names__: tuple[str, ...]
 
     @no_type_check
     def __new__(mcs, name, bases, namespace, **kwargs):  # noqa: ANN204, ANN001, ANN003
@@ -111,7 +112,7 @@ class StatesGroupMeta(type):
             return f"{cls.__parent__.__full_group_name__}.{cls.__name__}"
         return cls.__name__
 
-    def _prepare_child(cls, child: Type["StatesGroup"]) -> Type["StatesGroup"]:
+    def _prepare_child(cls, child: type["StatesGroup"]) -> type["StatesGroup"]:
         """Prepare child.
 
         While adding `cls` for its children, we also need to recalculate
@@ -125,19 +126,19 @@ class StatesGroupMeta(type):
         child.__all_states_names__ = child._get_all_states_names()  # noqa: SLF001
         return child
 
-    def _get_all_childs(cls) -> Tuple[Type["StatesGroup"], ...]:
+    def _get_all_childs(cls) -> tuple[type["StatesGroup"], ...]:
         result = cls.__childs__
         for child in cls.__childs__:
             result += child.__childs__
         return result
 
-    def _get_all_states(cls) -> Tuple[State, ...]:
+    def _get_all_states(cls) -> tuple[State, ...]:
         result = cls.__states__
         for group in cls.__childs__:
             result += group.__all_states__
         return result
 
-    def _get_all_states_names(cls) -> Tuple[str, ...]:
+    def _get_all_states_names(cls) -> tuple[str, ...]:
         return tuple(state.state for state in cls.__all_states__ if state.state)
 
     def __contains__(cls, item: Any) -> bool:
@@ -158,7 +159,7 @@ class StatesGroupMeta(type):
 
 class StatesGroup(metaclass=StatesGroupMeta):
     @classmethod
-    def get_root(cls) -> Type["StatesGroup"]:
+    def get_root(cls) -> type["StatesGroup"]:
         if cls.__parent__ is None:
             return cls
         return cls.__parent__.get_root()
