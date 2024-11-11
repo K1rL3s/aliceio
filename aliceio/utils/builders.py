@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Generic, List, Optional, TypeVar, Union, overload
+from typing import Generic, Optional, TypeVar, Union, overload
 
 from typing_extensions import Self
 
@@ -15,7 +15,7 @@ from aliceio.types import (
     TextButton,
 )
 
-Collection = TypeVar("Collection", ItemsList, ImageGallery, List[TextButton])
+Collection = TypeVar("Collection", ItemsList, ImageGallery, list[TextButton])
 Item = TypeVar("Item", ItemImage, ImageGalleryItem, TextButton)
 
 
@@ -24,7 +24,7 @@ class Builder(ABC, Generic[Collection, Item]):
     Базовый класс билдера
     """
 
-    _items: List[Item]
+    _items: list[Item]
 
     @abstractmethod
     def __init__(self) -> None:
@@ -49,7 +49,7 @@ class ItemsListBuilder(Builder[ItemsList, ItemImage]):
     """
 
     def __init__(self) -> None:
-        self._items: List[ItemImage] = []
+        self._items: list[ItemImage] = []
         self._header: Optional[CardHeader] = None
         self._footer: Optional[CardFooter] = None
 
@@ -131,7 +131,7 @@ class ItemsListBuilder(Builder[ItemsList, ItemImage]):
 
 class ImageGalleryBuilder(Builder[ImageGallery, ImageGalleryItem]):
     def __init__(self) -> None:
-        self._items: List[ImageGalleryItem] = []
+        self._items: list[ImageGalleryItem] = []
 
     @overload
     def add(
@@ -161,9 +161,9 @@ class ImageGalleryBuilder(Builder[ImageGallery, ImageGalleryItem]):
         return ImageGallery(items=self._items.copy())
 
 
-class TextButtonsBuilder(Builder[List[TextButton], TextButton]):
+class TextButtonsBuilder(Builder[list[TextButton], TextButton]):
     def __init__(self) -> None:
-        self._items: List[TextButton] = []
+        self._items: list[TextButton] = []
 
     @overload
     def add(
@@ -196,5 +196,5 @@ class TextButtonsBuilder(Builder[List[TextButton], TextButton]):
         self._items.append(item)
         return self
 
-    def to_collection(self) -> List[TextButton]:
+    def to_collection(self) -> list[TextButton]:
         return self._items.copy()

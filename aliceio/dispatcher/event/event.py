@@ -1,4 +1,4 @@
-from typing import Any, Callable, List
+from typing import Any, Callable
 
 from .handler import CallbackType, HandlerObject
 
@@ -21,7 +21,7 @@ class EventObserver:
     """
 
     def __init__(self) -> None:
-        self.handlers: List[HandlerObject] = []
+        self.handlers: list[HandlerObject] = []
 
     def register(self, callback: CallbackType) -> None:
         """Регистрация callback'а."""

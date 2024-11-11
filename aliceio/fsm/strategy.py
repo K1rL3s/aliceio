@@ -1,4 +1,4 @@
-from typing import Optional, Tuple
+from typing import Optional
 
 from aliceio.enums.base import StrEnum
 
@@ -14,7 +14,7 @@ def apply_strategy(
     user_id: str,
     session_id: str,
     application_id: str,
-) -> Tuple[Optional[str], Optional[str], Optional[str]]:
+) -> tuple[Optional[str], Optional[str], Optional[str]]:
     if strategy == FSMStrategy.USER:
         return user_id, None, None
     if strategy == FSMStrategy.SESSION:

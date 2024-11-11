@@ -1,8 +1,8 @@
-from typing import TYPE_CHECKING, Any, Dict, Optional
+from typing import TYPE_CHECKING, Any, Optional
 
 from aliceio.types.base import AliceObject
 
-StateDict = Dict[str, Any]
+StateDict = dict[str, Any]
 SessionState = StateDict
 UserState = StateDict
 ApplicationState = StateDict

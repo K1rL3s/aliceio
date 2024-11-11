@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import contextvars
-from typing import TYPE_CHECKING, Any, Dict, Generic, Optional, TypeVar, cast, overload
+from typing import TYPE_CHECKING, Any, Generic, Optional, TypeVar, cast, overload
 
 if TYPE_CHECKING:
     from typing_extensions import Literal
@@ -10,11 +10,11 @@ __all__ = ("ContextInstanceMixin", "DataMixin")
 
 
 class DataMixin:
-    _data: Optional[Dict[str, Any]]
+    _data: Optional[dict[str, Any]]
 
     @property
-    def data(self) -> Dict[str, Any]:
-        data: Optional[Dict[str, Any]] = getattr(self, "_data", None)
+    def data(self) -> dict[str, Any]:
+        data: Optional[dict[str, Any]] = getattr(self, "_data", None)
         if data is None:
             data = {}
             self._data = data

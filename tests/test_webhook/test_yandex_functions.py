@@ -1,6 +1,7 @@
 import json
 import logging
-from typing import Any, Awaitable, Callable, Dict, Optional
+from collections.abc import Awaitable
+from typing import Any, Callable, Optional
 
 import pytest
 
@@ -16,8 +17,8 @@ class TestYandexFunctionsRequestHandler:
     async def make_request(
         self,
         entrypoint: Callable[
-            [Dict[str, Any], Dict[str, Any]],
-            Awaitable[Optional[Dict[str, Any]]],
+            [dict[str, Any], dict[str, Any]],
+            Awaitable[Optional[dict[str, Any]]],
         ],
         command: str = "test",
         skill_id: str = "42:SKILL_ID",

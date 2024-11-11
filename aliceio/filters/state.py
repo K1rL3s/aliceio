@@ -1,11 +1,12 @@
+from collections.abc import Sequence
 from inspect import isclass
-from typing import Any, Dict, Optional, Sequence, Type, Union, cast
+from typing import Any, Optional, Union, cast
 
 from aliceio.filters.base import Filter
 from aliceio.fsm.state import State, StatesGroup
 from aliceio.types.base import AliceObject
 
-StateType = Union[str, None, State, StatesGroup, Type[StatesGroup]]
+StateType = Union[str, None, State, StatesGroup, type[StatesGroup]]
 
 
 class StateFilter(Filter):
@@ -29,7 +30,7 @@ class StateFilter(Filter):
         self,
         obj: AliceObject,
         raw_state: Optional[str] = None,
-    ) -> Union[bool, Dict[str, Any]]:
+    ) -> Union[bool, dict[str, Any]]:
         allowed_states = cast(Sequence[StateType], self.states)
         for allowed_state in allowed_states:
             if isinstance(allowed_state, str) or allowed_state is None:

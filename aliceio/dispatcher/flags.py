@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Any, Callable, Dict, Optional, Union, cast, overload
+from typing import TYPE_CHECKING, Any, Callable, Optional, Union, cast, overload
 
 from magic_filter import AttrDict, MagicFilter
 
@@ -79,13 +79,13 @@ class FlagGenerator:
         chat_action: _ChatActionFlagProtocol
 
 
-def extract_flags_from_object(obj: Any) -> Dict[str, Any]:
+def extract_flags_from_object(obj: Any) -> dict[str, Any]:
     if not hasattr(obj, "aliceio_flag"):
         return {}
-    return cast(Dict[str, Any], obj.aliceio_flag)
+    return cast(dict[str, Any], obj.aliceio_flag)
 
 
-def extract_flags(handler: Union["HandlerObject", Dict[str, Any]]) -> Dict[str, Any]:
+def extract_flags(handler: Union["HandlerObject", dict[str, Any]]) -> dict[str, Any]:
     """
     Извлекает флаги из контекстных данных обработчика или мидлваря.
 
@@ -100,7 +100,7 @@ def extract_flags(handler: Union["HandlerObject", Dict[str, Any]]) -> Dict[str, 
 
 
 def get_flag(
-    handler: Union["HandlerObject", Dict[str, Any]],
+    handler: Union["HandlerObject", dict[str, Any]],
     name: str,
     *,
     default: Optional[Any] = None,
@@ -118,7 +118,7 @@ def get_flag(
 
 
 def check_flags(
-    handler: Union["HandlerObject", Dict[str, Any]],
+    handler: Union["HandlerObject", dict[str, Any]],
     magic: MagicFilter,
 ) -> Any:
     """

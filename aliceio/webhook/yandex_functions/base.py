@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any, Dict, Optional, cast
+from typing import Any, Optional, cast
 
 from pydantic import BaseModel
 
@@ -8,9 +8,9 @@ from aliceio.types import Update
 from aliceio.types.base import AliceObject
 from aliceio.utils.funcs import prepare_value
 
-_Event = Dict[str, Any]
-_Context = Dict[str, Any]
-_Response = Optional[Dict[str, Any]]
+_Event = dict[str, Any]
+_Context = dict[str, Any]
+_Response = Optional[dict[str, Any]]
 
 
 class BaseYandexFunctionsRequestHandler(ABC):
@@ -78,7 +78,7 @@ class BaseYandexFunctionsRequestHandler(ABC):
         :param event:
         :return:
         """
-        return cast(Dict[str, Any], event.get("body", event))
+        return cast(_Event, event.get("body", event))
 
     def _build_response(self, result: Optional[AliceObject]) -> _Response:
         return cast(

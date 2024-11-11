@@ -1,5 +1,6 @@
 import re
-from typing import NoReturn, Pattern, Union
+from re import Pattern
+from typing import NoReturn, Union
 
 import pytest
 

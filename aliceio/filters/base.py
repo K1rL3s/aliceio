@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING, Any, Awaitable, Callable, Dict, Union
+from collections.abc import Awaitable
+from typing import TYPE_CHECKING, Any, Callable, Union
 
 if TYPE_CHECKING:
     from aliceio.filters.logic import _InvertFilter
@@ -13,7 +14,7 @@ class Filter(ABC):  # noqa: B024
     """
 
     if TYPE_CHECKING:
-        __call__: Callable[..., Awaitable[Union[bool, Dict[str, Any]]]]
+        __call__: Callable[..., Awaitable[Union[bool, dict[str, Any]]]]
     else:  # pragma: no cover
 
         @abstractmethod
@@ -21,13 +22,13 @@ class Filter(ABC):  # noqa: B024
             self,
             *args: Any,
             **kwargs: Any,
-        ) -> Union[bool, Dict[str, Any]]:
+        ) -> Union[bool, dict[str, Any]]:
             """
             Этот метод надо переопределить.
 
             Принимает входящее событие и должен возвращать логическое значение или dict.
 
-            :return: :class:`bool` или :class:`Dict[str, Any]`
+            :return: :class:`bool` или :class:`dict[str, Any]`
             """
 
     def __invert__(self) -> "_InvertFilter":
@@ -35,7 +36,7 @@ class Filter(ABC):  # noqa: B024
 
         return invert_f(self)
 
-    def update_handler_flags(self, flags: Dict[str, Any]) -> None:  # noqa: B027
+    def update_handler_flags(self, flags: dict[str, Any]) -> None:  # noqa: B027
         """
         Также, если вы хотите расширить флаги обработчика с помощью этого фильтра,
         вам следует реализовать этот метод

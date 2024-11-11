@@ -1,6 +1,6 @@
 from collections import defaultdict
 from dataclasses import dataclass, field
-from typing import Any, DefaultDict, Dict, Optional
+from typing import Any, Optional
 
 from aliceio.fsm.state import State
 from aliceio.fsm.storage.base import BaseStorage, StateType, StorageKey
@@ -8,7 +8,7 @@ from aliceio.fsm.storage.base import BaseStorage, StateType, StorageKey
 
 @dataclass
 class MemoryStorageRecord:
-    data: Dict[str, Any] = field(default_factory=dict)
+    data: dict[str, Any] = field(default_factory=dict)
     state: Optional[str] = None
 
 
@@ -23,7 +23,7 @@ class MemoryStorage(BaseStorage):
     """
 
     def __init__(self) -> None:
-        self.storage: DefaultDict[StorageKey, MemoryStorageRecord] = defaultdict(
+        self.storage: defaultdict[StorageKey, MemoryStorageRecord] = defaultdict(
             MemoryStorageRecord,
         )
 
@@ -36,8 +36,8 @@ class MemoryStorage(BaseStorage):
     async def get_state(self, key: StorageKey) -> Optional[str]:
         return self.storage[key].state
 
-    async def set_data(self, key: StorageKey, data: Dict[str, Any]) -> None:
+    async def set_data(self, key: StorageKey, data: dict[str, Any]) -> None:
         self.storage[key].data = data.copy()
 
-    async def get_data(self, key: StorageKey) -> Dict[str, Any]:
+    async def get_data(self, key: StorageKey) -> dict[str, Any]:
         return self.storage[key].data.copy()

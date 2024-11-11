@@ -1,8 +1,8 @@
-from typing import TYPE_CHECKING, Any, Dict
+from typing import TYPE_CHECKING, Any
 
 from .base import MutableAliceObject
 
-CustomEventData = Dict[str, Any]
+CustomEventData = dict[str, Any]
 
 
 class AnalyticEvent(MutableAliceObject):

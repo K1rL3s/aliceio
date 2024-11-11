@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING, Any, Dict, Generic, TypeVar, cast
+from typing import TYPE_CHECKING, Any, Generic, TypeVar, cast
 
 from aliceio.types import Update
 
@@ -12,7 +12,7 @@ T = TypeVar("T")
 class BaseHandlerMixin(Generic[T]):
     if TYPE_CHECKING:
         event: T
-        data: Dict[str, Any]
+        data: dict[str, Any]
 
 
 class BaseHandler(BaseHandlerMixin[T], ABC):
@@ -20,7 +20,7 @@ class BaseHandler(BaseHandlerMixin[T], ABC):
 
     def __init__(self, event: T, **kwargs: Any) -> None:
         self.event = event
-        self.data: Dict[str, Any] = kwargs
+        self.data: dict[str, Any] = kwargs
 
     @property
     def skill(self) -> "Skill":

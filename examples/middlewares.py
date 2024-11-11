@@ -1,7 +1,8 @@
 import logging
 import os
 import sys
-from typing import Any, Awaitable, Callable, Dict
+from collections.abc import Awaitable
+from typing import Any, Callable
 
 from aiohttp import web
 
@@ -17,9 +18,9 @@ from aliceio.webhook.aiohttp_server import (
 class OuterExampleMiddleware(BaseMiddleware[Update]):
     async def __call__(
         self,
-        handler: Callable[[Update, Dict[str, Any]], Awaitable[Any]],
+        handler: Callable[[Update, dict[str, Any]], Awaitable[Any]],
         update: Update,
-        data: Dict[str, Any],
+        data: dict[str, Any],
     ) -> Any:
         logging.info(
             "Ивент %s до фильтров (1)",
@@ -36,9 +37,9 @@ class OuterExampleMiddleware(BaseMiddleware[Update]):
 class InnerExampleMiddleware(BaseMiddleware[Update]):
     async def __call__(
         self,
-        handler: Callable[[Update, Dict[str, Any]], Awaitable[Any]],
+        handler: Callable[[Update, dict[str, Any]], Awaitable[Any]],
         update: Update,
-        data: Dict[str, Any],
+        data: dict[str, Any],
     ) -> Any:
         logging.info(
             "Ивент %s после фильтров и до обработчика (2)",
@@ -58,9 +59,9 @@ class MessageMiddleware(BaseMiddleware[Message]):
 
     async def __call__(
         self,
-        handler: Callable[[Message, Dict[str, Any]], Awaitable[Any]],
+        handler: Callable[[Message, dict[str, Any]], Awaitable[Any]],
         message: Message,
-        data: Dict[str, Any],
+        data: dict[str, Any],
     ) -> Any:
         logging.info("Проверяю сообщение на длину...")
 
@@ -75,9 +76,9 @@ class MessageMiddleware(BaseMiddleware[Message]):
 class UserAuthorizedMiddleware(BaseMiddleware[Update]):
     async def __call__(
         self,
-        handler: Callable[[Update, Dict[str, Any]], Awaitable[Any]],
+        handler: Callable[[Update, dict[str, Any]], Awaitable[Any]],
         event: Update,
-        data: Dict[str, Any],
+        data: dict[str, Any],
     ) -> Any:
         if event.session.user is None:
             logging.info("Замечен пользователь без аккаунта, блокирую!")

@@ -1,7 +1,6 @@
 import logging
 import os
 import sys
-from typing import List
 
 from aiohttp import web
 
@@ -37,7 +36,7 @@ class Form(StatesGroup):
 
 
 class ContainsFilter(BaseFilter):  # Кастомный фильтр
-    def __init__(self, words: List[str]) -> None:
+    def __init__(self, words: list[str]) -> None:
         self.words = words
 
     async def __call__(self, message: Message) -> bool:

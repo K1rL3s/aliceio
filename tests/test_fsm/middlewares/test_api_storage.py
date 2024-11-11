@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any
 
 import pytest
 
@@ -169,7 +169,7 @@ class TestFSMApiStorageMiddleware:
         self,
         strategy: FSMStrategy,
         state_attr: str,
-        new_state: Dict[str, Any],
+        new_state: dict[str, Any],
     ):
         middleware = FSMApiStorageMiddleware(strategy=strategy)
         response = AliceResponse(response=Response(text="ok"))
@@ -197,7 +197,7 @@ class TestFSMApiStorageMiddleware:
     async def test_set_new_state_unknown_strategy(
         self,
         strategy: Any,
-        new_state: Dict[str, Any],
+        new_state: dict[str, Any],
         state_attr: str = "session_state",
     ):
         middleware = FSMApiStorageMiddleware(strategy=strategy)

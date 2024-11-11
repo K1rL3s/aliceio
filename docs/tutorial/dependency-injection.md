@@ -56,9 +56,9 @@ class RandomFloatMiddleware(BaseMiddleware[Message]):
 
     async def __call__(
         self,
-        handler: Callable[[Message, Dict[str, Any]], Awaitable[Any]],
+        handler: Callable[[Message, dict[str, Any]], Awaitable[Any]],
         event: Message,
-        data: Dict[str, Any],
+        data: dict[str, Any],
     ) -> Any:
         # Добаляем значение в контекст
         data["float_num"] = round(random.uniform(self.start, self.end), 3)
@@ -76,7 +76,7 @@ class RandomNumberFilter(BaseFilter):
         message: Message,
         event_from_user: User
         # Фильтры также могут принимать данные из контекста как обработчики
-    ) -> Union[bool, Dict[str, Any]]:
+    ) -> Union[bool, dict[str, Any]]:
         if message.command == "число":
             # Возврат словаря обновит контекст
             return {"int_num": random.randint(1_000, 10_000)}

@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, ClassVar, List, Optional
+from typing import TYPE_CHECKING, Any, ClassVar, Optional
 
 from .base import AliceObject
 
@@ -74,14 +74,14 @@ class PreUploadedImage(AliceObject):
 class UploadedImagesList(AliceObject):
     """Список с изображениями."""
 
-    images: List[UploadedImage]
+    images: list[UploadedImage]
 
     if TYPE_CHECKING:
 
         def __init__(
             __pydantic_self__,
             *,
-            images: List[UploadedImage],
+            images: list[UploadedImage],
             **__pydantic_kwargs: Any,
         ) -> None:
             super().__init__(

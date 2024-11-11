@@ -1,7 +1,7 @@
 ```python
-AccountLinking = Dict[str, Any]
-Screen = Dict[str, Any]
-AudioPlayer = Dict[str, Any]
+AccountLinking = dict[str, Any]
+Screen = dict[str, Any]
+AudioPlayer = dict[str, Any]
 ```
 
 <br/>

@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Any, Dict, Optional, Union
+from typing import Any, Optional, Union
 
 from aliceio.fsm.state import State
 
@@ -40,7 +40,7 @@ class BaseStorage(ABC):
         """
 
     @abstractmethod
-    async def set_data(self, key: StorageKey, data: Dict[str, Any]) -> None:
+    async def set_data(self, key: StorageKey, data: dict[str, Any]) -> None:
         """
         Записать данные (перезапись).
 
@@ -49,7 +49,7 @@ class BaseStorage(ABC):
         """
 
     @abstractmethod
-    async def get_data(self, key: StorageKey) -> Dict[str, Any]:
+    async def get_data(self, key: StorageKey) -> dict[str, Any]:
         """
         Получить данные по ключу.
 
@@ -60,8 +60,8 @@ class BaseStorage(ABC):
     async def update_data(
         self,
         key: StorageKey,
-        data: Dict[str, Any],
-    ) -> Dict[str, Any]:
+        data: dict[str, Any],
+    ) -> dict[str, Any]:
         """
         Обновление данные в хранилище по ключу (like dict.update).
 

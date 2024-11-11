@@ -1,6 +1,6 @@
 import json
 from abc import ABC, abstractmethod
-from typing import Any, Callable, Dict, Literal, Optional, cast
+from typing import Any, Callable, Literal, Optional, cast
 
 from redis.asyncio.client import Redis
 from redis.asyncio.connection import ConnectionPool
@@ -107,7 +107,7 @@ class RedisStorage(BaseStorage):
     def from_url(
         cls,
         url: str,
-        connection_kwargs: Optional[Dict[str, Any]] = None,
+        connection_kwargs: Optional[dict[str, Any]] = None,
         **kwargs: Any,
     ) -> "RedisStorage":
         """
@@ -155,7 +155,7 @@ class RedisStorage(BaseStorage):
     async def set_data(
         self,
         key: StorageKey,
-        data: Dict[str, Any],
+        data: dict[str, Any],
     ) -> None:
         redis_key = self.key_builder.build(key, "data")
         if not data:
@@ -170,11 +170,11 @@ class RedisStorage(BaseStorage):
     async def get_data(
         self,
         key: StorageKey,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         redis_key = self.key_builder.build(key, "data")
         value = await self.redis.get(redis_key)
         if value is None:
             return {}
         if isinstance(value, bytes):
             value = value.decode("utf-8")
-        return cast(Dict[str, Any], self.json_loads(value))
+        return cast(dict[str, Any], self.json_loads(value))

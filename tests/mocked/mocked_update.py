@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional
+from typing import Any, Optional
 
 from aliceio import __api_version__
 from aliceio.enums.entity import EntityType
@@ -40,13 +40,13 @@ def create_mocked_update(
     original_utterance: Optional[str] = None,
     markup: Optional[Markup] = None,
     nlu: Optional[NLU] = None,
-    tokens: Optional[List[str]] = None,
-    intents: Optional[Dict[str, Any]] = None,
-    entities: Optional[List[Entity]] = None,
+    tokens: Optional[list[str]] = None,
+    intents: Optional[dict[str, Any]] = None,
+    entities: Optional[list[Entity]] = None,
     state: Optional[ApiState] = None,
-    user_state: Optional[Dict[str, Any]] = None,
-    session_state: Optional[Dict[str, Any]] = None,
-    application_state: Optional[Dict[str, Any]] = None,
+    user_state: Optional[dict[str, Any]] = None,
+    session_state: Optional[dict[str, Any]] = None,
+    application_state: Optional[dict[str, Any]] = None,
 ) -> Update:
     meta = create_mocked_meta(meta, interfaces)
     session = create_mocked_session(session, user, application, is_new)
@@ -122,9 +122,9 @@ def create_mocked_alice_request(
     original_utterance: Optional[str] = None,
     markup: Optional[Markup] = None,
     nlu: Optional[NLU] = None,
-    tokens: Optional[List[str]] = None,
+    tokens: Optional[list[str]] = None,
     intents: Optional[Intents] = None,
-    entities: Optional[List[Entity]] = None,
+    entities: Optional[list[Entity]] = None,
 ) -> AliceRequest:
     return request or AliceRequest(
         type=request_type or RequestType.SIMPLE_UTTERANCE,
@@ -193,9 +193,9 @@ def create_mocked_alice_request(
 
 def create_mocked_api_state(
     state: Optional[ApiState] = None,
-    user: Optional[Dict[str, Any]] = None,
-    session: Optional[Dict[str, Any]] = None,
-    application: Optional[Dict[str, Any]] = None,
+    user: Optional[dict[str, Any]] = None,
+    session: Optional[dict[str, Any]] = None,
+    application: Optional[dict[str, Any]] = None,
 ) -> ApiState:
     return state or ApiState(
         user=user or {},

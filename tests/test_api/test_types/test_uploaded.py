@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional
+from typing import Any, Optional
 
 import pytest
 
@@ -31,7 +31,7 @@ class TestUploadedImage:
     def test_uploaded_image(
         self,
         url: Optional[str],
-        data: Dict[str, Any],
+        data: dict[str, Any],
     ) -> None:
         image = UploadedImage.model_validate(data)
 
@@ -63,7 +63,7 @@ class TestUploadedSound:
             },
         ],
     )
-    def test_uploaded_sound(self, data: Dict[str, Any]) -> None:
+    def test_uploaded_sound(self, data: dict[str, Any]) -> None:
         sound = UploadedSound.model_validate(data)
 
         assert sound.createdAt == sound.created_at

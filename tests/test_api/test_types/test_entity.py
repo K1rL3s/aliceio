@@ -1,4 +1,4 @@
-from typing import Any, Dict, Type
+from typing import Any
 
 import pytest
 
@@ -33,7 +33,7 @@ class TestEntity:
             },
         ],
     )
-    def test_unknown_entity(self, data: Dict[str, Any]) -> None:
+    def test_unknown_entity(self, data: dict[str, Any]) -> None:
         data.update({"tokens": {"start": 0, "end": 0}})
         entity = Entity.model_validate(data)
 
@@ -118,8 +118,8 @@ class TestEntity:
     def test_known_entity(
         self,
         nlu_type: str,
-        nlu_entity: Type[NLUEntity],
-        data: Dict[str, Any],
+        nlu_entity: type[NLUEntity],
+        data: dict[str, Any],
     ) -> None:
         data.update({"tokens": {"start": 0, "end": 0}})
         entity = Entity.model_validate(data)
@@ -153,8 +153,8 @@ class TestEntity:
     def test_number_entity(
         self,
         nlu_type: str,
-        nlu_entity: Type[NumberEntity],
-        data: Dict[str, Any],
+        nlu_entity: type[NumberEntity],
+        data: dict[str, Any],
     ) -> None:
         data.update({"tokens": {"start": 0, "end": 0}})
         entity = Entity.model_validate(data)

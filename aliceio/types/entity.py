@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Dict, Optional, Type, Union
+from typing import TYPE_CHECKING, Any, Optional, Union
 
 from ..enums.entity import EntityType
 from .base import MutableAliceObject
@@ -43,7 +43,7 @@ class Entity(MutableAliceObject):
 
         if not self.value or isinstance(self.value, (int, float)):  # "YANDEX.NUMBER"
             return
-        entity_type: Dict[str, Type[NLUEntity]] = {
+        entity_type: dict[str, type[NLUEntity]] = {
             EntityType.YANDEX_FIO: FIOEntity,
             EntityType.YANDEX_GEO: GeoEntity,
             EntityType.YANDEX_DATETIME: DateTimeEntity,

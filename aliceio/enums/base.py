@@ -1,10 +1,9 @@
 from enum import Enum
-from typing import List
 
 
 class ValuesEnum(Enum):
     @classmethod
-    def values(cls) -> List[str]:
+    def values(cls) -> list[str]:
         return [e.value for e in cls]
 
 

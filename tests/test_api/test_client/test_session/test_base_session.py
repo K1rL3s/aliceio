@@ -1,6 +1,8 @@
 import datetime
 import json
-from typing import Any, AsyncContextManager, AsyncGenerator, Dict, Optional
+from collections.abc import AsyncGenerator
+from contextlib import AbstractAsyncContextManager
+from typing import Any, Optional
 from unittest.mock import AsyncMock, patch
 
 import pytest
@@ -31,7 +33,7 @@ class CustomSession(BaseSession):
     async def stream_content(
         self,
         url: str,
-        headers: Optional[Dict[str, Any]] = None,
+        headers: Optional[dict[str, Any]] = None,
         timeout: int = 30,
         chunk_size: int = 65536,
         raise_for_status: bool = True,
@@ -149,7 +151,7 @@ class TestBaseSession:
 
     async def test_context_manager(self):
         session = CustomSession()
-        assert isinstance(session, AsyncContextManager)
+        assert isinstance(session, AbstractAsyncContextManager)
 
         with patch(
             "tests.test_api.test_client.test_session.test_base_session.CustomSession.close",

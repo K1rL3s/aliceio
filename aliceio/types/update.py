@@ -1,5 +1,5 @@
 import contextlib
-from typing import TYPE_CHECKING, Any, ClassVar, Dict, Optional, Type, cast
+from typing import TYPE_CHECKING, Any, ClassVar, Optional, cast
 
 from pydantic import model_validator
 
@@ -130,7 +130,7 @@ class UpdateTypeLookupError(LookupError):
     """Запрос не содержит ни одного известного типа событий."""
 
 
-req_type_to_event_type: Dict[str, str] = {
+req_type_to_event_type: dict[str, str] = {
     RequestType.SIMPLE_UTTERANCE: EventType.MESSAGE,
     RequestType.BUTTON_PRESSED: EventType.BUTTON_PRESSED,
     RequestType.PURCHASE_CONFIRMATION: EventType.PURCHASE,
@@ -143,7 +143,7 @@ req_type_to_event_type: Dict[str, str] = {
     RequestType.ACCOUNT_LINKING_COMPLETE: EventType.ACCOUNT_LINKING_COMPLETE,
 }
 
-event_type_to_event_model: Dict[str, Type[MutableAliceObject]] = {
+event_type_to_event_model: dict[str, type[MutableAliceObject]] = {
     EventType.AUDIO_PLAYER: AudioPlayer,
     EventType.BUTTON_PRESSED: ButtonPressed,
     EventType.MESSAGE: Message,

@@ -1,4 +1,4 @@
-from typing import Any, Dict, Type
+from typing import Any
 
 import pytest
 
@@ -91,8 +91,8 @@ class TestUpdate:
     )
     def test_event(
         self,
-        event: Dict[str, Any],
-        event_type: Type[MutableAliceObject],
+        event: dict[str, Any],
+        event_type: type[MutableAliceObject],
         attr: str,
     ):
         event.update(

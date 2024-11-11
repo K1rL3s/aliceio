@@ -1,5 +1,6 @@
 import functools
-from typing import Any, Awaitable, Callable, Dict, List, NoReturn, Optional, Union
+from collections.abc import Awaitable
+from typing import Any, Callable, NoReturn, Optional, Union
 
 import pytest
 from pydantic import BaseModel
@@ -31,7 +32,7 @@ async def pipe_handler(*args, **kwargs):
 class MyFilter1(Filter, BaseModel):
     test: str
 
-    async def __call__(self, *args: Any, **kwargs: Any) -> Union[bool, Dict[str, Any]]:
+    async def __call__(self, *args: Any, **kwargs: Any) -> Union[bool, dict[str, Any]]:
         return True
 
 
@@ -46,14 +47,14 @@ class MyFilter3(MyFilter1):
 class OptionalFilter(Filter, BaseModel):
     optional: Optional[str]
 
-    async def __call__(self, *args: Any, **kwargs: Any) -> Union[bool, Dict[str, Any]]:
+    async def __call__(self, *args: Any, **kwargs: Any) -> Union[bool, dict[str, Any]]:
         return True
 
 
 class DefaultFilter(Filter, BaseModel):
     default: str = "Default"
 
-    async def __call__(self, *args: Any, **kwargs: Any) -> Union[bool, Dict[str, Any]]:
+    async def __call__(self, *args: Any, **kwargs: Any) -> Union[bool, dict[str, Any]]:
         return True
 
 
@@ -129,7 +130,7 @@ class TestAliceEventObserver:
         self,
         count: int,
         handler: Callable[[Any, Any], Awaitable[Any]],
-        filters: List[Callable[[Any], bool]],
+        filters: list[Callable[[Any], bool]],
     ) -> None:
         router = Router()
         observer = router.message
@@ -148,10 +149,10 @@ class TestAliceEventObserver:
         router = Router()
         observer = router.message
 
-        async def mix_unnecessary_data(event: Any) -> Dict[str, Any]:
+        async def mix_unnecessary_data(event: Any) -> dict[str, Any]:
             return {"a": 1}
 
-        async def mix_data(event: Any) -> Dict[str, Any]:
+        async def mix_data(event: Any) -> dict[str, Any]:
             return {"b": 2}
 
         async def handler(event: Any, **kwargs: Any) -> bool:

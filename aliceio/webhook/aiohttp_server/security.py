@@ -1,6 +1,7 @@
 from asyncio import Transport
+from collections.abc import Awaitable, Sequence
 from ipaddress import IPv4Address, IPv4Network
-from typing import Any, Awaitable, Callable, Optional, Sequence, Set, Tuple, Union, cast
+from typing import Any, Callable, Optional, Union, cast
 
 from aiohttp import web
 from aiohttp.typedefs import Handler
@@ -33,7 +34,7 @@ class IPFilter:
         self,
         ips: Optional[Sequence[Union[str, IPv4Network, IPv4Address]]] = None,
     ) -> None:
-        self._allowed_ips: Set[IPv4Address] = set()
+        self._allowed_ips: set[IPv4Address] = set()
 
         if ips:
             self.allow(*ips)
@@ -88,7 +89,7 @@ def ip_filter_middleware(
     return _ip_filter_middleware
 
 
-def check_ip(ip_filter: IPFilter, request: web.Request) -> Tuple[str, bool]:
+def check_ip(ip_filter: IPFilter, request: web.Request) -> tuple[str, bool]:
     # Попытка вычислить IP-адрес клиента после обратного прокси-сервера.
     if forwarded_for := request.headers.get("X-Forwarded-For", ""):
         # Получаем самый левый IP-адрес, если имеется несколько IP-адресов

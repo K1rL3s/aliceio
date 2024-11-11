@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, List, Optional
+from typing import TYPE_CHECKING, Any, Optional
 
 from .base import AliceObject
 from .card import Card
@@ -17,7 +17,7 @@ class Response(AliceObject):
     text: str
     tts: Optional[str] = None
     card: Optional[Card] = None
-    buttons: Optional[List[TextButton]] = None
+    buttons: Optional[list[TextButton]] = None
     directives: Optional[Directives] = None
     show_item_meta: Optional[ShowItemMeta] = None
     should_listen: Optional[bool] = None
@@ -31,7 +31,7 @@ class Response(AliceObject):
             text: str,
             tts: Optional[str] = None,
             card: Optional[Card] = None,
-            buttons: Optional[List[TextButton]] = None,
+            buttons: Optional[list[TextButton]] = None,
             directives: Optional[Directives] = None,
             show_item_meta: Optional[ShowItemMeta] = None,
             should_listen: Optional[bool] = None,

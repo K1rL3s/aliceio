@@ -1,4 +1,4 @@
-from typing import Any, Dict, Type
+from typing import Any
 
 import pytest
 
@@ -15,7 +15,7 @@ class TestErrorMiddleware:
         router = Router()
         middleware = ErrorsMiddleware(router)
 
-        async def handler(event: AliceObject, data: Dict[str, Any]) -> str:
+        async def handler(event: AliceObject, data: dict[str, Any]) -> str:
             assert event is not None
             assert data is not None
             return "result"
@@ -41,7 +41,7 @@ class TestErrorMiddleware:
     )
     async def test_re_raise_skip_and_cancel(
         self,
-        exception: Type[Exception],
+        exception: type[Exception],
         update: Update,
     ):
         router = Router()
@@ -59,7 +59,7 @@ class TestErrorMiddleware:
     )
     async def test_raise_skip_and_cancel_with_catcher(
         self,
-        exception: Type[Exception],
+        exception: type[Exception],
         update: Update,
     ):
         router = Router()
@@ -80,7 +80,7 @@ class TestErrorMiddleware:
         "exception",
         [AliceioError, ValueError, TypeError, RuntimeError],
     )
-    async def test_re_raise_exception(self, exception: Type[Exception], update: Update):
+    async def test_re_raise_exception(self, exception: type[Exception], update: Update):
         router = Router()
         middleware = ErrorsMiddleware(router)
 
@@ -96,7 +96,7 @@ class TestErrorMiddleware:
     )
     async def test_re_raise_exception_with_cathcer(
         self,
-        exception: Type[Exception],
+        exception: type[Exception],
         update: Update,
     ):
         router = Router()
@@ -118,7 +118,7 @@ class TestErrorMiddleware:
     )
     async def test_re_raise_exception_with_cathcer_unhandled(
         self,
-        exception: Type[Exception],
+        exception: type[Exception],
         update: Update,
     ):
         router = Router()

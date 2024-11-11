@@ -51,9 +51,9 @@ from aliceio.types import Update
 class UserAuthorizedMiddleware(BaseMiddleware[Update]):
     async def __call__(
         self,
-        handler: Callable[[Update, Dict[str, Any]], Awaitable[Any]],
+        handler: Callable[[Update, dict[str, Any]], Awaitable[Any]],
         event: Update,
-        data: Dict[str, Any],
+        data: dict[str, Any],
     ) -> Any:
         if event.session.user is None:
             logging.info("Замечен пользователь без аккаунта, блокирую!")
@@ -76,9 +76,9 @@ dp.update.outer_middleware(UserAuthorizedMiddleware())
 ```python
 @dp.update.middleware()  # либо `@dp.update.outer_middleware()`
 async def check_authorization(
-    handler: Callable[[Update, Dict[str, Any]], Awaitable[Any]],
+    handler: Callable[[Update, dict[str, Any]], Awaitable[Any]],
     event: Update,
-    data: Dict[str, Any]
+    data: dict[str, Any]
 ) -> Any:
     if event.session.user is None:
             logging.info("Замечен пользователь без аккаунта, блокирую!")

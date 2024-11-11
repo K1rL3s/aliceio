@@ -1,5 +1,5 @@
 import functools
-from typing import Any, Callable, Dict, Set, Union
+from typing import Any, Callable, Union
 
 import pytest
 from magic_filter import F as A
@@ -34,7 +34,7 @@ class TestFilter(Filter):
         foo: int,
         bar: int,
         baz: int,
-    ) -> Union[bool, Dict[str, Any]]:
+    ) -> Union[bool, dict[str, Any]]:
         return locals()
 
 
@@ -66,7 +66,7 @@ class TestCallableObject:
             pytest.param(SyncCallable(), {"self", "foo", "bar", "baz"}),
         ],
     )
-    def test_init_args_spec(self, callback: Callable, args: Set[str]):
+    def test_init_args_spec(self, callback: Callable, args: set[str]):
         obj = CallableObject(callback)
         assert set(obj.params) == args
 
@@ -138,8 +138,8 @@ class TestCallableObject:
     def test_prepare_kwargs(
         self,
         callback: Callable,
-        kwargs: Dict[str, Any],
-        result: Dict[str, Any],
+        kwargs: dict[str, Any],
+        result: dict[str, Any],
     ):
         obj = CallableObject(callback)
         assert obj._prepare_kwargs(kwargs) == result

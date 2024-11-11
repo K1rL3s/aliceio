@@ -1,4 +1,4 @@
-from typing import Any, Dict, Type, Union
+from typing import Any, Union
 
 import pytest
 
@@ -33,7 +33,7 @@ class TestLogic:
         self,
         obj: bool,
         case: _LogicFilter,
-        result: Union[bool, Dict[str, Any]],
+        result: Union[bool, dict[str, Any]],
     ) -> None:
         assert await case(obj) == result
 
@@ -46,5 +46,5 @@ class TestLogic:
             [~MockedFilter(), _InvertFilter],
         ],
     )
-    def test_dunder_methods(self, case: Any, type_: Type[_LogicFilter]) -> None:
+    def test_dunder_methods(self, case: Any, type_: type[_LogicFilter]) -> None:
         assert isinstance(case, type_)

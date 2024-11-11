@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, List
+from typing import TYPE_CHECKING, Any
 
 from pydantic import Field, field_validator
 
@@ -16,7 +16,7 @@ class ImageGallery(MutableAliceObject):
     """
 
     type: str = CardType.IMAGE_GALLERY
-    items: List[ImageGalleryItem] = Field(
+    items: list[ImageGalleryItem] = Field(
         default_factory=list,
         min_length=1,
         max_length=10,
@@ -27,7 +27,7 @@ class ImageGallery(MutableAliceObject):
         def __init__(
             __pydantic_self__,
             *,
-            items: List[ImageGalleryItem],
+            items: list[ImageGalleryItem],
             **__pydantic_kwargs: Any,
         ) -> None:
             super().__init__(

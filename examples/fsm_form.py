@@ -1,7 +1,7 @@
 import logging
 import os
 import sys
-from typing import Any, Dict
+from typing import Any
 
 from aiohttp import web
 
@@ -96,7 +96,7 @@ async def process_device(message: Message, state: FSMContext) -> Response:
     return Response(text=text, end_session=True)
 
 
-def show_summary(data: Dict[str, Any], positive: bool = True) -> str:
+def show_summary(data: dict[str, Any], positive: bool = True) -> str:
     name = data["name"]
     device = data.get("device", "чём-то непонятном")
     text = f"Я буду помнить, {name}, что "
