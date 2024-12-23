@@ -2,6 +2,7 @@ import datetime
 import json
 from collections.abc import AsyncGenerator
 from contextlib import AbstractAsyncContextManager
+from enum import Enum
 from typing import Any, Optional
 from unittest.mock import AsyncMock, patch
 
@@ -17,6 +18,10 @@ from aliceio.methods import AliceMethod, Status
 from aliceio.types import AnalyticEvent, PreQuota, Quota, SpaceStatus
 from aliceio.utils.funcs import prepare_value
 from tests.mocked.mocked_skill import MockedSkill
+
+
+class _TestEnum(Enum):
+    field = "fieldValue"
 
 
 class CustomSession(BaseSession):
@@ -86,6 +91,7 @@ class TestBaseSession:
             [None, None],
             ["text", "text"],
             [CardType.BIG_IMAGE, "BigImage"],
+            [_TestEnum.field, "fieldValue"],
             [42, "42"],
             [True, "true"],
             [["test"], '["test"]'],

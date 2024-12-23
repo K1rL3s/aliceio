@@ -6,6 +6,7 @@ from typing import Any, Callable, Literal, Protocol, Union
 from aiohttp import JsonPayload
 
 from aliceio.dispatcher.event.bases import REJECTED, UNHANDLED
+from aliceio.enums.base import StrEnum
 from aliceio.types import InputFile
 from aliceio.types.base import AliceObject
 
@@ -50,6 +51,8 @@ def prepare_value(
         return str(round((now + value).timestamp()))
     if isinstance(value, datetime.datetime):
         return str(round(value.timestamp()))
+    if isinstance(value, StrEnum):
+        return value
     if isinstance(value, Enum):
         return prepare_value(value.value, files=files)
     if isinstance(value, AliceObject):
