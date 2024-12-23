@@ -2,12 +2,9 @@ from typing import Any, Optional
 
 from aliceio import Dispatcher, Skill, loggers
 from aliceio.types import Update
-from aliceio.webhook.yandex_functions.base import (
-    BaseYandexFunctionsRequestHandler,
-    _Context,
-    _Event,
-    _Response,
-)
+
+from .base import BaseYandexFunctionsRequestHandler, _Event, _Response
+from .context import RuntimeContext
 
 
 class OneSkillYandexFunctionsRequestHandler(BaseYandexFunctionsRequestHandler):
@@ -26,14 +23,14 @@ class OneSkillYandexFunctionsRequestHandler(BaseYandexFunctionsRequestHandler):
         super().__init__(dispatcher=dispatcher, **data)
         self.skill = skill
 
-    async def resolve_skill(self, event: _Event, context: _Context) -> Skill:
+    async def resolve_skill(self, event: _Event, context: RuntimeContext) -> Skill:
         return self.skill
 
     async def _handle_request(
         self,
         skill: Skill,
         event: _Event,
-        context: _Context,
+        context: RuntimeContext,
         update: Optional[Update] = None,
     ) -> _Response:
         update = await self._validate_update(skill, event, context)

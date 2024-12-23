@@ -10,7 +10,25 @@ from aliceio.enums import EventType
 from aliceio.types import AliceResponse, Message, Response, Session, Update, User
 from aliceio.types.alice_event import AliceEvent
 from aliceio.webhook.yandex_functions import OneSkillYandexFunctionsRequestHandler
+from aliceio.webhook.yandex_functions.context import RuntimeContext
 from tests.mocked.mocked_skill import MockedSkill
+
+
+class FakeRuntimeContext(RuntimeContext):
+    function_name: str = "function_name"
+    function_version: str = "function_version"
+    function_folder_id: str = "function_folder_id"
+    invoked_function_arn: str = "invoked_function_arn"
+    memory_limit_in_mb: int = 128
+    request_id: str = "request_id"
+    log_group_name: str = "log_group_name"
+    log_stream_name: str = "log_stream_name"
+    deadline_ms: int = 1000
+    token: Optional[str] = None
+    aws_request_id: str = "aws_request_id"
+
+    def get_remaining_time_in_millis(self) -> int:
+        return self.deadline_ms - 100
 
 
 class TestYandexFunctionsRequestHandler:
@@ -202,6 +220,7 @@ class TestYandexFunctionsRequestHandler:
             skill,
             event_update,
             event_session,
+            ycf_context,
             event_from_user=None,
         ):
             assert isinstance(skill, MockedSkill)
@@ -213,6 +232,8 @@ class TestYandexFunctionsRequestHandler:
             if isinstance(event, AliceEvent):
                 assert event.user == event_from_user
                 assert event.session == event_session
+            assert isinstance(ycf_context, FakeRuntimeContext)
+
             return "Handled"
 
         dp = Dispatcher()
@@ -221,7 +242,8 @@ class TestYandexFunctionsRequestHandler:
 
         handler = OneSkillYandexFunctionsRequestHandler(dispatcher=dp, skill=skill)
         event = json.loads(update)
+        context = FakeRuntimeContext()
 
-        resp = await handler(event=event, context={})
+        resp = await handler(event=event, context=context)
         assert isinstance(resp, dict)
         assert "response" in resp

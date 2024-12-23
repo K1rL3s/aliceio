@@ -7,10 +7,12 @@ from aliceio import Dispatcher, Skill
 from aliceio.types import Update
 from aliceio.types.base import AliceObject
 from aliceio.utils.funcs import prepare_value
+from aliceio.webhook.yandex_functions.context import RuntimeContext
 
 _Event = dict[str, Any]
-_Context = dict[str, Any]
 _Response = Optional[dict[str, Any]]
+
+YСF_CONTEXT_KEY = "ycf_context"
 
 
 class BaseYandexFunctionsRequestHandler(ABC):
@@ -20,20 +22,29 @@ class BaseYandexFunctionsRequestHandler(ABC):
         **data: Any,
     ) -> None:
         """
-        Базовый обработчик, который помогает обрабатывать входящий запрос от aiohttp
-        и передавать его диспетчеру.
+        Базовый обработчик, который обрабатывает входящие запросы внутри Яндекс.Функции.
 
         :param dispatcher: Экземпляр :class:`aliceio.dispatcher.dispatcher.Dispatcher`
         """
         self.dispatcher = dispatcher
         self.data = data
 
+    async def handle(self, event: _Event, context: RuntimeContext) -> _Response:
+        skill = await self.resolve_skill(event=event, context=context)
+        return await self._handle_request(skill=skill, event=event, context=context)
+
+    __call__ = handle
+
+    @abstractmethod
+    async def resolve_skill(self, event: _Event, context: RuntimeContext) -> Skill:
+        pass
+
     @abstractmethod
     async def _handle_request(
         self,
         skill: Skill,
         event: _Event,
-        context: _Context,
+        context: RuntimeContext,
         update: Optional[Update] = None,
     ) -> _Response:
         if update is None:
@@ -43,27 +54,18 @@ class BaseYandexFunctionsRequestHandler(ABC):
             skill,
             update,
             **self.data,
+            **{YСF_CONTEXT_KEY: context},
         )
         return self._build_response(result)
-
-    @abstractmethod
-    async def resolve_skill(self, event: _Event, context: _Context) -> Skill:
-        pass
 
     async def _validate_update(
         self,
         skill: Skill,
         event: _Event,
-        context: _Context,
+        context: RuntimeContext,
     ) -> Update:
         json_data = self._convert_show_pull_to_normal_request(event)
         return Update.model_validate(json_data, context={"skill": skill})
-
-    async def handle(self, event: _Event, context: _Context) -> _Response:
-        skill = await self.resolve_skill(event, context)
-        return await self._handle_request(skill=skill, event=event, context=context)
-
-    __call__ = handle
 
     # TODO: Проверить, помогает ли про запуске шоу Алисы
     @staticmethod
