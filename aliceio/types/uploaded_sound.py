@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, ClassVar, Optional
+from typing import TYPE_CHECKING, Any, Optional
 
 from .base import AliceObject
 
@@ -21,10 +21,10 @@ class UploadedSound(AliceObject):
     error: Optional[str] = None
 
     if TYPE_CHECKING:
-        skill_id: ClassVar[str]
-        original_name: ClassVar[str]
-        created_at: ClassVar[str]
-        is_processed: ClassVar[bool]
+        skill_id: str
+        original_name: str
+        created_at: str
+        is_processed: bool
 
         def __init__(
             __pydantic_self__,

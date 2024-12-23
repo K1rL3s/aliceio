@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, ClassVar, Optional
+from typing import TYPE_CHECKING, Any, Optional
 
 from .alice_event import AliceEvent
 from .markup import Markup
@@ -22,9 +22,9 @@ class Message(AliceEvent):
     nlu: Optional[NLU] = None
 
     if TYPE_CHECKING:
-        text: ClassVar[str]
-        original_text: ClassVar[str]
-        original_command: ClassVar[str]
+        text: str
+        original_text: str
+        original_command: str
 
         def __init__(
             __pydantic_self__,

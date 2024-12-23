@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, ClassVar, Optional
+from typing import TYPE_CHECKING, Any, Optional
 
 from .application import Application
 from .base import AliceObject
@@ -21,7 +21,7 @@ class Session(AliceObject):
     user: Optional[User] = None  # None если пользователь неавторизован
 
     if TYPE_CHECKING:
-        is_anonymous: ClassVar[bool]
+        is_anonymous: bool
 
         def __init__(
             __pydantic_self__,
