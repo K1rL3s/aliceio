@@ -7,12 +7,13 @@ from aliceio import Dispatcher, Skill
 from aliceio.types import Update
 from aliceio.types.base import AliceObject
 from aliceio.utils.funcs import prepare_value
-from aliceio.webhook.yandex_functions.context import RuntimeContext
+
+from .context import RuntimeContext
 
 _Event = dict[str, Any]
 _Response = Optional[dict[str, Any]]
 
-YСF_CONTEXT_KEY = "ycf_context"
+YCF_CONTEXT_KEY = "ycf_context"
 
 
 class BaseYandexFunctionsRequestHandler(ABC):
@@ -54,7 +55,7 @@ class BaseYandexFunctionsRequestHandler(ABC):
             skill,
             update,
             **self.data,
-            **{YСF_CONTEXT_KEY: context},
+            **{YCF_CONTEXT_KEY: context},
         )
         return self._build_response(result)
 

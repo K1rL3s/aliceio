@@ -9,8 +9,10 @@ from aliceio import Dispatcher, F
 from aliceio.enums import EventType
 from aliceio.types import AliceResponse, Message, Response, Session, Update, User
 from aliceio.types.alice_event import AliceEvent
-from aliceio.webhook.yandex_functions import OneSkillYandexFunctionsRequestHandler
-from aliceio.webhook.yandex_functions.context import RuntimeContext
+from aliceio.webhook.yandex_functions import (
+    OneSkillYandexFunctionsRequestHandler,
+    RuntimeContext,
+)
 from tests.mocked.mocked_skill import MockedSkill
 
 
