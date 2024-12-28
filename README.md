@@ -101,7 +101,7 @@ if __name__ == "__main__":
 
 
 ## Материалы
-- [Туториал](https://aliceio.readthedocs.io/ru/latest/tutorial/start/)
+- [Туториал](https://aliceio.readthedocs.io/ru/latest/tutorial/)
 - [Документация](https://aliceio.readthedocs.io/)
 - [Примеры](https://github.com/K1rL3s/aliceio/tree/master/examples)
 
