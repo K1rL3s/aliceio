@@ -38,7 +38,7 @@ classifiers = [
   "Topic :: Communications :: Chat",
 ]
 dependencies = [
-  "aiofiles~=23.2.1",
+  "aiofiles>=23.2.1,<24.2",
   "aiohttp~=3.9.0",
   "certifi>=2023.7.22",
   "magic-filter>=1.0.12,<1.1",
