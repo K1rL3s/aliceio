@@ -85,11 +85,11 @@ class Update(MutableAliceObject):
 
         @property
         def event_type(self) -> str:
-            if (event_type := req_type_to_event_type.get(self.request.type)) is None:
-                raise UpdateTypeLookupError(
-                    "Update does not contain any known event type.",
-                )
-            return str(event_type)
+            if event_type := req_type_to_event_type.get(self.request.type):
+                return str(event_type)
+            raise UpdateTypeLookupError(
+                "Update does not contain any known event type.",
+            )
 
     # Это костыль для account_linking_complete_event, при нём нет поля request
     @model_validator(mode="before")
@@ -106,8 +106,8 @@ class Update(MutableAliceObject):
         super().model_post_init(__context)
         with contextlib.suppress(UpdateTypeLookupError):
             # При работе ошибка возникнет ещё раз в диспетчере,
-            # здесь она глушится для работы тестов
-            # (убрать здесь suppress и переделать тесты)
+            # здесь она глушится для работы тестов.
+            # TODO: убрать здесь suppress и переделать тесты
             self._event_model_validate(self.event_type, __context)
 
     def _event_model_validate(self, event_type: str, __context: Any) -> None:
@@ -116,13 +116,11 @@ class Update(MutableAliceObject):
         """
         dump = self.request.model_dump()
         dump["session"] = self.session
+        event_model = event_type_to_event_model[event_type]
         setattr(
             self,
             event_type,
-            event_type_to_event_model[event_type].model_validate(
-                dump,
-                context=__context,
-            ),
+            event_model.model_validate(dump, context=__context),
         )
 
 

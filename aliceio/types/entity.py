@@ -9,6 +9,15 @@ from .nlu_entity import NLUEntity
 from .number_entity import NumberEntity
 from .tokens_entity import TokensEntity
 
+NLUEntityType = Union[
+    NLUEntity,
+    DateTimeEntity,
+    FIOEntity,
+    GeoEntity,
+    NLUEntity,
+    NumberEntity,
+]
+
 
 class Entity(MutableAliceObject):
     """
@@ -19,7 +28,7 @@ class Entity(MutableAliceObject):
 
     type: str
     tokens: TokensEntity
-    value: Optional[Union[NLUEntity, NumberEntity]] = None
+    value: Optional[NLUEntityType] = None
 
     if TYPE_CHECKING:
 
@@ -43,11 +52,11 @@ class Entity(MutableAliceObject):
 
         if not self.value or isinstance(self.value, (int, float)):  # "YANDEX.NUMBER"
             return
+
         entity_type: dict[str, type[NLUEntity]] = {
             EntityType.YANDEX_FIO: FIOEntity,
             EntityType.YANDEX_GEO: GeoEntity,
             EntityType.YANDEX_DATETIME: DateTimeEntity,
         }
-        if (known_entity := entity_type.get(self.type)) is None:
-            return
-        self.value = known_entity.model_validate(self.value, from_attributes=True)
+        if known_entity := entity_type.get(self.type):
+            self.value = known_entity.model_validate(self.value, from_attributes=True)
