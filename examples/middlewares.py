@@ -6,7 +6,7 @@ from typing import Any, Callable
 
 from aiohttp import web
 
-from aliceio import BaseMiddleware, Dispatcher, Router, Skill
+from aliceio import BaseMiddleware, Dispatcher, Skill
 from aliceio.types import Message, Response, Update
 from aliceio.types.base import AliceObject
 from aliceio.webhook.aiohttp_server import (
@@ -89,24 +89,22 @@ class UserAuthorizedMiddleware(BaseMiddleware[Update]):
         return await handler(event, data)
 
 
-router = Router()
+dp = Dispatcher()
 
 
-@router.message()
-@router.button_pressed()
-@router.purchase()
-@router.show_pull()
-@router.audio_player()
-@router.error()  # Событие фреймворка, не Алисы
-@router.timeout()  # Событие фреймворка, не Алисы
+@dp.message()
+@dp.button_pressed()
+@dp.purchase()
+@dp.show_pull()
+@dp.audio_player()
+@dp.account_linking_complete()
+@dp.error()  # Событие фреймворка, не Алисы
+@dp.timeout()  # Событие фреймворка, не Алисы
 async def giga_handler(event: AliceObject) -> Response:
     return Response(text=f"Ой, привет, {event.__class__.__name__}!")
 
 
 def main() -> None:
-    dp = Dispatcher()
-    dp.include_router(router)
-
     # Сначала всегда будут вызываться мидлвари update'а, потом уже ивентов
     dp.update.outer_middleware(OuterExampleMiddleware())
     dp.update.outer_middleware(UserAuthorizedMiddleware())
@@ -118,10 +116,7 @@ def main() -> None:
     skill = Skill(skill_id=skill_id)
 
     app = web.Application()
-    requests_handler = OneSkillAiohttpRequestHandler(
-        dispatcher=dp,
-        skill=skill,
-    )
+    requests_handler = OneSkillAiohttpRequestHandler(dispatcher=dp, skill=skill)
 
     WEB_SERVER_HOST = "127.0.0.1"
     WEB_SERVER_PORT = 80

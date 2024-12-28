@@ -1,3 +1,9 @@
+"""
+Кнопочки
+
+https://yandex.ru/dev/dialogs/alice/doc/ru/buttons
+"""
+
 import logging
 import os
 import sys
@@ -127,7 +133,7 @@ async def text_buttons(message: Message) -> Response:
     )
 
 
-# Не обрабатывайте разные типы событий одной функцией
+# Не обрабатывайте разные типы событий одной функцией, это ради примера
 @router.button_pressed()
 @router.message()
 async def button_pressed(_: Any) -> Response:
@@ -142,10 +148,7 @@ def main() -> None:
     skill = Skill(skill_id=skill_id)
 
     app = web.Application()
-    requests_handler = OneSkillAiohttpRequestHandler(
-        dispatcher=dp,
-        skill=skill,
-    )
+    requests_handler = OneSkillAiohttpRequestHandler(dispatcher=dp, skill=skill)
 
     WEB_SERVER_HOST = "127.0.0.1"
     WEB_SERVER_PORT = 80

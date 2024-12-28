@@ -1,7 +1,7 @@
 """
-Встроенные интенты
+Пример запуска навыка с командой и без
 
-https://yandex.ru/dev/dialogs/alice/doc/ru/nlu#predefined-intents
+https://yandex.ru/dev/dialogs/alice/doc/ru/activation#activate
 """
 
 import logging
@@ -11,7 +11,7 @@ import sys
 from aiohttp import web
 
 from aliceio import Dispatcher, F, Skill
-from aliceio.types import Message
+from aliceio.types import Message, Response
 from aliceio.webhook.aiohttp_server import (
     OneSkillAiohttpRequestHandler,
     setup_application,
@@ -20,29 +20,19 @@ from aliceio.webhook.aiohttp_server import (
 dp = Dispatcher()
 
 
-@dp.message(F.nlu.intents["YANDEX.CONFIRM"])
-async def confirm(message: Message) -> str:
-    return "Тоже согласен, да?"
+@dp.message(F.session.new, F.command)
+async def start_with_command(message: Message) -> str:
+    return f'Привет! Это был запуск c командой: "{message.command}"'
 
 
-@dp.message(F.nlu.intents["YANDEX.REJECT"])
-async def reject(message: Message) -> str:
-    return "Тоже не веришь, не?"
-
-
-@dp.message(F.nlu.intents["YANDEX.REPEAT"])
-async def repeat(message: Message) -> str:
-    return "Сейчас повторю, ещё разок?"
-
-
-@dp.message(F.nlu.intents["YANDEX.HELP"])
-async def help(message: Message) -> str:
-    return "Тебе помочь, помощь?"
+@dp.message(F.session.new, F.command == "")
+async def start_without_command(message: Message) -> str:
+    return "Привет! Это был запуск без команды"
 
 
 @dp.message()
-async def anything_else(message: Message) -> str:
-    return "Привет, как дела, пока!"
+async def other(message: Message) -> Response:
+    return Response(text="Перезапуск =)", end_session=True)
 
 
 def main() -> None:

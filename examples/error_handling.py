@@ -4,7 +4,7 @@ import sys
 
 from aiohttp import web
 
-from aliceio import Dispatcher, F, Router, Skill
+from aliceio import Dispatcher, F, Skill
 from aliceio.filters import ExceptionMessageFilter, ExceptionTypeFilter
 from aliceio.types import ErrorEvent, Message, Response
 from aliceio.webhook.aiohttp_server import (
@@ -12,7 +12,7 @@ from aliceio.webhook.aiohttp_server import (
     setup_application,
 )
 
-router = Router()
+dp = Dispatcher()
 logger = logging.getLogger(__name__)
 
 
@@ -25,7 +25,7 @@ class InvalidName(Exception):
         super().__init__(message)
 
 
-@router.errors(ExceptionTypeFilter(InvalidAge))
+@dp.errors(ExceptionTypeFilter(InvalidAge))
 async def handle_invalid_age_exception(event: ErrorEvent) -> str:
     assert isinstance(event.exception, InvalidAge)
     logger.error("Error caught: %r while processing %r", event.exception, event.update)
@@ -35,7 +35,7 @@ async def handle_invalid_age_exception(event: ErrorEvent) -> str:
     return f"Произошла ошибка: {event.exception!r}"
 
 
-@router.errors(ExceptionMessageFilter("Invalid"))
+@dp.errors(ExceptionMessageFilter("Invalid"))
 async def handle_invalid_exceptions(event: ErrorEvent) -> str:
     # Так как мы определили `ExceptionTypeFilter` с типом ошибки `InvalidAge` ранее,
     # этот обработчик будет получать ошибки всех типов,
@@ -48,7 +48,7 @@ async def handle_invalid_exceptions(event: ErrorEvent) -> str:
     return f"Произошла ошибка: {event.exception!r}"
 
 
-@router.message(F.command.startswith("мне"))
+@dp.message(F.command.startswith("мне"))
 async def handle_set_age(message: Message) -> str:
     age = message.command.replace("мне", "", 1).strip()
     if not age:
@@ -60,7 +60,7 @@ async def handle_set_age(message: Message) -> str:
     return f"Твой возраст через год  - {int(age) + 1}"
 
 
-@router.message(F.command.startswith("я"))
+@dp.message(F.command.startswith("я"))
 async def handle_set_name(message: Message) -> str:
     name = message.command.replace("я", "", 1).strip()
     if not name:
@@ -69,28 +69,22 @@ async def handle_set_name(message: Message) -> str:
     return f"Твоё имя - {name}"
 
 
-@router.message(F.session.new)
+@dp.message(F.session.new)
 async def start_handler(message: Message) -> Response:
     return Response(text="Привет!")
 
 
-@router.message()
+@dp.message()
 async def help_hanler(message: Message) -> Response:
     return Response(text='Скажите "мне <возраст>" или "я <имя>" :)')
 
 
 def main() -> None:
-    dp = Dispatcher()
-    dp.include_routers(router)
-
     skill_id = os.environ["SKILL_ID"]
     skill = Skill(skill_id=skill_id)
 
     app = web.Application()
-    requests_handler = OneSkillAiohttpRequestHandler(
-        dispatcher=dp,
-        skill=skill,
-    )
+    requests_handler = OneSkillAiohttpRequestHandler(dispatcher=dp, skill=skill)
 
     WEB_SERVER_HOST = "127.0.0.1"
     WEB_SERVER_PORT = 80
