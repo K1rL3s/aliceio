@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any, Optional, overload
 
 from aliceio.fsm.storage.base import BaseStorage, StateType, StorageKey
 
@@ -54,6 +54,19 @@ class FSMContext:
         :return: Текущие данные.
         """
         return await self.storage.get_data(key=self.key)
+
+    @overload
+    async def get_value(self, key: str) -> Optional[Any]: ...
+
+    @overload
+    async def get_value(self, key: str, default: Any) -> Any: ...
+
+    async def get_value(self, key: str, default: Optional[Any] = None) -> Optional[Any]:
+        return await self.storage.get_value(
+            storage_key=self.key,
+            dict_key=key,
+            default=default,
+        )
 
     async def update_data(
         self,

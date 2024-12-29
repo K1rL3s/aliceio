@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Any, Optional, Union
+from typing import Any, Optional, Union, overload
 
 from aliceio.fsm.state import State
 
@@ -56,6 +56,39 @@ class BaseStorage(ABC):
         :param key: Ключ.
         :return: Текущие данные.
         """
+
+    @overload
+    async def get_value(self, storage_key: StorageKey, dict_key: str) -> Optional[Any]:
+        """
+        Get single value from data by key
+        :param storage_key: storage key
+        :param dict_key: value key
+        :return: value stored in key of dict or ``None``
+        """
+
+    @overload
+    async def get_value(
+        self,
+        storage_key: StorageKey,
+        dict_key: str,
+        default: Any,
+    ) -> Any:
+        """
+        Get single value from data by key
+        :param storage_key: storage key
+        :param dict_key: value key
+        :param default: default value to return
+        :return: value stored in key of dict or default
+        """
+
+    async def get_value(
+        self,
+        storage_key: StorageKey,
+        dict_key: str,
+        default: Optional[Any] = None,
+    ) -> Optional[Any]:
+        data = await self.get_data(storage_key)
+        return data.get(dict_key, default)
 
     async def update_data(
         self,

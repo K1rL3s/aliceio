@@ -1,6 +1,7 @@
 from collections import defaultdict
+from copy import copy
 from dataclasses import dataclass, field
-from typing import Any, Optional
+from typing import Any, Optional, overload
 
 from aliceio.fsm.state import State
 from aliceio.fsm.storage.base import BaseStorage, StateType, StorageKey
@@ -41,3 +42,27 @@ class MemoryStorage(BaseStorage):
 
     async def get_data(self, key: StorageKey) -> dict[str, Any]:
         return self.storage[key].data.copy()
+
+    @overload
+    async def get_value(
+        self,
+        storage_key: StorageKey,
+        dict_key: str,
+    ) -> Optional[Any]: ...
+
+    @overload
+    async def get_value(
+        self,
+        storage_key: StorageKey,
+        dict_key: str,
+        default: Any,
+    ) -> Any: ...
+
+    async def get_value(
+        self,
+        storage_key: StorageKey,
+        dict_key: str,
+        default: Optional[Any] = None,
+    ) -> Optional[Any]:
+        data = self.storage[storage_key].data
+        return copy(data.get(dict_key, default))
