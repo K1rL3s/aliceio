@@ -43,7 +43,7 @@ dependencies = [
   "aiohttp>=3.9.0,<3.11",
   "certifi>=2023.7.22",
   "magic-filter>=1.0.12,<1.1",
-  "pydantic>=2.4.1,<2.10",
+  "pydantic>=2.4.1,<2.11",
   "typing-extensions>=4.7.0,<=5.0",
 ]
 
