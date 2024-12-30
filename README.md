@@ -49,7 +49,7 @@
 
 ## Быстрый старт
 
-Как получить `skill_id` и подключить навык к Алисе можно прочитать <a target="_blank" href="https://aliceio.readthedocs.io/ru/latest/tutorial/start/">тут</a>.
+Как получить `skill_id` и подключить навык к Алисе можно прочитать <a target="_blank" href="https://aliceio.readthedocs.io/ru/latest/tutorial/">тут</a>.
 
 ### [Yandex Cloud Functions](https://yandex.ru/dev/dialogs/alice/doc/ru/quickstart-programming):
 ```python
@@ -101,7 +101,7 @@ if __name__ == "__main__":
 
 
 ## Материалы
-- [Туториал](https://aliceio.readthedocs.io/ru/latest/tutorial/start/)
+- [Туториал](https://aliceio.readthedocs.io/ru/latest/tutorial/)
 - [Документация](https://aliceio.readthedocs.io/)
 - [Примеры](https://github.com/K1rL3s/aliceio/tree/master/examples)
 
