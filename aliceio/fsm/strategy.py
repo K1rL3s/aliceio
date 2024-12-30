@@ -4,9 +4,16 @@ from aliceio.enums.base import StrEnum
 
 
 class FSMStrategy(StrEnum):
+    """
+    FSM Strategy для генерации ключей FSM Storage.
+    """
+
     USER = "user"
+    """Имя пользователя."""
     SESSION = "session"
+    """Сессия."""
     APPLICATION = "application"
+    """Описание/Приложение"""
 
 
 def apply_strategy(
