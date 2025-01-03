@@ -4,7 +4,7 @@ import sys
 
 from aiohttp import web
 
-from aliceio import Dispatcher, F, Router, Skill
+from aliceio import Dispatcher, F, Skill
 from aliceio.filters import BaseFilter
 from aliceio.fsm.context import FSMContext
 from aliceio.fsm.state import State, StatesGroup
@@ -14,25 +14,15 @@ from aliceio.webhook.aiohttp_server import (
     setup_application,
 )
 
-form_router = Router()
+dp = Dispatcher()
+
 words_yes = ["да", "давай", "ок", "покупаю", "ладно", "купить"]
-all_words = [
-    "да",
-    "давай",
-    "ок",
-    "покупаю",
-    "ладно",
-    "купить",
-    "нет",
-    "не хочу",
-    "не буду",
-    "отстань",
-]
+all_words = [*words_yes, "нет", "не хочу", "не буду", "отстань"]
 site_url = "https://market.yandex.ru/search?text=слон"
 
 
 class Form(StatesGroup):
-    process_buying = State()
+    buying = State()
 
 
 class ContainsFilter(BaseFilter):  # Кастомный фильтр
@@ -43,10 +33,10 @@ class ContainsFilter(BaseFilter):  # Кастомный фильтр
         return any(word in message.command for word in self.words)
 
 
-@form_router.message(F.session.new)
+@dp.message(F.session.new)
 async def new_session(message: Message, state: FSMContext) -> Response:
     await state.set_data(all_words=all_words.copy())
-    await state.set_state(Form.process_buying)
+    await state.set_state(Form.buying)
 
     return Response(
         text="Привет! Купи слона!",
@@ -54,8 +44,8 @@ async def new_session(message: Message, state: FSMContext) -> Response:
     )
 
 
-@form_router.message(Form.process_buying, ContainsFilter(words_yes))
-async def purchase(message: Message, state: FSMContext) -> Response:
+@dp.message(Form.buying, ContainsFilter(words_yes))
+async def confirm_purchase(message: Message, state: FSMContext) -> Response:
     await state.clear()
     return Response(
         text=f"Круто! Слона можно найти на Яндекс.Маркете!\n{site_url}",
@@ -63,8 +53,8 @@ async def purchase(message: Message, state: FSMContext) -> Response:
     )
 
 
-@form_router.message(Form.process_buying)
-async def proposal(message: Message, state: FSMContext) -> Response:
+@dp.message(Form.buying)
+async def next_try(message: Message, state: FSMContext) -> Response:
     data = await state.get_data()
     if message.command in data["all_words"]:
         data["all_words"].remove(message.command)
@@ -77,9 +67,6 @@ async def proposal(message: Message, state: FSMContext) -> Response:
 
 
 def main() -> None:
-    dp = Dispatcher()
-    dp.include_routers(form_router)
-
     skill_id = os.environ["SKILL_ID"]
     skill = Skill(skill_id=skill_id)
 

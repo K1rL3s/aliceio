@@ -118,10 +118,7 @@ def main() -> None:
     skill = Skill(skill_id=skill_id)
 
     app = web.Application()
-    requests_handler = OneSkillAiohttpRequestHandler(
-        dispatcher=dp,
-        skill=skill,
-    )
+    requests_handler = OneSkillAiohttpRequestHandler(dispatcher=dp, skill=skill)
 
     WEB_SERVER_HOST = "127.0.0.1"
     WEB_SERVER_PORT = 80

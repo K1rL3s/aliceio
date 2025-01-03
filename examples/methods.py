@@ -1,3 +1,10 @@
+"""
+Добавление аудио, изображений и проверка доступного места
+
+https://yandex.ru/dev/dialogs/alice/doc/ru/resource-upload
+https://yandex.ru/dev/dialogs/alice/doc/ru/resource-sounds-upload
+"""
+
 import asyncio
 import logging
 import os
@@ -6,7 +13,7 @@ from pathlib import Path
 
 from aiohttp import web
 
-from aliceio import Dispatcher, F, Router, Skill
+from aliceio import Dispatcher, F, Skill
 from aliceio.types import BufferedInputFile, FSInputFile, Message, Response
 from aliceio.webhook.aiohttp_server import (
     OneSkillAiohttpRequestHandler,
@@ -14,18 +21,17 @@ from aliceio.webhook.aiohttp_server import (
 )
 
 # Для использования методов API Алисы обязательно нужен oauth token!
-
-router = Router()
+dp = Dispatcher()
 DATA_DIR = Path(__file__).parent / "data"
 
 
-@router.message(F.command == "статус")
+@dp.message(F.command == "статус")
 async def status(message: Message, skill: Skill) -> Response:
     space_status = await skill.status()
     return Response(text=str(space_status))
 
 
-@router.message(F.command == "загрузи фото")
+@dp.message(F.command == "загрузи фото")
 async def upload_photo(message: Message, skill: Skill) -> Response:
     with open(DATA_DIR / "watermelon.png", "rb") as f:
         image = BufferedInputFile(file=f.read())
@@ -45,7 +51,7 @@ async def upload_photo(message: Message, skill: Skill) -> Response:
     return Response(text=str(results))
 
 
-@router.message(F.command == "загрузи аудио")
+@dp.message(F.command == "загрузи аудио")
 async def upload_sounds(message: Message, skill: Skill) -> Response:
     with open(DATA_DIR / "watermelon_rip.mp3", "rb") as f:
         audio = BufferedInputFile(file=f.read())
@@ -60,21 +66,21 @@ async def upload_sounds(message: Message, skill: Skill) -> Response:
     return Response(text=str(results))
 
 
-@router.message(F.command == "все фото")
+@dp.message(F.command == "все фото")
 async def get_all_images(message: Message, skill: Skill) -> Response:
     pre_images = await skill.get_images()
     images = pre_images.images
     return Response(text=str(images))
 
 
-@router.message(F.command == "все аудио")
+@dp.message(F.command == "все аудио")
 async def get_all_sounds(message: Message, skill: Skill) -> Response:
     pre_sounds = await skill.get_sounds()
     sounds = pre_sounds.sounds
     return Response(text=str(sounds))
 
 
-@router.message(F.command == "удали фото")
+@dp.message(F.command == "удали фото")
 async def delete_image(message: Message, skill: Skill) -> Response:
     images = (await skill.get_images()).images
     if images:
@@ -86,7 +92,7 @@ async def delete_image(message: Message, skill: Skill) -> Response:
     return Response(text=text)
 
 
-@router.message(F.command == "удали аудио")
+@dp.message(F.command == "удали аудио")
 async def delete_sound(message: Message, skill: Skill) -> Response:
     sounds = (await skill.get_sounds()).sounds
     if sounds:
@@ -98,28 +104,22 @@ async def delete_sound(message: Message, skill: Skill) -> Response:
     return Response(text=text)
 
 
-@router.message()
+@dp.message()
 async def any_message(message: Message) -> Response:
     return Response(text="Привет!")
 
 
 def main() -> None:
-    dp = Dispatcher()
-    dp.include_router(router)
-
     # ouath_token обязателен!
     skill_id = os.environ["SKILL_ID"]
-    oauth_token = os.getenv("OAUTH_TOKEN")
+    oauth_token = os.environ["OAUTH_TOKEN"]
     skill = Skill(
         skill_id=skill_id,
         oauth_token=oauth_token,
     )
 
     app = web.Application()
-    requests_handler = OneSkillAiohttpRequestHandler(
-        dispatcher=dp,
-        skill=skill,
-    )
+    requests_handler = OneSkillAiohttpRequestHandler(dispatcher=dp, skill=skill)
 
     WEB_SERVER_HOST = "127.0.0.1"
     WEB_SERVER_PORT = 80

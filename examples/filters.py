@@ -4,7 +4,7 @@ import sys
 
 from aiohttp import web
 
-from aliceio import Dispatcher, F, Router, Skill
+from aliceio import Dispatcher, F, Skill
 from aliceio.filters import BaseFilter
 from aliceio.types import ButtonPressed, Message, Response, TextButton
 from aliceio.webhook.aiohttp_server import (
@@ -12,7 +12,7 @@ from aliceio.webhook.aiohttp_server import (
     setup_application,
 )
 
-router = Router()
+dp = Dispatcher()
 
 
 class InWordsFilter(BaseFilter):  # Кастомный фильтр
@@ -23,29 +23,29 @@ class InWordsFilter(BaseFilter):  # Кастомный фильтр
         return message.command in self.words
 
 
-@router.message(InWordsFilter(["да", "ок", "хорошо"]))
+@dp.message(InWordsFilter(["да", "ок", "хорошо"]))
 async def yes_message_handler(message: Message) -> str:
     return "Ну да так да, чё бубнеть-то"
 
 
 # Один и тот же фильтр, но разная запись
-@router.button_pressed(F.payload["yes"], F.payload["yes"].is_(True))
+@dp.button_pressed(F.payload["yes"], F.payload["yes"].is_(True))
 async def yes_button_handler(button: ButtonPressed) -> Response:
     return Response(text="Кнопку нажал? Говорить лень?\nНу да так да, чё бубнеть-то")
 
 
-@router.message(InWordsFilter(["не", "нет", "неа"]))
+@dp.message(InWordsFilter(["не", "нет", "неа"]))
 async def no_message_handler(message: Message) -> str:
     return "Ну на нет и суда нет"
 
 
 # Один и тот же фильтр, но разная запись
-@router.button_pressed(~F.payload["yes"], F.payload["yes"].is_(False))
+@dp.button_pressed(~F.payload["yes"], F.payload["yes"].is_(False))
 async def no_button_handler(button: ButtonPressed) -> Response:
     return Response(text="Кнопку нажал? Говорить лень?\nНу на нет и суда нет")
 
 
-@router.message()
+@dp.message()
 async def any_message_handler(message: Message) -> Response:
     return Response(
         text="Да-да... Да-да...",
@@ -56,7 +56,7 @@ async def any_message_handler(message: Message) -> Response:
     )
 
 
-@router.button_pressed()
+@dp.button_pressed()
 async def any_button_handler(message: Message) -> Response:
     return Response(
         text="Да-да... Да-да...",
@@ -68,17 +68,11 @@ async def any_button_handler(message: Message) -> Response:
 
 
 def main() -> None:
-    dp = Dispatcher()
-    dp.include_router(router)
-
     skill_id = os.environ["SKILL_ID"]
     skill = Skill(skill_id=skill_id)
 
     app = web.Application()
-    requests_handler = OneSkillAiohttpRequestHandler(
-        dispatcher=dp,
-        skill=skill,
-    )
+    requests_handler = OneSkillAiohttpRequestHandler(dispatcher=dp, skill=skill)
 
     WEB_SERVER_HOST = "127.0.0.1"
     WEB_SERVER_PORT = 80
