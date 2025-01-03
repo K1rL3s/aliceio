@@ -5,7 +5,6 @@ from typing import Any, Callable, Optional, cast
 
 from aiohttp import JsonPayload, web
 from aiohttp.abc import Application
-from pydantic import BaseModel
 
 from aliceio import Dispatcher, Skill
 from aliceio.dispatcher.event.bases import REJECTED, UNHANDLED
@@ -125,7 +124,4 @@ class BaseAiohttpRequestHandler(ABC):
         )
 
     def _build_json_response(self, result: Optional[AliceObject]) -> JsonPayload:
-        return build_json_payload(
-            value=result.model_dump() if isinstance(result, BaseModel) else result,
-            json_dumps=self.json_dumps,
-        )
+        return build_json_payload(value=result, json_dumps=self.json_dumps)

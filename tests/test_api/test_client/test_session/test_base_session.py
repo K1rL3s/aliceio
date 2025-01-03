@@ -2,19 +2,26 @@ import datetime
 import json
 from collections.abc import AsyncGenerator
 from contextlib import AbstractAsyncContextManager
+from enum import Enum
 from typing import Any, Optional
 from unittest.mock import AsyncMock, patch
 
 import pytest
+from pytz import utc
 
 from aliceio import Skill
 from aliceio.client.alice import PRODUCTION, AliceAPIServer
 from aliceio.client.session.base import AliceType, BaseSession
+from aliceio.enums import CardType
 from aliceio.exceptions import AliceAPIError, ClientDecodeError
 from aliceio.methods import AliceMethod, Status
-from aliceio.types import PreQuota, Quota, SpaceStatus
+from aliceio.types import AnalyticEvent, PreQuota, Quota, SpaceStatus
 from aliceio.utils.funcs import prepare_value
 from tests.mocked.mocked_skill import MockedSkill
+
+
+class _TestEnum(Enum):
+    field = "fieldValue"
 
 
 class CustomSession(BaseSession):
@@ -77,6 +84,47 @@ class TestBaseSession:
     def test_prepare_value_timedelta(self, skill: MockedSkill):
         value = prepare_value(datetime.timedelta(minutes=2), files={})
         assert isinstance(value, str)
+
+    @pytest.mark.parametrize(
+        "value,result",
+        [
+            [None, None],
+            ["text", "text"],
+            [CardType.BIG_IMAGE, "BigImage"],
+            [_TestEnum.field, "fieldValue"],
+            [42, "42"],
+            [True, "true"],
+            [["test"], '["test"]'],
+            [["test", ["test"]], '["test", ["test"]]'],
+            [[{"test": "pass", "spam": None}], '[{"test": "pass", "spam": null}]'],
+            [
+                {"test": "pass", "number": 42, "spam": None},
+                '{"test": "pass", "number": 42, "spam": null}',
+            ],
+            [
+                {"foo": {"test": "pass", "spam": None}},
+                '{"foo": {"test": "pass", "spam": null}}',
+            ],
+            [
+                datetime.datetime(
+                    year=2017,
+                    month=5,
+                    day=17,
+                    hour=4,
+                    minute=11,
+                    second=42,
+                    tzinfo=utc,
+                ),
+                "1494994302",
+            ],
+            [
+                {"analytic_event": AnalyticEvent(name="John", value={"key": "door"})},
+                '{"analytic_event": {"name": "John", "value": {"key": "door"}}}',
+            ],
+        ],
+    )
+    def test_prepare_value(self, value: Any, result: str, skill: MockedSkill):
+        assert prepare_value(value, files={}, _dumps_json=json.dumps) == result
 
     def test_check_response_json_decode_error(self):
         session = CustomSession()
