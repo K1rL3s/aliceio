@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, ClassVar
+from typing import TYPE_CHECKING, Any
 
 from .alice_event import AliceEvent
 from .session import Session
@@ -12,7 +12,7 @@ class ErrorEvent(AliceEvent):
     exception: Exception
 
     if TYPE_CHECKING:
-        event: ClassVar[AliceEvent]
+        event: AliceEvent
 
         def __init__(
             __pydantic_self__,

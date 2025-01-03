@@ -1,5 +1,5 @@
 import contextlib
-from typing import TYPE_CHECKING, Any, ClassVar, Optional, cast
+from typing import TYPE_CHECKING, Any, Optional, cast
 
 from pydantic import model_validator
 
@@ -43,8 +43,8 @@ class Update(MutableAliceObject):
     state: Optional[ApiState] = None
 
     if TYPE_CHECKING:
-        event: ClassVar[AliceEvent]
-        event_type: ClassVar[str]
+        event: AliceEvent
+        event_type: str
 
         def __init__(
             __pydantic_self__,

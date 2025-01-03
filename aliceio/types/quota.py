@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, ClassVar
+from typing import TYPE_CHECKING, Any
 
 from .base import AliceObject
 
@@ -14,7 +14,7 @@ class Quota(AliceObject):
     used: int
 
     if TYPE_CHECKING:
-        available: ClassVar[int]
+        available: int
 
         def __init__(
             __pydantic_self__,

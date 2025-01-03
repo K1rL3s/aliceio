@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, ClassVar, Optional
+from typing import TYPE_CHECKING, Any, Optional
 
 from .base import AliceObject
 
@@ -21,8 +21,8 @@ class UploadedImage(AliceObject):
     createdAt: str
 
     if TYPE_CHECKING:
-        orig_url: ClassVar[Optional[str]]
-        created_at: ClassVar[str]
+        orig_url: Optional[str]
+        created_at: str
 
         def __init__(
             __pydantic_self__,

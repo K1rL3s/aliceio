@@ -1,3 +1,4 @@
+import http
 import json
 from abc import ABC, abstractmethod
 from typing import Any, Callable, Optional, cast
@@ -57,6 +58,12 @@ class BaseAiohttpRequestHandler(ABC):
     async def close(self) -> None:
         pass
 
+    async def handle(self, request: web.Request) -> web.Response:
+        skill = await self.resolve_skill(request)
+        return await self._handle_request(skill=skill, request=request)
+
+    __call__ = handle
+
     @abstractmethod
     async def resolve_skill(self, request: web.Request) -> Skill:
         """
@@ -92,12 +99,6 @@ class BaseAiohttpRequestHandler(ABC):
         )
         return Update.model_validate(json_data, context={"skill": skill})
 
-    async def handle(self, request: web.Request) -> web.Response:
-        skill = await self.resolve_skill(request)
-        return await self._handle_request(skill=skill, request=request)
-
-    __call__ = handle
-
     # TODO: Проверить, помогает ли про запуске шоу Алисы
     @staticmethod
     def _convert_show_pull_to_normal_request(update: dict[str, Any]) -> dict[str, Any]:
@@ -116,7 +117,11 @@ class BaseAiohttpRequestHandler(ABC):
     def _build_web_response(self, result: Any) -> web.Response:
         return web.Response(
             body=self._build_json_response(result=result),
-            status=404 if result in (None, UNHANDLED, REJECTED) else 200,
+            status=(
+                http.HTTPStatus.NOT_FOUND
+                if result in (None, UNHANDLED, REJECTED)
+                else http.HTTPStatus.OK
+            ),
         )
 
     def _build_json_response(self, result: Optional[AliceObject]) -> JsonPayload:
