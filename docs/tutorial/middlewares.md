@@ -81,9 +81,9 @@ async def check_authorization(
     data: dict[str, Any]
 ) -> Any:
     if event.session.user is None:
-            logging.info("Замечен пользователь без аккаунта, блокирую!")
-            return "Я вас не знаю, у вас нет аккаунта в Яндексе. А чтобы пользоваться мной, он нужен!"
-        return await handler(event, data)
+        logging.info("Замечен пользователь без аккаунта, блокирую!")
+        return "Я вас не знаю, у вас нет аккаунта в Яндексе. А чтобы пользоваться мной, он нужен!"
+    return await handler(event, data)
 ```
 
 ## Факты
