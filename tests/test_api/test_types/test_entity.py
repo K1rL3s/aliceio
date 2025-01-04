@@ -177,7 +177,7 @@ class TestEntity:
         assert type(entity.value) == nlu_entity
 
     def test_entities_types_in_event(self) -> None:
-        _update = {
+        update_dict = {
             "meta": {"locale": "", "timezone": "", "client_id": "", "interfaces": {}},
             "session": {
                 "message_id": 0,
@@ -248,7 +248,7 @@ class TestEntity:
             "state": {"session": {}, "user": {"data": {}}, "application": {}},
             "version": "1.0",
         }
-        update = Update.model_validate(_update)
+        update = Update.model_validate(update_dict)
 
         message = update.message
         assert isinstance(message, Message)

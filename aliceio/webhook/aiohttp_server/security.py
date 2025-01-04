@@ -11,7 +11,7 @@ from aliceio import loggers
 
 # https://yandex.ru/ips
 # https://cloud.yandex.ru/ru/docs/security/ip-list#adresa,-ispolzuemye-yandex-cloud
-DEFAULT_YANDEX_NETWORKS = [
+DEFAULT_YANDEX_NETWORKS = (
     IPv4Network("5.45.192.0/18"),
     IPv4Network("5.255.192.0/18"),
     IPv4Network("37.9.64.0/18"),
@@ -26,7 +26,7 @@ DEFAULT_YANDEX_NETWORKS = [
     IPv4Network("178.154.128.0/18"),
     IPv4Network("185.32.187.0/24"),
     IPv4Network("213.180.192.0/19"),
-]
+)
 
 
 class IPFilter:
@@ -51,7 +51,7 @@ class IPFilter:
         elif isinstance(ip, IPv4Network):
             self._allowed_ips.update(ip.hosts())
         else:
-            raise ValueError(f"Invalid type of ipaddress: {type(ip)} ('{ip}')")
+            raise TypeError(f"Invalid type of ipaddress: {type(ip)} ('{ip}')")
 
     @classmethod
     def default(cls) -> "IPFilter":

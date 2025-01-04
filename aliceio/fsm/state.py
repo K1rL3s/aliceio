@@ -39,7 +39,7 @@ class State:
 
     def set_parent(self, group: "type[StatesGroup]") -> None:
         if not issubclass(group, StatesGroup):
-            raise ValueError("Group must be subclass of StatesGroup")
+            raise TypeError("Group must be subclass of StatesGroup")
         self._group = group
 
     def __set_name__(self, owner: "type[StatesGroup]", name: str) -> None:
@@ -57,7 +57,7 @@ class State:
             return True
         return raw_state == self.state
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: object) -> bool:
         if isinstance(other, self.__class__):
             return self.state == other.state
         if isinstance(other, str):

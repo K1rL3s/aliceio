@@ -1,3 +1,5 @@
+# ruff: noqa: PLC0415
+
 from __future__ import annotations
 
 import asyncio
@@ -9,6 +11,7 @@ import certifi
 from aiohttp import BasicAuth, ClientError, ClientSession, FormData, TCPConnector
 from aiohttp.hdrs import USER_AGENT
 from aiohttp.http import SERVER_SOFTWARE
+from typing_extensions import Self
 
 from aliceio.__meta__ import __version__
 from aliceio.client.session.base import BaseSession
@@ -27,7 +30,7 @@ _ProxyType = Union[_ProxyChain, _ProxyBasic]
 
 
 def _retrieve_basic(basic: _ProxyBasic) -> dict[str, Any]:
-    from aiohttp_socks.utils import parse_proxy_url  # type: ignore
+    from aiohttp_socks.utils import parse_proxy_url  # type: ignore[import-untyped]
 
     proxy_auth: Optional[BasicAuth] = None
 
@@ -54,7 +57,7 @@ def _retrieve_basic(basic: _ProxyBasic) -> dict[str, Any]:
 def _prepare_connector(
     chain_or_plain: _ProxyType,
 ) -> tuple[type[TCPConnector], dict[str, Any]]:
-    from aiohttp_socks import (  # type: ignore
+    from aiohttp_socks import (  # type: ignore[import-untyped]
         ChainProxyConnector,
         ProxyConnector,
         ProxyInfo,
@@ -64,7 +67,7 @@ def _prepare_connector(
     # мы предполагаем, что пользователю нужны цепочки прокси,
     # если кортеж представляет собой пару строки(url) и BasicAuth
     if isinstance(chain_or_plain, str) or (
-        isinstance(chain_or_plain, tuple) and len(chain_or_plain) == 2
+        isinstance(chain_or_plain, tuple) and len(chain_or_plain) == 2  # noqa: PLR2004
     ):
         chain_or_plain = cast(_ProxyBasic, chain_or_plain)
         return ProxyConnector, _retrieve_basic(chain_or_plain)
@@ -149,17 +152,13 @@ class AiohttpSession(BaseSession):
     ) -> tuple[Optional[FormData], Optional[dict[str, Any]]]:
         form = FormData(quote_fields=False)
         files: dict[str, InputFile] = {}
-        for key, value in method.model_dump(warnings=False).items():
-            value = prepare_value(value, files=files)
-            if not value:
+        for key, raw_value in method.model_dump(warnings=False).items():
+            prepared_value = prepare_value(raw_value, files=files)
+            if not prepared_value:
                 continue
-            form.add_field(key, value)
+            form.add_field(key, prepared_value)
         for key, value in files.items():
-            form.add_field(
-                key,
-                value.read(),
-                filename=key,
-            )
+            form.add_field(key, value.read(), filename=key)
 
         if not files:
             return None, self._build_json_data(method)
@@ -169,11 +168,11 @@ class AiohttpSession(BaseSession):
     @staticmethod
     def _build_json_data(method: AliceMethod[AliceType]) -> dict[str, Any]:
         data: dict[str, Any] = {}
-        for key, value in method.model_dump(warnings=False).items():
-            value = prepare_value(value, files={})
-            if not value:
+        for key, raw_value in method.model_dump(warnings=False).items():
+            prepared_value = prepare_value(raw_value, files={})
+            if not prepared_value:
                 continue
-            data[key] = value
+            data[key] = prepared_value
         return cast(dict[str, Any], prepare_value(data, {}))
 
     @staticmethod
@@ -218,6 +217,6 @@ class AiohttpSession(BaseSession):
         )
         return cast(AliceType, response.result)
 
-    async def __aenter__(self) -> AiohttpSession:
+    async def __aenter__(self) -> Self:
         await self.create_session()
         return self

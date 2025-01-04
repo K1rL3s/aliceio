@@ -15,6 +15,7 @@ from aliceio.webhook.aiohttp_server import (
 )
 
 form_router = Router()
+logger = logging.getLogger(__name__)
 
 
 class Form(StatesGroup):
@@ -34,7 +35,7 @@ async def cancel_handler(message: Message, state: FSMContext) -> Response:
     """Позволяет пользователю отменить любое действие."""
     current_state = await state.get_state()
     if current_state is not None:
-        logging.info("Cancelling state %r", current_state)
+        logger.info("Cancelling state %r", current_state)
         await state.clear()
 
     return Response(text="Окей, стою. Пока-пока!", end_session=True)

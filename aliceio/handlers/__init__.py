@@ -16,7 +16,7 @@ __all__ = (
     "ButtonPressedHandler",
     "ErrorHandler",
     "MessageHandler",
-    "ShowPullHandler",
     "PurchaseHandler",
+    "ShowPullHandler",
     "TimeoutHandler",
 )

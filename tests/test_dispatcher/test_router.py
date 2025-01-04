@@ -56,12 +56,12 @@ class TestRouter:
 
     def test_include_router_by_string_bad_type(self):
         router = Router()
-        with pytest.raises(ValueError, match=r"router should be instance of Router"):
+        with pytest.raises(TypeError, match=r"router should be instance of Router"):
             router.include_router(self)
 
     def test_set_parent_router_bad_type(self):
         router = Router()
-        with pytest.raises(ValueError, match=r"router should be instance of Router"):
+        with pytest.raises(TypeError, match=r"router should be instance of Router"):
             router.parent_router = object()
 
     def test_observers_config(self):

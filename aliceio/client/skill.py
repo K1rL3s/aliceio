@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
-from typing import Any, Optional, TypeVar, Union, overload
+from typing import Optional, TypeVar, Union, overload
 
 from ..methods import (
     DeleteImage,
@@ -87,7 +87,7 @@ class Skill:
             if auto_close:
                 await self.session.close()
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: object) -> bool:
         """
         Сравнить текущий навык с другим экземпляром навыка.
 
@@ -97,6 +97,9 @@ class Skill:
         if not isinstance(other, Skill):
             return False
         return self.id == other.id
+
+    def __hash__(self) -> int:
+        return hash(self.id)
 
     async def __call__(
         self,

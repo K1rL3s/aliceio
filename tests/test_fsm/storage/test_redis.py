@@ -1,4 +1,4 @@
-from typing import Final, Literal, Optional
+from typing import Final, Optional
 
 import pytest
 
@@ -10,7 +10,7 @@ SKILL_ID = "42:SKILL_ID"
 USER_ID = "42:USER_ID"
 SESSION_ID = "42:SESSION_ID"
 APPLICATION_ID = "42:APP_ID"
-FIELD: Final[Literal["data"]] = "data"
+FIELD: Final = "data"
 
 
 class TestRedisDefaultKeyBuilder:

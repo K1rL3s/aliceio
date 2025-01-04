@@ -20,7 +20,7 @@ class ApiResponse(BaseModel, Generic[AliceType]):
     status_code: Optional[int] = None
 
 
-class AliceMethod(SkillContextController, BaseModel, Generic[AliceType], ABC):
+class AliceMethod(SkillContextController, BaseModel, ABC, Generic[AliceType]):
     model_config = ConfigDict(
         extra="allow",
         populate_by_name=True,
