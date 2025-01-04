@@ -75,6 +75,15 @@ class TestSkill:
         assert skill_2 != smt
         assert skill_3 != smt
 
+    def test_hash(self):
+        skill_1 = Skill(skill_id="1")
+        skill_2 = Skill(skill_id="1")
+        skill_3 = Skill(skill_id="2")
+
+        assert hash(skill_1) == hash(skill_2)
+        assert hash(skill_1) != hash(skill_3)
+        assert hash(skill_2) != hash(skill_3)
+
     async def test_status(self, skill: MockedSkill):
         skill.add_result_for(
             Status,
