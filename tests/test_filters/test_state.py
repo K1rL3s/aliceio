@@ -45,7 +45,7 @@ class TestStateFilter:
     )
     async def test_filter(
         self,
-        state: Iterable[Union[str, None, State, StatesGroup, type[StatesGroup]]],
+        state: Iterable[Union[str, State, StatesGroup, type[StatesGroup], None]],
         current_state: Optional[str],
         result: bool,
         event: AliceRequest,

@@ -32,7 +32,7 @@ class Dispatcher(Router):
         disable_fsm: bool = False,
         use_api_storage: bool = False,
         name: Optional[str] = None,
-        response_timeout: Union[int, float] = 4.0,
+        response_timeout: float = 4.0,
         **kwargs: Any,
     ) -> None:
         """

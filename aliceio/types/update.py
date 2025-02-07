@@ -102,25 +102,23 @@ class Update(MutableAliceObject):
             data["request"] = {"type": RequestType.ACCOUNT_LINKING_COMPLETE}
         return data
 
-    def model_post_init(self, __context: Any) -> None:
-        super().model_post_init(__context)
+    def model_post_init(self, context: Any, /) -> None:
+        super().model_post_init(context)
         with contextlib.suppress(UpdateTypeLookupError):
             # При работе ошибка возникнет ещё раз в диспетчере,
             # здесь она глушится для работы тестов.
             # TODO: убрать здесь suppress и переделать тесты
-            self._event_model_validate(self.event_type, __context)
+            self._event_model_validate(self.event_type, context)
 
-    def _event_model_validate(self, event_type: str, __context: Any) -> None:
-        """
-        Вспомогательный метод для определения и создания события конкретного типа.
-        """
+    def _event_model_validate(self, event_type: str, context: Any, /) -> None:
+        """Вспомогательный метод для определения и создания события конкретного типа."""
         dump = self.request.model_dump()
         dump["session"] = self.session
         event_model = event_type_to_event_model[event_type]
         setattr(
             self,
             event_type,
-            event_model.model_validate(dump, context=__context),
+            event_model.model_validate(dump, context=context),
         )
 
 

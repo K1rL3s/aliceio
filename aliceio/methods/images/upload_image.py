@@ -30,8 +30,8 @@ class UploadImage(AliceMethod[PreUploadedImage]):
                 **__pydantic_kwargs,
             )
 
-    def model_post_init(self, __context: Any) -> None:
-        super().model_post_init(__context)
+    def model_post_init(self, context: Any, /) -> None:
+        super().model_post_init(context)
         if self.file is None and self.url is None:
             raise AliceWrongFieldError('At least "file" or "url" must be not None')
         if self.file and self.url:

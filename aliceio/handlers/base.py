@@ -1,10 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Any, Generic, TypeVar, cast
 
+from aliceio import Skill
 from aliceio.types import Update
-
-if TYPE_CHECKING:
-    from aliceio import Skill
 
 T = TypeVar("T")
 
@@ -24,7 +22,6 @@ class BaseHandler(BaseHandlerMixin[T], ABC):
 
     @property
     def skill(self) -> "Skill":
-        from aliceio import Skill
 
         if "skill" in self.data:
             return cast(Skill, self.data["skill"])

@@ -19,5 +19,5 @@ class AsFilterResultOperation(BaseOperation):
 
 
 class MagicFilter(_MagicFilter):
-    def as_(self: _MagicT, name: str) -> _MagicT:
+    def as_(self: _MagicT, name: str) -> _MagicT:  # noqa: PYI019
         return self._extend(AsFilterResultOperation(name=name))

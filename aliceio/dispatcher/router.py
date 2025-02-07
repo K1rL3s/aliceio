@@ -165,7 +165,7 @@ class Router:
         :param router: Роутер.
         """
         if not isinstance(router, Router):
-            raise ValueError(
+            raise TypeError(
                 f"router should be instance of Router not {type(router).__name__!r}",
             )
         if self._parent_router:
@@ -202,7 +202,7 @@ class Router:
         :return: Этот же роутер.
         """
         if not isinstance(router, Router):
-            raise ValueError(
+            raise TypeError(
                 f"router should be instance of Router, "
                 f"not {type(router).__class__.__name__}",
             )

@@ -7,6 +7,7 @@ from types import TracebackType
 from typing import TYPE_CHECKING, Any, Callable, Final, Optional, cast
 
 from pydantic import ValidationError
+from typing_extensions import Self
 
 from aliceio.client.alice import PRODUCTION, AliceAPIServer
 from aliceio.client.session.middlewares.manager import RequestMiddlewareManager
@@ -66,8 +67,8 @@ class BaseSession(abc.ABC):
             raise ClientDecodeError("Failed to decode object", e, content) from e
 
         if HTTPStatus.OK <= status_code <= HTTPStatus.IM_USED:
+            response_type = ApiResponse[method.__returning__]  # type: ignore[name-defined]
             try:
-                response_type = ApiResponse[method.__returning__]  # type: ignore
                 return response_type.model_validate(
                     {"result": json_data, "status_code": status_code},
                     context={"skill": skill},
@@ -119,7 +120,7 @@ class BaseSession(abc.ABC):
         )
         return cast(AliceType, await middleware(skill, method))
 
-    async def __aenter__(self) -> BaseSession:
+    async def __aenter__(self) -> Self:
         return self
 
     async def __aexit__(

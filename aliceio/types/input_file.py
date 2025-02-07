@@ -53,7 +53,7 @@ class BufferedInputFile(InputFile):
         self.data = file
 
     @classmethod
-    def from_file(
+    def from_file(  # TODO: breaking change to async def with aiofiles.open?
         cls,
         path: Union[str, Path],
         chunk_size: int = DEFAULT_CHUNK_SIZE,
@@ -65,7 +65,7 @@ class BufferedInputFile(InputFile):
         :param chunk_size: Размер загружаемых фрагментов.
         :return: Экземпляр :obj:`BufferedInputFile`
         """
-        with open(path, "rb") as f:
+        with open(path, "rb") as f:  # noqa: PTH123 FURB101
             data = f.read()
         return cls(data, chunk_size=chunk_size)
 

@@ -13,7 +13,7 @@ async def next_handler(*args, **kwargs):
 
 class TestUserContextMiddleware:
     async def test_unexpected_event_type(self):
-        with pytest.raises(RuntimeError):
+        with pytest.raises(TypeError):
             await UserContextMiddleware()(next_handler, None, {})
 
     async def test_expected_event_type(self, update: Update):

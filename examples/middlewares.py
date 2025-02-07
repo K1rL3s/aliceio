@@ -14,6 +14,8 @@ from aliceio.webhook.aiohttp_server import (
     setup_application,
 )
 
+logger = logging.getLogger(__name__)
+
 
 class OuterExampleMiddleware(BaseMiddleware[Update]):
     async def __call__(
@@ -22,12 +24,12 @@ class OuterExampleMiddleware(BaseMiddleware[Update]):
         update: Update,
         data: dict[str, Any],
     ) -> Any:
-        logging.info(
+        logger.info(
             "Ивент %s до фильтров (1)",
             update.event.__class__.__name__,
         )
         result = await handler(update, data)
-        logging.info(
+        logger.info(
             "Ивент %s после всей обработки (4)",
             update.event.__class__.__name__,
         )
@@ -41,12 +43,12 @@ class InnerExampleMiddleware(BaseMiddleware[Update]):
         update: Update,
         data: dict[str, Any],
     ) -> Any:
-        logging.info(
+        logger.info(
             "Ивент %s после фильтров и до обработчика (2)",
             update.event.__class__.__name__,
         )
         result = await handler(update, data)
-        logging.info(
+        logger.info(
             "Ивент %s после обработчика (3)",
             update.event.__class__.__name__,
         )
@@ -63,13 +65,13 @@ class MessageMiddleware(BaseMiddleware[Message]):
         message: Message,
         data: dict[str, Any],
     ) -> Any:
-        logging.info("Проверяю сообщение на длину...")
+        logger.info("Проверяю сообщение на длину...")
 
         if len(message.command) < self.length:
-            logging.info("Сообщение слишком короткое, блокирую!")
+            logger.info("Сообщение слишком короткое, блокирую!")
             return Response(text="Ваше сообщение слишком короткое!")
 
-        logging.info("Сообщение достаточное длинное, пропускаю!")
+        logger.info("Сообщение достаточное длинное, пропускаю!")
         return await handler(message, data)
 
 
@@ -81,7 +83,7 @@ class UserAuthorizedMiddleware(BaseMiddleware[Update]):
         data: dict[str, Any],
     ) -> Any:
         if event.session.user is None:
-            logging.info("Замечен пользователь без аккаунта, блокирую!")
+            logger.info("Замечен пользователь без аккаунта, блокирую!")
             return Response(
                 text="Я вас не знаю, у вас нет аккаунта в Яндексе. "
                 "А чтобы пользоваться мной, он нужен!",

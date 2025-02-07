@@ -6,7 +6,7 @@ from aliceio.filters.base import Filter
 from aliceio.fsm.state import State, StatesGroup
 from aliceio.types.base import AliceObject
 
-StateType = Union[str, None, State, StatesGroup, type[StatesGroup]]
+StateType = Union[str, State, StatesGroup, type[StatesGroup], None]
 
 
 class StateFilter(Filter):
@@ -34,7 +34,7 @@ class StateFilter(Filter):
         allowed_states = cast(Sequence[StateType], self.states)
         for allowed_state in allowed_states:
             if isinstance(allowed_state, str) or allowed_state is None:
-                if allowed_state == "*" or raw_state == allowed_state:
+                if allowed_state in {"*", raw_state}:
                     return True
             elif isinstance(allowed_state, (State, StatesGroup)):
                 if allowed_state(event=obj, raw_state=raw_state):
