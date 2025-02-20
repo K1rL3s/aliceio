@@ -1,9 +1,9 @@
 from typing import TYPE_CHECKING, Any, Optional
 
-from .nlu_entity import NLUEntity
+from .nlu_entity import NLUNamedEntity
 
 
-class FIOEntity(NLUEntity):
+class FIOEntity(NLUNamedEntity):
     """
     NLU Entity Фамилии, имени и отчества.
 

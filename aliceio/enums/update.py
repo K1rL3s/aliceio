@@ -23,7 +23,7 @@ class RequestType(StrEnum, ValuesEnum):
     PURCHASE_CONFIRMATION = "Purchase.Confirmation"
     SHOW_PULL = "Show.Pull"
     SIMPLE_UTTERANCE = "SimpleUtterance"
-    ACCOUNT_LINKING_COMPLETE = "AccountLinkigCompleteEvent"  # Нужен ли?
+    ACCOUNT_LINKING_COMPLETE = "AccountLinkingCompleteEvent"  # Нужен ли?
 
 
 class ShowType(StrEnum, ValuesEnum):

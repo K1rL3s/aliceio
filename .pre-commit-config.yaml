@@ -39,7 +39,7 @@ repos:
 
       - id: mypy
         name: mypy
-        entry: mypy aliceio
+        entry: mypy --strict aliceio
         language: system
         pass_filenames: false
         stages: [ pre-commit ]

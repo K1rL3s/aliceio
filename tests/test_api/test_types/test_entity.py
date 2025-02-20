@@ -10,7 +10,7 @@ from aliceio.types import (
     FIOEntity,
     GeoEntity,
     Message,
-    NLUEntity,
+    NLUNamedEntity,
     NumberEntity,
     Update,
 )
@@ -40,7 +40,7 @@ class TestEntity:
         data.update({"tokens": {"start": 0, "end": 0}})
         entity = Entity.model_validate(data)
 
-        assert isinstance(entity.value, NLUEntity)
+        assert isinstance(entity.value, NLUNamedEntity)
 
     @pytest.mark.parametrize(
         "nlu_type,nlu_entity,data",
@@ -131,14 +131,14 @@ class TestEntity:
     def test_known_entity(
         self,
         nlu_type: str,
-        nlu_entity: type[NLUEntity],
+        nlu_entity: type[NLUNamedEntity],
         data: dict[str, Any],
     ) -> None:
         data.update({"tokens": {"start": 0, "end": 0}})
         entity = Entity.model_validate(data)
 
         assert entity.type == nlu_type
-        assert isinstance(entity.value, NLUEntity)
+        assert isinstance(entity.value, NLUNamedEntity)
         assert isinstance(entity.value, nlu_entity)
         assert type(entity.value) == nlu_entity
 
@@ -268,7 +268,7 @@ class TestEntity:
 
         assert isinstance(geo.value, GeoEntity)
         assert geo.value.street == "улица прямая"
-        assert geo.value.house_number == 5
+        assert geo.value.house_number == "5"
 
         assert isinstance(num5.value, int)
         assert num5.value == 5

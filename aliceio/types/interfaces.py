@@ -29,6 +29,8 @@ class Interfaces(AliceObject):
     payments: Optional[Payments] = None
 
     if TYPE_CHECKING:
+        available_interfaces: set[str]
+        available: set[str]
 
         def __init__(
             __pydantic_self__,
@@ -47,13 +49,22 @@ class Interfaces(AliceObject):
                 **__pydantic_kwargs,
             )
 
-    @cached_property
-    def available_interfaces(self) -> set[str]:
-        return {
-            interface
-            for interface in self.__annotations__
-            if isinstance(getattr(self, interface, None), dict)
-        }
+    else:
+
+        @cached_property
+        def available_interfaces(self) -> set[str]:
+            return {
+                interface
+                for interface in self.__annotations__
+                if isinstance(getattr(self, interface, None), dict)
+            }
+
+        @property
+        def available(self) -> set[str]:
+            return self.available_interfaces
 
     def is_interface_available(self, interface: str) -> bool:
         return interface in self.available_interfaces
+
+    def has(self, interface: str) -> bool:
+        return self.is_interface_available(interface)

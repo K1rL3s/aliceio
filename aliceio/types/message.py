@@ -25,6 +25,7 @@ class Message(AliceEvent):
         text: str
         original_text: str
         original_command: str
+        is_ping: bool
 
         def __init__(
             __pydantic_self__,
@@ -62,3 +63,7 @@ class Message(AliceEvent):
         @property
         def original_command(self) -> str:
             return self.original_utterance
+
+        @property
+        def is_ping(self) -> bool:
+            return self.original_utterance == "ping"

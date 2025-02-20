@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 from typing import Any, Callable, Optional, cast
 
 from aiohttp import JsonPayload, web
-from aiohttp.abc import Application
+from aiohttp.abc import Application  # type: ignore[attr-defined]
 
 from aliceio import Dispatcher, Skill
 from aliceio.dispatcher.event.bases import REJECTED, UNHANDLED

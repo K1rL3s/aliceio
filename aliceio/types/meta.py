@@ -1,7 +1,11 @@
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Literal, Optional
 
 from .base import AliceObject
 from .interfaces import Interfaces
+
+# TODO: Возможно flags появляется при запуске со станций, надо уточнить
+# https://github.com/mahenzon/aioalice/blob/e66615138bf6ae4883154de7fe19a9f8c8c065bc/tests/_dataset.py#L216
+POSSIBLE_FLAGS = Literal["no_cards_support"]
 
 
 class Meta(AliceObject):
@@ -15,6 +19,7 @@ class Meta(AliceObject):
     timezone: str
     client_id: str
     interfaces: Interfaces
+    flags: Optional[list[POSSIBLE_FLAGS]] = None
 
     if TYPE_CHECKING:
 

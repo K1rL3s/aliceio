@@ -1,9 +1,9 @@
 from typing import TYPE_CHECKING, Any, Optional
 
-from .nlu_entity import NLUEntity
+from .nlu_entity import NLUNamedEntity
 
 
-class DateTimeEntity(NLUEntity):
+class DateTimeEntity(NLUNamedEntity):
     """
     NLU Entity Даты и времени.
 

@@ -5,17 +5,18 @@ from .base import MutableAliceObject
 from .datetime import DateTimeEntity
 from .fio_entity import FIOEntity
 from .geo_entity import GeoEntity
-from .nlu_entity import NLUEntity
+from .nlu_entity import NLUNamedEntity
 from .number_entity import NumberEntity
-from .tokens_entity import TokensEntity
+from .tokens_entity import EntityTokens
 
 NLUEntityType = Union[
-    NLUEntity,
+    NLUNamedEntity,
     DateTimeEntity,
     FIOEntity,
     GeoEntity,
     NumberEntity,
 ]
+EntityValue = Optional[Union[NLUEntityType, Any]]
 
 
 class Entity(MutableAliceObject):
@@ -26,8 +27,8 @@ class Entity(MutableAliceObject):
     """
 
     type: str
-    tokens: TokensEntity
-    value: Optional[NLUEntityType] = None
+    tokens: EntityTokens
+    value: EntityValue = None
 
     if TYPE_CHECKING:
 
@@ -35,8 +36,8 @@ class Entity(MutableAliceObject):
             __pydantic_self__,
             *,
             type: str,
-            tokens: TokensEntity,
-            value: Optional[Union[NLUEntity, NumberEntity]] = None,
+            tokens: EntityTokens,
+            value: EntityValue = None,
             **__pydantic_kwargs: Any,
         ) -> None:
             super().__init__(
@@ -49,10 +50,11 @@ class Entity(MutableAliceObject):
     def model_post_init(self, context: Any, /) -> None:
         super().model_post_init(context)
 
-        if not self.value or isinstance(self.value, (int, float)):  # "YANDEX.NUMBER"
+        if self.value is None or isinstance(self.value, (int, float)):
+            # "YANDEX.NUMBER" или пустое
             return
 
-        entity_type: dict[str, type[NLUEntity]] = {
+        entity_type: dict[str, type[NLUNamedEntity]] = {
             EntityType.YANDEX_FIO: FIOEntity,
             EntityType.YANDEX_GEO: GeoEntity,
             EntityType.YANDEX_DATETIME: DateTimeEntity,

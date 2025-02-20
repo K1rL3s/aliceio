@@ -10,6 +10,7 @@ from aliceio.types import (
     Application,
     DateTimeEntity,
     Entity,
+    EntityTokens,
     FIOEntity,
     GeoEntity,
     Interfaces,
@@ -17,7 +18,6 @@ from aliceio.types import (
     Meta,
     Payload,
     Session,
-    TokensEntity,
     Update,
     User,
 )
@@ -154,18 +154,18 @@ def create_mocked_alice_request(
             entities=entities
             or [
                 Entity(
-                    tokens=TokensEntity(
+                    tokens=EntityTokens(
                         start=2,
                         end=6,
                     ),
                     type=EntityType.YANDEX_GEO,
                     value=GeoEntity(
-                        house_number=16,
+                        house_number="16",
                         street="льва толстого",
                     ),
                 ),
                 Entity(
-                    tokens=TokensEntity(
+                    tokens=EntityTokens(
                         start=3,
                         end=5,
                     ),
@@ -176,7 +176,7 @@ def create_mocked_alice_request(
                     ),
                 ),
                 Entity(
-                    tokens=TokensEntity(
+                    tokens=EntityTokens(
                         start=6,
                         end=8,
                     ),

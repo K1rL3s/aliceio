@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING, Any
 from .base import AliceObject
 
 
-class TokensEntity(AliceObject):
+class EntityTokens(AliceObject):
     """
     start и end из request.nlu.entities.
 

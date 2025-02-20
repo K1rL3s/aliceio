@@ -33,7 +33,7 @@ from .message import Message
 from .meta import Meta
 from .metadata import Metadata
 from .nlu import NLU
-from .nlu_entity import NLUEntity
+from .nlu_entity import NLUNamedEntity
 from .number_entity import NumberEntity
 from .payload import Payload
 from .purchase import Purchase
@@ -47,7 +47,7 @@ from .space_status import SpaceStatus
 from .stream import Stream
 from .text_button import TextButton
 from .timeout_event import TimeoutUpdate
-from .tokens_entity import TokensEntity
+from .tokens_entity import EntityTokens
 from .update import Update, UpdateTypeLookupError
 from .uploaded_image import PreUploadedImage, UploadedImage, UploadedImagesList
 from .uploaded_sound import PreUploadedSound, UploadedSound, UploadedSoundsList
@@ -78,6 +78,7 @@ __all__ = (
     "DateTimeEntity",
     "Directives",
     "Entity",
+    "EntityTokens",
     "ErrorEvent",
     "ErrorResult",
     "FIOEntity",
@@ -94,7 +95,7 @@ __all__ = (
     "Message",
     "Meta",
     "Metadata",
-    "NLUEntity",
+    "NLUNamedEntity",
     "NumberEntity",
     "Payload",
     "PreQuota",
@@ -113,7 +114,6 @@ __all__ = (
     "Stream",
     "TextButton",
     "TimeoutUpdate",
-    "TokensEntity",
     "Update",
     "UpdateTypeLookupError",
     "UploadedImage",

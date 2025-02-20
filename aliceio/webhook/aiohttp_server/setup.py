@@ -1,6 +1,6 @@
 from typing import Any
 
-from aiohttp.abc import Application
+from aiohttp.abc import Application  # type: ignore[attr-defined]
 
 from aliceio import Dispatcher
 
