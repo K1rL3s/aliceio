@@ -50,7 +50,7 @@ class BaseAiohttpRequestHandler(ABC):
         app.on_shutdown.append(self._handle_close)
         app.router.add_route("POST", path, self.handle, **kwargs)
 
-    async def _handle_close(self, app: Application) -> None:
+    async def _handle_close(self, *_: Any, **__: Any) -> None:
         await self.close()
 
     @abstractmethod
