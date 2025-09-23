@@ -13,7 +13,7 @@ class GeoEntity(NLUEntity):
     country: Optional[str] = None
     city: Optional[str] = None
     street: Optional[str] = None
-    house_number: Optional[int] = None
+    house_number: Optional[str] = None
     airport: Optional[str] = None
 
     if TYPE_CHECKING:
@@ -24,7 +24,7 @@ class GeoEntity(NLUEntity):
             country: Optional[str] = None,
             city: Optional[str] = None,
             street: Optional[str] = None,
-            house_number: Optional[int] = None,
+            house_number: Optional[str] = None,
             airport: Optional[str] = None,
             **__pydantic_kwargs: Any,
         ) -> None:
