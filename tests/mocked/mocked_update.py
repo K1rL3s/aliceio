@@ -160,7 +160,7 @@ def create_mocked_alice_request(
                     ),
                     type=EntityType.YANDEX_GEO,
                     value=GeoEntity(
-                        house_number=16,
+                        house_number="16",
                         street="льва толстого",
                     ),
                 ),

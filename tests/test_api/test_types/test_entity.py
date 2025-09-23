@@ -268,7 +268,7 @@ class TestEntity:
 
         assert isinstance(geo.value, GeoEntity)
         assert geo.value.street == "улица прямая"
-        assert geo.value.house_number == 5
+        assert geo.value.house_number == "5"
 
         assert isinstance(num5.value, int)
         assert num5.value == 5
