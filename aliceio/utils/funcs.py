@@ -21,7 +21,7 @@ class PrepareValue(Protocol):  # pragma: no cover
 
 # Ключи, у которых значение = None, не пропускаются, потому что иначе не получится
 # установить None в значение хранилища состояний API Алисы
-def prepare_value(
+def prepare_value(  # noqa: PLR0911 C901
     value: Any,
     files: dict[str, Any],
     _dumps_json: Union[Callable[..., str], Literal[False]] = False,
@@ -46,7 +46,7 @@ def prepare_value(
             return _dumps_json(value)
         return value
     if isinstance(value, datetime.timedelta):
-        now = datetime.datetime.now()
+        now = datetime.datetime.now()  # noqa: DTZ005
         return str(round((now + value).timestamp()))
     if isinstance(value, datetime.datetime):
         return str(round(value.timestamp()))

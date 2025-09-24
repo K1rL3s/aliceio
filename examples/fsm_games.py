@@ -1,7 +1,7 @@
 import os
 import random
 from collections.abc import Sequence
-from typing import Any, cast
+from typing import Any
 
 from aiohttp import web
 
@@ -129,7 +129,9 @@ async def thimbles_message(message: Message) -> Response:
 # Создаёт три напёрстка, среди которых один выигрышный
 def generate_thimbles() -> list[TextButton]:
     buttons = [TextButton(title=THIMBLE, payload={"win": False}) for _ in range(3)]
-    cast(dict[str, Any], random.choice(buttons).payload)["win"] = True
+    random_button = random.choice(buttons)
+    payload: dict[str, Any] = random_button.payload
+    payload["win"] = True
     return buttons
 
 

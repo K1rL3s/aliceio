@@ -7,9 +7,7 @@ from aliceio.types.user import User
 
 
 class AliceEvent(MutableAliceObject, ABC):
-    """
-    Родительский класс для событий от Алисы.
-    """
+    """Родительский класс для событий от Алисы."""
 
     session: Session
 

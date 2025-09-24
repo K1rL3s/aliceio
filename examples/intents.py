@@ -21,27 +21,27 @@ dp = Dispatcher()
 
 
 @dp.message(F.nlu.intents["YANDEX.CONFIRM"])
-async def confirm(message: Message) -> str:
+async def confirm_handler(message: Message) -> str:
     return "Тоже согласен, да?"
 
 
 @dp.message(F.nlu.intents["YANDEX.REJECT"])
-async def reject(message: Message) -> str:
+async def reject_handler(message: Message) -> str:
     return "Тоже не веришь, не?"
 
 
 @dp.message(F.nlu.intents["YANDEX.REPEAT"])
-async def repeat(message: Message) -> str:
+async def repeat_handler(message: Message) -> str:
     return "Сейчас повторю, ещё разок?"
 
 
 @dp.message(F.nlu.intents["YANDEX.HELP"])
-async def help(message: Message) -> str:
+async def help_handler(message: Message) -> str:
     return "Тебе помочь, помощь?"
 
 
 @dp.message()
-async def anything_else(message: Message) -> str:
+async def anything_else_handler(message: Message) -> str:
     return "Привет, как дела, пока!"
 
 

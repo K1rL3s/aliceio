@@ -8,7 +8,7 @@ from aiohttp import web
 # Конфигурация OAuth приложения
 REDIRECT_URI = "https://social.yandex.net/broker/redirect"
 CLIENT_ID = "your_client_id"
-CLIENT_SECRET = "your_client_secret"
+CLIENT_SECRET = "your_client_secret"  # noqa: S105
 
 # Временное хранилище для кодов авторизации и токенов
 auth_codes = {}

@@ -14,6 +14,7 @@ from aliceio.webhook.aiohttp_server import (
 )
 
 router = Router()
+logger = logging.getLogger(__name__)
 
 
 @router.message()
@@ -31,7 +32,7 @@ async def on_startup(skill: Skill) -> None:
         log = str(await skill.status())
     except AliceNoCredentialsError as e:
         log = str(e)
-    logging.info("On startup: %s", log)
+    logger.info("On startup: %s", log)
 
 
 async def on_shutdown(skill: Skill) -> None:
@@ -39,7 +40,7 @@ async def on_shutdown(skill: Skill) -> None:
         log = str(await skill.status())
     except AliceNoCredentialsError as e:
         log = str(e)
-    logging.info("On shutdown: %s", log)
+    logger.info("On shutdown: %s", log)
 
 
 @router.timeout()

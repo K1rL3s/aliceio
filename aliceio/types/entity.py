@@ -14,7 +14,6 @@ NLUEntityType = Union[
     DateTimeEntity,
     FIOEntity,
     GeoEntity,
-    NLUEntity,
     NumberEntity,
 ]
 
@@ -47,8 +46,8 @@ class Entity(MutableAliceObject):
                 **__pydantic_kwargs,
             )
 
-    def model_post_init(self, __context: Any) -> None:
-        super().model_post_init(__context)
+    def model_post_init(self, context: Any, /) -> None:
+        super().model_post_init(context)
 
         if not self.value or isinstance(self.value, (int, float)):  # "YANDEX.NUMBER"
             return

@@ -14,7 +14,7 @@ from tests.mocked.mocked_skill import MockedSkill
 
 
 class TestExceptionMessageFilter:
-    @pytest.mark.parametrize("value", ["value", re.compile("value")])
+    @pytest.mark.parametrize("value", ["value", re.compile(r"value")])
     def test_converter(self, value: Union[str, Pattern[str]]) -> None:
         obj = ExceptionMessageFilter(pattern=value)
         assert isinstance(obj.pattern, re.Pattern)

@@ -24,10 +24,10 @@ class TimeoutUpdate(Update):
         def event_type(self) -> str:
             return str(EventType.TIMEOUT)
 
-    def model_post_init(self, __context: Any) -> None:
-        MutableAliceObject.model_post_init(self, __context)
+    def model_post_init(self, context: Any, /) -> None:
+        MutableAliceObject.model_post_init(self, context)
         with contextlib.suppress(UpdateTypeLookupError):
-            self._event_model_validate(self._real_event_type, __context)
+            self._event_model_validate(self._real_event_type, context)
 
     @property
     def _real_event_type(self) -> str:

@@ -207,7 +207,7 @@ class TestHandlerObject:
 
     async def test_check_rejected(self):
         handler = HandlerObject(simple_handler, [FilterObject(lambda value: False)])
-        result, data = await handler.check(42, foo=True)
+        result, _ = await handler.check(42, foo=True)
         assert not result
 
     async def test_check_partial_rejected(self):
@@ -215,7 +215,7 @@ class TestHandlerObject:
             simple_handler,
             [FilterObject(lambda value: True), FilterObject(lambda value: False)],
         )
-        result, data = await handler.check(42, foo=True)
+        result, _ = await handler.check(42, foo=True)
         assert not result
 
     async def test_class_based_handler(self, update: Update):

@@ -25,7 +25,7 @@ async def start_with_command(message: Message) -> str:
     return f'Привет! Это был запуск c командой: "{message.command}"'
 
 
-@dp.message(F.session.new, F.command == "")
+@dp.message(F.session.new, F.command == "")  # noqa: PLC1901
 async def start_without_command(message: Message) -> str:
     return "Привет! Это был запуск без команды"
 

@@ -151,7 +151,7 @@ class TestAiohttpSession:
             document: InputFile
 
         session = AiohttpSession()
-        form, json_data = session.build_request_data(
+        form, _ = session.build_request_data(
             TestMethod(key="value", document=BareInputFile()),
         )
 

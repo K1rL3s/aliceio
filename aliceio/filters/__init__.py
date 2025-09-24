@@ -7,13 +7,13 @@ from .state import StateFilter
 BaseFilter = Filter
 
 __all__ = (
-    "Filter",
     "BaseFilter",
     "ExceptionMessageFilter",
     "ExceptionTypeFilter",
-    "StateFilter",
+    "Filter",
     "MagicData",
+    "StateFilter",
     "and_f",
-    "or_f",
     "invert_f",
+    "or_f",
 )

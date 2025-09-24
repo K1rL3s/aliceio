@@ -17,7 +17,7 @@ class UserContextMiddleware(BaseMiddleware[Update]):
         data: dict[str, Any],
     ) -> Any:
         if not isinstance(event, Update):
-            raise RuntimeError("UserContextMiddleware got an unexpected event type!")
+            raise TypeError("UserContextMiddleware got an unexpected event type!")
 
         session, user = self.resolve_event_context(event=event)
 

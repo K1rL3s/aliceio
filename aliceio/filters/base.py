@@ -1,3 +1,5 @@
+# ruff: noqa: PLC0415
+
 from abc import ABC, abstractmethod
 from collections.abc import Awaitable
 from typing import TYPE_CHECKING, Any, Callable, Union
@@ -56,6 +58,6 @@ class Filter(ABC):  # noqa: B024
 
         return f"{type(self).__name__}({', '.join(items)})"
 
-    def __await__(self):  # type: ignore # pragma: no cover # noqa: ANN204
+    def __await__(self):  # type: ignore[no-untyped-def] # pragma: no cover # noqa: ANN204
         # Этот метод нужен только для проверки, никогда не вызывается
         return self.__call__

@@ -58,7 +58,7 @@ class FilterObject(CallableObject):
         if isinstance(self.callback, OriginalMagicFilter):
             # MagicFilter instance is callable but generates
             # only "CallOperation" instead of applying the filter
-            self.magic = self.callback
+            self.magic = self.callback  # type: ignore[assignment]
             self.callback = self.callback.resolve
             if not isinstance(self.magic, MagicFilter):
                 warnings.warn(

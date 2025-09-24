@@ -65,7 +65,7 @@ class TestSecurity:
     def test_allow_ip(self, ip, ip_range: set[IPv4Address]):
         ip_filter = IPFilter()
         if not ip_range:
-            with pytest.raises(ValueError):
+            with pytest.raises(TypeError):
                 ip_filter.allow_ip(ip)
         else:
             ip_filter.allow_ip(ip)

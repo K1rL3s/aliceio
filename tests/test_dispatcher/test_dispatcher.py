@@ -19,7 +19,7 @@ async def simple_message_handler(message: Message):
 
 async def invalid_message_handler(message: Message):
     await asyncio.sleep(0.2)
-    raise Exception(42)
+    raise Exception(42)  # noqa: TRY002
 
 
 async def anext(ait):

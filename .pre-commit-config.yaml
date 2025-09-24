@@ -21,25 +21,25 @@ repos:
         entry: black
         language: system
         types: [ python ]
-        stages: [ commit ]
+        stages: [ pre-commit ]
 
       - id: isort
         name: isort
         entry: isort
         language: system
         types: [ python ]
-        stages: [ commit ]
+        stages: [ pre-commit ]
 
       - id: ruff
         name: ruff
         entry: ruff check
         language: system
         types: [ python ]
-        stages: [ commit ]
+        stages: [ pre-commit ]
 
       - id: mypy
         name: mypy
         entry: mypy aliceio
         language: system
         pass_filenames: false
-        stages: [ commit ]
+        stages: [ pre-commit ]

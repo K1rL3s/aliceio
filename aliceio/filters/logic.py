@@ -1,3 +1,5 @@
+# ruff: noqa: PLC0415
+
 from abc import ABC
 from typing import TYPE_CHECKING, Any, Union
 

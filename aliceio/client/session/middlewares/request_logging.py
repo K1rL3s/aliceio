@@ -26,7 +26,7 @@ class RequestLogging(BaseRequestMiddleware):
         self,
         ignore_methods: Optional[list[type[AliceMethod[Any]]]] = None,
     ) -> None:
-        self.ignore_methods = ignore_methods if ignore_methods else []
+        self.ignore_methods = ignore_methods or []
 
     async def __call__(
         self,

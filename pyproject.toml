@@ -77,13 +77,12 @@ test = [
   "pycryptodomex~=3.19.0",
 ]
 dev = [
-  "black~=24.4.0",
-  "isort~=5.13.2",
-  "ruff~=0.4.9",
-  "mypy~=1.10.0",
+  "black~=24.10.0",
+  "ruff~=0.8.6",
+  "mypy~=1.14.1",
   "toml~=0.10.2",
-  "pre-commit~=3.5.0",
-  "packaging~=24.1",
+  "pre-commit~=4.0.1",
+  "packaging~=24.2",
 ]
 docs = [
   "mkdocs~=1.5.3",
@@ -159,45 +158,6 @@ python = ["39", "310", "311", "312", "313"]
 
 [tool.ruff]
 line-length = 88
-lint.select = [
-  "F", # Pyflakes
-  "E", # pycodestyle
-  "W", # pycodestyle
-  "UP", # pyupgrade
-  "ANN", # flake8-annotations
-  "TRIO", # flake8-trio
-  "BLE", # flake8-blind-except
-  "B", # flake8-bugbear
-  "COM", # flake8-commas
-  "C4", # flake8-comprehensions
-  "PLC", # Pylint
-  "ISC", # flake8-implicit-str-concat
-  "INP", # flake8-no-pep420
-  "PIE", # flake8-pie
-  "Q", # flake8-quotes
-  "RSE", # flake8-raise
-  "RET", # flake8-return
-  "SLF", # flake8-self
-  "SIM", # flake8-simplify
-  "FLY", # flynt
-  "PERF", # Perflint
-  "RUF", # Ruff-specific rules
-  "T10", # flake8-debugger
-  "T20", # flake8-print
-]
-lint.ignore = [
-  "ANN101", # missing-type-self | Missing type annotation for {name} in method
-  "ANN102", # missing-type-cls | Missing type annotation for {name} in classmethod
-  "ANN401", # any-type | Dynamically typed expressions (typing.Any) are disallowed in {name}
-  "UP038", # Use `X | Y` in `isinstance` call instead of `(X, Y)`
-  "B905", # `zip()` without an explicit `strict=` parameter
-  "RUF001", # ambiguous-unicode-character-string | String contains ambiguous {}. Did you mean {}?
-  "RUF002", # ambiguous-unicode-character-docstring | Docstring contains ambiguous {}. Did you mean {}?
-  "RUF003", # ambiguous-unicode-character-comment | Comment contains ambiguous {}. Did you mean {}?
-  "UP042", # Class StrEnum inherits from both `str` and `enum.Enum`
-  "UP007", # Use `X | Y` for type annotations
-  "SIM102", # Use a single `if` statement instead of nested `if` statements
-]
 src = ["aliceio", "tests", "examples"]
 exclude = [
   ".git",
@@ -214,14 +174,117 @@ exclude = [
 target-version = "py39"
 indent-width = 4
 
+[tool.ruff.lint]
+preview = true
+select = [
+  "A", # flake8-builtins
+  "AIR", # Airflow
+  "ANN", # flake8-annotations
+  "ASYNC", # flake8-async
+  "B", # flake8-bugbear
+  "BLE", # flake8-blind-except
+  "C4", # flake8-comprehensions
+  "C90", # mccabe
+  "COM", # flake8-commas
+  "DJ", # flake8-django
+  "DTZ", # flake8-datetimez
+  "E", # Error
+  "E", # pycodestyle
+  "EM", # flake8-errmsg
+  "EXE", # flake8-executable
+  "F", # Pyflakes
+  "FAST", # FastAPI
+  "FBT", # flake8-boolean-trap
+  "FLY", # flynt
+  "FURB", # refurb
+  "G", # flake8-logging-format
+  "ICN", # flake8-import-conventions
+  "INP", # flake8-no-pep420
+  "INT", # flake8-gettext
+  "ISC", # flake8-implicit-str-concat
+  "LOG", # flake8-logging
+  "N", # pep8-naming
+  "NPY", # NumPy-specific rules
+  "PD", # pandas-vet
+  "PERF", # Perflint
+  "PGH", # pygrep-hooks
+  "PIE", # flake8-pie
+  "PL", # Pylint
+  "PT", # flake8-pytest-style
+  "PTH", # flake8-use-pathlib
+  "PYI", # flake8-pyi
+  "Q", # flake8-quotes
+  "RET", # flake8-return
+  "RSE", # flake8-raise
+  "RUF", # Ruff-specific rules
+  "S", # flake8-bandit
+  "SIM", # flake8-simplify
+  "SLF", # flake8-self
+  "SLOT", # flake8-slots
+  "T10", # flake8-debugger
+  "T20", # flake8-print
+  "TC", # flake8-type-checking
+  "TD", # flake8-todos
+  "TID", # flake8-tidy-imports
+  "TRY", # tryceratops
+  "UP", # pyugrade
+  "YTT", # flake8-2020
+]
+ignore = [
+  "ARG", # flake8-unused-arguments
+  "CPY", # flake8-copyright
+  "D", # pydocstyle
+  "DOC", # pydoclint
+  "EM", # flake8-errmsg
+  "ERA", # eradicate
+  "FA", # flake8-future-annotations
+  "FBT", # flake8-boolean-trap
+  "FIX", # flake8-fixme
+  "I", # isort
+  "A002", # Function argument {name} is shadowing a Python builtin
+  "A005", # Modelu {name} is shadowing a python builtin module
+  "ANN401", # any-type | Dynamically typed expressions (typing.Any) are disallowed in {name}
+  "B905", # `zip()` without an explicit `strict=` parameter
+  "N803", # Argument name {name} should be lowercase
+  "N804", # First argument of a class method should be named `cls`
+  "N805", # First argument of a method should be named `self`
+  "N806", # Variable {name} in function should be lowercase
+  "N815", # Variable {name} in class scope should not be mixedCase
+  "PLR6201", # Use a set literal when testing for membership
+  "PLR0913", # Too many arguments in function definition ({c_args} > {max_args})
+  "PLR0917", # Too many positional arguments ({c_pos}/{max_pos})
+  "PLR6301", # Method {name} could be a function, class method, or static method
+  "PLW3201", # Dunder method {name} has no special meaning in Python 3
+  "RUF001", # ambiguous-unicode-character-string | String contains ambiguous {}. Did you mean {}?
+  "RUF002", # ambiguous-unicode-character-docstring | Docstring contains ambiguous {}. Did you mean {}?
+  "RUF003", # ambiguous-unicode-character-comment | Comment contains ambiguous {}. Did you mean {}?
+  "S311", # Standard pseudo-random generators are not suitable for cryptographic purposes
+  "SIM102", # Use a single `if` statement instead of nested `if` statements
+  "TC001", # Move application import {} into a type-checking block
+  "TC002", # Move third-party import {} into a type-checking block
+  "TC003", # Move standard library import {} into a type-checking block
+  "TD002", # Missing author in TODO; try: # TODO(<author_name>): ... or # TODO @<author_name>: ...
+  "TD003", # Missing issue link on the line following this TODO
+  "TC006", # Add quotes to type expression in ``
+  "TID252", # Prefer absolute imports over relative imports from parent modules
+  "TRY003", # Avoid specifying long messages outside the exception class
+  "UP007", # Use `X | Y` for type annotations
+  "UP038", # Use `X | Y` in `isinstance` call instead of `(X, Y)`
+  "UP042", # Class StrEnum inherits from both `str` and `enum.Enum`
+  "RUF029", # Function {name} is declared async, but doesn't await or use async features
+  "N818", # Exception name {name} should be named with an Error suffix
+]
+
 [tool.ruff.format]
+preview = true
 quote-style = "double"
 indent-style = "space"
 skip-magic-trailing-comma = false
 line-ending = "auto"
 
 [tool.ruff.lint.per-file-ignores]
-"tests/*" = ["ANN", "SLF", "B"]
+"tests/*" = ["ANN", "SLF", "B", "S", "PT", "PLR", "PLC", "E721", "PGH003"]
+"examples/*" = ["FURB", "ASYNC", "PTH", "S101"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"

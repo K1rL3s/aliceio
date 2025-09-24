@@ -82,7 +82,7 @@ class TestState:
             # __set_name__ exceptions with RuntimeError anymore as part
             # of PEP 678. See "Other Language Changes" in the changelogs:
             # https://docs.python.org/3/whatsnew/3.12.html
-            with pytest.raises(ValueError):
+            with pytest.raises(TypeError):
 
                 class MyClass:
                     state1 = State()

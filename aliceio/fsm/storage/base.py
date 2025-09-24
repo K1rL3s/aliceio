@@ -61,6 +61,7 @@ class BaseStorage(ABC):
     async def get_value(self, storage_key: StorageKey, dict_key: str) -> Optional[Any]:
         """
         Get single value from data by key
+
         :param storage_key: storage key
         :param dict_key: value key
         :return: value stored in key of dict or ``None``
@@ -75,6 +76,7 @@ class BaseStorage(ABC):
     ) -> Any:
         """
         Get single value from data by key
+
         :param storage_key: storage key
         :param dict_key: value key
         :param default: default value to return
@@ -109,6 +111,4 @@ class BaseStorage(ABC):
 
     @abstractmethod
     async def close(self) -> None:  # pragma: no cover
-        """
-        Закрыть хранилище (подключение к бд, файлу итп.)
-        """
+        """Закрыть хранилище (подключение к бд, файлу итп.)"""
